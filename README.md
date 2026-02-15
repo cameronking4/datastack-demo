@@ -1,6 +1,6 @@
-# fumadocs-ui-template
+# DataStack
 
-This is a Next.js application generated with
+This is a Next.js application built with
 [Create Fumadocs](https://github.com/fuma-nama/fumadocs).
 
 Run development server:

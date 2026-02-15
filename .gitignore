@@ -24,3 +24,8 @@ yarn-error.log*
 .env*.local
 .vercel
 next-env.d.ts
+# Docdrift run artifacts
+.docdrift/evidence
+.docdrift/*.log
+.docdrift/state.json
+.docdrift/run-output.json
