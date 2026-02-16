@@ -43,6 +43,7 @@ pathMappings:
     impacts:
       - ./openapi/**
       - ./content/docs/api-reference/jobs/list-jobs.mdx
+      - ./content/docs/api-reference/jobs/create-job.mdx
       - ./content/docs/api-reference/jobs/get-job.mdx
       - ./content/docs/api-reference/jobs/trigger-job-run.mdx
       - ./content/docs/api-reference/jobs/get-job-run.mdx
