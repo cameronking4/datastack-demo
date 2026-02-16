@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isPreviewEnabled } from "@/lib/api/preview";
 
 /**
  * @swagger
@@ -50,17 +51,30 @@ export async function GET(request: NextRequest) {
  * Create or overwrite notebook
  */
 export async function PUT(request: NextRequest) {
+  const preview = isPreviewEnabled(request);
   const body = (await request.json()) as {
     path: string;
     language: string;
     content?: string;
+    overwrite?: boolean;
+    format?: string;
+    metadata?: Record<string, string>;
   };
-  return NextResponse.json({
+
+  const response: Record<string, unknown> = {
     path: body.path,
     language: body.language as "PYTHON" | "SQL" | "SCALA" | "R",
     format: "SOURCE",
     content: body.content ?? "",
     createdAt: new Date().toISOString(),
     modifiedAt: new Date().toISOString(),
-  });
+  };
+
+  if (preview) {
+    response.overwrite = body.overwrite ?? false;
+    response.format = body.format ?? "SOURCE";
+    response.metadata = body.metadata ?? {};
+  }
+
+  return NextResponse.json(response);
 }
