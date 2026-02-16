@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://unpkg.com/@devinnn/docdrift@latest/docdrift.schema.json
+version: 2
+
+docsite: content/docs
+
+pathMappings:
+  - match: "app/api/v1/**"
+    impacts:
+      - "content/docs/**"
+  - match: "lib/**"
+    impacts:
+      - "content/docs/**"
+
+policy:
+  prCaps:
+    - createDraftPR
+    - updateDocs
+  confidence:
+    minAutoMerge: 0.95
+    minDraft: 0.7
+  allowlist:
+    - "content/docs/**"
+  verification:
+    commands:
+      - "pnpm run types:check"
+      - "pnpm run build"
+
+devin:
+  apiVersion: v1
+  unlisted: true
+  maxAcuLimit: 2
+  tags:
+    - docdrift
+  customInstructions:
+    - ".docdrift/DocDrift.md"
