@@ -1,0 +1,61 @@
+---
+title: Create Connection
+description: Create a new data source or sink connection.
+---
+
+```
+POST /api/v1/connections
+```
+
+Creates a new external data connection.
+
+**Required scope:** `manage:connections`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Display name. |
+| `type` | `string` | Yes | Connection type (`S3`, `POSTGRESQL`, `KAFKA`, etc.). |
+| `host` | `string` | Yes | Host or endpoint URI. |
+| `workspaceId` | `string` | Yes | Target workspace. |
+| `secretScope` | `string` | No | Secret scope for credentials. |
+| `properties` | `object` | No | Type-specific configuration. |
+
+## Response `201`
+
+Returns the created connection object with `status` set to `PENDING_VALIDATION`.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/connections" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Staging Postgres",
+    "type": "POSTGRESQL",
+    "host": "staging-db.acme.internal",
+    "workspaceId": "ws-001",
+    "secretScope": "db-staging",
+    "properties": { "port": 5432, "database": "analytics", "sslMode": "require" }
+  }'
+```
+
+```json title="Response"
+{
+  "id": "conn-new",
+  "name": "Staging Postgres",
+  "type": "POSTGRESQL",
+  "host": "staging-db.acme.internal",
+  "status": "PENDING_VALIDATION",
+  "workspaceId": "ws-001",
+  "secretScope": "db-staging",
+  "properties": { "port": 5432, "database": "analytics", "sslMode": "require" },
+  "createdAt": "2024-06-10T10:00:00Z",
+  "updatedAt": "2024-06-10T10:00:00Z",
+  "createdBy": "api",
+  "lastTestedAt": null,
+  "lastTestStatus": null
+}
+```

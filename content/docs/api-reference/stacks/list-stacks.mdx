@@ -1,0 +1,74 @@
+---
+title: List Stacks
+description: Retrieve a paginated list of composable infrastructure stacks.
+---
+
+```
+GET /api/v1/stacks
+```
+
+Returns a paginated list of infrastructure stacks.
+
+**Required scope:** `read:stacks`
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `page` | `number` | `1` | Page number (min 1). |
+| `pageSize` | `number` | `25` | Results per page (1–100). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `stacks` | `object[]` | Array of stack objects. |
+| `stacks[].id` | `string` | Stack identifier. |
+| `stacks[].name` | `string` | Display name. |
+| `stacks[].description` | `string` | Stack description. |
+| `stacks[].workspaceId` | `string` | Workspace the stack belongs to. |
+| `stacks[].status` | `string` | Current status (`DRAFT`, `DEPLOYED`, `FAILED`). |
+| `stacks[].environment` | `string` | Target environment (`DEVELOPMENT`, `STAGING`, `PRODUCTION`). |
+| `stacks[].layers` | `object[]` | Ordered list of resource layers. |
+| `stacks[].layers[].name` | `string` | Layer name. |
+| `stacks[].layers[].resourceType` | `string` | Resource type (`pipeline`, `cluster`, `job`, `warehouse`). |
+| `stacks[].layers[].resourceId` | `string` | Referenced resource identifier. |
+| `stacks[].layers[].order` | `number` | Execution order. |
+| `stacks[].connections` | `string[]` | Connection identifiers used by the stack. |
+| `stacks[].version` | `number` | Stack version number. |
+| `stacks[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `stacks[].updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+| `stacks[].createdBy` | `string` | Creator identity. |
+| `totalCount` | `number` | Total number of stacks. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/stacks?page=1&pageSize=10" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "stacks": [
+    {
+      "id": "stack-001",
+      "name": "Analytics Platform",
+      "description": "End-to-end analytics stack with ingestion, transformation, and serving layers",
+      "workspaceId": "ws-001",
+      "status": "DEPLOYED",
+      "environment": "PRODUCTION",
+      "layers": [
+        { "name": "ingestion", "resourceType": "pipeline", "resourceId": "pipe-001", "order": 1 },
+        { "name": "compute", "resourceType": "cluster", "resourceId": "cluster-001", "order": 2 }
+      ],
+      "connections": ["conn-001", "conn-002"],
+      "version": 3,
+      "createdAt": "2024-02-01T10:00:00Z",
+      "updatedAt": "2024-06-10T08:00:00Z",
+      "createdBy": "ada@datastack.dev"
+    }
+  ],
+  "totalCount": 2
+}
+```

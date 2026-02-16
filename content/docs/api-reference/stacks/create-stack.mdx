@@ -1,0 +1,72 @@
+---
+title: Create Stack
+description: Create a new composable infrastructure stack.
+---
+
+```
+POST /api/v1/stacks
+```
+
+Creates a new infrastructure stack with the specified layers and connections.
+
+**Required scope:** `manage:stacks`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Stack display name. |
+| `description` | `string` | No | Stack description. |
+| `workspaceId` | `string` | Yes | Target workspace identifier. |
+| `environment` | `string` | Yes | Target environment (`DEVELOPMENT`, `STAGING`, `PRODUCTION`). |
+| `layers` | `object[]` | Yes | Ordered list of resource layers. |
+| `layers[].name` | `string` | Yes | Layer name. |
+| `layers[].resourceType` | `string` | Yes | Resource type (`pipeline`, `cluster`, `job`, `warehouse`). |
+| `layers[].resourceId` | `string` | Yes | Referenced resource identifier. |
+| `layers[].order` | `number` | Yes | Execution order. |
+| `layers[].config` | `object` | No | Layer-specific configuration. |
+| `connections` | `string[]` | No | Connection identifiers. |
+| `tags` | `object` | No | Key-value tags. |
+
+## Response `201`
+
+Returns the created stack object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/stacks" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "ML Feature Store",
+    "workspaceId": "ws-001",
+    "environment": "DEVELOPMENT",
+    "layers": [
+      { "name": "ingestion", "resourceType": "pipeline", "resourceId": "pipe-002", "order": 1 },
+      { "name": "compute", "resourceType": "cluster", "resourceId": "cluster-002", "order": 2 }
+    ],
+    "connections": ["conn-003"]
+  }'
+```
+
+```json title="Response"
+{
+  "id": "stack-new",
+  "name": "ML Feature Store",
+  "description": "",
+  "workspaceId": "ws-001",
+  "status": "DRAFT",
+  "environment": "DEVELOPMENT",
+  "layers": [
+    { "name": "ingestion", "resourceType": "pipeline", "resourceId": "pipe-002", "order": 1 },
+    { "name": "compute", "resourceType": "cluster", "resourceId": "cluster-002", "order": 2 }
+  ],
+  "connections": ["conn-003"],
+  "version": 1,
+  "tags": {},
+  "createdAt": "2024-06-10T10:00:00Z",
+  "updatedAt": "2024-06-10T10:00:00Z",
+  "createdBy": "api"
+}
+```

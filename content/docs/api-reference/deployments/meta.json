@@ -1,0 +1,9 @@
+{
+  "title": "Deployments",
+  "pages": [
+    "list-deployments",
+    "get-deployment",
+    "promote-deployment",
+    "rollback-deployment"
+  ]
+}

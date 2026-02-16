@@ -1,0 +1,61 @@
+---
+title: Update Stack
+description: Update a stack configuration.
+---
+
+```
+PATCH /api/v1/stacks/{stackId}
+```
+
+Updates one or more fields of an existing stack.
+
+**Required scope:** `manage:stacks`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `stackId` | `string` | Stack identifier. |
+
+## Request Body
+
+All fields are optional. Only provided fields are updated.
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | New display name. |
+| `description` | `string` | New description. |
+| `layers` | `object[]` | Replacement layer list. |
+| `connections` | `string[]` | Replacement connection list. |
+| `tags` | `object` | Replacement key-value tags. |
+
+## Response `200`
+
+Returns the updated stack object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH "/api/v1/stacks/stack-001" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{ "name": "Analytics Platform v2" }'
+```
+
+```json title="Response"
+{
+  "id": "stack-001",
+  "name": "Analytics Platform v2",
+  "description": "End-to-end analytics stack",
+  "workspaceId": "ws-001",
+  "status": "DRAFT",
+  "environment": "PRODUCTION",
+  "layers": [],
+  "connections": [],
+  "version": 4,
+  "tags": {},
+  "createdAt": "2024-02-01T10:00:00Z",
+  "updatedAt": "2024-06-10T12:00:00Z",
+  "createdBy": "ada@datastack.dev"
+}
+```

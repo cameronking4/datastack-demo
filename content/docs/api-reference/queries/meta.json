@@ -1,0 +1,12 @@
+{
+  "title": "Queries",
+  "pages": [
+    "list-queries",
+    "create-query",
+    "get-query",
+    "update-query",
+    "delete-query",
+    "execute-query",
+    "get-query-results"
+  ]
+}

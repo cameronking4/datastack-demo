@@ -10,6 +10,12 @@
     "sql-warehouses",
     "users",
     "webhooks",
-    "workspaces"
+    "workspaces",
+    "stacks",
+    "connections",
+    "catalogs",
+    "secrets",
+    "queries",
+    "deployments"
   ]
 }

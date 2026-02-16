@@ -1,0 +1,60 @@
+---
+title: Execute Query
+description: Execute a saved SQL query against its warehouse.
+---
+
+```
+POST /api/v1/queries/{queryId}/execute
+```
+
+Submits a saved query for execution. The query runs asynchronously; poll the results endpoint for output.
+
+**Required scope:** `manage:queries`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `queryId` | `string` | Query identifier. |
+
+## Request Body
+
+| Field | Type | Default | Description |
+|---|---|---|---|
+| `parameters` | `object` | `{}` | Key-value query parameters for parameterized SQL. |
+| `limit` | `number` | `1000` | Maximum rows to return. |
+
+## Response `202`
+
+| Field | Type | Description |
+|---|---|---|
+| `executionId` | `string` | Execution identifier. |
+| `queryId` | `string` | Query identifier. |
+| `warehouseId` | `string` | Warehouse used for execution. |
+| `status` | `string` | Execution status (`RUNNING`). |
+| `parameters` | `object` | Parameters used. |
+| `limit` | `number` | Row limit. |
+| `submittedAt` | `string` | ISO 8601 submission timestamp. |
+| `submittedBy` | `string` | Submitter identity. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/queries/query-001/execute" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{ "limit": 100 }'
+```
+
+```json title="Response"
+{
+  "executionId": "exec-new",
+  "queryId": "query-001",
+  "warehouseId": "wh-001",
+  "status": "RUNNING",
+  "parameters": {},
+  "limit": 100,
+  "submittedAt": "2024-06-10T10:00:00Z",
+  "submittedBy": "api"
+}
+```

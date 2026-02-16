@@ -1,0 +1,43 @@
+---
+title: Update Query
+description: Update a saved SQL query.
+---
+
+```
+PATCH /api/v1/queries/{queryId}
+```
+
+Updates one or more fields of a saved query.
+
+**Required scope:** `manage:queries`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `queryId` | `string` | Query identifier. |
+
+## Request Body
+
+All fields are optional. Only provided fields are updated.
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | New display name. |
+| `description` | `string` | New description. |
+| `sql` | `string` | New SQL statement. |
+| `warehouseId` | `string` | New target warehouse. |
+| `tags` | `string[]` | Replacement tags. |
+
+## Response `200`
+
+Returns the updated query object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH "/api/v1/queries/query-001" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{ "sql": "SELECT date_trunc('"'"'day'"'"', created_at) AS day, COUNT(DISTINCT user_id) AS dau FROM main.gold.user_sessions WHERE region = '"'"'us-east-1'"'"' GROUP BY 1" }'
+```
