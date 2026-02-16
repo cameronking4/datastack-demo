@@ -1,0 +1,61 @@
+---
+title: Get Connection
+description: Retrieve details of a specific connection.
+---
+
+```
+GET /api/v1/connections/{connectionId}
+```
+
+Returns full details for a single connection.
+
+**Required scope:** `read:connections`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `connectionId` | `string` | The connection identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Connection identifier. |
+| `name` | `string` | Display name. |
+| `type` | `string` | Connection type. |
+| `host` | `string` | Host URI. |
+| `status` | `string` | Current status. |
+| `workspaceId` | `string` | Workspace identifier. |
+| `secretScope` | `string` | Secret scope for credentials. |
+| `properties` | `object` | Connection-specific properties. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+| `createdBy` | `string` | Creator identifier. |
+| `lastTestedAt` | `string` | Last connectivity test timestamp. |
+| `lastTestStatus` | `string` | Last test result. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/connections/conn-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "conn-001",
+  "name": "Production S3",
+  "type": "S3",
+  "host": "s3://acme-data-lake",
+  "status": "ACTIVE",
+  "workspaceId": "ws-001",
+  "secretScope": "aws-prod",
+  "properties": { "region": "us-east-1", "format": "delta", "pathPrefix": "/raw/events" },
+  "createdAt": "2024-01-20T10:00:00Z",
+  "updatedAt": "2024-06-01T12:00:00Z",
+  "createdBy": "ada@datastack.dev",
+  "lastTestedAt": "2024-06-10T08:00:00Z",
+  "lastTestStatus": "SUCCESS"
+}
+```

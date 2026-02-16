@@ -1,0 +1,73 @@
+---
+title: Create Query
+description: Save a new SQL query.
+---
+
+```
+POST /api/v1/queries
+```
+
+Save a new SQL query associated with a SQL warehouse.
+
+**Required scope:** `manage:queries`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Query name. |
+| `warehouseId` | `string` | Yes | SQL warehouse ID for execution. |
+| `sql` | `string` | Yes | SQL statement. |
+| `description` | `string` | No | Query description. |
+| `tags` | `string[]` | No | Tags for categorization. |
+
+## Response `201`
+
+Returns the created query object.
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Query identifier. |
+| `name` | `string` | Query name. |
+| `description` | `string` | Query description. |
+| `warehouseId` | `string` | SQL warehouse ID. |
+| `sql` | `string` | SQL statement. |
+| `status` | `string` | `SAVED`. |
+| `tags` | `string[]` | Tags. |
+| `lastExecutedAt` | `null` | Not yet executed. |
+| `lastExecutionDurationMs` | `null` | Not yet executed. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+| `createdBy` | `string` | Creator identifier. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/queries \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Daily Active Users",
+    "warehouseId": "wh-001",
+    "sql": "SELECT date_trunc('\''day'\'', created_at) AS day, COUNT(DISTINCT user_id) AS dau FROM main.gold.user_sessions GROUP BY 1 ORDER BY 1 DESC LIMIT 30",
+    "description": "Count distinct users by day",
+    "tags": ["analytics", "users"]
+  }'
+```
+
+```json title="Response"
+{
+  "id": "query-new",
+  "name": "Daily Active Users",
+  "description": "Count distinct users by day",
+  "warehouseId": "wh-001",
+  "sql": "SELECT date_trunc('day', created_at) AS day, COUNT(DISTINCT user_id) AS dau FROM main.gold.user_sessions GROUP BY 1 ORDER BY 1 DESC LIMIT 30",
+  "status": "SAVED",
+  "tags": ["analytics", "users"],
+  "lastExecutedAt": null,
+  "lastExecutionDurationMs": null,
+  "createdAt": "2024-06-10T10:00:00Z",
+  "updatedAt": "2024-06-10T10:00:00Z",
+  "createdBy": "api"
+}
+```

@@ -1,0 +1,71 @@
+---
+title: Deploy Stack
+description: Deploy all layers of a stack to the target environment.
+---
+
+```
+POST /api/v1/stacks/{stackId}/deploy
+```
+
+Triggers deployment of all stack layers to the target environment. Supports dry-run mode to preview changes without applying them.
+
+**Required scope:** `manage:stacks`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `stackId` | `string` | The stack identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `environment` | `string` | No | Target environment override. Defaults to the stack's configured environment. |
+| `dryRun` | `boolean` | No | Preview changes without deploying. Defaults to `false`. |
+| `force` | `boolean` | No | Force deployment even if validation warnings exist. Defaults to `false`. |
+
+## Response `202`
+
+| Field | Type | Description |
+|---|---|---|
+| `deploymentId` | `string` | Deployment identifier. |
+| `stackId` | `string` | Stack identifier. |
+| `environment` | `string` | Target environment. |
+| `dryRun` | `boolean` | Whether this is a dry run. |
+| `status` | `string` | `IN_PROGRESS` or `VALIDATED` (dry run). |
+| `version` | `number` | Stack version being deployed. |
+| `steps` | `object[]` | Per-layer deployment steps. |
+| `steps[].layer` | `string` | Layer name. |
+| `steps[].resourceType` | `string` | Resource type. |
+| `steps[].resourceId` | `string` | Resource ID. |
+| `steps[].action` | `string` | Planned action (`CREATE`, `UPDATE`, `NO_CHANGE`). |
+| `steps[].status` | `string` | Step status (`PLANNED`, `IN_PROGRESS`, `PENDING`, `SKIPPED`). |
+| `startedAt` | `string` | ISO 8601 start timestamp. |
+| `startedBy` | `string` | Initiator identifier. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/stacks/stack-001/deploy \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{ "dryRun": true }'
+```
+
+```json title="Response"
+{
+  "deploymentId": "deploy-new",
+  "stackId": "stack-001",
+  "environment": "PRODUCTION",
+  "dryRun": true,
+  "status": "VALIDATED",
+  "version": 4,
+  "steps": [
+    { "layer": "ingestion", "resourceType": "pipeline", "resourceId": "pipe-001", "action": "UPDATE", "status": "PLANNED" },
+    { "layer": "compute", "resourceType": "cluster", "resourceId": "cluster-001", "action": "NO_CHANGE", "status": "PLANNED" }
+  ],
+  "startedAt": "2024-06-10T10:00:00Z",
+  "startedBy": "api"
+}
+```

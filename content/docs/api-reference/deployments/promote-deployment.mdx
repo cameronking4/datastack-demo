@@ -1,0 +1,66 @@
+---
+title: Promote Deployment
+description: Promote a deployment to the next environment.
+---
+
+```
+POST /api/v1/deployments/{deploymentId}/promote
+```
+
+Promote a successful deployment to the next environment in the pipeline (e.g., development to staging, staging to production).
+
+**Required scope:** `manage:deployments`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `deploymentId` | `string` | The deployment identifier to promote from. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `targetEnvironment` | `string` | No | Target environment override. Defaults to the next environment in the pipeline. |
+
+## Response `202`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | New deployment identifier. |
+| `stackId` | `string` | Stack identifier. |
+| `stackName` | `string` | Stack display name. |
+| `version` | `number` | Stack version being deployed. |
+| `environment` | `string` | Target environment. |
+| `status` | `string` | `IN_PROGRESS`. |
+| `promotedFrom` | `string` | Source deployment ID. |
+| `steps` | `object[]` | Per-layer deployment steps. |
+| `startedAt` | `string` | ISO 8601 start timestamp. |
+| `startedBy` | `string` | Initiator identifier. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/deployments/deploy-002/promote \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{ "targetEnvironment": "PRODUCTION" }'
+```
+
+```json title="Response"
+{
+  "id": "deploy-new",
+  "stackId": "stack-001",
+  "stackName": "Analytics Platform",
+  "version": 3,
+  "environment": "PRODUCTION",
+  "status": "IN_PROGRESS",
+  "promotedFrom": "deploy-002",
+  "steps": [
+    { "layer": "ingestion", "resourceType": "pipeline", "resourceId": "pipe-001", "action": "CREATE", "status": "PENDING" },
+    { "layer": "compute", "resourceType": "cluster", "resourceId": "cluster-001", "action": "CREATE", "status": "PENDING" }
+  ],
+  "startedAt": "2024-06-10T10:00:00Z",
+  "startedBy": "api"
+}
+```

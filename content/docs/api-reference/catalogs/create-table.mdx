@@ -1,0 +1,92 @@
+---
+title: Create Table
+description: Create a new table in a schema.
+---
+
+```
+POST /api/v1/catalogs/{catalogName}/schemas/{schemaName}/tables
+```
+
+Create a new table within a schema.
+
+**Required scope:** `manage:catalogs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `catalogName` | `string` | The catalog name. |
+| `schemaName` | `string` | The schema name. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name. |
+| `columns` | `object[]` | Yes | Column definitions. |
+| `columns[].name` | `string` | Yes | Column name. |
+| `columns[].type` | `string` | Yes | Column data type (e.g., `STRING`, `INT`, `TIMESTAMP`). |
+| `columns[].nullable` | `boolean` | No | Whether the column is nullable. Defaults to `true`. |
+| `columns[].comment` | `string` | No | Column description. |
+| `tableType` | `string` | No | Table type (`MANAGED` or `EXTERNAL`). Defaults to `MANAGED`. |
+| `dataSourceFormat` | `string` | No | Storage format. Defaults to `DELTA`. |
+| `storageLocation` | `string` | No | Custom storage path (required for `EXTERNAL` tables). |
+| `comment` | `string` | No | Table description. |
+
+## Response `201`
+
+Returns the created table object.
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | Table name. |
+| `catalogName` | `string` | Parent catalog name. |
+| `schemaName` | `string` | Parent schema name. |
+| `tableType` | `string` | Table type. |
+| `dataSourceFormat` | `string` | Storage format. |
+| `columns` | `object[]` | Column definitions. |
+| `storageLocation` | `string` | Storage path. |
+| `comment` | `string` | Table description. |
+| `rowCount` | `number` | Row count (starts at `0`). |
+| `sizeBytes` | `number` | Size in bytes (starts at `0`). |
+| `owner` | `string` | Table owner. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/catalogs/main/schemas/bronze/tables \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "click_events",
+    "columns": [
+      { "name": "event_id", "type": "STRING", "nullable": false },
+      { "name": "user_id", "type": "STRING", "nullable": false },
+      { "name": "clicked_at", "type": "TIMESTAMP", "nullable": false }
+    ]
+  }'
+```
+
+```json title="Response"
+{
+  "name": "click_events",
+  "catalogName": "main",
+  "schemaName": "bronze",
+  "tableType": "MANAGED",
+  "dataSourceFormat": "DELTA",
+  "columns": [
+    { "name": "event_id", "type": "STRING", "nullable": false },
+    { "name": "user_id", "type": "STRING", "nullable": false },
+    { "name": "clicked_at", "type": "TIMESTAMP", "nullable": false }
+  ],
+  "storageLocation": "s3://acme-data-lake/main/bronze/click_events",
+  "comment": "",
+  "rowCount": 0,
+  "sizeBytes": 0,
+  "owner": "api",
+  "createdAt": "2024-06-10T10:00:00Z",
+  "updatedAt": "2024-06-10T10:00:00Z"
+}
+```

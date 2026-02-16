@@ -1,0 +1,63 @@
+---
+title: Create Schema
+description: Create a new schema in a catalog.
+---
+
+```
+POST /api/v1/catalogs/{catalogName}/schemas
+```
+
+Create a new schema within a catalog.
+
+**Required scope:** `manage:catalogs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `catalogName` | `string` | The catalog name. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Schema name. |
+| `comment` | `string` | No | Schema description. |
+| `properties` | `object` | No | Key-value properties. |
+
+## Response `201`
+
+Returns the created schema object.
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | Schema name. |
+| `catalogName` | `string` | Parent catalog name. |
+| `owner` | `string` | Schema owner. |
+| `comment` | `string` | Schema description. |
+| `properties` | `object` | Key-value properties. |
+| `tablesCount` | `number` | Number of tables (starts at `0`). |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/catalogs/main/schemas \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{ "name": "staging", "comment": "Staging data layer" }'
+```
+
+```json title="Response"
+{
+  "name": "staging",
+  "catalogName": "main",
+  "owner": "api",
+  "comment": "Staging data layer",
+  "properties": {},
+  "tablesCount": 0,
+  "createdAt": "2024-06-10T10:00:00Z",
+  "updatedAt": "2024-06-10T10:00:00Z"
+}
+```

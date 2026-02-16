@@ -1,0 +1,76 @@
+---
+title: List Tables
+description: List tables in a schema.
+---
+
+```
+GET /api/v1/catalogs/{catalogName}/schemas/{schemaName}/tables
+```
+
+Returns a list of tables within a schema.
+
+**Required scope:** `read:catalogs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `catalogName` | `string` | The catalog name. |
+| `schemaName` | `string` | The schema name. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `tables` | `object[]` | Array of table objects. |
+| `tables[].name` | `string` | Table name. |
+| `tables[].catalogName` | `string` | Parent catalog name. |
+| `tables[].schemaName` | `string` | Parent schema name. |
+| `tables[].tableType` | `string` | Table type (`MANAGED`, `EXTERNAL`). |
+| `tables[].dataSourceFormat` | `string` | Storage format (`DELTA`, `PARQUET`, `CSV`, etc.). |
+| `tables[].columns` | `object[]` | Column definitions. |
+| `tables[].columns[].name` | `string` | Column name. |
+| `tables[].columns[].type` | `string` | Column data type. |
+| `tables[].columns[].nullable` | `boolean` | Whether the column is nullable. |
+| `tables[].columns[].comment` | `string` | Column description. |
+| `tables[].storageLocation` | `string` | Storage path. |
+| `tables[].rowCount` | `number` | Approximate row count. |
+| `tables[].sizeBytes` | `number` | Table size in bytes. |
+| `tables[].owner` | `string` | Table owner. |
+| `tables[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `tables[].updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+| `totalCount` | `number` | Total number of tables. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/catalogs/main/schemas/bronze/tables \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "tables": [
+    {
+      "name": "raw_events",
+      "catalogName": "main",
+      "schemaName": "bronze",
+      "tableType": "MANAGED",
+      "dataSourceFormat": "DELTA",
+      "columns": [
+        { "name": "event_id", "type": "STRING", "nullable": false, "comment": "Unique event identifier" },
+        { "name": "event_type", "type": "STRING", "nullable": false, "comment": "Type of event" },
+        { "name": "payload", "type": "STRING", "nullable": true, "comment": "JSON event payload" },
+        { "name": "created_at", "type": "TIMESTAMP", "nullable": false, "comment": "Event timestamp" }
+      ],
+      "storageLocation": "s3://acme-data-lake/main/bronze/raw_events",
+      "rowCount": 15420000,
+      "sizeBytes": 4831000000,
+      "owner": "ada@datastack.dev",
+      "createdAt": "2024-01-20T10:00:00Z",
+      "updatedAt": "2024-06-10T02:15:33Z"
+    }
+  ],
+  "totalCount": 2
+}
+```

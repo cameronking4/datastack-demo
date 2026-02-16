@@ -1,0 +1,29 @@
+---
+title: Delete Query
+description: Delete a saved SQL query.
+---
+
+```
+DELETE /api/v1/queries/{queryId}
+```
+
+Permanently delete a saved query. This does not affect any previous execution results.
+
+**Required scope:** `manage:queries`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `queryId` | `string` | The query identifier. |
+
+## Response `204`
+
+No content.
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE /api/v1/queries/query-001 \
+  -H "Authorization: Bearer <accessToken>"
+```

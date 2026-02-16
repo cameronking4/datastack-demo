@@ -1,0 +1,59 @@
+---
+title: Get Query
+description: Retrieve details of a saved SQL query.
+---
+
+```
+GET /api/v1/queries/{queryId}
+```
+
+Returns full details for a saved SQL query.
+
+**Required scope:** `read:queries`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `queryId` | `string` | The query identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Query identifier. |
+| `name` | `string` | Query name. |
+| `description` | `string` | Query description. |
+| `warehouseId` | `string` | SQL warehouse ID. |
+| `sql` | `string` | SQL statement. |
+| `status` | `string` | Query status. |
+| `tags` | `string[]` | Tags. |
+| `lastExecutedAt` | `string\|null` | Last execution timestamp. |
+| `lastExecutionDurationMs` | `number\|null` | Last execution duration in milliseconds. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+| `createdBy` | `string` | Creator identifier. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/queries/query-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "query-001",
+  "name": "Daily Active Users",
+  "description": "Count distinct users by day",
+  "warehouseId": "wh-001",
+  "sql": "SELECT date_trunc('day', created_at) AS day, COUNT(DISTINCT user_id) AS dau FROM main.gold.user_sessions GROUP BY 1 ORDER BY 1 DESC LIMIT 30",
+  "status": "SAVED",
+  "tags": ["analytics", "users"],
+  "lastExecutedAt": "2024-06-10T09:00:00Z",
+  "lastExecutionDurationMs": 1250,
+  "createdAt": "2024-03-01T10:00:00Z",
+  "updatedAt": "2024-06-10T09:00:00Z",
+  "createdBy": "ada@datastack.dev"
+}
+```

@@ -1,0 +1,73 @@
+---
+title: Create Connection
+description: Create a new data source or sink connection.
+---
+
+```
+POST /api/v1/connections
+```
+
+Create a new connection to an external data source or sink.
+
+**Required scope:** `manage:connections`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Connection display name. |
+| `type` | `string` | Yes | Connection type (`S3`, `POSTGRESQL`, `KAFKA`, `SNOWFLAKE`, etc.). |
+| `host` | `string` | Yes | Host URI or address. |
+| `workspaceId` | `string` | Yes | Target workspace ID. |
+| `secretScope` | `string` | No | Secret scope containing credentials. |
+| `properties` | `object` | No | Connection-specific properties (e.g., region, port, database). |
+
+## Response `201`
+
+Returns the created connection object with status `PENDING_VALIDATION`.
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Connection identifier. |
+| `name` | `string` | Display name. |
+| `type` | `string` | Connection type. |
+| `host` | `string` | Host URI. |
+| `status` | `string` | `PENDING_VALIDATION` until tested. |
+| `workspaceId` | `string` | Workspace identifier. |
+| `secretScope` | `string\|null` | Secret scope, if set. |
+| `properties` | `object` | Connection properties. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+| `createdBy` | `string` | Creator identifier. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/connections \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Production S3",
+    "type": "S3",
+    "host": "s3://acme-data-lake",
+    "workspaceId": "ws-001",
+    "secretScope": "aws-prod",
+    "properties": { "region": "us-east-1", "format": "delta" }
+  }'
+```
+
+```json title="Response"
+{
+  "id": "conn-new",
+  "name": "Production S3",
+  "type": "S3",
+  "host": "s3://acme-data-lake",
+  "status": "PENDING_VALIDATION",
+  "workspaceId": "ws-001",
+  "secretScope": "aws-prod",
+  "properties": { "region": "us-east-1", "format": "delta" },
+  "createdAt": "2024-06-10T10:00:00Z",
+  "updatedAt": "2024-06-10T10:00:00Z",
+  "createdBy": "api"
+}
+```

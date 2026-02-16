@@ -1,0 +1,58 @@
+---
+title: Update Query
+description: Update a saved SQL query.
+---
+
+```
+PATCH /api/v1/queries/{queryId}
+```
+
+Update properties of a saved SQL query.
+
+**Required scope:** `manage:queries`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `queryId` | `string` | The query identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Updated query name. |
+| `description` | `string` | No | Updated description. |
+| `sql` | `string` | No | Updated SQL statement. |
+| `warehouseId` | `string` | No | Updated warehouse ID. |
+| `tags` | `string[]` | No | Updated tags. |
+
+## Response `200`
+
+Returns the updated query object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/queries/query-001 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{ "sql": "SELECT COUNT(*) FROM main.gold.user_sessions" }'
+```
+
+```json title="Response"
+{
+  "id": "query-001",
+  "name": "Daily Active Users",
+  "description": "Count distinct users by day",
+  "warehouseId": "wh-001",
+  "sql": "SELECT COUNT(*) FROM main.gold.user_sessions",
+  "status": "SAVED",
+  "tags": [],
+  "lastExecutedAt": "2024-06-10T09:00:00Z",
+  "lastExecutionDurationMs": 1250,
+  "createdAt": "2024-03-01T10:00:00Z",
+  "updatedAt": "2024-06-10T12:00:00Z",
+  "createdBy": "ada@datastack.dev"
+}
+```

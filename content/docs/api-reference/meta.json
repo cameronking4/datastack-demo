@@ -8,6 +8,12 @@
     "pipelines",
     "notebooks",
     "sql-warehouses",
+    "stacks",
+    "connections",
+    "catalogs",
+    "secrets",
+    "queries",
+    "deployments",
     "users",
     "webhooks",
     "workspaces"

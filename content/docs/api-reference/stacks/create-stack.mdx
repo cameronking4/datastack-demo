@@ -1,0 +1,88 @@
+---
+title: Create Stack
+description: Create a new composable infrastructure stack.
+---
+
+```
+POST /api/v1/stacks
+```
+
+Create a new infrastructure stack that composes multiple resources into a deployable unit.
+
+**Required scope:** `manage:stacks`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Stack display name. |
+| `workspaceId` | `string` | Yes | Target workspace ID. |
+| `environment` | `string` | Yes | Target environment (`PRODUCTION`, `STAGING`, `DEVELOPMENT`). |
+| `description` | `string` | No | Stack description. |
+| `layers` | `object[]` | Yes | Ordered list of resource layers. |
+| `layers[].name` | `string` | Yes | Layer name. |
+| `layers[].resourceType` | `string` | Yes | Resource type (`pipeline`, `cluster`, `job`, `warehouse`). |
+| `layers[].resourceId` | `string` | Yes | Referenced resource ID. |
+| `layers[].order` | `number` | Yes | Execution order. |
+| `layers[].config` | `object` | No | Layer-specific configuration overrides. |
+| `connections` | `string[]` | No | Connection IDs used by the stack. |
+| `tags` | `object` | No | Key-value metadata tags. |
+
+## Response `201`
+
+Returns the created stack object with status `DRAFT`.
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Stack identifier. |
+| `name` | `string` | Display name. |
+| `description` | `string` | Stack description. |
+| `workspaceId` | `string` | Workspace identifier. |
+| `status` | `string` | `DRAFT` for newly created stacks. |
+| `environment` | `string` | Target environment. |
+| `layers` | `object[]` | Resource layers. |
+| `connections` | `string[]` | Connection IDs. |
+| `version` | `number` | Version number (starts at `1`). |
+| `tags` | `object` | Metadata tags. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+| `createdBy` | `string` | Creator identifier. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/stacks \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Analytics Platform",
+    "workspaceId": "ws-001",
+    "environment": "PRODUCTION",
+    "layers": [
+      { "name": "ingestion", "resourceType": "pipeline", "resourceId": "pipe-001", "order": 1 },
+      { "name": "compute", "resourceType": "cluster", "resourceId": "cluster-001", "order": 2 }
+    ],
+    "connections": ["conn-001"]
+  }'
+```
+
+```json title="Response"
+{
+  "id": "stack-new",
+  "name": "Analytics Platform",
+  "description": "",
+  "workspaceId": "ws-001",
+  "status": "DRAFT",
+  "environment": "PRODUCTION",
+  "layers": [
+    { "name": "ingestion", "resourceType": "pipeline", "resourceId": "pipe-001", "order": 1 },
+    { "name": "compute", "resourceType": "cluster", "resourceId": "cluster-001", "order": 2 }
+  ],
+  "connections": ["conn-001"],
+  "version": 1,
+  "tags": {},
+  "createdAt": "2024-06-10T10:00:00Z",
+  "updatedAt": "2024-06-10T10:00:00Z",
+  "createdBy": "api"
+}
+```

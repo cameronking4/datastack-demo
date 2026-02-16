@@ -88,6 +88,120 @@
         }
       }
     },
+    "/api/v1/catalogs/{catalogName}/schemas/{schemaName}/tables": {
+      "get": {
+        "summary": "List tables",
+        "description": "List tables in a schema",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "catalogName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "schemaName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create table",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "catalogName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "schemaName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/catalogs/{catalogName}/schemas": {
+      "get": {
+        "summary": "List schemas",
+        "description": "List schemas in a catalog",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "catalogName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create schema",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "catalogName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/catalogs": {
+      "get": {
+        "summary": "List catalogs",
+        "description": "List Unity Catalog catalogs in workspace",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create catalog",
+        "description": "Create a new catalog",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
     "/api/v1/clusters/{clusterId}/resize": {
       "post": {
         "summary": "Resize cluster",
@@ -162,6 +276,177 @@
         "responses": {
           "201": {
             "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/connections/{connectionId}": {
+      "get": {
+        "summary": "Get connection",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connectionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update connection",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connectionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete connection",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connectionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/api/v1/connections/{connectionId}/test": {
+      "post": {
+        "summary": "Test connection",
+        "description": "Test connectivity and authentication for a connection",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connectionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/connections": {
+      "get": {
+        "summary": "List connections",
+        "description": "List external data source and sink connections",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create connection",
+        "description": "Create a new data source or sink connection",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/deployments/{deploymentId}/promote": {
+      "post": {
+        "summary": "Promote deployment",
+        "description": "Promote a deployment to the next environment (dev -> staging -> production)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "deploymentId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/api/v1/deployments/{deploymentId}/rollback": {
+      "post": {
+        "summary": "Rollback deployment",
+        "description": "Rollback to a previous deployment version",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "deploymentId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/api/v1/deployments/{deploymentId}": {
+      "get": {
+        "summary": "Get deployment",
+        "description": "Get deployment details including per-layer status",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "deploymentId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/deployments": {
+      "get": {
+        "summary": "List deployments",
+        "description": "List all stack deployments across environments",
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -398,6 +683,202 @@
         }
       }
     },
+    "/api/v1/queries/{queryId}/execute": {
+      "post": {
+        "summary": "Execute query",
+        "description": "Execute a saved SQL query against its warehouse",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "queryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/api/v1/queries/{queryId}/results": {
+      "get": {
+        "summary": "Get query results",
+        "description": "Get results of the most recent query execution",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "queryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/queries/{queryId}": {
+      "get": {
+        "summary": "Get query",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "queryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update query",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "queryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete query",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "queryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/api/v1/queries": {
+      "get": {
+        "summary": "List queries",
+        "description": "List saved SQL queries",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create query",
+        "description": "Save a new SQL query",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/secrets": {
+      "put": {
+        "summary": "Put secret",
+        "description": "Create or update a secret in a scope",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete secret",
+        "description": "Delete a secret from a scope",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/secrets/scopes/{scopeName}": {
+      "get": {
+        "summary": "List secrets in scope",
+        "description": "List secret keys in a scope (values are redacted)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "scopeName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete secret scope",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "scopeName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/secrets/scopes": {
+      "get": {
+        "summary": "List secret scopes",
+        "description": "List all secret scopes in workspace",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create secret scope",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
     "/api/v1/sql/warehouses/{warehouseId}": {
       "get": {
         "summary": "Get SQL warehouse",
@@ -464,6 +945,145 @@
         "responses": {
           "200": {
             "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/stacks/{stackId}/deploy": {
+      "post": {
+        "summary": "Deploy stack",
+        "description": "Deploy all layers of a stack to the target environment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stackId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/api/v1/stacks/{stackId}/deployments": {
+      "get": {
+        "summary": "List stack deployments",
+        "description": "List deployment history for a stack",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stackId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/stacks/{stackId}": {
+      "get": {
+        "summary": "Get stack",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stackId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update stack",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stackId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete stack",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stackId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/api/v1/stacks/{stackId}/validate": {
+      "post": {
+        "summary": "Validate stack",
+        "description": "Validate stack configuration and layer dependencies",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stackId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/stacks": {
+      "get": {
+        "summary": "List stacks",
+        "description": "List composable infrastructure stacks",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create stack",
+        "description": "Create a new composable infrastructure stack",
+        "responses": {
+          "201": {
+            "description": "Created"
           }
         }
       }

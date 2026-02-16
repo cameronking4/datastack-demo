@@ -1,0 +1,53 @@
+---
+title: Test Connection
+description: Test connectivity and authentication for a connection.
+---
+
+```
+POST /api/v1/connections/{connectionId}/test
+```
+
+Tests connectivity, authentication, and permissions for a connection.
+
+**Required scope:** `read:connections`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `connectionId` | `string` | The connection identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `connectionId` | `string` | Connection identifier. |
+| `success` | `boolean` | Whether all checks passed. |
+| `latencyMs` | `number` | Total test latency in milliseconds. |
+| `checks` | `object[]` | Individual check results. |
+| `checks[].name` | `string` | Check name (`connectivity`, `authentication`, `permissions`). |
+| `checks[].status` | `string` | Check result (`PASSED`, `FAILED`). |
+| `checks[].message` | `string` | Human-readable result message. |
+| `checks[].durationMs` | `number` | Check duration in milliseconds. |
+| `testedAt` | `string` | ISO 8601 test timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/connections/conn-001/test \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "connectionId": "conn-001",
+  "success": true,
+  "latencyMs": 45,
+  "checks": [
+    { "name": "connectivity", "status": "PASSED", "message": "Successfully connected to host", "durationMs": 23 },
+    { "name": "authentication", "status": "PASSED", "message": "Credentials validated", "durationMs": 12 },
+    { "name": "permissions", "status": "PASSED", "message": "Read/write access confirmed", "durationMs": 10 }
+  ],
+  "testedAt": "2024-06-10T10:00:00Z"
+}
+```

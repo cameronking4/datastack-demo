@@ -1,0 +1,37 @@
+---
+title: Delete Stack
+description: Delete an infrastructure stack.
+---
+
+```
+DELETE /api/v1/stacks/{stackId}
+```
+
+Delete a stack. This does not terminate the underlying resources; it only removes the stack definition.
+
+**Required scope:** `manage:stacks`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `stackId` | `string` | The stack identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `message` | `string` | Confirmation message. |
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE /api/v1/stacks/stack-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "message": "Stack stack-001 deleted."
+}
+```
