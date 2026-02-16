@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isPreviewEnabled } from "@/lib/api/preview";
 
 /**
  * @swagger
@@ -23,9 +24,17 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ clusterId: string }> }
 ) {
+  const preview = isPreviewEnabled(request);
   const { clusterId } = await params;
-  const body = (await request.json()) as { workerCount: number };
-  return NextResponse.json({
+  const body = (await request.json()) as {
+    workerCount: number;
+    nodeType?: string;
+    enableAutoscaling?: boolean;
+    minWorkers?: number;
+    maxWorkers?: number;
+  };
+
+  const response: Record<string, unknown> = {
     id: clusterId,
     name: "Analytics Cluster",
     workspaceId: "ws-001",
@@ -38,5 +47,14 @@ export async function POST(
     autoTerminationMinutes: 30,
     createdAt: "2024-03-01T09:00:00Z",
     createdBy: "ada@datastack.dev",
-  });
+  };
+
+  if (preview) {
+    if (body.nodeType) response.nodeType = body.nodeType;
+    response.enableAutoscaling = body.enableAutoscaling ?? false;
+    response.minWorkers = body.minWorkers ?? 1;
+    response.maxWorkers = body.maxWorkers ?? 8;
+  }
+
+  return NextResponse.json(response);
 }

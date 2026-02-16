@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isPreviewEnabled } from "@/lib/api/preview";
 
 /**
  * @swagger
@@ -73,6 +74,7 @@ export async function GET(request: NextRequest) {
  * Create pipeline
  */
 export async function POST(request: NextRequest) {
+  const preview = isPreviewEnabled(request);
   const body = (await request.json()) as {
     name: string;
     workspaceId: string;
@@ -82,23 +84,32 @@ export async function POST(request: NextRequest) {
     continuous?: boolean;
     photon?: boolean;
     edition?: string;
+    notifications?: { emailRecipients?: string[]; onStart?: boolean; onSuccess?: boolean; onFailure?: boolean }[];
+    developmentMode?: boolean;
+    channel?: string;
   };
-  return NextResponse.json(
-    {
-      id: "pipe-new",
-      name: body.name,
-      workspaceId: body.workspaceId,
-      state: "IDLE",
-      target: body.target,
-      catalog: body.catalog ?? "main",
-      schema: body.schema ?? "default",
-      continuous: body.continuous ?? false,
-      photon: body.photon ?? false,
-      edition: body.edition ?? "CORE",
-      clusters: [],
-      createdAt: new Date().toISOString(),
-      createdBy: "api",
-    },
-    { status: 201 }
-  );
+
+  const response: Record<string, unknown> = {
+    id: "pipe-new",
+    name: body.name,
+    workspaceId: body.workspaceId,
+    state: "IDLE",
+    target: body.target,
+    catalog: body.catalog ?? "main",
+    schema: body.schema ?? "default",
+    continuous: body.continuous ?? false,
+    photon: body.photon ?? false,
+    edition: body.edition ?? "CORE",
+    clusters: [],
+    createdAt: new Date().toISOString(),
+    createdBy: "api",
+  };
+
+  if (preview) {
+    response.notifications = body.notifications ?? [];
+    response.developmentMode = body.developmentMode ?? false;
+    response.channel = body.channel ?? "CURRENT";
+  }
+
+  return NextResponse.json(response, { status: 201 });
 }

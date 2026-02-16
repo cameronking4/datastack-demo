@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isPreviewEnabled } from "@/lib/api/preview";
 
 /**
  * @swagger
@@ -61,6 +62,7 @@ export async function GET(request: NextRequest) {
  * Create a new compute cluster
  */
 export async function POST(request: NextRequest) {
+  const preview = isPreviewEnabled(request);
   const body = (await request.json()) as {
     name: string;
     workspaceId: string;
@@ -72,26 +74,35 @@ export async function POST(request: NextRequest) {
     maxWorkers?: number;
     autoTerminationMinutes?: number;
     tags?: Record<string, string>;
+    spotInstances?: boolean;
+    initScripts?: { workspace: { destination: string } }[];
+    customSparkConf?: Record<string, string>;
   };
-  return NextResponse.json(
-    {
-      id: "cluster-new",
-      name: body.name,
-      workspaceId: body.workspaceId,
-      clusterSize: "Medium",
-      region: "us-east-1",
-      state: "PENDING",
-      sparkVersion: body.sparkVersion,
-      nodeType: body.nodeType,
-      workerCount: body.workerCount ?? 2,
-      enableAutoscaling: body.enableAutoscaling ?? false,
-      minWorkers: body.minWorkers ?? 1,
-      maxWorkers: body.maxWorkers ?? 8,
-      autoTerminationMinutes: body.autoTerminationMinutes ?? 30,
-      tags: body.tags ?? {},
-      createdAt: new Date().toISOString(),
-      createdBy: "api",
-    },
-    { status: 201 }
-  );
+
+  const response: Record<string, unknown> = {
+    id: "cluster-new",
+    name: body.name,
+    workspaceId: body.workspaceId,
+    clusterSize: "Medium",
+    region: "us-east-1",
+    state: "PENDING",
+    sparkVersion: body.sparkVersion,
+    nodeType: body.nodeType,
+    workerCount: body.workerCount ?? 2,
+    enableAutoscaling: body.enableAutoscaling ?? false,
+    minWorkers: body.minWorkers ?? 1,
+    maxWorkers: body.maxWorkers ?? 8,
+    autoTerminationMinutes: body.autoTerminationMinutes ?? 30,
+    tags: body.tags ?? {},
+    createdAt: new Date().toISOString(),
+    createdBy: "api",
+  };
+
+  if (preview) {
+    response.spotInstances = body.spotInstances ?? false;
+    response.initScripts = body.initScripts ?? [];
+    response.customSparkConf = body.customSparkConf ?? {};
+  }
+
+  return NextResponse.json(response, { status: 201 });
 }
