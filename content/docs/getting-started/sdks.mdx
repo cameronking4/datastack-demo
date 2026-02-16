@@ -1,0 +1,132 @@
+---
+title: SDKs & Tools
+description: Client libraries, CLI tools, and integrations for the DataStack API.
+---
+
+DataStack provides multiple ways to interact with the platform beyond direct HTTP calls.
+
+## Python SDK
+
+Install the official Python client:
+
+```bash
+pip install datastack-sdk
+```
+
+Initialize the client and make API calls:
+
+```python title="Python"
+from datastack import DataStackClient
+
+client = DataStackClient(
+    base_url="https://acme.datastack.cloud/api/v1",
+    api_key="dsk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+)
+
+clusters = client.clusters.list(page_size=10)
+for cluster in clusters:
+    print(f"{cluster.name} — {cluster.state}")
+```
+
+### Common Operations
+
+```python title="Create and manage a cluster"
+cluster = client.clusters.create(
+    name="Analytics Cluster",
+    workspace_id="ws-001",
+    spark_version="3.5.x-scala2.12",
+    node_type="i3.xlarge",
+    worker_count=4,
+)
+
+print(f"Cluster {cluster.id} is {cluster.state}")
+
+client.clusters.resize(cluster.id, worker_count=8)
+```
+
+```python title="Trigger a job run"
+run = client.jobs.trigger_run("job-001")
+print(f"Run {run.run_id} — {run.state}")
+```
+
+## Node.js SDK
+
+Install the JavaScript/TypeScript client:
+
+```bash
+npm install @datastack/sdk
+```
+
+```typescript title="TypeScript"
+import { DataStack } from "@datastack/sdk";
+
+const client = new DataStack({
+  baseUrl: "https://acme.datastack.cloud/api/v1",
+  apiKey: "dsk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+});
+
+const { clusters, totalCount } = await client.clusters.list({ pageSize: 10 });
+console.log(`Found ${totalCount} clusters`);
+```
+
+## CLI
+
+The DataStack CLI wraps the REST API for terminal workflows:
+
+```bash
+pip install datastack-cli
+```
+
+```bash title="Authenticate"
+datastack auth login --api-key dsk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+```bash title="List clusters"
+datastack clusters list --format table
+```
+
+```bash title="Create a cluster"
+datastack clusters create \
+  --name "Dev Cluster" \
+  --workspace ws-001 \
+  --spark-version "3.5.x-scala2.12" \
+  --node-type i3.xlarge \
+  --workers 2
+```
+
+## REST API (cURL)
+
+You can always call the API directly with any HTTP client:
+
+```bash title="cURL"
+curl https://acme.datastack.cloud/api/v1/clusters \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+See the [Quickstart](/docs/getting-started/quickstart) for a step-by-step walkthrough.
+
+## Terraform Provider
+
+For infrastructure-as-code workflows, use the DataStack Terraform provider:
+
+```hcl title="main.tf"
+provider "datastack" {
+  base_url = "https://acme.datastack.cloud/api/v1"
+  api_key  = var.datastack_api_key
+}
+
+resource "datastack_cluster" "analytics" {
+  name           = "Analytics Cluster"
+  workspace_id   = "ws-001"
+  spark_version  = "3.5.x-scala2.12"
+  node_type      = "i3.xlarge"
+  worker_count   = 4
+  auto_termination_minutes = 30
+}
+```
+
+## What's Next
+
+- [Authentication](/docs/getting-started/authentication) — Learn about tokens and API keys.
+- [Error Handling](/docs/guides/error-handling) — Handle API errors gracefully.
+- [API Reference](/docs/api-reference) — Browse all endpoints.

@@ -1,0 +1,62 @@
+---
+title: Introduction
+description: Learn what DataStack is, its core concepts, and how to get started with the platform.
+---
+
+DataStack is a unified data platform that lets you provision and manage data infrastructure programmatically through a versioned REST API.
+
+## What You Can Do
+
+DataStack provides a single API surface for managing your entire data stack:
+
+- **Compute Clusters** — Spin up distributed Spark clusters with autoscaling, resize on the fly, and set idle auto-termination policies.
+- **SQL Warehouses** — Launch managed query endpoints for analytical SQL with JDBC/ODBC connectivity.
+- **Data Pipelines** — Define Delta Live Tables pipelines, start and stop them, and stream lifecycle events.
+- **Scheduled Jobs** — Create cron-based jobs that run notebooks on dedicated clusters, and track individual run statuses.
+- **Notebooks** — Create multi-language notebooks (Python, SQL, Scala, R) and export them in SOURCE, HTML, or Jupyter formats.
+- **Webhooks** — Subscribe to real-time event notifications for job completions, pipeline updates, and cluster state changes.
+
+## Core Concepts
+
+### Workspaces
+
+Every resource in DataStack belongs to a **workspace**. Workspaces provide logical isolation between environments (e.g., production vs. development) and teams.
+
+### Authentication
+
+DataStack uses scope-based access control. You can authenticate with:
+
+- **Bearer tokens** — Short-lived JWTs (1-hour expiry) obtained via the OAuth2 `client_credentials` grant.
+- **API keys** — Long-lived credentials (90-day default) for CI/CD pipelines and automated workflows.
+
+Both methods support fine-grained scopes like `read:clusters`, `manage:jobs`, and `manage:pipelines`.
+
+### Resource Lifecycle
+
+Most resources follow a state machine pattern:
+
+```
+PENDING → RUNNING → STOPPING → TERMINATED
+                  ↘ RESIZING → RUNNING
+```
+
+You can poll resource endpoints or subscribe to [webhooks](/docs/guides/webhooks-guide) for state change notifications.
+
+## API Design
+
+The DataStack API follows REST conventions:
+
+- All endpoints live under `/api/v1`
+- Requests and responses use JSON
+- List endpoints support [pagination](/docs/guides/pagination) (page-based or offset-based)
+- Errors return structured JSON with `error.code` and `error.message`
+- Timestamps use ISO 8601 format in UTC
+
+## Next Steps
+
+<Cards>
+  <Card title="Quickstart" href="/docs/getting-started/quickstart" description="Make your first API call in under 5 minutes." />
+  <Card title="Authentication" href="/docs/getting-started/authentication" description="Set up tokens and API keys with scoped permissions." />
+  <Card title="SDKs & Tools" href="/docs/getting-started/sdks" description="Use client libraries and CLI tools." />
+  <Card title="API Reference" href="/docs/api-reference" description="Browse full endpoint documentation." />
+</Cards>

@@ -1,0 +1,134 @@
+---
+title: CI/CD Integration
+description: Integrate DataStack into your CI/CD pipelines for automated infrastructure management.
+---
+
+Automate cluster provisioning, job execution, and pipeline deployments as part of your CI/CD workflows.
+
+## Authentication in CI/CD
+
+Use API keys instead of short-lived tokens for CI/CD pipelines. Create a dedicated key with only the scopes your pipeline needs:
+
+```bash
+curl -X POST /api/v1/auth/api-keys \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "CI/CD Pipeline Key",
+    "scopes": ["manage:clusters", "manage:jobs", "read:pipelines"],
+    "expiresInDays": 90
+  }'
+```
+
+Store the returned key as a secret in your CI/CD platform (e.g., `DATASTACK_API_KEY`).
+
+## GitHub Actions Example
+
+```yaml title=".github/workflows/deploy-pipeline.yml"
+name: Deploy Pipeline
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy pipeline
+        env:
+          DATASTACK_API_KEY: ${{ secrets.DATASTACK_API_KEY }}
+          DATASTACK_URL: ${{ vars.DATASTACK_URL }}
+        run: |
+          # Create or update the pipeline
+          curl -X POST "$DATASTACK_URL/api/v1/pipelines" \
+            -H "X-API-Key: $DATASTACK_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "name": "ETL Pipeline",
+              "workspaceId": "ws-001",
+              "target": "PRODUCTION",
+              "continuous": false
+            }'
+
+      - name: Start pipeline
+        env:
+          DATASTACK_API_KEY: ${{ secrets.DATASTACK_API_KEY }}
+          DATASTACK_URL: ${{ vars.DATASTACK_URL }}
+        run: |
+          curl -X POST "$DATASTACK_URL/api/v1/pipelines/pipeline-001/start" \
+            -H "X-API-Key: $DATASTACK_API_KEY"
+```
+
+## GitLab CI Example
+
+```yaml title=".gitlab-ci.yml"
+deploy-pipeline:
+  stage: deploy
+  script:
+    - |
+      curl -X POST "$DATASTACK_URL/api/v1/pipelines" \
+        -H "X-API-Key: $DATASTACK_API_KEY" \
+        -H "Content-Type: application/json" \
+        -d '{
+          "name": "ETL Pipeline",
+          "workspaceId": "ws-001",
+          "target": "PRODUCTION"
+        }'
+  only:
+    - main
+```
+
+## Polling for Completion
+
+After triggering a job or starting a pipeline, poll for completion:
+
+```bash title="Wait for job run to complete"
+RUN_ID=$(curl -s -X POST /api/v1/jobs/job-001/runs \
+  -H "X-API-Key: $DATASTACK_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"triggeredBy": "ci-pipeline"}' | jq -r '.runId')
+
+while true; do
+  STATE=$(curl -s /api/v1/jobs/job-001/runs/$RUN_ID \
+    -H "X-API-Key: $DATASTACK_API_KEY" | jq -r '.state')
+
+  case $STATE in
+    SUCCESS) echo "Job completed"; break ;;
+    FAILED)  echo "Job failed"; exit 1 ;;
+    *)       echo "State: $STATE — waiting..."; sleep 10 ;;
+  esac
+done
+```
+
+## Environment Promotion
+
+Use the pipeline `target` field to promote across environments:
+
+| Environment | Target | Description |
+|---|---|---|
+| Development | `DEVELOPMENT` | Iterative development and testing. |
+| Staging | `STAGING` | Pre-production validation. |
+| Production | `PRODUCTION` | Live data processing. |
+
+```bash title="Promote to production"
+curl -X POST /api/v1/pipelines \
+  -H "X-API-Key: $DATASTACK_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "ETL Pipeline",
+    "workspaceId": "ws-001",
+    "target": "PRODUCTION",
+    "continuous": true,
+    "photon": true
+  }'
+```
+
+## Best Practices
+
+1. **Use dedicated API keys** — Create separate keys per pipeline with minimal scopes.
+2. **Rotate keys regularly** — Set expiration dates and automate key rotation.
+3. **Poll with backoff** — Use exponential backoff when waiting for resources to reach a desired state.
+4. **Use webhooks for long-running jobs** — Instead of polling, configure [webhooks](/docs/guides/webhooks-guide) to notify your CI system on completion.
+5. **Tag resources** — Use the `tags` field on clusters to track which CI run provisioned them.

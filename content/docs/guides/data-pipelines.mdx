@@ -1,0 +1,153 @@
+---
+title: Data Pipelines
+description: Build, deploy, and monitor Delta Live Tables pipelines with DataStack.
+---
+
+This guide walks through end-to-end pipeline management — from creation to monitoring production deployments.
+
+## Creating a Pipeline
+
+Define a new Delta Live Tables pipeline:
+
+```bash title="cURL"
+curl -X POST /api/v1/pipelines \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Customer ETL",
+    "workspaceId": "ws-001",
+    "catalog": "main",
+    "schema": "bronze",
+    "target": "DEVELOPMENT",
+    "continuous": false,
+    "photon": true,
+    "edition": "ADVANCED",
+    "clusters": [
+      {
+        "label": "default",
+        "nodeType": "i3.xlarge",
+        "numWorkers": 4
+      }
+    ]
+  }'
+```
+
+## Pipeline Targets
+
+Use `target` to control which environment the pipeline writes to:
+
+| Target | Use Case |
+|---|---|
+| `DEVELOPMENT` | Iterative development. Fast feedback, limited data. |
+| `STAGING` | Pre-production validation against production-like data. |
+| `PRODUCTION` | Live data processing. Full data, high reliability. |
+
+## Starting and Stopping
+
+### Start a pipeline
+
+```bash
+curl -X POST /api/v1/pipelines/pipeline-001/start \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+The pipeline transitions from `IDLE` to `RUNNING`. For continuous pipelines, it runs indefinitely until stopped.
+
+### Stop a pipeline
+
+```bash
+curl -X POST /api/v1/pipelines/pipeline-001/stop \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+The pipeline transitions through `STOPPING` to `IDLE`.
+
+## Monitoring Events
+
+Track pipeline lifecycle events:
+
+```bash title="Get pipeline events"
+curl "/api/v1/pipelines/pipeline-001/events" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "events": [
+    {
+      "id": "evt-001",
+      "timestamp": "2024-03-01T09:00:00Z",
+      "eventType": "STARTED",
+      "message": "Pipeline update started."
+    },
+    {
+      "id": "evt-002",
+      "timestamp": "2024-03-01T09:15:00Z",
+      "eventType": "COMPLETED",
+      "message": "Pipeline update completed successfully."
+    }
+  ]
+}
+```
+
+### Event Types
+
+| Event | Description |
+|---|---|
+| `STARTED` | Pipeline update has begun. |
+| `COMPLETED` | Pipeline update finished successfully. |
+| `FAILED` | Pipeline update encountered an error. |
+| `RETRYING` | Pipeline is retrying after a transient failure. |
+
+## Continuous vs. Triggered Pipelines
+
+| Mode | `continuous` | Behavior |
+|---|---|---|
+| Triggered | `false` | Runs once per start, processes available data, then returns to `IDLE`. |
+| Continuous | `true` | Runs indefinitely, processing new data as it arrives. Must be explicitly stopped. |
+
+## Pipeline Architecture Patterns
+
+### Bronze-Silver-Gold
+
+A common pattern is to chain pipelines across data quality layers:
+
+```
+Bronze Pipeline → Silver Pipeline → Gold Pipeline
+(raw ingestion)   (cleaned data)    (aggregated/business-ready)
+```
+
+Create separate pipelines for each layer with different schemas:
+
+```bash
+# Bronze: raw ingestion
+curl -X POST /api/v1/pipelines -d '{"schema": "bronze", ...}'
+
+# Silver: cleaned
+curl -X POST /api/v1/pipelines -d '{"schema": "silver", ...}'
+
+# Gold: aggregated
+curl -X POST /api/v1/pipelines -d '{"schema": "gold", ...}'
+```
+
+### Webhook-Driven Orchestration
+
+Use [webhooks](/docs/guides/webhooks-guide) to trigger downstream pipelines when upstream ones complete:
+
+1. Create a webhook subscribing to `pipeline.completed`.
+2. When the bronze pipeline completes, your webhook receiver starts the silver pipeline.
+3. Repeat for silver → gold.
+
+## Photon Acceleration
+
+Set `photon: true` to enable the vectorized query engine for faster processing. Photon is recommended for:
+
+- SQL-heavy transformations
+- Large aggregations
+- Join-intensive workloads
+
+## Related
+
+- [Create Pipeline](/docs/api-reference/pipelines/create-pipeline) — Full endpoint reference
+- [Pipeline Events](/docs/api-reference/pipelines/list-pipeline-events) — Event stream reference
+- [Webhooks Guide](/docs/guides/webhooks-guide) — Event-driven orchestration

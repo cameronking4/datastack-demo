@@ -1,4 +1,4 @@
 {
   "title": "Guides",
-  "pages": ["error-handling", "pagination", "webhooks-guide"]
+  "pages": ["error-handling", "pagination", "webhooks-guide", "ci-cd-integration", "managing-clusters", "data-pipelines"]
 }
