@@ -1,0 +1,52 @@
+---
+title: Validate Stack
+description: Validate stack configuration and layer dependencies.
+---
+
+```
+POST /api/v1/stacks/{stackId}/validate
+```
+
+Validates a stack configuration without deploying. Checks layer dependencies, resource availability, connection health, permissions, and circular dependencies.
+
+**Required scope:** `read:stacks`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `stackId` | `string` | Stack identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `stackId` | `string` | Stack identifier. |
+| `valid` | `boolean` | Whether the stack is valid. |
+| `checks` | `object[]` | Validation check results. |
+| `checks[].name` | `string` | Check name (e.g., `layer_dependencies`, `resource_availability`). |
+| `checks[].status` | `string` | Check result (`PASSED`, `FAILED`, `WARNING`). |
+| `checks[].message` | `string` | Human-readable result message. |
+| `validatedAt` | `string` | ISO 8601 validation timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/stacks/stack-001/validate" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "stackId": "stack-001",
+  "valid": true,
+  "checks": [
+    { "name": "layer_dependencies", "status": "PASSED", "message": "All layer dependencies are satisfied" },
+    { "name": "resource_availability", "status": "PASSED", "message": "All referenced resources exist and are accessible" },
+    { "name": "connection_health", "status": "PASSED", "message": "All connections are healthy" },
+    { "name": "permission_check", "status": "PASSED", "message": "Caller has permissions for all resources" },
+    { "name": "circular_dependency", "status": "PASSED", "message": "No circular dependencies detected" }
+  ],
+  "validatedAt": "2024-06-10T12:00:00Z"
+}
+```

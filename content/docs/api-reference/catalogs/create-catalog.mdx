@@ -1,0 +1,48 @@
+---
+title: Create Catalog
+description: Create a new Unity Catalog catalog.
+---
+
+```
+POST /api/v1/catalogs
+```
+
+Creates a new catalog in the workspace.
+
+**Required scope:** `manage:catalogs`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Catalog name. |
+| `comment` | `string` | No | Description. |
+| `properties` | `object` | No | Key-value properties. |
+| `isolation` | `string` | No | Isolation mode (`OPEN` or `ISOLATED`). Defaults to `OPEN`. |
+
+## Response `201`
+
+Returns the created catalog object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/catalogs" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{ "name": "sandbox", "comment": "Development catalog", "isolation": "ISOLATED" }'
+```
+
+```json title="Response"
+{
+  "name": "sandbox",
+  "owner": "api",
+  "comment": "Development catalog",
+  "properties": {},
+  "isolation": "ISOLATED",
+  "schemasCount": 0,
+  "createdAt": "2024-06-10T10:00:00Z",
+  "updatedAt": "2024-06-10T10:00:00Z",
+  "createdBy": "api"
+}
+```

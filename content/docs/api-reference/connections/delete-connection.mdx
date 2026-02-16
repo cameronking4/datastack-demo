@@ -1,0 +1,29 @@
+---
+title: Delete Connection
+description: Delete a connection by identifier.
+---
+
+```
+DELETE /api/v1/connections/{connectionId}
+```
+
+Deletes a connection. Stacks referencing this connection should be updated first.
+
+**Required scope:** `manage:connections`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `connectionId` | `string` | Connection identifier. |
+
+## Response `204`
+
+No content.
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE "/api/v1/connections/conn-001" \
+  -H "Authorization: Bearer <accessToken>"
+```

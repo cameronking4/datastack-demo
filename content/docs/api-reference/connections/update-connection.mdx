@@ -1,0 +1,58 @@
+---
+title: Update Connection
+description: Update a connection configuration.
+---
+
+```
+PATCH /api/v1/connections/{connectionId}
+```
+
+Updates one or more fields of an existing connection.
+
+**Required scope:** `manage:connections`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `connectionId` | `string` | Connection identifier. |
+
+## Request Body
+
+All fields are optional. Only provided fields are updated.
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | New display name. |
+| `host` | `string` | New host or endpoint URI. |
+| `secretScope` | `string` | New secret scope. |
+| `properties` | `object` | Replacement configuration properties. |
+
+## Response `200`
+
+Returns the updated connection object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH "/api/v1/connections/conn-001" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{ "name": "Production S3 (updated)" }'
+```
+
+```json title="Response"
+{
+  "id": "conn-001",
+  "name": "Production S3 (updated)",
+  "type": "S3",
+  "host": "s3://acme-data-lake",
+  "status": "ACTIVE",
+  "workspaceId": "ws-001",
+  "secretScope": "aws-prod",
+  "properties": {},
+  "createdAt": "2024-01-20T10:00:00Z",
+  "updatedAt": "2024-06-10T12:00:00Z",
+  "createdBy": "ada@datastack.dev"
+}
+```

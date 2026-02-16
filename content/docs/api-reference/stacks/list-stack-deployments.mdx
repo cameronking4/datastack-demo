@@ -1,0 +1,62 @@
+---
+title: List Stack Deployments
+description: List deployment history for a stack.
+---
+
+```
+GET /api/v1/stacks/{stackId}/deployments
+```
+
+Returns the deployment history for a specific stack.
+
+**Required scope:** `read:stacks`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `stackId` | `string` | Stack identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `deployments` | `object[]` | Array of deployment objects. |
+| `deployments[].id` | `string` | Deployment identifier. |
+| `deployments[].stackId` | `string` | Stack identifier. |
+| `deployments[].version` | `number` | Stack version deployed. |
+| `deployments[].environment` | `string` | Target environment. |
+| `deployments[].status` | `string` | Status (`SUCCEEDED`, `FAILED`, `IN_PROGRESS`). |
+| `deployments[].layersDeployed` | `number` | Number of layers successfully deployed. |
+| `deployments[].layersFailed` | `number` | Number of layers that failed. |
+| `deployments[].startedAt` | `string` | ISO 8601 start timestamp. |
+| `deployments[].completedAt` | `string` | ISO 8601 completion timestamp (null if in progress). |
+| `deployments[].startedBy` | `string` | Initiator identity. |
+| `totalCount` | `number` | Total deployments for this stack. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/stacks/stack-001/deployments" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "deployments": [
+    {
+      "id": "deploy-003",
+      "stackId": "stack-001",
+      "version": 3,
+      "environment": "PRODUCTION",
+      "status": "SUCCEEDED",
+      "layersDeployed": 4,
+      "layersFailed": 0,
+      "startedAt": "2024-06-10T08:00:00Z",
+      "completedAt": "2024-06-10T08:05:33Z",
+      "startedBy": "ada@datastack.dev"
+    }
+  ],
+  "totalCount": 3
+}
+```
