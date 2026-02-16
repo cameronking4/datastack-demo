@@ -37,6 +37,8 @@ Returns a paginated list of data connections.
 | `connections[].lastTestedAt` | `string` | ISO 8601 last test timestamp. |
 | `connections[].lastTestStatus` | `string` | Last test result (`SUCCESS`, `FAILED`). |
 | `totalCount` | `number` | Total number of connections. |
+| `page` | `number` | Current page number. |
+| `pageSize` | `number` | Results per page. |
 
 ## Example
 
@@ -64,6 +66,8 @@ curl "/api/v1/connections?page=1&pageSize=10" \
       "lastTestStatus": "SUCCESS"
     }
   ],
-  "totalCount": 3
+  "totalCount": 3,
+  "page": 1,
+  "pageSize": 10
 }
 ```

@@ -40,6 +40,8 @@ Returns a paginated list of infrastructure stacks.
 | `stacks[].updatedAt` | `string` | ISO 8601 last-updated timestamp. |
 | `stacks[].createdBy` | `string` | Creator identity. |
 | `totalCount` | `number` | Total number of stacks. |
+| `page` | `number` | Current page number. |
+| `pageSize` | `number` | Results per page. |
 
 ## Example
 
@@ -69,6 +71,8 @@ curl "/api/v1/stacks?page=1&pageSize=10" \
       "createdBy": "ada@datastack.dev"
     }
   ],
-  "totalCount": 2
+  "totalCount": 2,
+  "page": 1,
+  "pageSize": 10
 }
 ```
