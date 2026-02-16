@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://unpkg.com/@devinnn/docdrift/docdrift.schema.json
+version: 2
+
+specProviders:
+  - format: openapi3
+    current:
+      type: export
+      command: "pnpm run build"
+      outputPath: ".docdrift/openapi.json"
+    published: "content/docs"
+
+docsite: content/docs
+
+pathMappings:
+  - match: "app/api/v1/**"
+    impacts:
+      - "content/docs/**"
+
+mode: auto
+
+devin:
+  apiVersion: v1
+  unlisted: true
+  maxAcuLimit: 2
+  tags:
+    - docdrift
+  customInstructions:
+    - .docdrift/DocDrift.md
+
+policy:
+  prCaps:
+    maxPrsPerDay: 1
+    maxFilesTouched: 12
+  confidence:
+    autopatchThreshold: 0.8
+  allowlist:
+    - "content/docs/**"
+    - "app/llms.txt/**"
+    - "app/llms.mdx"
+    - "app/llms-full.txt"
+  verification:
+    commands:
+      - "pnpm run types:check"
+      - "pnpm run build"
+  slaDays: 7
+  slaLabel: docdrift
