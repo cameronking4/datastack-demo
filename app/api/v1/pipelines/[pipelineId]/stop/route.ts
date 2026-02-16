@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/pipelines/{pipelineId}/stop:
+ *   post:
+ *     summary: Stop pipeline
+ *     parameters:
+ *       - in: path
+ *         name: pipelineId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * POST /api/v1/pipelines/:pipelineId/stop
  * Stop pipeline
  */

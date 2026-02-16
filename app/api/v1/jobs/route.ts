@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/jobs:
+ *   get:
+ *     summary: List jobs
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create job
+ *     responses:
+ *       201:
+ *         description: Created
+ */
+/**
  * GET /api/v1/jobs
  * List jobs in workspace
  */

@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/auth/api-keys:
+ *   get:
+ *     summary: List API keys
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create API key
+ *     responses:
+ *       201:
+ *         description: Created
+ */
+/**
  * GET /api/v1/auth/api-keys
  * List all API keys for the authenticated user
  */

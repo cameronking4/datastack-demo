@@ -1,0 +1,30 @@
+{
+  "run": {
+    "repo": "local/docdrift",
+    "baseSha": "3015c4e42c879f5c7e7849c0efee725ec471b9e6",
+    "headSha": "HEAD",
+    "trigger": "manual",
+    "timestamp": "2026-02-16T03:14:07.204Z"
+  },
+  "items": [
+    {
+      "docArea": "docsite",
+      "mode": "autogen",
+      "signals": [
+        {
+          "kind": "openapi_diff",
+          "tier": 1,
+          "confidence": 0.95,
+          "evidence": [
+            "/Users/cameronking/Desktop/sideproject/elastic-ully-w6x5rm/.docdrift/evidence/1771211647204/openapi3.diff.txt"
+          ]
+        }
+      ],
+      "impactedDocs": [
+        "openapi/openapi.json"
+      ],
+      "recommendedAction": "OPEN_PR",
+      "summary": "OpenAPI changed, but no top-level response field changes were detected in 200 responses."
+    }
+  ]
+}

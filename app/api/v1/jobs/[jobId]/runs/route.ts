@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/jobs/{jobId}/runs:
+ *   post:
+ *     summary: Trigger job run
+ *     parameters:
+ *       - in: path
+ *         name: jobId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * POST /api/v1/jobs/:jobId/runs
  * Trigger job run immediately
  */

@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/clusters/{clusterId}/resize:
+ *   post:
+ *     summary: Resize cluster
+ *     parameters:
+ *       - in: path
+ *         name: clusterId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * POST /api/v1/clusters/:clusterId/resize
  * Resize cluster (change worker count)
  */

@@ -1,6 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/pipelines/{pipelineId}:
+ *   get:
+ *     summary: Get pipeline
+ *     parameters:
+ *       - in: path
+ *         name: pipelineId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *   delete:
+ *     summary: Delete pipeline
+ *     parameters:
+ *       - in: path
+ *         name: pipelineId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * GET /api/v1/pipelines/:pipelineId
  * Get pipeline by ID
  */

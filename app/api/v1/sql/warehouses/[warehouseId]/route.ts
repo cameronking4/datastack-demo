@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/sql/warehouses/{warehouseId}:
+ *   get:
+ *     summary: Get SQL warehouse
+ *     parameters:
+ *       - in: path
+ *         name: warehouseId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * GET /api/v1/sql/warehouses/:warehouseId
  * Get SQL warehouse by ID
  */
