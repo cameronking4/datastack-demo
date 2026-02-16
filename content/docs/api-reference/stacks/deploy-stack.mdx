@@ -38,6 +38,7 @@ Triggers a deployment of all stack layers. Supports dry-run mode for validation 
 | `steps` | `object[]` | Per-layer deployment steps. |
 | `steps[].layer` | `string` | Layer name. |
 | `steps[].resourceType` | `string` | Resource type. |
+| `steps[].resourceId` | `string` | Referenced resource identifier. |
 | `steps[].action` | `string` | Planned action (`CREATE`, `UPDATE`, `NO_CHANGE`). |
 | `steps[].status` | `string` | Step status. |
 | `startedAt` | `string` | ISO 8601 timestamp. |

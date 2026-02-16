@@ -17,13 +17,21 @@ Deletes a connection. Stacks referencing this connection should be updated first
 |---|---|---|
 | `connectionId` | `string` | Connection identifier. |
 
-## Response `204`
+## Response `200`
 
-No content.
+| Field | Type | Description |
+|---|---|---|
+| `message` | `string` | Confirmation message. |
 
 ## Example
 
 ```bash title="cURL"
 curl -X DELETE "/api/v1/connections/conn-001" \
   -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "message": "Connection conn-001 deleted."
+}
 ```
