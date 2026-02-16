@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://unpkg.com/@devinnn/docdrift@latest/docdrift.schema.json
+version: 2
+
+docsite: content/docs
+
+pathMappings:
+  - match: "app/api/v1/auth/**"
+    impacts:
+      - "content/docs/**"
+  - match: "app/api/v1/clusters/**"
+    impacts:
+      - "content/docs/**"
+  - match: "app/api/v1/jobs/**"
+    impacts:
+      - "content/docs/**"
+  - match: "app/api/v1/pipelines/**"
+    impacts:
+      - "content/docs/**"
+  - match: "app/api/v1/notebooks/**"
+    impacts:
+      - "content/docs/**"
+  - match: "app/api/v1/sql/**"
+    impacts:
+      - "content/docs/**"
+  - match: "app/api/v1/users/**"
+    impacts:
+      - "content/docs/**"
+  - match: "app/api/v1/webhooks/**"
+    impacts:
+      - "content/docs/**"
+  - match: "app/api/v1/workspaces/**"
+    impacts:
+      - "content/docs/**"
+  - match: "lib/**"
+    impacts:
+      - "content/docs/**"
+
+devin:
+  apiVersion: v1
+  unlisted: true
+  maxAcuLimit: 2
+  tags:
+    - docdrift
+  customInstructions:
+    - .docdrift/DocDrift.md
+
+policy:
+  prCaps:
+    - create
+    - update
+  confidence: 0.7
+  allowlist:
+    - "content/docs/**"
+  verification:
+    commands:
+      - "pnpm run types:check"
+      - "pnpm run build"
