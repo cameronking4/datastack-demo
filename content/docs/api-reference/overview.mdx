@@ -16,14 +16,20 @@ See [Authentication](/docs/getting-started/authentication) for details.
 
 ## Pagination
 
-List endpoints support pagination via query parameters. Two patterns are used:
+List endpoints support pagination via query parameters. Three patterns are used:
 
-**Page-based** (clusters, workspaces, SQL warehouses, users, stacks, connections, queries, deployments):
+**Page-based** (clusters, SQL warehouses, users, stacks, connections, queries, deployments):
 
 | Parameter | Default | Max |
 |---|---|---|
 | `page` | `1` | — |
 | `pageSize` / `perPage` | `20`–`25` | `100` |
+
+**pageSize-only** (pipelines, catalogs, workspaces):
+
+| Parameter | Default | Max |
+|---|---|---|
+| `pageSize` | `25` | `100` |
 
 **Offset-based** (jobs, notebooks):
 
@@ -55,6 +61,7 @@ All timestamps use ISO 8601 format in UTC (e.g., `2024-03-01T09:00:00Z`).
 |---|---|
 | `200` | Success |
 | `201` | Resource created |
+| `202` | Accepted (async operation started) |
 | `204` | Deleted (no body) |
 | `400` | Bad request |
 | `401` | Unauthorized |

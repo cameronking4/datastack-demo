@@ -17,13 +17,21 @@ Deletes a stack. Running deployments are not affected.
 |---|---|---|
 | `stackId` | `string` | Stack identifier. |
 
-## Response `204`
+## Response `200`
 
-No content.
+| Field | Type | Description |
+|---|---|---|
+| `message` | `string` | Confirmation message. |
 
 ## Example
 
 ```bash title="cURL"
 curl -X DELETE "/api/v1/stacks/stack-001" \
   -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "message": "Stack stack-001 deleted."
+}
 ```

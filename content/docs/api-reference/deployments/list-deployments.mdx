@@ -36,6 +36,8 @@ Returns a paginated list of stack deployments.
 | `deployments[].startedBy` | `string` | Initiator identity. |
 | `deployments[].promotedFrom` | `string` | Source deployment ID if promoted (null otherwise). |
 | `totalCount` | `number` | Total number of deployments. |
+| `page` | `number` | Current page number. |
+| `pageSize` | `number` | Results per page. |
 
 ## Example
 
@@ -62,6 +64,8 @@ curl "/api/v1/deployments?page=1&pageSize=10" \
       "promotedFrom": "deploy-002"
     }
   ],
-  "totalCount": 3
+  "totalCount": 3,
+  "page": 1,
+  "pageSize": 10
 }
 ```

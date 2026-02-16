@@ -2,12 +2,12 @@
   "title": "DataStack",
   "pages": [
     "---Getting Started---",
-    "getting-started",
+    "...getting-started",
     "---API Reference---",
-    "api-reference",
+    "...api-reference",
     "---Guides---",
-    "guides",
+    "...guides",
     "---Resources---",
-    "faq"
+    "...faq"
   ]
 }

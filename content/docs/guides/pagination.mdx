@@ -3,11 +3,11 @@ title: Pagination
 description: Navigate paginated API responses.
 ---
 
-List endpoints return a subset of results per request. DataStack uses two pagination patterns depending on the resource.
+List endpoints return a subset of results per request. DataStack uses three pagination patterns depending on the resource.
 
 ## Page-Based Pagination
 
-Used by: **Clusters**, **SQL Warehouses**, **Users**, **Workspaces**, **Pipelines**
+Used by: **Clusters**, **SQL Warehouses**, **Users**, **Stacks**, **Connections**, **Queries**, **Deployments**
 
 | Parameter | Description |
 |---|---|
@@ -23,6 +23,21 @@ The response includes `totalCount` so you can calculate total pages:
 
 ```
 totalPages = ceil(totalCount / pageSize)
+```
+
+## pageSize-Only Pagination
+
+Used by: **Pipelines**, **Catalogs**, **Workspaces**
+
+These endpoints accept `pageSize` but do not support a `page` parameter.
+
+| Parameter | Description |
+|---|---|
+| `pageSize` | Number of results per page. Max `100`. |
+
+```bash
+curl "/api/v1/pipelines?pageSize=10" \
+  -H "Authorization: Bearer <token>"
 ```
 
 ## Offset-Based Pagination

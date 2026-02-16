@@ -38,10 +38,12 @@ pathMappings:
       - ./content/docs/api-reference/clusters/get-cluster.mdx
       - ./content/docs/api-reference/clusters/delete-cluster.mdx
       - ./content/docs/api-reference/clusters/resize-cluster.mdx
+      - ./content/docs/guides/managing-clusters.mdx
   - match: app/api/v1/jobs/**
     impacts:
       - ./openapi/**
       - ./content/docs/api-reference/jobs/list-jobs.mdx
+      - ./content/docs/api-reference/jobs/create-job.mdx
       - ./content/docs/api-reference/jobs/get-job.mdx
       - ./content/docs/api-reference/jobs/trigger-job-run.mdx
       - ./content/docs/api-reference/jobs/get-job-run.mdx
@@ -55,6 +57,7 @@ pathMappings:
       - ./content/docs/api-reference/pipelines/start-pipeline.mdx
       - ./content/docs/api-reference/pipelines/stop-pipeline.mdx
       - ./content/docs/api-reference/pipelines/list-pipeline-events.mdx
+      - ./content/docs/guides/data-pipelines.mdx
   - match: app/api/v1/notebooks/**
     impacts:
       - ./openapi/**
@@ -92,10 +95,72 @@ pathMappings:
       - ./openapi/**
       - ./content/docs/api-reference/workspaces/list-workspaces.mdx
       - ./content/docs/api-reference/workspaces/get-workspace.mdx
+  - match: app/api/v1/stacks/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/stacks/list-stacks.mdx
+      - ./content/docs/api-reference/stacks/create-stack.mdx
+      - ./content/docs/api-reference/stacks/get-stack.mdx
+      - ./content/docs/api-reference/stacks/update-stack.mdx
+      - ./content/docs/api-reference/stacks/delete-stack.mdx
+      - ./content/docs/api-reference/stacks/validate-stack.mdx
+      - ./content/docs/api-reference/stacks/deploy-stack.mdx
+      - ./content/docs/api-reference/stacks/list-stack-deployments.mdx
+  - match: app/api/v1/connections/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/connections/list-connections.mdx
+      - ./content/docs/api-reference/connections/create-connection.mdx
+      - ./content/docs/api-reference/connections/get-connection.mdx
+      - ./content/docs/api-reference/connections/update-connection.mdx
+      - ./content/docs/api-reference/connections/delete-connection.mdx
+      - ./content/docs/api-reference/connections/test-connection.mdx
+  - match: app/api/v1/catalogs/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/catalogs/list-catalogs.mdx
+      - ./content/docs/api-reference/catalogs/create-catalog.mdx
+      - ./content/docs/api-reference/catalogs/list-schemas.mdx
+      - ./content/docs/api-reference/catalogs/create-schema.mdx
+      - ./content/docs/api-reference/catalogs/list-tables.mdx
+      - ./content/docs/api-reference/catalogs/create-table.mdx
+  - match: app/api/v1/secrets/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/secrets/list-scopes.mdx
+      - ./content/docs/api-reference/secrets/create-scope.mdx
+      - ./content/docs/api-reference/secrets/delete-scope.mdx
+      - ./content/docs/api-reference/secrets/list-secrets.mdx
+      - ./content/docs/api-reference/secrets/put-secret.mdx
+      - ./content/docs/api-reference/secrets/delete-secret.mdx
+  - match: app/api/v1/queries/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/queries/list-queries.mdx
+      - ./content/docs/api-reference/queries/create-query.mdx
+      - ./content/docs/api-reference/queries/get-query.mdx
+      - ./content/docs/api-reference/queries/update-query.mdx
+      - ./content/docs/api-reference/queries/delete-query.mdx
+      - ./content/docs/api-reference/queries/execute-query.mdx
+      - ./content/docs/api-reference/queries/get-query-results.mdx
+  - match: app/api/v1/deployments/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/deployments/list-deployments.mdx
+      - ./content/docs/api-reference/deployments/get-deployment.mdx
+      - ./content/docs/api-reference/deployments/promote-deployment.mdx
+      - ./content/docs/api-reference/deployments/rollback-deployment.mdx
+  - match: app/api/v1/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/overview.mdx
   - match: lib/api/auth.ts
     impacts:
       - ./content/docs/getting-started/authentication.mdx
       - ./content/docs/api-reference/overview.mdx
+  - match: content/docs/**/meta.json
+    impacts:
+      - ./content/docs/**
 mode: auto
 devin:
   apiVersion: v1
