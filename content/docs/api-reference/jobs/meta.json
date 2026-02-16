@@ -2,6 +2,7 @@
   "title": "Jobs",
   "pages": [
     "list-jobs",
+    "create-job",
     "get-job",
     "trigger-job-run",
     "get-job-run"
