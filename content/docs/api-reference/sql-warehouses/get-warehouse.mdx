@@ -1,0 +1,49 @@
+---
+title: Get SQL Warehouse
+description: Retrieve details of a specific SQL warehouse.
+---
+
+```
+GET /api/v1/sql/warehouses/{warehouseId}
+```
+
+Returns full details for a single SQL warehouse.
+
+**Required scope:** `read:sql`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `warehouseId` | `string` | The warehouse identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Warehouse identifier. |
+| `name` | `string` | Display name. |
+| `clusterSize` | `string` | Size tier. |
+| `state` | `string` | Current state. |
+| `jdbcUrl` | `string` | JDBC connection URL. |
+| `odbcUrl` | `string` | ODBC connection string. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/sql/warehouses/wh-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "wh-001",
+  "name": "BI Warehouse",
+  "clusterSize": "Small",
+  "state": "RUNNING",
+  "jdbcUrl": "jdbc:datastack:sql://wh-001.us-west-2.datastack.cloud:443",
+  "odbcUrl": "Driver={DataStack};Server=wh-001.us-west-2.datastack.cloud;Port=443",
+  "createdAt": "2024-01-20T10:00:00Z"
+}
+```

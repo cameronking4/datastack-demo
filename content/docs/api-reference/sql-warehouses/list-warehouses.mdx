@@ -1,0 +1,57 @@
+---
+title: List SQL Warehouses
+description: Retrieve a paginated list of SQL warehouses.
+---
+
+```
+GET /api/v1/sql/warehouses
+```
+
+Returns a paginated list of SQL warehouses in the workspace.
+
+**Required scope:** `read:sql`
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `page` | `number` | `1` | Page number (min 1). |
+| `pageSize` | `number` | `25` | Results per page (1–100). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `warehouses` | `object[]` | Array of warehouse objects. |
+| `warehouses[].id` | `string` | Warehouse identifier. |
+| `warehouses[].name` | `string` | Display name. |
+| `warehouses[].clusterSize` | `string` | Size tier (e.g., `Small`, `2X-Small`). |
+| `warehouses[].state` | `string` | Current state (`RUNNING`, `STOPPED`, `STARTING`, `STOPPING`). |
+| `warehouses[].jdbcUrl` | `string` | JDBC connection URL. |
+| `warehouses[].odbcUrl` | `string` | ODBC connection string. |
+| `warehouses[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `totalCount` | `number` | Total number of warehouses. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/sql/warehouses?page=1&pageSize=10" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "warehouses": [
+    {
+      "id": "wh-001",
+      "name": "BI Warehouse",
+      "clusterSize": "Small",
+      "state": "RUNNING",
+      "jdbcUrl": "jdbc:datastack:sql://wh-001.us-west-2.datastack.cloud:443",
+      "odbcUrl": "Driver={DataStack};Server=wh-001.us-west-2.datastack.cloud;Port=443",
+      "createdAt": "2024-01-20T10:00:00Z"
+    }
+  ],
+  "totalCount": 2
+}
+```

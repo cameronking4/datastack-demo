@@ -1,0 +1,63 @@
+---
+title: List Clusters
+description: Retrieve a paginated list of compute clusters in your workspace.
+---
+
+```
+GET /api/v1/clusters
+```
+
+Returns a paginated list of clusters.
+
+**Required scope:** `read:clusters`
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `page` | `number` | `1` | Page number (min 1). |
+| `pageSize` | `number` | `25` | Results per page (1–100). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `clusters` | `object[]` | Array of cluster objects. |
+| `clusters[].id` | `string` | Cluster identifier. |
+| `clusters[].name` | `string` | Display name. |
+| `clusters[].clusterSize` | `string` | Capacity label (e.g., `Medium`, `Large`). |
+| `clusters[].region` | `string` | Deployment region. |
+| `clusters[].state` | `string` | Current state (`RUNNING`, `PENDING`, `TERMINATED`, `RESIZING`). |
+| `clusters[].sparkVersion` | `string` | Apache Spark version. |
+| `clusters[].nodeType` | `string` | VM instance type. |
+| `clusters[].numWorkers` | `number` | Number of worker nodes. |
+| `clusters[].autoTerminationMinutes` | `number` | Idle timeout in minutes. `0` disables auto-termination. |
+| `clusters[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `totalCount` | `number` | Total number of clusters. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/clusters?page=1&pageSize=10" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "clusters": [
+    {
+      "id": "cluster-001",
+      "name": "Analytics Cluster",
+      "clusterSize": "Medium",
+      "region": "us-east-1",
+      "state": "RUNNING",
+      "sparkVersion": "3.5.x-scala2.12",
+      "nodeType": "i3.xlarge",
+      "numWorkers": 4,
+      "autoTerminationMinutes": 30,
+      "createdAt": "2024-03-01T09:00:00Z"
+    }
+  ],
+  "totalCount": 2
+}
+```

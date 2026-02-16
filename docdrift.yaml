@@ -17,10 +17,85 @@ pathMappings:
     impacts:
       - ./content/**
       - ./openapi/**
-  - match: app/api/**
+  - match: app/api/v1/auth/token/**
     impacts:
       - ./openapi/**
-      - ./content/**
+      - ./content/docs/api-reference/authentication/generate-token.mdx
+      - ./content/docs/api-reference/authentication/revoke-token.mdx
+      - ./content/docs/getting-started/authentication.mdx
+  - match: app/api/v1/auth/api-keys/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/authentication/list-api-keys.mdx
+      - ./content/docs/api-reference/authentication/create-api-key.mdx
+      - ./content/docs/api-reference/authentication/delete-api-key.mdx
+      - ./content/docs/getting-started/authentication.mdx
+  - match: app/api/v1/clusters/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/clusters/list-clusters.mdx
+      - ./content/docs/api-reference/clusters/create-cluster.mdx
+      - ./content/docs/api-reference/clusters/get-cluster.mdx
+      - ./content/docs/api-reference/clusters/delete-cluster.mdx
+      - ./content/docs/api-reference/clusters/resize-cluster.mdx
+  - match: app/api/v1/jobs/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/jobs/list-jobs.mdx
+      - ./content/docs/api-reference/jobs/get-job.mdx
+      - ./content/docs/api-reference/jobs/trigger-job-run.mdx
+      - ./content/docs/api-reference/jobs/get-job-run.mdx
+  - match: app/api/v1/pipelines/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/pipelines/list-pipelines.mdx
+      - ./content/docs/api-reference/pipelines/create-pipeline.mdx
+      - ./content/docs/api-reference/pipelines/get-pipeline.mdx
+      - ./content/docs/api-reference/pipelines/delete-pipeline.mdx
+      - ./content/docs/api-reference/pipelines/start-pipeline.mdx
+      - ./content/docs/api-reference/pipelines/stop-pipeline.mdx
+      - ./content/docs/api-reference/pipelines/list-pipeline-events.mdx
+  - match: app/api/v1/notebooks/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/notebooks/list-notebooks.mdx
+      - ./content/docs/api-reference/notebooks/create-notebook.mdx
+      - ./content/docs/api-reference/notebooks/export-notebook.mdx
+  - match: app/api/v1/sql/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/sql-warehouses/list-warehouses.mdx
+      - ./content/docs/api-reference/sql-warehouses/get-warehouse.mdx
+      - ./content/docs/api-reference/sql-warehouses/start-warehouse.mdx
+      - ./content/docs/api-reference/sql-warehouses/stop-warehouse.mdx
+  - match: app/api/v1/users/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/users/list-users.mdx
+      - ./content/docs/api-reference/users/create-user.mdx
+      - ./content/docs/api-reference/users/get-user.mdx
+      - ./content/docs/api-reference/users/update-user.mdx
+      - ./content/docs/api-reference/users/delete-user.mdx
+  - match: app/api/v1/webhooks/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/webhooks/list-webhooks.mdx
+      - ./content/docs/api-reference/webhooks/create-webhook.mdx
+      - ./content/docs/api-reference/webhooks/get-webhook.mdx
+      - ./content/docs/api-reference/webhooks/update-webhook.mdx
+      - ./content/docs/api-reference/webhooks/delete-webhook.mdx
+      - ./content/docs/api-reference/webhooks/test-webhook.mdx
+      - ./content/docs/api-reference/webhooks/list-deliveries.mdx
+      - ./content/docs/guides/webhooks-guide.mdx
+  - match: app/api/v1/workspaces/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/workspaces/list-workspaces.mdx
+      - ./content/docs/api-reference/workspaces/get-workspace.mdx
+  - match: lib/api/auth.ts
+    impacts:
+      - ./content/docs/getting-started/authentication.mdx
+      - ./content/docs/api-reference/overview.mdx
 mode: auto
 devin:
   apiVersion: v1

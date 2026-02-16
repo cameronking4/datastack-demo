@@ -1,0 +1,29 @@
+---
+title: Delete Webhook
+description: Delete a webhook.
+---
+
+```
+DELETE /api/v1/webhooks/{webhookId}
+```
+
+Permanently delete a webhook and stop all future deliveries.
+
+**Required scope:** `manage:webhooks`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `webhookId` | `string` | The webhook identifier. |
+
+## Response `204`
+
+No content. The webhook has been deleted.
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE /api/v1/webhooks/wh-001 \
+  -H "Authorization: Bearer <accessToken>"
+```

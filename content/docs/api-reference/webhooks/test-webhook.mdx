@@ -1,0 +1,51 @@
+---
+title: Test Webhook
+description: Send a test payload to a webhook URL.
+---
+
+```
+POST /api/v1/webhooks/{webhookId}/test
+```
+
+Send a test `test.ping` event to the webhook URL to verify connectivity.
+
+**Required scope:** `manage:webhooks`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `webhookId` | `string` | The webhook identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Delivery identifier. |
+| `webhookId` | `string` | Webhook identifier. |
+| `event` | `string` | Event type (`test.ping`). |
+| `requestUrl` | `string` | URL the payload was sent to. |
+| `responseStatus` | `number` | HTTP status code from the target. |
+| `success` | `boolean` | Whether delivery succeeded. |
+| `duration` | `number` | Round-trip time in milliseconds. |
+| `timestamp` | `string` | ISO 8601 delivery timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/webhooks/wh-001/test \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "del-test-001",
+  "webhookId": "wh-001",
+  "event": "test.ping",
+  "requestUrl": "https://example.com/hooks/datastack",
+  "responseStatus": 200,
+  "success": true,
+  "duration": 120,
+  "timestamp": "2024-06-10T12:00:00Z"
+}
+```

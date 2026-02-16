@@ -1,0 +1,52 @@
+---
+title: List Webhooks
+description: Retrieve a list of registered webhooks.
+---
+
+```
+GET /api/v1/webhooks
+```
+
+Returns all registered webhooks.
+
+**Required scope:** `manage:webhooks`
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `webhooks` | `object[]` | Array of webhook objects. |
+| `webhooks[].id` | `string` | Webhook identifier. |
+| `webhooks[].url` | `string` | Delivery URL. |
+| `webhooks[].events` | `string[]` | Subscribed event types. |
+| `webhooks[].active` | `boolean` | Whether the webhook is active. |
+| `webhooks[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `webhooks[].updatedAt` | `string` | ISO 8601 last update timestamp. |
+| `webhooks[].lastTriggeredAt` | `string` | ISO 8601 timestamp of last delivery. |
+| `webhooks[].failureCount` | `number` | Consecutive delivery failures. |
+| `totalCount` | `number` | Total number of webhooks. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/webhooks \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "webhooks": [
+    {
+      "id": "wh-001",
+      "url": "https://example.com/hooks/datastack",
+      "events": ["job.completed", "job.failed", "cluster.terminated"],
+      "active": true,
+      "createdAt": "2024-03-01T09:00:00Z",
+      "updatedAt": "2024-05-15T10:00:00Z",
+      "lastTriggeredAt": "2024-06-10T02:15:33Z",
+      "failureCount": 0
+    }
+  ],
+  "totalCount": 1
+}
+```

@@ -1,0 +1,57 @@
+---
+title: Update User
+description: Update an existing user's properties.
+---
+
+```
+PATCH /api/v1/users/{id}
+```
+
+Update one or more properties of an existing user.
+
+**Required scope:** `write:users`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `id` | `string` | The user identifier. |
+
+## Request Body
+
+All fields are optional. Only the provided fields are updated.
+
+| Field | Type | Description |
+|---|---|---|
+| `fullName` | `string` | Full name. |
+| `email` | `string` | Email address. |
+| `role` | `string` | User role. |
+| `department` | `string` | Department name. |
+
+## Response `200`
+
+Returns the updated user object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/users/u1 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"department": "Data Engineering"}'
+```
+
+```json title="Response"
+{
+  "id": "u1",
+  "fullName": "Ada Lovelace",
+  "email": "ada@datastack.dev",
+  "avatarUrl": "https://api.datastack.dev/avatars/ada.png",
+  "department": "Engineering",
+  "createdAt": "2024-01-15T10:00:00Z",
+  "updatedAt": "2024-06-10T12:00:00Z",
+  "role": "admin",
+  "status": "active",
+  "lastLoginAt": "2024-06-10T08:00:00Z"
+}
+```

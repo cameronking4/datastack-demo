@@ -1,0 +1,10 @@
+{
+  "title": "Clusters",
+  "pages": [
+    "list-clusters",
+    "create-cluster",
+    "get-cluster",
+    "delete-cluster",
+    "resize-cluster"
+  ]
+}
