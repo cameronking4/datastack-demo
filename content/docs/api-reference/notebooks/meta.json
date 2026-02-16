@@ -1,0 +1,8 @@
+{
+  "title": "Notebooks",
+  "pages": [
+    "list-notebooks",
+    "create-notebook",
+    "export-notebook"
+  ]
+}

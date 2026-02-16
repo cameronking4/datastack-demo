@@ -1,0 +1,9 @@
+{
+  "title": "SQL Warehouses",
+  "pages": [
+    "list-warehouses",
+    "get-warehouse",
+    "start-warehouse",
+    "stop-warehouse"
+  ]
+}

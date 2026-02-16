@@ -1,0 +1,10 @@
+{
+  "title": "Authentication",
+  "pages": [
+    "generate-token",
+    "revoke-token",
+    "list-api-keys",
+    "create-api-key",
+    "delete-api-key"
+  ]
+}

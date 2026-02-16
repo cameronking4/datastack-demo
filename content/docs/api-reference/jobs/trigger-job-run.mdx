@@ -1,0 +1,47 @@
+---
+title: Trigger Job Run
+description: Trigger an immediate run of a job.
+---
+
+```
+POST /api/v1/jobs/{jobId}/runs
+```
+
+Trigger an on-demand execution of a job. The run starts in `PENDING` state.
+
+**Required scope:** `manage:jobs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `jobId` | `string` | The job identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `runId` | `number` | Run identifier. |
+| `jobId` | `number` | Parent job identifier. |
+| `state` | `string` | Run state (`PENDING`). |
+| `startTime` | `string` | ISO 8601 start timestamp. |
+| `endTime` | `string\|null` | ISO 8601 end timestamp (null while running). |
+| `triggeredBy` | `string` | How the run was triggered (`api`, `schedule`). |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/jobs/1001/runs \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "runId": 5001,
+  "jobId": 1001,
+  "state": "PENDING",
+  "startTime": "2024-06-10T12:00:00Z",
+  "endTime": null,
+  "triggeredBy": "api"
+}
+```

@@ -1,0 +1,47 @@
+---
+title: Stop Pipeline
+description: Stop a running pipeline.
+---
+
+```
+POST /api/v1/pipelines/{pipelineId}/stop
+```
+
+Stop a running pipeline. The pipeline transitions to `STOPPING` state.
+
+**Required scope:** `manage:pipelines`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `pipelineId` | `string` | The pipeline identifier. |
+
+## Response `200`
+
+Returns the pipeline object with state `STOPPING`.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/pipelines/pipe-001/stop \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "pipe-001",
+  "name": "Bronze Ingestion",
+  "workspaceId": "ws-001",
+  "state": "STOPPING",
+  "target": "PRODUCTION",
+  "catalog": "main",
+  "schema": "bronze",
+  "continuous": true,
+  "photon": true,
+  "edition": "PRO",
+  "clusters": [],
+  "createdAt": "2024-03-01T09:00:00Z",
+  "createdBy": "ada@datastack.dev"
+}
+```

@@ -1,0 +1,10 @@
+{
+  "title": "Users",
+  "pages": [
+    "list-users",
+    "create-user",
+    "get-user",
+    "update-user",
+    "delete-user"
+  ]
+}

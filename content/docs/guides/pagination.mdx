@@ -1,0 +1,68 @@
+---
+title: Pagination
+description: Navigate paginated API responses.
+---
+
+List endpoints return a subset of results per request. DataStack uses two pagination patterns depending on the resource.
+
+## Page-Based Pagination
+
+Used by: **Clusters**, **SQL Warehouses**, **Users**, **Workspaces**, **Pipelines**
+
+| Parameter | Description |
+|---|---|
+| `page` | Page number, starting at `1`. |
+| `pageSize` (or `perPage`) | Number of results per page. Max `100`. |
+
+```bash
+curl "/api/v1/clusters?page=2&pageSize=10" \
+  -H "Authorization: Bearer <token>"
+```
+
+The response includes `totalCount` so you can calculate total pages:
+
+```
+totalPages = ceil(totalCount / pageSize)
+```
+
+## Offset-Based Pagination
+
+Used by: **Jobs**, **Notebooks**
+
+| Parameter | Description |
+|---|---|
+| `limit` | Maximum number of results. Max `100`. |
+| `offset` | Number of results to skip. |
+
+```bash
+curl "/api/v1/jobs?limit=25&offset=50" \
+  -H "Authorization: Bearer <token>"
+```
+
+## Iterating All Results
+
+```python title="Python — page-based"
+page = 1
+all_clusters = []
+
+while True:
+    resp = requests.get(f"/api/v1/clusters?page={page}&pageSize=100", headers=headers)
+    data = resp.json()
+    all_clusters.extend(data["clusters"])
+    if len(all_clusters) >= data["totalCount"]:
+        break
+    page += 1
+```
+
+```python title="Python — offset-based"
+offset = 0
+all_jobs = []
+
+while True:
+    resp = requests.get(f"/api/v1/jobs?limit=100&offset={offset}", headers=headers)
+    data = resp.json()
+    all_jobs.extend(data["jobs"])
+    if len(all_jobs) >= data["totalCount"]:
+        break
+    offset += 100
+```

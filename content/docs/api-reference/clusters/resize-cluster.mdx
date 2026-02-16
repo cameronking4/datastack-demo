@@ -1,0 +1,69 @@
+---
+title: Resize Cluster
+description: Change the worker count of a running cluster.
+---
+
+```
+POST /api/v1/clusters/{clusterId}/resize
+```
+
+Resize a cluster by changing its worker count. The cluster enters a `RESIZING` state during the operation.
+
+**Required scope:** `manage:clusters`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `clusterId` | `string` | The cluster identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `workerCount` | `number` | Yes | New number of worker nodes. |
+
+## Response `200`
+
+Returns the cluster object with state `RESIZING` and updated `workerCount`.
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Cluster identifier. |
+| `name` | `string` | Display name. |
+| `workspaceId` | `string` | Workspace identifier. |
+| `clusterSize` | `string` | Capacity label. |
+| `region` | `string` | Deployment region. |
+| `state` | `string` | `RESIZING` during the operation. |
+| `sparkVersion` | `string` | Spark version. |
+| `nodeType` | `string` | Instance type. |
+| `workerCount` | `number` | New worker count. |
+| `autoTerminationMinutes` | `number` | Idle timeout. |
+| `createdAt` | `string` | Creation timestamp. |
+| `createdBy` | `string` | Creator identifier. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/clusters/cluster-001/resize \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"workerCount": 8}'
+```
+
+```json title="Response"
+{
+  "id": "cluster-001",
+  "name": "Analytics Cluster",
+  "workspaceId": "ws-001",
+  "clusterSize": "Medium",
+  "region": "us-east-1",
+  "state": "RESIZING",
+  "sparkVersion": "3.5.x-scala2.12",
+  "nodeType": "i3.xlarge",
+  "workerCount": 8,
+  "autoTerminationMinutes": 30,
+  "createdAt": "2024-03-01T09:00:00Z",
+  "createdBy": "ada@datastack.dev"
+}
+```

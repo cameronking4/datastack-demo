@@ -1,0 +1,57 @@
+---
+title: Create User
+description: Create a new user account.
+---
+
+```
+POST /api/v1/users
+```
+
+Create a new user. The user starts in `pending_verification` status.
+
+**Required scope:** `write:users`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `fullName` | `string` | Yes | Full name. |
+| `email` | `string` | Yes | Email address. |
+| `role` | `string` | Yes | User role (e.g., `admin`, `viewer`). |
+
+## Response `201`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | User identifier. |
+| `fullName` | `string` | Full name. |
+| `email` | `string` | Email address. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `updatedAt` | `string` | ISO 8601 last update timestamp. |
+| `role` | `string` | User role. |
+| `status` | `string` | `pending_verification`. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/users \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fullName": "Grace Hopper",
+    "email": "grace@datastack.dev",
+    "role": "admin"
+  }'
+```
+
+```json title="Response"
+{
+  "id": "u-new",
+  "fullName": "Grace Hopper",
+  "email": "grace@datastack.dev",
+  "createdAt": "2024-06-10T12:00:00Z",
+  "updatedAt": "2024-06-10T12:00:00Z",
+  "role": "admin",
+  "status": "pending_verification"
+}
+```

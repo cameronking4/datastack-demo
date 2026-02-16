@@ -1,0 +1,55 @@
+---
+title: Get Cluster
+description: Retrieve details of a specific cluster.
+---
+
+```
+GET /api/v1/clusters/{clusterId}
+```
+
+Returns full details for a single cluster.
+
+**Required scope:** `read:clusters`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `clusterId` | `string` | The cluster identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Cluster identifier. |
+| `name` | `string` | Display name. |
+| `clusterSize` | `string` | Capacity label. |
+| `region` | `string` | Deployment region. |
+| `state` | `string` | Current state. |
+| `sparkVersion` | `string` | Spark version. |
+| `nodeType` | `string` | Instance type. |
+| `numWorkers` | `number` | Number of worker nodes. |
+| `autoTerminationMinutes` | `number` | Idle timeout in minutes. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/clusters/cluster-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "cluster-001",
+  "name": "Analytics Cluster",
+  "clusterSize": "Medium",
+  "region": "us-east-1",
+  "state": "RUNNING",
+  "sparkVersion": "3.5.x-scala2.12",
+  "nodeType": "i3.xlarge",
+  "numWorkers": 4,
+  "autoTerminationMinutes": 30,
+  "createdAt": "2024-03-01T09:00:00Z"
+}
+```

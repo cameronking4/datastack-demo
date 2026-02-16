@@ -1,0 +1,67 @@
+---
+title: Quickstart
+description: Get up and running with the DataStack API in minutes.
+---
+
+This guide walks you through making your first DataStack API call.
+
+## Base URL
+
+All API endpoints are served under:
+
+```
+https://<your-deployment>.datastack.cloud/api/v1
+```
+
+## 1. Obtain an Access Token
+
+```bash title="cURL"
+curl -X POST https://acme.datastack.cloud/api/v1/auth/token \
+  -H "Content-Type: application/json" \
+  -d '{
+    "grantType": "client_credentials",
+    "scopes": ["read:clusters", "read:jobs"]
+  }'
+```
+
+The response includes an `accessToken` valid for one hour:
+
+```json
+{
+  "accessToken": "eyJhbGciOiJSUzI1NiIs...",
+  "refreshToken": "drt_refresh_demo_token",
+  "tokenType": "Bearer",
+  "expiresIn": 3600,
+  "scopes": ["read:clusters", "read:jobs"]
+}
+```
+
+## 2. Make an API Call
+
+Use the token in the `Authorization` header:
+
+```bash title="cURL"
+curl https://acme.datastack.cloud/api/v1/clusters \
+  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIs..."
+```
+
+## 3. Explore Resources
+
+DataStack exposes the following resource groups:
+
+| Resource | Base Path | Description |
+|---|---|---|
+| Clusters | `/api/v1/clusters` | Compute cluster lifecycle |
+| Jobs | `/api/v1/jobs` | Scheduled task execution |
+| Pipelines | `/api/v1/pipelines` | Delta Live Tables pipelines |
+| Notebooks | `/api/v1/notebooks` | Code notebooks |
+| SQL Warehouses | `/api/v1/sql/warehouses` | SQL query endpoints |
+| Users | `/api/v1/users` | User management |
+| Webhooks | `/api/v1/webhooks` | Event notifications |
+| Workspaces | `/api/v1/workspaces` | Workspace management |
+
+## Next Steps
+
+- Review [Authentication](/docs/getting-started/authentication) for token and API key details.
+- Browse the [API Reference](/docs/api-reference) for full endpoint documentation.
+- See [Error Handling](/docs/guides/error-handling) for common error patterns.

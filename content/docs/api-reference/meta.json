@@ -1,0 +1,15 @@
+{
+  "title": "API Reference",
+  "pages": [
+    "overview",
+    "authentication",
+    "clusters",
+    "jobs",
+    "pipelines",
+    "notebooks",
+    "sql-warehouses",
+    "users",
+    "webhooks",
+    "workspaces"
+  ]
+}

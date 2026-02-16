@@ -1,0 +1,9 @@
+{
+  "title": "Jobs",
+  "pages": [
+    "list-jobs",
+    "get-job",
+    "trigger-job-run",
+    "get-job-run"
+  ]
+}

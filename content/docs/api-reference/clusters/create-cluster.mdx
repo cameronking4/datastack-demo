@@ -1,0 +1,87 @@
+---
+title: Create Cluster
+description: Create a new compute cluster in your workspace.
+---
+
+```
+POST /api/v1/clusters
+```
+
+Provision a new compute cluster.
+
+**Required scope:** `manage:clusters`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Cluster display name. |
+| `workspaceId` | `string` | Yes | Target workspace ID. |
+| `sparkVersion` | `string` | Yes | Spark runtime version (e.g., `3.5.x-scala2.12`). |
+| `nodeType` | `string` | Yes | VM instance type (e.g., `i3.xlarge`). |
+| `workerCount` | `number` | No | Number of workers. Defaults to `2`. |
+| `enableAutoscaling` | `boolean` | No | Enable autoscaling. Defaults to `false`. |
+| `minWorkers` | `number` | No | Minimum workers when autoscaling. Defaults to `1`. |
+| `maxWorkers` | `number` | No | Maximum workers when autoscaling. Defaults to `8`. |
+| `autoTerminationMinutes` | `number` | No | Idle timeout in minutes. Defaults to `30`. |
+| `tags` | `object` | No | Key-value metadata tags. |
+
+## Response `201`
+
+Returns the created cluster object with state `PENDING`.
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Cluster identifier. |
+| `name` | `string` | Display name. |
+| `workspaceId` | `string` | Workspace identifier. |
+| `clusterSize` | `string` | Capacity label. |
+| `region` | `string` | Deployment region. |
+| `state` | `string` | `PENDING` while provisioning. |
+| `sparkVersion` | `string` | Spark version. |
+| `nodeType` | `string` | Instance type. |
+| `workerCount` | `number` | Number of workers. |
+| `enableAutoscaling` | `boolean` | Autoscaling enabled. |
+| `minWorkers` | `number` | Minimum workers. |
+| `maxWorkers` | `number` | Maximum workers. |
+| `autoTerminationMinutes` | `number` | Idle timeout. |
+| `tags` | `object` | Metadata tags. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `createdBy` | `string` | Creator identifier. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/clusters \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Analytics Cluster",
+    "workspaceId": "ws-001",
+    "sparkVersion": "3.5.x-scala2.12",
+    "nodeType": "i3.xlarge",
+    "workerCount": 4,
+    "autoTerminationMinutes": 30
+  }'
+```
+
+```json title="Response"
+{
+  "id": "cluster-new",
+  "name": "Analytics Cluster",
+  "workspaceId": "ws-001",
+  "clusterSize": "Medium",
+  "region": "us-east-1",
+  "state": "PENDING",
+  "sparkVersion": "3.5.x-scala2.12",
+  "nodeType": "i3.xlarge",
+  "workerCount": 4,
+  "enableAutoscaling": false,
+  "minWorkers": 1,
+  "maxWorkers": 8,
+  "autoTerminationMinutes": 30,
+  "tags": {},
+  "createdAt": "2024-03-01T09:00:00Z",
+  "createdBy": "api"
+}
+```
