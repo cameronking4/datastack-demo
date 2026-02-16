@@ -1,0 +1,55 @@
+---
+title: Error Handling
+description: Handle errors returned by the DataStack API.
+---
+
+The DataStack API uses standard HTTP status codes and returns structured error responses.
+
+## Error Response Format
+
+```json
+{
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "Invalid or expired access token."
+  }
+}
+```
+
+## Common Status Codes
+
+| Code | Name | When It Occurs |
+|---|---|---|
+| `400` | Bad Request | Missing required fields, invalid parameter values, or malformed JSON. |
+| `401` | Unauthorized | Missing, invalid, or expired authentication credentials. |
+| `403` | Forbidden | Valid credentials but insufficient scopes for the operation. |
+| `404` | Not Found | The requested resource does not exist. |
+| `409` | Conflict | Resource is in a state that conflicts with the request (e.g., starting an already running cluster). |
+| `429` | Too Many Requests | Rate limit exceeded. Retry after the duration in the `Retry-After` header. |
+| `500` | Internal Server Error | Unexpected server-side failure. |
+
+## Retry Strategy
+
+For transient errors (`429`, `500`, `502`, `503`):
+
+1. Wait for the `Retry-After` header value (if present).
+2. Use exponential backoff starting at 1 second.
+3. Cap retries at 5 attempts.
+
+```python title="Python"
+import time
+import requests
+
+def api_call_with_retry(url, headers, max_retries=5):
+    for attempt in range(max_retries):
+        response = requests.get(url, headers=headers)
+        if response.status_code < 500 and response.status_code != 429:
+            return response
+        wait = min(2 ** attempt, 30)
+        time.sleep(wait)
+    return response
+```
+
+## Scope Errors
+
+If your token lacks the required scope, you will receive a `403` response. Check the endpoint documentation for the required scope, then request a new token with the correct scopes via [Generate Token](/docs/api-reference/authentication/generate-token).

@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/auth/token:
+ *   post:
+ *     summary: Get access token
+ *     description: Exchange credentials for access token (OAuth2 client_credentials grant)
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * POST /api/v1/auth/token
  * Exchange credentials for access token (OAuth2 client_credentials grant)
  */

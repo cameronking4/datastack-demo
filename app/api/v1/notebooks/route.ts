@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/notebooks:
+ *   get:
+ *     summary: List notebooks
+ *     responses:
+ *       200:
+ *         description: Success
+ *   put:
+ *     summary: Create or overwrite notebook
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * GET /api/v1/notebooks
  * List notebooks with path prefix filter
  */

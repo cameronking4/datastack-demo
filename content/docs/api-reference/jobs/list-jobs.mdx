@@ -1,0 +1,66 @@
+---
+title: List Jobs
+description: Retrieve a paginated list of jobs in your workspace.
+---
+
+```
+GET /api/v1/jobs
+```
+
+Returns a paginated list of scheduled jobs.
+
+**Required scope:** `read:jobs`
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `limit` | `number` | `25` | Maximum results to return (1–100). |
+| `offset` | `number` | `0` | Number of results to skip. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `jobs` | `object[]` | Array of job objects. |
+| `jobs[].jobId` | `number` | Job identifier. |
+| `jobs[].name` | `string` | Job name. |
+| `jobs[].description` | `string` | Job description. |
+| `jobs[].schedule` | `string` | Cron expression for scheduling. |
+| `jobs[].trigger` | `string` | Trigger type (`PERIODIC`, `api`). |
+| `jobs[].settings` | `object` | Job execution settings. |
+| `jobs[].settings.clusterId` | `string` | Cluster used for execution. |
+| `jobs[].settings.notebookPath` | `string` | Path to the notebook to execute. |
+| `jobs[].settings.timeoutSeconds` | `number` | Maximum run duration in seconds. |
+| `jobs[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `jobs[].createdBy` | `string` | Creator email. |
+| `totalCount` | `number` | Total number of jobs. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/jobs?limit=10&offset=0" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "jobs": [
+    {
+      "jobId": 1001,
+      "name": "Daily ETL",
+      "description": "Ingest and transform raw events",
+      "schedule": "0 0 2 * * ?",
+      "trigger": "PERIODIC",
+      "settings": {
+        "clusterId": "cluster-001",
+        "notebookPath": "/Workspace/ETL/daily_pipeline",
+        "timeoutSeconds": 3600
+      },
+      "createdAt": "2024-02-01T10:00:00Z",
+      "createdBy": "ada@datastack.dev"
+    }
+  ],
+  "totalCount": 2
+}
+```

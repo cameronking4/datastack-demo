@@ -1,6 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/clusters:
+ *   get:
+ *     summary: List clusters
+ *     description: List clusters in workspace with optional state filter
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create cluster
+ *     description: Create a new compute cluster
+ *     responses:
+ *       201:
+ *         description: Created
+ */
+/**
  * GET /api/v1/clusters
  * List clusters in workspace with optional state filter
  */

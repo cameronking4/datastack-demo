@@ -1,0 +1,58 @@
+---
+title: Get Job
+description: Retrieve details of a specific job.
+---
+
+```
+GET /api/v1/jobs/{jobId}
+```
+
+Returns full details for a single job.
+
+**Required scope:** `read:jobs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `jobId` | `string` | The job identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `jobId` | `number` | Job identifier. |
+| `name` | `string` | Job name. |
+| `description` | `string` | Job description. |
+| `schedule` | `string` | Cron expression. |
+| `trigger` | `string` | Trigger type. |
+| `settings` | `object` | Execution settings. |
+| `settings.clusterId` | `string` | Cluster for execution. |
+| `settings.notebookPath` | `string` | Notebook path. |
+| `settings.timeoutSeconds` | `number` | Timeout in seconds. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `createdBy` | `string` | Creator email. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/jobs/1001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "jobId": 1001,
+  "name": "Daily ETL",
+  "description": "Ingest and transform raw events",
+  "schedule": "0 0 2 * * ?",
+  "trigger": "PERIODIC",
+  "settings": {
+    "clusterId": "cluster-001",
+    "notebookPath": "/Workspace/ETL/daily_pipeline",
+    "timeoutSeconds": 3600
+  },
+  "createdAt": "2024-02-01T10:00:00Z",
+  "createdBy": "ada@datastack.dev"
+}
+```

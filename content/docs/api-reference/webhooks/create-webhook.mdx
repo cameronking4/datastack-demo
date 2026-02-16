@@ -1,0 +1,60 @@
+---
+title: Create Webhook
+description: Register a new webhook endpoint.
+---
+
+```
+POST /api/v1/webhooks
+```
+
+Register a new webhook to receive event notifications.
+
+**Required scope:** `manage:webhooks`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `url` | `string` | Yes | Delivery URL. Must be HTTPS. |
+| `events` | `string[]` | Yes | Event types to subscribe to (e.g., `job.completed`, `job.failed`, `cluster.terminated`). |
+| `secret` | `string` | No | Shared secret for payload signature verification. |
+| `active` | `boolean` | No | Whether the webhook is active. Defaults to `true`. |
+
+## Response `201`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Webhook identifier. |
+| `url` | `string` | Delivery URL. |
+| `events` | `string[]` | Subscribed events. |
+| `secret` | `string` | Shared secret (if provided). |
+| `active` | `boolean` | Active status. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `updatedAt` | `string` | ISO 8601 last update timestamp. |
+| `failureCount` | `number` | Consecutive failures (starts at `0`). |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/webhooks \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com/hooks/datastack",
+    "events": ["job.completed", "job.failed"],
+    "secret": "whsec_my_secret_key"
+  }'
+```
+
+```json title="Response"
+{
+  "id": "wh-new",
+  "url": "https://example.com/hooks/datastack",
+  "events": ["job.completed", "job.failed"],
+  "secret": "whsec_my_secret_key",
+  "active": true,
+  "createdAt": "2024-06-10T12:00:00Z",
+  "updatedAt": "2024-06-10T12:00:00Z",
+  "failureCount": 0
+}
+```

@@ -1,0 +1,115 @@
+---
+title: Managing Clusters
+description: Provision, scale, and manage compute clusters for your data workloads.
+---
+
+This guide covers common cluster management workflows including creation, scaling, monitoring, and cost optimization.
+
+## Creating a Cluster
+
+Provision a new cluster with the configuration your workload requires:
+
+```bash title="cURL"
+curl -X POST /api/v1/clusters \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Analytics Cluster",
+    "workspaceId": "ws-001",
+    "sparkVersion": "3.5.x-scala2.12",
+    "nodeType": "i3.xlarge",
+    "workerCount": 4,
+    "autoTerminationMinutes": 30,
+    "tags": { "team": "data-engineering", "env": "production" }
+  }'
+```
+
+The cluster starts in `PENDING` state and transitions to `RUNNING` once provisioning completes.
+
+## Choosing Instance Types
+
+Select node types based on your workload profile:
+
+| Workload | Recommended Node Type | Why |
+|---|---|---|
+| General analytics | `i3.xlarge` | Balanced compute and memory |
+| Memory-intensive ETL | `r5.2xlarge` | High memory-to-CPU ratio |
+| Compute-heavy ML | `c5.4xlarge` | High CPU core count |
+| Storage-heavy ingestion | `d3.xlarge` | High local disk throughput |
+
+## Autoscaling
+
+Enable autoscaling to dynamically adjust worker count based on workload:
+
+```bash title="Create with autoscaling"
+curl -X POST /api/v1/clusters \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Autoscaling Cluster",
+    "workspaceId": "ws-001",
+    "sparkVersion": "3.5.x-scala2.12",
+    "nodeType": "i3.xlarge",
+    "enableAutoscaling": true,
+    "minWorkers": 2,
+    "maxWorkers": 16,
+    "autoTerminationMinutes": 30
+  }'
+```
+
+The cluster scales between `minWorkers` and `maxWorkers` based on pending task queue depth.
+
+## Resizing a Running Cluster
+
+Adjust worker count on a running cluster without downtime:
+
+```bash title="Resize cluster"
+curl -X POST /api/v1/clusters/cluster-001/resize \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{ "workerCount": 8 }'
+```
+
+The cluster enters `RESIZING` state briefly, then returns to `RUNNING` with the new worker count.
+
+## Auto-Termination
+
+Set `autoTerminationMinutes` to automatically shut down idle clusters and control costs:
+
+| Value | Behavior |
+|---|---|
+| `0` | Disabled — cluster runs until manually deleted. |
+| `30` (default) | Terminates after 30 minutes of inactivity. |
+| `120` | Terminates after 2 hours of inactivity. |
+
+## Monitoring Cluster State
+
+Poll the cluster endpoint to check its current state:
+
+```bash title="Get cluster status"
+curl /api/v1/clusters/cluster-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+Possible states:
+
+| State | Description |
+|---|---|
+| `PENDING` | Cluster is being provisioned. |
+| `RUNNING` | Cluster is active and accepting work. |
+| `RESIZING` | Worker count is being adjusted. |
+| `TERMINATED` | Cluster has been shut down. |
+
+## Cost Optimization Tips
+
+1. **Set auto-termination** on all non-production clusters to avoid idle costs.
+2. **Use autoscaling** to right-size clusters dynamically based on actual demand.
+3. **Tag clusters** with `team` and `env` tags to track costs by team and environment.
+4. **Use smaller node types** for development and reserve larger instances for production workloads.
+5. **Schedule cluster creation** via [jobs](/docs/api-reference/jobs) to spin up clusters only when needed.
+
+## Related
+
+- [Create Cluster](/docs/api-reference/clusters/create-cluster) — Full endpoint reference
+- [Resize Cluster](/docs/api-reference/clusters/resize-cluster) — Resize endpoint reference
+- [List Clusters](/docs/api-reference/clusters/list-clusters) — Query your clusters

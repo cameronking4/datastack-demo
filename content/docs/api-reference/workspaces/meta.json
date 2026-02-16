@@ -1,0 +1,7 @@
+{
+  "title": "Workspaces",
+  "pages": [
+    "list-workspaces",
+    "get-workspace"
+  ]
+}

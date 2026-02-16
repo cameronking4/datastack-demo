@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/sql/warehouses:
+ *   get:
+ *     summary: List SQL warehouses
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * GET /api/v1/sql/warehouses
  * List SQL warehouses in workspace
  */

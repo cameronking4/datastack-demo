@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/webhooks/{webhookId}/deliveries:
+ *   get:
+ *     summary: List webhook deliveries
+ *     parameters:
+ *       - in: path
+ *         name: webhookId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * GET /api/v1/webhooks/:webhookId/deliveries
  * List webhook delivery attempts
  */

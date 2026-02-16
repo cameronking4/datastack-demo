@@ -1,0 +1,95 @@
+---
+title: Frequently Asked Questions
+description: Answers to the most common questions about DataStack platform, APIs, and services.
+---
+
+Common questions about using the DataStack platform, APIs, and services.
+
+## Quick Links
+
+- [API Reference](/docs/api-reference)
+- [Authentication Guide](/docs/getting-started/authentication)
+- [Quickstart](/docs/getting-started/quickstart)
+
+---
+
+## Authentication
+
+### How do I authenticate with the DataStack API?
+
+DataStack supports two authentication methods:
+
+- **API key** — Include the header `X-API-Key: YOUR_API_KEY` in your requests. API keys are long-lived (90-day default) and ideal for CI/CD and automated workflows. See [Create API Key](/docs/api-reference/authentication/create-api-key).
+- **Bearer token** — Include the header `Authorization: Bearer YOUR_JWT_TOKEN`. Tokens are short-lived (1 hour) and obtained via the [Generate Token](/docs/api-reference/authentication/generate-token) endpoint.
+
+See the [Authentication Guide](/docs/getting-started/authentication) for full details.
+
+### How do I revoke an API key?
+
+Send a `DELETE` request to the API key endpoint:
+
+```bash
+curl -X DELETE /api/v1/auth/api-keys/{keyId} \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+A successful revocation returns a `200` status. Revocation is permanent and cannot be undone. See [Delete API Key](/docs/api-reference/authentication/delete-api-key).
+
+### What scopes should I request?
+
+Request only the scopes your application needs. For a read-only integration, use scopes like `read:clusters` and `read:jobs`. For automation that creates resources, include `manage:` scopes. See the full [scope reference](/docs/getting-started/authentication#scopes).
+
+---
+
+## Clusters
+
+### What instance types are available?
+
+DataStack supports a range of instance types optimized for different workloads. Common choices include `i3.xlarge` (balanced), `r5.2xlarge` (memory-heavy), and `c5.4xlarge` (compute-heavy). See the [Managing Clusters](/docs/guides/managing-clusters) guide.
+
+### How does autoscaling work?
+
+When `enableAutoscaling` is `true`, the cluster automatically adjusts worker count between `minWorkers` and `maxWorkers` based on pending task queue depth. Workers are added when demand increases and removed when idle.
+
+### What happens when a cluster auto-terminates?
+
+After `autoTerminationMinutes` of inactivity, the cluster shuts down and transitions to `TERMINATED` state. Set this to `0` to disable auto-termination.
+
+---
+
+## Pipelines
+
+### What is the difference between continuous and triggered pipelines?
+
+- **Triggered** (`continuous: false`) — The pipeline runs once when started, processes available data, then returns to `IDLE`.
+- **Continuous** (`continuous: true`) — The pipeline runs indefinitely, processing new data as it arrives. It must be explicitly stopped.
+
+### How do I monitor pipeline progress?
+
+Use the [Pipeline Events](/docs/api-reference/pipelines/list-pipeline-events) endpoint to stream lifecycle events (`STARTED`, `COMPLETED`, `FAILED`). You can also set up [webhooks](/docs/guides/webhooks-guide) for real-time notifications.
+
+---
+
+## Jobs
+
+### How do I schedule a recurring job?
+
+Create a job with a cron-style `schedule` string. The job runs automatically on the specified schedule. You can also trigger runs manually via the [Trigger Job Run](/docs/api-reference/jobs/trigger-job-run) endpoint.
+
+### How do I check if a job run succeeded?
+
+Poll the [Get Job Run](/docs/api-reference/jobs/get-job-run) endpoint with the `runId`. The `state` field will be `SUCCESS`, `FAILED`, or `PENDING`.
+
+---
+
+## Rate Limits & Errors
+
+### What are the rate limits?
+
+The API returns `429 Too Many Requests` when rate limits are exceeded. Check the `Retry-After` header for the wait duration. See [Error Handling](/docs/guides/error-handling) for retry strategies.
+
+### What does a 403 Forbidden error mean?
+
+A `403` means your token or API key is valid but lacks the required scope for the endpoint. Check the endpoint documentation for required scopes and request a new token with the correct permissions.
+
+

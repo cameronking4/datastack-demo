@@ -1,0 +1,48 @@
+---
+title: Get Job Run
+description: Retrieve the status of a specific job run.
+---
+
+```
+GET /api/v1/jobs/{jobId}/runs/{runId}
+```
+
+Returns status details for a single job run.
+
+**Required scope:** `read:jobs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `jobId` | `string` | The job identifier. |
+| `runId` | `string` | The run identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `runId` | `number` | Run identifier. |
+| `jobId` | `number` | Parent job identifier. |
+| `state` | `string` | Run state (`PENDING`, `RUNNING`, `SUCCESS`, `FAILED`). |
+| `startTime` | `string` | ISO 8601 start timestamp. |
+| `endTime` | `string` | ISO 8601 end timestamp. |
+| `triggeredBy` | `string` | How the run was triggered. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/jobs/1001/runs/5001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "runId": 5001,
+  "jobId": 1001,
+  "state": "SUCCESS",
+  "startTime": "2024-03-10T02:00:01Z",
+  "endTime": "2024-03-10T02:15:33Z",
+  "triggeredBy": "schedule"
+}
+```

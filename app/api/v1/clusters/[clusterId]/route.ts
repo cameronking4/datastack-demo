@@ -1,6 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/clusters/{clusterId}:
+ *   get:
+ *     summary: Get cluster
+ *     parameters:
+ *       - in: path
+ *         name: clusterId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *   delete:
+ *     summary: Delete cluster
+ *     parameters:
+ *       - in: path
+ *         name: clusterId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: No content
+ */
+/**
  * GET /api/v1/clusters/:clusterId
  * Get cluster by ID
  */

@@ -1,0 +1,41 @@
+---
+title: Start SQL Warehouse
+description: Start a stopped SQL warehouse.
+---
+
+```
+POST /api/v1/sql/warehouses/{warehouseId}/start
+```
+
+Start a stopped SQL warehouse. The warehouse transitions to `STARTING` state.
+
+**Required scope:** `manage:sql`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `warehouseId` | `string` | The warehouse identifier. |
+
+## Response `200`
+
+Returns the warehouse object with state `STARTING`.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/sql/warehouses/wh-002/start \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "wh-002",
+  "name": "Ad-hoc SQL",
+  "clusterSize": "2X-Small",
+  "state": "STARTING",
+  "jdbcUrl": "jdbc:datastack:sql://wh-002.us-west-2.datastack.cloud:443",
+  "odbcUrl": "Driver={DataStack};Server=wh-002.us-west-2.datastack.cloud;Port=443",
+  "createdAt": "2024-02-05T14:00:00Z"
+}
+```

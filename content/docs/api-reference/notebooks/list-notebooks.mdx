@@ -1,0 +1,59 @@
+---
+title: List Notebooks
+description: Retrieve a paginated list of notebooks.
+---
+
+```
+GET /api/v1/notebooks
+```
+
+Returns a paginated list of notebooks with optional path prefix filtering.
+
+**Required scope:** `read:notebooks`
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `limit` | `number` | `25` | Maximum results to return (1–100). |
+| `offset` | `number` | `0` | Number of results to skip. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `notebooks` | `object[]` | Array of notebook objects. |
+| `notebooks[].path` | `string` | Workspace path to the notebook. |
+| `notebooks[].language` | `string` | Language (`PYTHON`, `SQL`, `SCALA`, `R`). |
+| `notebooks[].modifiedAt` | `string` | ISO 8601 last modification timestamp. |
+| `totalCount` | `number` | Total number of notebooks. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/notebooks?limit=10" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "notebooks": [
+    {
+      "path": "/Workspace/ETL/daily_pipeline",
+      "language": "PYTHON",
+      "modifiedAt": "2024-03-09T18:00:00Z"
+    },
+    {
+      "path": "/Workspace/Reports/weekly",
+      "language": "PYTHON",
+      "modifiedAt": "2024-03-08T12:00:00Z"
+    },
+    {
+      "path": "/Workspace/Ad-hoc/explore",
+      "language": "SQL",
+      "modifiedAt": "2024-03-10T09:00:00Z"
+    }
+  ],
+  "totalCount": 3
+}
+```

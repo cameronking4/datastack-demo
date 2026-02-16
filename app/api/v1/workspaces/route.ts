@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/workspaces:
+ *   get:
+ *     summary: List workspaces
+ *     description: List workspaces the caller has access to
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * GET /api/v1/workspaces
  * List workspaces the caller has access to
  */

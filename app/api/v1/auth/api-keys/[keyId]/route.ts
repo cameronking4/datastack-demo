@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/auth/api-keys/{keyId}:
+ *   delete:
+ *     summary: Revoke API key
+ *     parameters:
+ *       - in: path
+ *         name: keyId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * DELETE /api/v1/auth/api-keys/:keyId
  * Revoke an API key (cannot be undone)
  */

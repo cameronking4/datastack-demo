@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/pipelines:
+ *   get:
+ *     summary: List pipelines
+ *     description: List Delta Live Tables pipelines
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create pipeline
+ *     responses:
+ *       201:
+ *         description: Created
+ */
+/**
  * GET /api/v1/pipelines
  * List Delta Live Tables pipelines
  */

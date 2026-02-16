@@ -1,0 +1,65 @@
+---
+title: Create Pipeline
+description: Create a new Delta Live Tables pipeline.
+---
+
+```
+POST /api/v1/pipelines
+```
+
+Create a new pipeline. The pipeline starts in `IDLE` state.
+
+**Required scope:** `manage:pipelines`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Pipeline display name. |
+| `workspaceId` | `string` | Yes | Target workspace ID. |
+| `target` | `string` | Yes | Target environment (`PRODUCTION`, `DEVELOPMENT`, `STAGING`). |
+| `catalog` | `string` | No | Unity Catalog name. Defaults to `main`. |
+| `schema` | `string` | No | Database schema. Defaults to `default`. |
+| `continuous` | `boolean` | No | Run continuously. Defaults to `false`. |
+| `photon` | `boolean` | No | Enable Photon acceleration. Defaults to `false`. |
+| `edition` | `string` | No | Product edition. Defaults to `CORE`. |
+
+## Response `201`
+
+Returns the created pipeline object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/pipelines \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Bronze Ingestion",
+    "workspaceId": "ws-001",
+    "target": "PRODUCTION",
+    "catalog": "main",
+    "schema": "bronze",
+    "continuous": true,
+    "photon": true,
+    "edition": "PRO"
+  }'
+```
+
+```json title="Response"
+{
+  "id": "pipe-new",
+  "name": "Bronze Ingestion",
+  "workspaceId": "ws-001",
+  "state": "IDLE",
+  "target": "PRODUCTION",
+  "catalog": "main",
+  "schema": "bronze",
+  "continuous": true,
+  "photon": true,
+  "edition": "PRO",
+  "clusters": [],
+  "createdAt": "2024-06-10T12:00:00Z",
+  "createdBy": "api"
+}
+```

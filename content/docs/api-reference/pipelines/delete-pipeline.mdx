@@ -1,0 +1,37 @@
+---
+title: Delete Pipeline
+description: Delete a pipeline.
+---
+
+```
+DELETE /api/v1/pipelines/{pipelineId}
+```
+
+Delete a pipeline and its associated resources.
+
+**Required scope:** `manage:pipelines`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `pipelineId` | `string` | The pipeline identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `message` | `string` | Confirmation message. |
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE /api/v1/pipelines/pipe-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "message": "Pipeline pipe-001 deleted."
+}
+```

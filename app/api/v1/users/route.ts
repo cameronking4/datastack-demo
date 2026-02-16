@@ -1,6 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/users:
+ *   get:
+ *     summary: List users
+ *     description: List users with pagination and filters
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create user
+ *     description: Create a new user
+ *     responses:
+ *       201:
+ *         description: Created
+ */
+/**
  * GET /api/v1/users
  * List users with pagination and filters
  */
