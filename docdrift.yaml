@@ -19,20 +19,17 @@ pathMappings:
       - ./openapi/**
   - match: app/api/v1/auth/token/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/authentication/generate-token.mdx
       - ./content/docs/api-reference/authentication/revoke-token.mdx
       - ./content/docs/getting-started/authentication.mdx
   - match: app/api/v1/auth/api-keys/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/authentication/list-api-keys.mdx
       - ./content/docs/api-reference/authentication/create-api-key.mdx
       - ./content/docs/api-reference/authentication/delete-api-key.mdx
       - ./content/docs/getting-started/authentication.mdx
   - match: app/api/v1/clusters/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/clusters/list-clusters.mdx
       - ./content/docs/api-reference/clusters/create-cluster.mdx
       - ./content/docs/api-reference/clusters/get-cluster.mdx
@@ -41,7 +38,6 @@ pathMappings:
       - ./content/docs/guides/managing-clusters.mdx
   - match: app/api/v1/jobs/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/jobs/list-jobs.mdx
       - ./content/docs/api-reference/jobs/create-job.mdx
       - ./content/docs/api-reference/jobs/get-job.mdx
@@ -49,7 +45,6 @@ pathMappings:
       - ./content/docs/api-reference/jobs/get-job-run.mdx
   - match: app/api/v1/pipelines/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/pipelines/list-pipelines.mdx
       - ./content/docs/api-reference/pipelines/create-pipeline.mdx
       - ./content/docs/api-reference/pipelines/get-pipeline.mdx
@@ -60,20 +55,17 @@ pathMappings:
       - ./content/docs/guides/data-pipelines.mdx
   - match: app/api/v1/notebooks/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/notebooks/list-notebooks.mdx
       - ./content/docs/api-reference/notebooks/create-notebook.mdx
       - ./content/docs/api-reference/notebooks/export-notebook.mdx
   - match: app/api/v1/sql/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/sql-warehouses/list-warehouses.mdx
       - ./content/docs/api-reference/sql-warehouses/get-warehouse.mdx
       - ./content/docs/api-reference/sql-warehouses/start-warehouse.mdx
       - ./content/docs/api-reference/sql-warehouses/stop-warehouse.mdx
   - match: app/api/v1/users/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/users/list-users.mdx
       - ./content/docs/api-reference/users/create-user.mdx
       - ./content/docs/api-reference/users/get-user.mdx
@@ -81,7 +73,6 @@ pathMappings:
       - ./content/docs/api-reference/users/delete-user.mdx
   - match: app/api/v1/webhooks/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/webhooks/list-webhooks.mdx
       - ./content/docs/api-reference/webhooks/create-webhook.mdx
       - ./content/docs/api-reference/webhooks/get-webhook.mdx
@@ -92,12 +83,10 @@ pathMappings:
       - ./content/docs/guides/webhooks-guide.mdx
   - match: app/api/v1/workspaces/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/workspaces/list-workspaces.mdx
       - ./content/docs/api-reference/workspaces/get-workspace.mdx
   - match: app/api/v1/stacks/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/stacks/list-stacks.mdx
       - ./content/docs/api-reference/stacks/create-stack.mdx
       - ./content/docs/api-reference/stacks/get-stack.mdx
@@ -108,7 +97,6 @@ pathMappings:
       - ./content/docs/api-reference/stacks/list-stack-deployments.mdx
   - match: app/api/v1/connections/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/connections/list-connections.mdx
       - ./content/docs/api-reference/connections/create-connection.mdx
       - ./content/docs/api-reference/connections/get-connection.mdx
@@ -117,7 +105,6 @@ pathMappings:
       - ./content/docs/api-reference/connections/test-connection.mdx
   - match: app/api/v1/catalogs/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/catalogs/list-catalogs.mdx
       - ./content/docs/api-reference/catalogs/create-catalog.mdx
       - ./content/docs/api-reference/catalogs/list-schemas.mdx
@@ -126,7 +113,6 @@ pathMappings:
       - ./content/docs/api-reference/catalogs/create-table.mdx
   - match: app/api/v1/secrets/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/secrets/list-scopes.mdx
       - ./content/docs/api-reference/secrets/create-scope.mdx
       - ./content/docs/api-reference/secrets/delete-scope.mdx
@@ -135,7 +121,6 @@ pathMappings:
       - ./content/docs/api-reference/secrets/delete-secret.mdx
   - match: app/api/v1/queries/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/queries/list-queries.mdx
       - ./content/docs/api-reference/queries/create-query.mdx
       - ./content/docs/api-reference/queries/get-query.mdx
@@ -145,7 +130,6 @@ pathMappings:
       - ./content/docs/api-reference/queries/get-query-results.mdx
   - match: app/api/v1/deployments/**
     impacts:
-      - ./openapi/**
       - ./content/docs/api-reference/deployments/list-deployments.mdx
       - ./content/docs/api-reference/deployments/get-deployment.mdx
       - ./content/docs/api-reference/deployments/promote-deployment.mdx
@@ -154,6 +138,7 @@ pathMappings:
     impacts:
       - ./openapi/**
       - ./content/docs/api-reference/overview.mdx
+      - ./content/docs/*
   - match: lib/api/auth.ts
     impacts:
       - ./content/docs/getting-started/authentication.mdx
@@ -161,7 +146,7 @@ pathMappings:
   - match: content/docs/**/meta.json
     impacts:
       - ./content/docs/**
-mode: auto
+mode: strict
 devin:
   apiVersion: v1
   unlisted: true
