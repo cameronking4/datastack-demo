@@ -1,7 +1,7 @@
 # DataStack
 
 This is a Next.js application built with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+[Create Fumadocs](https://github.com/fuma-nama/fumadocs) to demonstrate DocDrift package.
 
 Run development server:
 
