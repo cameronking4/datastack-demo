@@ -12,6 +12,30 @@ import { NextRequest, NextResponse } from "next/server";
  *   post:
  *     summary: Create connection
  *     description: Create a new data source or sink connection
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - type
+ *               - host
+ *               - workspaceId
+ *             properties:
+ *               name:
+ *                 type: string
+ *               type:
+ *                 type: string
+ *               host:
+ *                 type: string
+ *               workspaceId:
+ *                 type: string
+ *               secretScope:
+ *                 type: string
+ *               properties:
+ *                 type: object
  *     responses:
  *       201:
  *         description: Created

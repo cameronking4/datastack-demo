@@ -12,6 +12,21 @@ import { isPreviewEnabled } from "@/lib/api/preview";
  *         required: true
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               notebookParams:
+ *                 type: object
+ *                 additionalProperties:
+ *                   type: string
+ *               idempotencyToken:
+ *                 type: string
+ *               queueDuration:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Success

@@ -22,6 +22,23 @@ import { NextRequest, NextResponse } from "next/server";
  *         required: true
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               url:
+ *                 type: string
+ *               events:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               secret:
+ *                 type: string
+ *               active:
+ *                 type: boolean
  *     responses:
  *       200:
  *         description: Success

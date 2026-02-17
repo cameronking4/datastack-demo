@@ -6,6 +6,19 @@ import { NextRequest, NextResponse } from "next/server";
  *   post:
  *     summary: Get access token
  *     description: Exchange credentials for access token (OAuth2 client_credentials grant)
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               grantType:
+ *                 type: string
+ *               scopes:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *     responses:
  *       200:
  *         description: Success

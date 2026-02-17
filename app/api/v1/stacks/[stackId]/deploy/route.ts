@@ -12,6 +12,19 @@ import { NextRequest, NextResponse } from "next/server";
  *         required: true
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               environment:
+ *                 type: string
+ *               dryRun:
+ *                 type: boolean
+ *               force:
+ *                 type: boolean
  *     responses:
  *       202:
  *         description: Accepted

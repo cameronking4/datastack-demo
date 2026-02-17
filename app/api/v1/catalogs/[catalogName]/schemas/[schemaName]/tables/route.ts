@@ -33,6 +33,42 @@ import { NextRequest, NextResponse } from "next/server";
  *         required: true
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - columns
+ *             properties:
+ *               name:
+ *                 type: string
+ *               tableType:
+ *                 type: string
+ *               dataSourceFormat:
+ *                 type: string
+ *               columns:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - name
+ *                     - type
+ *                   properties:
+ *                     name:
+ *                       type: string
+ *                     type:
+ *                       type: string
+ *                     nullable:
+ *                       type: boolean
+ *                     comment:
+ *                       type: string
+ *               storageLocation:
+ *                 type: string
+ *               comment:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Created

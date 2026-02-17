@@ -12,6 +12,23 @@ import { NextRequest, NextResponse } from "next/server";
  *   post:
  *     summary: Create user
  *     description: Create a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - fullName
+ *               - email
+ *               - role
+ *             properties:
+ *               fullName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               role:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Created

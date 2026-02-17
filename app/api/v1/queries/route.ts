@@ -12,6 +12,29 @@ import { NextRequest, NextResponse } from "next/server";
  *   post:
  *     summary: Create query
  *     description: Save a new SQL query
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - warehouseId
+ *               - sql
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               warehouseId:
+ *                 type: string
+ *               sql:
+ *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *     responses:
  *       201:
  *         description: Created

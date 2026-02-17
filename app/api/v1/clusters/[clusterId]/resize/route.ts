@@ -12,6 +12,19 @@ import { isPreviewEnabled } from "@/lib/api/preview";
  *         required: true
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - workerCount
+ *             properties:
+ *               workerCount:
+ *                 type: integer
+ *               nodeType:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Success

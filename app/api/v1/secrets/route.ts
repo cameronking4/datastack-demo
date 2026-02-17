@@ -6,6 +6,23 @@ import { NextRequest, NextResponse } from "next/server";
  *   put:
  *     summary: Put secret
  *     description: Create or update a secret in a scope
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - scope
+ *               - key
+ *               - value
+ *             properties:
+ *               scope:
+ *                 type: string
+ *               key:
+ *                 type: string
+ *               value:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Success

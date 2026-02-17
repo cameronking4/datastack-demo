@@ -11,6 +11,26 @@ import { isPreviewEnabled } from "@/lib/api/preview";
  *         description: Success
  *   put:
  *     summary: Create or overwrite notebook
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - path
+ *               - language
+ *             properties:
+ *               path:
+ *                 type: string
+ *               language:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               overwrite:
+ *                 type: boolean
+ *               format:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Success

@@ -12,6 +12,25 @@ import { NextRequest, NextResponse } from "next/server";
  *   post:
  *     summary: Create catalog
  *     description: Create a new catalog
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *             properties:
+ *               name:
+ *                 type: string
+ *               comment:
+ *                 type: string
+ *               properties:
+ *                 type: object
+ *                 additionalProperties:
+ *                   type: string
+ *               isolation:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Created
