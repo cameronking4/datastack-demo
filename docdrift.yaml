@@ -29,7 +29,7 @@ pathMappings:
   - match: lib/api/preview.ts
     impacts:
       - ./content/docs/*
-mode: strict
+mode: auto
 devin:
   apiVersion: v1
   unlisted: true
