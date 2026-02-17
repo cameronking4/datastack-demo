@@ -26,6 +26,9 @@ pathMappings:
   - match: content/docs/**/meta.json
     impacts:
       - ./content/docs/**
+ - match: lib/api/preview.ts
+    impacts:
+      - ./content/docs/*
 mode: strict
 devin:
   apiVersion: v1
@@ -36,7 +39,7 @@ devin:
 policy:
   prCaps:
     maxPrsPerDay: 10
-    maxFilesTouched: 50
+    maxFilesTouched: 100
   confidence:
     autopatchThreshold: 0.75
   allowlist:
