@@ -13,6 +13,40 @@ import { isPreviewEnabled } from "@/lib/api/preview";
  *   post:
  *     summary: Create cluster
  *     description: Create a new compute cluster
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - workspaceId
+ *               - sparkVersion
+ *               - nodeType
+ *             properties:
+ *               name:
+ *                 type: string
+ *               workspaceId:
+ *                 type: string
+ *               sparkVersion:
+ *                 type: string
+ *               nodeType:
+ *                 type: string
+ *               workerCount:
+ *                 type: integer
+ *               enableAutoscaling:
+ *                 type: boolean
+ *               minWorkers:
+ *                 type: integer
+ *               maxWorkers:
+ *                 type: integer
+ *               autoTerminationMinutes:
+ *                 type: integer
+ *               tags:
+ *                 type: object
+ *                 additionalProperties:
+ *                   type: string
  *     responses:
  *       201:
  *         description: Created

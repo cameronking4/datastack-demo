@@ -11,6 +11,26 @@ import { NextRequest, NextResponse } from "next/server";
  *         description: Success
  *   post:
  *     summary: Create webhook
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - url
+ *               - events
+ *             properties:
+ *               url:
+ *                 type: string
+ *               events:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               secret:
+ *                 type: string
+ *               active:
+ *                 type: boolean
  *     responses:
  *       201:
  *         description: Created

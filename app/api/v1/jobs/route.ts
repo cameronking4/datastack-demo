@@ -10,6 +10,35 @@ import { NextRequest, NextResponse } from "next/server";
  *         description: Success
  *   post:
  *     summary: Create job
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - schedule
+ *               - trigger
+ *               - settings
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               schedule:
+ *                 type: string
+ *               trigger:
+ *                 type: string
+ *               settings:
+ *                 type: object
+ *                 properties:
+ *                   clusterId:
+ *                     type: string
+ *                   notebookPath:
+ *                     type: string
+ *                   timeoutSeconds:
+ *                     type: integer
  *     responses:
  *       201:
  *         description: Created

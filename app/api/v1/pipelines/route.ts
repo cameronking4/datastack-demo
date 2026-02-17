@@ -12,6 +12,33 @@ import { isPreviewEnabled } from "@/lib/api/preview";
  *         description: Success
  *   post:
  *     summary: Create pipeline
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - workspaceId
+ *               - target
+ *             properties:
+ *               name:
+ *                 type: string
+ *               workspaceId:
+ *                 type: string
+ *               target:
+ *                 type: string
+ *               catalog:
+ *                 type: string
+ *               schema:
+ *                 type: string
+ *               continuous:
+ *                 type: boolean
+ *               photon:
+ *                 type: boolean
+ *               edition:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Created

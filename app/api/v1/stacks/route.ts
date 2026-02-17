@@ -12,6 +12,54 @@ import { NextRequest, NextResponse } from "next/server";
  *   post:
  *     summary: Create stack
  *     description: Create a new composable infrastructure stack
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - workspaceId
+ *               - environment
+ *               - layers
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               workspaceId:
+ *                 type: string
+ *               environment:
+ *                 type: string
+ *               layers:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - name
+ *                     - resourceType
+ *                     - resourceId
+ *                     - order
+ *                   properties:
+ *                     name:
+ *                       type: string
+ *                     resourceType:
+ *                       type: string
+ *                     resourceId:
+ *                       type: string
+ *                     order:
+ *                       type: integer
+ *                     config:
+ *                       type: object
+ *               connections:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               tags:
+ *                 type: object
+ *                 additionalProperties:
+ *                   type: string
  *     responses:
  *       201:
  *         description: Created

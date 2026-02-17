@@ -10,6 +10,24 @@ import { NextRequest, NextResponse } from "next/server";
  *         description: Success
  *   post:
  *     summary: Create API key
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - scopes
+ *             properties:
+ *               name:
+ *                 type: string
+ *               scopes:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               expiresInDays:
+ *                 type: integer
  *     responses:
  *       201:
  *         description: Created
