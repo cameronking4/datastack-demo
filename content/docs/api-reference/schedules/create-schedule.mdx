@@ -1,0 +1,63 @@
+---
+title: Create Schedule
+description: Create a new cron or interval-based schedule for a resource.
+---
+
+```
+POST /api/v1/schedules
+```
+
+Create a new schedule attached to a job, pipeline, or maintenance window.
+
+**Required scope:** `manage:schedules`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Display name. |
+| `resourceType` | `string` | Yes | Resource type (`job`, `pipeline`, `maintenance`). |
+| `resourceId` | `string` | Yes | Identifier of the resource to schedule. |
+| `scheduleExpression` | `string` | Yes | Cron expression (e.g., `0 0 2 * * ?`) or interval expression. |
+| `timezone` | `string` | No | IANA timezone (e.g., `America/New_York`). Defaults to `UTC`. |
+| `active` | `boolean` | No | Whether the schedule is active. Defaults to `true`. |
+| `startDate` | `string` | No | ISO 8601 date-time when the schedule begins. |
+| `endDate` | `string` | No | ISO 8601 date-time when the schedule ends. |
+| `skipIfRunning` | `boolean` | No | Skip execution if the resource is already running. |
+| `catchUpMissed` | `boolean` | No | Execute missed runs on startup. |
+| `parameters` | `object` | No | Key-value parameters passed to the resource on each execution. |
+
+## Response `201`
+
+Returns the created schedule object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/schedules \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Nightly Pipeline",
+    "resourceType": "pipeline",
+    "resourceId": "pipe-001",
+    "scheduleExpression": "0 0 1 * * ?",
+    "timezone": "UTC",
+    "skipIfRunning": true
+  }'
+```
+
+```json title="Response"
+{
+  "id": "sched-new",
+  "name": "Nightly Pipeline",
+  "resourceType": "pipeline",
+  "resourceId": "pipe-001",
+  "scheduleExpression": "0 0 1 * * ?",
+  "timezone": "UTC",
+  "active": true,
+  "skipIfRunning": true,
+  "nextFireTime": "2024-06-11T01:00:00Z",
+  "createdAt": "2024-06-10T12:00:00Z"
+}
+```

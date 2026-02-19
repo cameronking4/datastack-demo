@@ -1,0 +1,60 @@
+---
+title: Update Environment
+description: Update environment settings, promotion rules, or access controls.
+---
+
+```
+PATCH /api/v1/environments/{environmentId}
+```
+
+Update an existing environment's configuration.
+
+**Required scope:** `manage:environments`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `environmentId` | `string` | The environment identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Display name. |
+| `description` | `string` | No | Environment description. |
+| `color` | `string` | No | Hex color code. |
+| `promotionRules` | `object` | No | Promotion configuration. |
+| `accessControl` | `object` | No | Access control settings. |
+| `variables` | `object` | No | Environment variables. |
+| `protected` | `boolean` | No | Protection flag. |
+
+## Response `200`
+
+Returns the updated environment object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/environments/env-001 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "promotionRules": {
+      "requiresApproval": true,
+      "approvers": ["user-001", "user-002"]
+    }
+  }'
+```
+
+```json title="Response"
+{
+  "id": "env-001",
+  "name": "Development",
+  "promotionRules": {
+    "requiresApproval": true,
+    "approvers": ["user-001", "user-002"]
+  },
+  "updatedAt": "2024-06-10T12:00:00Z"
+}
+```

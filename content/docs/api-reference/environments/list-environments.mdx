@@ -1,0 +1,62 @@
+---
+title: List Environments
+description: List deployment environments with promotion rules and access controls.
+---
+
+```
+GET /api/v1/environments
+```
+
+Returns all deployment environments configured in the workspace.
+
+**Required scope:** `read:environments`
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `environments` | `object[]` | Array of environment objects. |
+| `environments[].id` | `string` | Environment identifier. |
+| `environments[].name` | `string` | Display name. |
+| `environments[].slug` | `string` | URL-safe identifier. |
+| `environments[].description` | `string` | Environment description. |
+| `environments[].color` | `string` | Display color for UI. |
+| `environments[].protected` | `boolean` | Whether the environment is protected from deletion. |
+| `environments[].deploymentCount` | `number` | Number of active deployments. |
+| `environments[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `totalCount` | `number` | Total number of environments. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/environments \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "environments": [
+    {
+      "id": "env-001",
+      "name": "Development",
+      "slug": "dev",
+      "description": "Development environment",
+      "color": "#22c55e",
+      "protected": false,
+      "deploymentCount": 5,
+      "createdAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "env-002",
+      "name": "Production",
+      "slug": "prod",
+      "description": "Production environment",
+      "color": "#ef4444",
+      "protected": true,
+      "deploymentCount": 3,
+      "createdAt": "2024-01-15T10:00:00Z"
+    }
+  ],
+  "totalCount": 2
+}
+```

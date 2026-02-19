@@ -4,6 +4,7 @@
     "list-clusters",
     "create-cluster",
     "get-cluster",
+    "update-cluster",
     "delete-cluster",
     "resize-cluster"
   ]

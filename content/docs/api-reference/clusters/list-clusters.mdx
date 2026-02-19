@@ -17,6 +17,10 @@ Returns a paginated list of clusters.
 |---|---|---|---|
 | `page` | `number` | `1` | Page number (min 1). |
 | `pageSize` | `number` | `25` | Results per page (1–100). |
+| `state` | `string` | — | Filter by state (`RUNNING`, `PENDING`, `TERMINATED`, `ERROR`, `RESIZING`). |
+| `sortBy` | `string` | — | Sort field (`name`, `createdAt`, `state`, `numWorkers`). |
+| `sortOrder` | `string` | — | Sort direction (`asc`, `desc`). |
+| `tagFilter` | `string` | — | Filter by tag key-value (e.g., `team:analytics`). |
 
 ## Response `200`
 

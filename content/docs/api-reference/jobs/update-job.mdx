@@ -1,0 +1,69 @@
+---
+title: Update Job
+description: Update job configuration, schedule, or retry policy.
+---
+
+```
+PATCH /api/v1/jobs/{jobId}
+```
+
+Update an existing job's configuration.
+
+**Required scope:** `manage:jobs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `jobId` | `string` | The job identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Job name. |
+| `description` | `string` | No | Job description. |
+| `schedule` | `string` | No | Cron expression for scheduling. |
+| `timezone` | `string` | No | IANA timezone for the schedule. |
+| `triggerType` | `string` | No | Trigger type (`PERIODIC`, `CONTINUOUS`, `ONE_TIME`, `FILE_ARRIVAL`, `TABLE_UPDATE`). |
+| `maxConcurrentRuns` | `number` | No | Maximum concurrent runs. |
+| `retryPolicy` | `object` | No | Retry policy configuration. |
+| `retryPolicy.maxRetries` | `number` | No | Maximum retry attempts. |
+| `retryPolicy.retryIntervalSeconds` | `number` | No | Seconds between retries. |
+| `retryPolicy.retryOnTimeout` | `boolean` | No | Whether to retry on timeout. |
+| `alertDestinations` | `string[]` | No | Notification channel IDs for job alerts. |
+| `settings` | `object` | No | Job execution settings. |
+
+## Response `200`
+
+Returns the updated job object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/jobs/1001 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "schedule": "0 0 3 * * ?",
+    "retryPolicy": {
+      "maxRetries": 3,
+      "retryIntervalSeconds": 300,
+      "retryOnTimeout": true
+    }
+  }'
+```
+
+```json title="Response"
+{
+  "jobId": 1001,
+  "name": "Daily ETL",
+  "schedule": "0 0 3 * * ?",
+  "retryPolicy": {
+    "maxRetries": 3,
+    "retryIntervalSeconds": 300,
+    "retryOnTimeout": true
+  },
+  "updatedAt": "2024-06-10T12:00:00Z"
+}
+```

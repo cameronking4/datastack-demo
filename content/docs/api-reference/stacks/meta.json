@@ -7,6 +7,8 @@
     "update-stack",
     "delete-stack",
     "deploy-stack",
+    "lock-stack",
+    "unlock-stack",
     "validate-stack",
     "list-stack-deployments"
   ]

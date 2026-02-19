@@ -1,0 +1,29 @@
+---
+title: Delete Job
+description: Delete a job and all associated run history.
+---
+
+```
+DELETE /api/v1/jobs/{jobId}
+```
+
+Permanently delete a job. Any active runs will be cancelled.
+
+**Required scope:** `manage:jobs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `jobId` | `string` | The job identifier. |
+
+## Response `204`
+
+No content returned on success.
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE /api/v1/jobs/1001 \
+  -H "Authorization: Bearer <accessToken>"
+```

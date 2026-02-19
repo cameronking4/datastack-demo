@@ -7,7 +7,7 @@ description: Create a new compute cluster in your workspace.
 POST /api/v1/clusters
 ```
 
-Provision a new compute cluster.
+Create a new compute cluster with autoscaling, spot instances, and custom configurations.
 
 **Required scope:** `manage:clusters`
 
@@ -17,13 +17,21 @@ Provision a new compute cluster.
 |---|---|---|---|
 | `name` | `string` | Yes | Cluster display name. |
 | `workspaceId` | `string` | Yes | Target workspace ID. |
-| `sparkVersion` | `string` | Yes | Spark runtime version (e.g., `3.5.x-scala2.12`). |
+| `runtimeVersion` | `string` | Yes | Runtime version (e.g., `14.3.x-scala2.12`). |
 | `nodeType` | `string` | Yes | VM instance type (e.g., `i3.xlarge`). |
-| `workerCount` | `number` | No | Number of workers. Defaults to `2`. |
+| `driverNodeType` | `string` | No | Driver node instance type. Defaults to `nodeType`. |
+| `numWorkers` | `number` | No | Number of workers. Defaults to `2`. |
 | `enableAutoscaling` | `boolean` | No | Enable autoscaling. Defaults to `false`. |
 | `minWorkers` | `number` | No | Minimum workers when autoscaling. Defaults to `1`. |
 | `maxWorkers` | `number` | No | Maximum workers when autoscaling. Defaults to `8`. |
 | `autoTerminationMinutes` | `number` | No | Idle timeout in minutes. Defaults to `30`. |
+| `spotInstances` | `boolean` | No | Use spot/preemptible instances. |
+| `spotFallbackToOnDemand` | `boolean` | No | Fall back to on-demand if spot unavailable. |
+| `instancePoolId` | `string` | No | Instance pool to use. |
+| `clusterPolicyId` | `string` | No | Cluster policy to apply. |
+| `runtimeEngine` | `string` | No | Runtime engine (`STANDARD` or `PHOTON`). |
+| `initScripts` | `object[]` | No | Initialization scripts. |
+| `customSparkConf` | `object` | No | Custom Spark configuration key-value pairs. |
 | `tags` | `object` | No | Key-value metadata tags. |
 
 ## Response `201`
@@ -38,9 +46,9 @@ Returns the created cluster object with state `PENDING`.
 | `clusterSize` | `string` | Capacity label. |
 | `region` | `string` | Deployment region. |
 | `state` | `string` | `PENDING` while provisioning. |
-| `sparkVersion` | `string` | Spark version. |
+| `runtimeVersion` | `string` | Runtime version. |
 | `nodeType` | `string` | Instance type. |
-| `workerCount` | `number` | Number of workers. |
+| `numWorkers` | `number` | Number of workers. |
 | `enableAutoscaling` | `boolean` | Autoscaling enabled. |
 | `minWorkers` | `number` | Minimum workers. |
 | `maxWorkers` | `number` | Maximum workers. |
@@ -58,9 +66,9 @@ curl -X POST /api/v1/clusters \
   -d '{
     "name": "Analytics Cluster",
     "workspaceId": "ws-001",
-    "sparkVersion": "3.5.x-scala2.12",
+    "runtimeVersion": "14.3.x-scala2.12",
     "nodeType": "i3.xlarge",
-    "workerCount": 4,
+    "numWorkers": 4,
     "autoTerminationMinutes": 30
   }'
 ```
@@ -73,9 +81,9 @@ curl -X POST /api/v1/clusters \
   "clusterSize": "Medium",
   "region": "us-east-1",
   "state": "PENDING",
-  "sparkVersion": "3.5.x-scala2.12",
+  "runtimeVersion": "14.3.x-scala2.12",
   "nodeType": "i3.xlarge",
-  "workerCount": 4,
+  "numWorkers": 4,
   "enableAutoscaling": false,
   "minWorkers": 1,
   "maxWorkers": 8,

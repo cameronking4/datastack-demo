@@ -1,0 +1,66 @@
+---
+title: Update Cluster
+description: Update cluster configuration. Some changes require a restart.
+---
+
+```
+PATCH /api/v1/clusters/{clusterId}
+```
+
+Update an existing cluster's configuration. Changes to worker count, node types, or autoscaling settings may trigger a cluster restart.
+
+**Required scope:** `manage:clusters`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `clusterId` | `string` | The cluster identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Cluster display name. |
+| `numWorkers` | `number` | No | Number of worker nodes. |
+| `nodeType` | `string` | No | VM instance type. |
+| `driverNodeType` | `string` | No | Driver node instance type. |
+| `autoTerminationMinutes` | `number` | No | Idle timeout in minutes. |
+| `enableAutoscaling` | `boolean` | No | Enable autoscaling. |
+| `minWorkers` | `number` | No | Minimum workers when autoscaling. |
+| `maxWorkers` | `number` | No | Maximum workers when autoscaling. |
+| `spotInstances` | `boolean` | No | Use spot/preemptible instances. |
+| `runtimeEngine` | `string` | No | Runtime engine (`STANDARD` or `PHOTON`). |
+| `customSparkConf` | `object` | No | Custom Spark configuration key-value pairs. |
+| `tags` | `object` | No | Key-value metadata tags. |
+
+## Response `200`
+
+Returns the updated cluster object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/clusters/cluster-001 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "numWorkers": 8,
+    "enableAutoscaling": true,
+    "minWorkers": 2,
+    "maxWorkers": 16
+  }'
+```
+
+```json title="Response"
+{
+  "id": "cluster-001",
+  "name": "Analytics Cluster",
+  "state": "RESIZING",
+  "numWorkers": 8,
+  "enableAutoscaling": true,
+  "minWorkers": 2,
+  "maxWorkers": 16,
+  "updatedAt": "2024-06-10T12:00:00Z"
+}
+```

@@ -1,0 +1,10 @@
+{
+  "title": "Environments",
+  "pages": [
+    "list-environments",
+    "create-environment",
+    "get-environment",
+    "update-environment",
+    "delete-environment"
+  ]
+}

@@ -1,0 +1,59 @@
+---
+title: Lock Stack
+description: Acquire an exclusive lock on a stack to prevent concurrent modifications.
+---
+
+```
+POST /api/v1/stacks/{stackId}/lock
+```
+
+Acquire an exclusive lock on a stack. While locked, no other user or automation can deploy or modify the stack.
+
+**Required scope:** `manage:stacks`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `stackId` | `string` | The stack identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `reason` | `string` | No | Reason for acquiring the lock. |
+| `ttlSeconds` | `number` | No | Time-to-live for the lock in seconds. The lock expires automatically after this duration. |
+
+## Response `200`
+
+Returns the lock details.
+
+## Errors
+
+| Code | Description |
+|---|---|
+| `409` | Stack is already locked by another user or process. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/stacks/stack-001/lock \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "reason": "Production deployment in progress",
+    "ttlSeconds": 1800
+  }'
+```
+
+```json title="Response"
+{
+  "stackId": "stack-001",
+  "locked": true,
+  "lockedBy": "api",
+  "reason": "Production deployment in progress",
+  "ttlSeconds": 1800,
+  "lockedAt": "2024-06-10T12:00:00Z",
+  "expiresAt": "2024-06-10T12:30:00Z"
+}
+```

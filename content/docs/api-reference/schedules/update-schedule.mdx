@@ -1,0 +1,58 @@
+---
+title: Update Schedule
+description: Update schedule expression, timezone, or activation state.
+---
+
+```
+PATCH /api/v1/schedules/{scheduleId}
+```
+
+Update an existing schedule.
+
+**Required scope:** `manage:schedules`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `scheduleId` | `string` | The schedule identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Display name. |
+| `scheduleExpression` | `string` | No | Cron or interval expression. |
+| `timezone` | `string` | No | IANA timezone. |
+| `active` | `boolean` | No | Whether the schedule is active. |
+| `startDate` | `string` | No | ISO 8601 start date. |
+| `endDate` | `string` | No | ISO 8601 end date. |
+| `skipIfRunning` | `boolean` | No | Skip if resource is running. |
+| `catchUpMissed` | `boolean` | No | Execute missed runs. |
+| `parameters` | `object` | No | Execution parameters. |
+
+## Response `200`
+
+Returns the updated schedule object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/schedules/sched-001 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "scheduleExpression": "0 0 3 * * ?",
+    "active": false
+  }'
+```
+
+```json title="Response"
+{
+  "id": "sched-001",
+  "name": "Daily ETL Schedule",
+  "scheduleExpression": "0 0 3 * * ?",
+  "active": false,
+  "updatedAt": "2024-06-10T12:00:00Z"
+}
+```

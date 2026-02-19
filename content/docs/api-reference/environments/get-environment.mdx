@@ -1,0 +1,64 @@
+---
+title: Get Environment
+description: Get environment details including promotion rules, variables, and deployment count.
+---
+
+```
+GET /api/v1/environments/{environmentId}
+```
+
+Returns full details for a single environment.
+
+**Required scope:** `read:environments`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `environmentId` | `string` | The environment identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Environment identifier. |
+| `name` | `string` | Display name. |
+| `slug` | `string` | URL-safe identifier. |
+| `description` | `string` | Environment description. |
+| `color` | `string` | Display color. |
+| `promotionRules` | `object` | Promotion configuration. |
+| `accessControl` | `object` | Access control settings. |
+| `variables` | `object` | Environment variables. |
+| `protected` | `boolean` | Whether the environment is protected. |
+| `deploymentCount` | `number` | Number of active deployments. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/environments/env-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "env-001",
+  "name": "Development",
+  "slug": "dev",
+  "description": "Development environment",
+  "color": "#22c55e",
+  "promotionRules": {
+    "requiresApproval": false,
+    "autoPromoteFrom": null
+  },
+  "accessControl": {
+    "allowedRoles": ["admin", "developer"]
+  },
+  "variables": {
+    "LOG_LEVEL": "debug"
+  },
+  "protected": false,
+  "deploymentCount": 5,
+  "createdAt": "2024-01-15T10:00:00Z"
+}
+```

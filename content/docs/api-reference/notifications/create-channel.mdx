@@ -1,0 +1,69 @@
+---
+title: Create Notification Channel
+description: Register a new notification channel for alerts and event notifications.
+---
+
+```
+POST /api/v1/notifications
+```
+
+Register a new notification channel.
+
+**Required scope:** `manage:notifications`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Display name. |
+| `type` | `string` | Yes | Channel type (`email`, `slack`, `pagerduty`, `webhook`, `teams`). |
+| `config` | `object` | Yes | Channel-specific configuration. |
+| `config.recipients` | `string[]` | No | Email recipients (for `email` type). |
+| `config.webhookUrl` | `string` | No | Webhook URL (for `webhook` or `slack` type). |
+| `config.slackChannel` | `string` | No | Slack channel name (for `slack` type). |
+| `config.pagerdutyServiceKey` | `string` | No | PagerDuty service key (for `pagerduty` type). |
+| `eventFilters` | `string[]` | No | Event types to receive (e.g., `job.failed`, `pipeline.completed`). |
+| `severityFilter` | `string[]` | No | Severity levels to receive (`info`, `warning`, `error`, `critical`). |
+| `enabled` | `boolean` | No | Whether the channel is active. Defaults to `true`. |
+| `quietHours` | `object` | No | Suppress notifications during specified hours. |
+| `quietHours.enabled` | `boolean` | No | Enable quiet hours. |
+| `quietHours.startTime` | `string` | No | Start time (HH:MM format). |
+| `quietHours.endTime` | `string` | No | End time (HH:MM format). |
+| `quietHours.timezone` | `string` | No | IANA timezone. |
+| `rateLimitPerHour` | `number` | No | Maximum notifications per hour. |
+
+## Response `201`
+
+Returns the created notification channel object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/notifications \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Ops Slack Channel",
+    "type": "slack",
+    "config": {
+      "slackChannel": "#ops-alerts",
+      "webhookUrl": "https://hooks.slack.com/services/..."
+    },
+    "severityFilter": ["error", "critical"],
+    "enabled": true
+  }'
+```
+
+```json title="Response"
+{
+  "id": "notif-new",
+  "name": "Ops Slack Channel",
+  "type": "slack",
+  "config": {
+    "slackChannel": "#ops-alerts"
+  },
+  "severityFilter": ["error", "critical"],
+  "enabled": true,
+  "createdAt": "2024-06-10T12:00:00Z"
+}
+```

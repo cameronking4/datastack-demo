@@ -1,0 +1,64 @@
+---
+title: Get Schedule
+description: Get schedule details including fire history and next execution time.
+---
+
+```
+GET /api/v1/schedules/{scheduleId}
+```
+
+Returns full details for a single schedule.
+
+**Required scope:** `read:schedules`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `scheduleId` | `string` | The schedule identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Schedule identifier. |
+| `name` | `string` | Display name. |
+| `resourceType` | `string` | Associated resource type. |
+| `resourceId` | `string` | Associated resource identifier. |
+| `scheduleExpression` | `string` | Cron or interval expression. |
+| `timezone` | `string` | IANA timezone. |
+| `active` | `boolean` | Whether the schedule is active. |
+| `startDate` | `string` | ISO 8601 start date. |
+| `endDate` | `string` | ISO 8601 end date. |
+| `skipIfRunning` | `boolean` | Skip if resource is running. |
+| `catchUpMissed` | `boolean` | Execute missed runs. |
+| `parameters` | `object` | Execution parameters. |
+| `nextFireTime` | `string` | ISO 8601 next execution timestamp. |
+| `lastFireTime` | `string` | ISO 8601 last execution timestamp. |
+| `fireCount` | `number` | Total number of executions. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/schedules/sched-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "sched-001",
+  "name": "Daily ETL Schedule",
+  "resourceType": "job",
+  "resourceId": "1001",
+  "scheduleExpression": "0 0 2 * * ?",
+  "timezone": "America/New_York",
+  "active": true,
+  "skipIfRunning": false,
+  "catchUpMissed": true,
+  "nextFireTime": "2024-06-11T02:00:00Z",
+  "lastFireTime": "2024-06-10T02:00:00Z",
+  "fireCount": 120,
+  "createdAt": "2024-03-01T10:00:00Z"
+}
+```

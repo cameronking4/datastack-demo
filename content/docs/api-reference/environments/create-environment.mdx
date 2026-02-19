@@ -1,0 +1,71 @@
+---
+title: Create Environment
+description: Create a new deployment environment with approval and promotion configuration.
+---
+
+```
+POST /api/v1/environments
+```
+
+Create a new deployment environment.
+
+**Required scope:** `manage:environments`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Display name for the environment. |
+| `slug` | `string` | Yes | URL-safe identifier (e.g., `dev`, `staging`, `prod`). |
+| `workspaceId` | `string` | Yes | Target workspace ID. |
+| `description` | `string` | No | Environment description. |
+| `color` | `string` | No | Hex color code for UI display. |
+| `promotionRules` | `object` | No | Promotion configuration. |
+| `promotionRules.requiresApproval` | `boolean` | No | Whether deployments require approval. |
+| `promotionRules.approvers` | `string[]` | No | User IDs authorized to approve. |
+| `promotionRules.autoPromoteFrom` | `string` | No | Environment slug to auto-promote from. |
+| `promotionRules.requiredChecks` | `string[]` | No | Checks that must pass before promotion. |
+| `accessControl` | `object` | No | Access control configuration. |
+| `accessControl.allowedRoles` | `string[]` | No | Roles allowed to deploy. |
+| `accessControl.allowedTeamIds` | `string[]` | No | Team IDs allowed to deploy. |
+| `variables` | `object` | No | Environment-specific variable key-value pairs. |
+| `protected` | `boolean` | No | Protect environment from deletion. Defaults to `false`. |
+
+## Response `201`
+
+Returns the created environment object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/environments \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Staging",
+    "slug": "staging",
+    "workspaceId": "ws-001",
+    "promotionRules": {
+      "requiresApproval": true,
+      "approvers": ["user-001"],
+      "autoPromoteFrom": "dev"
+    },
+    "protected": false
+  }'
+```
+
+```json title="Response"
+{
+  "id": "env-new",
+  "name": "Staging",
+  "slug": "staging",
+  "workspaceId": "ws-001",
+  "promotionRules": {
+    "requiresApproval": true,
+    "approvers": ["user-001"],
+    "autoPromoteFrom": "dev"
+  },
+  "protected": false,
+  "createdAt": "2024-06-10T12:00:00Z"
+}
+```

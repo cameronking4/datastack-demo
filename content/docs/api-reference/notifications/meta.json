@@ -1,0 +1,10 @@
+{
+  "title": "Notifications",
+  "pages": [
+    "list-channels",
+    "create-channel",
+    "get-channel",
+    "update-channel",
+    "delete-channel"
+  ]
+}

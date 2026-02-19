@@ -1,0 +1,29 @@
+---
+title: Delete Notification Channel
+description: Remove a notification channel.
+---
+
+```
+DELETE /api/v1/notifications/{notificationId}
+```
+
+Permanently remove a notification channel.
+
+**Required scope:** `manage:notifications`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `notificationId` | `string` | The notification channel identifier. |
+
+## Response `204`
+
+No content returned on success.
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE /api/v1/notifications/notif-001 \
+  -H "Authorization: Bearer <accessToken>"
+```

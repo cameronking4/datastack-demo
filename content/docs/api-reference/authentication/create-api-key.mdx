@@ -7,7 +7,7 @@ description: Create a new API key. The full key is returned only once.
 POST /api/v1/auth/api-keys
 ```
 
-Create a new API key with the specified name and scopes. The full key value is returned **only in this response** — store it securely.
+Create a new API key with scopes, expiration, and rate limiting. The full key value is returned **only in this response** — store it securely.
 
 **Required scope:** `manage:api_keys`
 
@@ -18,6 +18,14 @@ Create a new API key with the specified name and scopes. The full key value is r
 | `name` | `string` | Yes | Display name for the key. |
 | `scopes` | `string[]` | Yes | Permission scopes to grant. |
 | `expiresInDays` | `number` | No | Days until expiration. Defaults to `90`. |
+| `rateLimit` | `object` | No | Rate limiting configuration. |
+| `rateLimit.requestsPerMinute` | `number` | No | Max requests per minute. |
+| `rateLimit.requestsPerDay` | `number` | No | Max requests per day. |
+| `rotationPolicy` | `object` | No | Key rotation configuration. |
+| `rotationPolicy.autoRotate` | `boolean` | No | Enable automatic key rotation. |
+| `rotationPolicy.rotationIntervalDays` | `number` | No | Days between rotations. |
+| `allowedIpRanges` | `string[]` | No | IP CIDR ranges allowed to use this key. |
+| `metadata` | `object` | No | Key-value metadata tags. |
 
 ## Response `201`
 
