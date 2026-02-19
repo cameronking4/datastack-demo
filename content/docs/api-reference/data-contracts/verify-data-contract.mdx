@@ -1,0 +1,117 @@
+---
+title: Verify Data Contract
+description: Run verification checks against a data contract.
+---
+
+```
+POST /api/v1/data-contracts/{contractId}/verify
+```
+
+Runs verification checks against a data contract to validate schema conformance, SLA compliance, and quality rules.
+
+**Required scope:** `manage:data-contracts`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `contractId` | `string` | Contract identifier. |
+
+## Request Body
+
+The request body is optional. If omitted, all checks run with default settings.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `checks` | `string[]` | No | Checks to run (`SCHEMA`, `SLA`, `QUALITY`, `FRESHNESS`, `ALL`). Defaults to `["ALL"]`. |
+| `sampleSize` | `integer` | No | Number of rows to sample. Defaults to `10000`. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `contractId` | `string` | Contract identifier. |
+| `verificationId` | `string` | Unique verification run identifier. |
+| `status` | `string` | Overall result (`PASSED`, `FAILED`). |
+| `checksRun` | `string[]` | List of checks that were executed. |
+| `sampleSize` | `number` | Rows sampled. |
+| `results.schema` | `object` | Schema check results. |
+| `results.schema.status` | `string` | `PASSED` or `FAILED`. |
+| `results.schema.columnsChecked` | `number` | Number of columns validated. |
+| `results.schema.missingColumns` | `string[]` | Columns missing from the table. |
+| `results.schema.typeMismatches` | `object[]` | Columns with type mismatches. |
+| `results.sla` | `object` | SLA check results. |
+| `results.sla.status` | `string` | `PASSED` or `FAILED`. |
+| `results.sla.freshnessMinutes` | `number` | Actual data freshness in minutes. |
+| `results.sla.freshnessThreshold` | `number` | Configured freshness threshold. |
+| `results.sla.uptimePercent` | `number` | Actual uptime percentage. |
+| `results.sla.uptimeThreshold` | `number` | Configured uptime threshold. |
+| `results.quality` | `object` | Quality check results. |
+| `results.quality.status` | `string` | `PASSED` or `FAILED`. |
+| `results.quality.rulesEvaluated` | `number` | Total rules checked. |
+| `results.quality.rulesPassed` | `number` | Rules that passed. |
+| `results.quality.rulesFailed` | `number` | Rules that failed. |
+| `results.quality.details` | `object[]` | Per-rule results. |
+| `results.freshness` | `object` | Freshness check results. |
+| `results.freshness.status` | `string` | `PASSED` or `FAILED`. |
+| `results.freshness.lastRecordAt` | `string` | ISO 8601 timestamp of the most recent record. |
+| `results.freshness.latencyMinutes` | `number` | Current latency in minutes. |
+| `results.freshness.threshold` | `number` | Configured freshness threshold. |
+| `startedAt` | `string` | ISO 8601 timestamp when the verification started. |
+| `completedAt` | `string` | ISO 8601 timestamp when the verification completed. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/data-contracts/dc-001/verify" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "checks": ["SCHEMA", "QUALITY"],
+    "sampleSize": 5000
+  }'
+```
+
+```json title="Response"
+{
+  "contractId": "dc-001",
+  "verificationId": "ver-1718006400000",
+  "status": "PASSED",
+  "checksRun": ["SCHEMA", "QUALITY"],
+  "sampleSize": 5000,
+  "results": {
+    "schema": {
+      "status": "PASSED",
+      "columnsChecked": 5,
+      "missingColumns": [],
+      "typeMismatches": []
+    },
+    "sla": {
+      "status": "PASSED",
+      "freshnessMinutes": 8,
+      "freshnessThreshold": 15,
+      "uptimePercent": 99.97,
+      "uptimeThreshold": 99.9
+    },
+    "quality": {
+      "status": "PASSED",
+      "rulesEvaluated": 3,
+      "rulesPassed": 3,
+      "rulesFailed": 0,
+      "details": [
+        { "rule": "NOT_NULL", "column": "event_id", "expected": 100, "actual": 100, "status": "PASSED" },
+        { "rule": "UNIQUE", "column": "event_id", "expected": 99.99, "actual": 100, "status": "PASSED" },
+        { "rule": "FRESHNESS", "column": "timestamp", "expected": 15, "actual": 8, "status": "PASSED" }
+      ]
+    },
+    "freshness": {
+      "status": "PASSED",
+      "lastRecordAt": "2024-06-10T07:55:00Z",
+      "latencyMinutes": 5,
+      "threshold": 15
+    }
+  },
+  "startedAt": "2024-06-10T08:00:00Z",
+  "completedAt": "2024-06-10T08:00:01Z"
+}
+```

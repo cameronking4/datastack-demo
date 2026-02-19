@@ -1,0 +1,78 @@
+---
+title: Update Data Contract
+description: Update an existing data contract.
+---
+
+```
+PATCH /api/v1/data-contracts/{contractId}
+```
+
+Update fields on an existing data contract. Only the provided fields are changed; omitted fields remain unchanged. The version is automatically incremented.
+
+**Required scope:** `manage:data-contracts`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `contractId` | `string` | Contract identifier. |
+
+## Request Body
+
+All fields are optional. Only included fields are updated.
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | Contract display name. |
+| `description` | `string` | Human-readable description. |
+| `status` | `string` | Contract status (`ACTIVE`, `DRAFT`, `EXPIRED`, `ARCHIVED`). |
+| `producer` | `object` | Producer team details. |
+| `consumer` | `object` | Consumer team details. |
+| `schema` | `object[]` | Updated column definitions. |
+| `sla` | `object` | Updated SLA thresholds. |
+| `qualityRules` | `object[]` | Updated quality rules. |
+| `tags` | `object` | Updated key-value metadata tags. |
+| `expiresAt` | `string` | ISO 8601 expiration timestamp. |
+
+## Response `200`
+
+Returns the updated data contract object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH "/api/v1/data-contracts/dc-001" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "ACTIVE",
+    "sla": { "freshnessMinutes": 10, "uptimePercent": 99.95, "maxNullPercent": 0.5 }
+  }'
+```
+
+```json title="Response"
+{
+  "id": "dc-001",
+  "name": "User Events Contract",
+  "description": "Contract for user behavioral events",
+  "producer": { "team": "platform-engineering", "contactEmail": "platform@acme.com" },
+  "consumer": { "team": "analytics", "contactEmail": "analytics@acme.com" },
+  "table": "catalog_main.events.user_actions",
+  "status": "ACTIVE",
+  "version": "2.2.0",
+  "schema": [
+    { "column": "event_id", "type": "STRING", "nullable": false, "piiClassification": "NONE" },
+    { "column": "user_id", "type": "STRING", "nullable": false, "piiClassification": "HIGH" }
+  ],
+  "sla": { "freshnessMinutes": 10, "uptimePercent": 99.95, "maxNullPercent": 0.5 },
+  "qualityRules": [],
+  "tags": { "domain": "events", "tier": "critical" },
+  "lastVerifiedAt": "2024-06-10T08:00:00Z",
+  "lastVerificationStatus": "PASSED",
+  "violationCount": 0,
+  "expiresAt": "2025-06-01T00:00:00Z",
+  "createdAt": "2024-01-15T10:00:00Z",
+  "updatedAt": "2024-06-10T12:00:00Z",
+  "createdBy": "user-042"
+}
+```

@@ -1,0 +1,29 @@
+---
+title: Delete Data Contract
+description: Delete a data contract.
+---
+
+```
+DELETE /api/v1/data-contracts/{contractId}
+```
+
+Permanently deletes a data contract and its associated violation history.
+
+**Required scope:** `manage:data-contracts`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `contractId` | `string` | Contract identifier. |
+
+## Response `204`
+
+No content.
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE "/api/v1/data-contracts/dc-001" \
+  -H "Authorization: Bearer <accessToken>"
+```

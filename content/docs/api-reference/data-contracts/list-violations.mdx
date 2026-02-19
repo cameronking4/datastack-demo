@@ -1,0 +1,80 @@
+---
+title: List Violations
+description: List violations detected for a data contract.
+---
+
+```
+GET /api/v1/data-contracts/{contractId}/violations
+```
+
+Returns a paginated list of violations detected for a data contract. Filter by severity, date, or resolution status.
+
+**Required scope:** `read:data-contracts`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `contractId` | `string` | Contract identifier. |
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `page` | `number` | `1` | Page number. |
+| `pageSize` | `number` | `25` | Results per page (1-100). |
+| `severity` | `string` | — | Filter by severity (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`). |
+| `since` | `string` | — | Only return violations detected after this ISO 8601 timestamp. |
+| `resolved` | `boolean` | — | Filter by resolution status (`true` or `false`). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `violations` | `object[]` | Array of violation objects. |
+| `violations[].id` | `string` | Violation identifier. |
+| `violations[].contractId` | `string` | Parent contract identifier. |
+| `violations[].type` | `string` | Violation type (`FRESHNESS`, `QUALITY`, `SCHEMA`). |
+| `violations[].severity` | `string` | Severity level (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`). |
+| `violations[].message` | `string` | Human-readable violation description. |
+| `violations[].column` | `string\|null` | Affected column, if applicable. |
+| `violations[].rule` | `string` | Rule that was violated. |
+| `violations[].expectedValue` | `any` | Expected value per the contract. |
+| `violations[].actualValue` | `any` | Observed value. |
+| `violations[].detectedAt` | `string` | ISO 8601 detection timestamp. |
+| `violations[].resolvedAt` | `string\|null` | ISO 8601 resolution timestamp. |
+| `violations[].resolved` | `boolean` | Whether the violation has been resolved. |
+| `violations[].resolvedBy` | `string\|null` | User who resolved the violation. |
+| `violations[].resolution` | `string\|null` | Description of the resolution. |
+| `totalCount` | `number` | Total number of violations matching the filters. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/data-contracts/dc-002/violations?severity=CRITICAL&resolved=false" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "violations": [
+    {
+      "id": "viol-001",
+      "contractId": "dc-002",
+      "type": "FRESHNESS",
+      "severity": "CRITICAL",
+      "message": "Data freshness exceeded SLA threshold: 42 minutes (threshold: 15 minutes)",
+      "column": null,
+      "rule": "FRESHNESS",
+      "expectedValue": 15,
+      "actualValue": 42,
+      "detectedAt": "2024-06-09T22:15:00Z",
+      "resolvedAt": null,
+      "resolved": false,
+      "resolvedBy": null,
+      "resolution": null
+    }
+  ],
+  "totalCount": 1
+}
+```

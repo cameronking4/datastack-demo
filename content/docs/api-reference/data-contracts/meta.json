@@ -1,0 +1,12 @@
+{
+  "title": "Data Contracts",
+  "pages": [
+    "list-data-contracts",
+    "create-data-contract",
+    "get-data-contract",
+    "update-data-contract",
+    "delete-data-contract",
+    "verify-data-contract",
+    "list-violations"
+  ]
+}

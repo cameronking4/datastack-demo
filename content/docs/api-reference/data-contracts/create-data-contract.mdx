@@ -1,0 +1,98 @@
+---
+title: Create Data Contract
+description: Create a new data contract between a producer and consumer team.
+---
+
+```
+POST /api/v1/data-contracts
+```
+
+Create a new data contract. The contract starts in `DRAFT` status.
+
+**Required scope:** `manage:data-contracts`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Contract display name. |
+| `description` | `string` | No | Human-readable description. |
+| `producer` | `object` | Yes | Producer team details. |
+| `producer.team` | `string` | Yes | Producer team name. |
+| `producer.contactEmail` | `string` | No | Producer contact email. |
+| `consumer` | `object` | Yes | Consumer team details. |
+| `consumer.team` | `string` | Yes | Consumer team name. |
+| `consumer.contactEmail` | `string` | No | Consumer contact email. |
+| `table` | `string` | Yes | Fully-qualified table name. |
+| `schema` | `object[]` | Yes | Column definitions. |
+| `schema[].column` | `string` | Yes | Column name. |
+| `schema[].type` | `string` | Yes | Column data type. |
+| `schema[].nullable` | `boolean` | No | Whether the column allows nulls. |
+| `schema[].piiClassification` | `string` | No | PII level (`NONE`, `LOW`, `MEDIUM`, `HIGH`). |
+| `sla` | `object` | No | SLA thresholds. |
+| `sla.freshnessMinutes` | `integer` | No | Max acceptable data age in minutes. |
+| `sla.uptimePercent` | `number` | No | Required uptime percentage. |
+| `sla.maxNullPercent` | `number` | No | Maximum acceptable null percentage. |
+| `qualityRules` | `object[]` | No | Quality rule definitions. |
+| `qualityRules[].rule` | `string` | No | Rule type (e.g. `NOT_NULL`, `UNIQUE`, `FRESHNESS`, `RANGE`, `POSITIVE`). |
+| `qualityRules[].column` | `string` | No | Target column. |
+| `qualityRules[].threshold` | `number` | No | Rule threshold value. |
+| `tags` | `object` | No | Key-value metadata tags. |
+| `expiresAt` | `string` | No | ISO 8601 expiration timestamp. |
+
+## Response `201`
+
+Returns the created data contract object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/data-contracts \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "User Events Contract",
+    "description": "Contract for user behavioral events",
+    "producer": { "team": "platform-engineering", "contactEmail": "platform@acme.com" },
+    "consumer": { "team": "analytics", "contactEmail": "analytics@acme.com" },
+    "table": "catalog_main.events.user_actions",
+    "schema": [
+      { "column": "event_id", "type": "STRING", "nullable": false, "piiClassification": "NONE" },
+      { "column": "user_id", "type": "STRING", "nullable": false, "piiClassification": "HIGH" }
+    ],
+    "sla": { "freshnessMinutes": 15, "uptimePercent": 99.9, "maxNullPercent": 1.0 },
+    "qualityRules": [
+      { "rule": "NOT_NULL", "column": "event_id", "threshold": 100 }
+    ],
+    "tags": { "domain": "events", "tier": "critical" }
+  }'
+```
+
+```json title="Response"
+{
+  "id": "dc-new",
+  "name": "User Events Contract",
+  "description": "Contract for user behavioral events",
+  "producer": { "team": "platform-engineering", "contactEmail": "platform@acme.com" },
+  "consumer": { "team": "analytics", "contactEmail": "analytics@acme.com" },
+  "table": "catalog_main.events.user_actions",
+  "status": "DRAFT",
+  "version": "1.0.0",
+  "schema": [
+    { "column": "event_id", "type": "STRING", "nullable": false, "piiClassification": "NONE" },
+    { "column": "user_id", "type": "STRING", "nullable": false, "piiClassification": "HIGH" }
+  ],
+  "sla": { "freshnessMinutes": 15, "uptimePercent": 99.9, "maxNullPercent": 1.0 },
+  "qualityRules": [
+    { "rule": "NOT_NULL", "column": "event_id", "threshold": 100 }
+  ],
+  "tags": { "domain": "events", "tier": "critical" },
+  "lastVerifiedAt": null,
+  "lastVerificationStatus": null,
+  "violationCount": 0,
+  "expiresAt": null,
+  "createdAt": "2024-06-10T12:00:00Z",
+  "updatedAt": "2024-06-10T12:00:00Z",
+  "createdBy": "api"
+}
+```

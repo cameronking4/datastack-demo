@@ -17,6 +17,7 @@
     "---Data Management---",
     "catalogs",
     "connections",
+    "data-contracts",
     "---Infrastructure---",
     "stacks",
     "deployments",
