@@ -1,0 +1,53 @@
+---
+title: Update Environment
+description: Update environment settings, promotion rules, or access controls.
+---
+
+```
+PATCH /api/v1/environments/{environmentId}
+```
+
+Update an existing environment's configuration.
+
+**Required scope:** `manage:environments`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `environmentId` | `string` | The environment identifier. |
+
+## Request Body
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | Display name. |
+| `description` | `string` | Environment description. |
+| `color` | `string` | Display color. |
+| `promotionRules` | `object` | Promotion configuration. |
+| `accessControl` | `object` | Access restrictions. |
+| `variables` | `object` | Environment-specific variables. |
+| `protected` | `boolean` | Prevent accidental deletion. |
+
+## Response `200`
+
+Returns the updated environment.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/environments/env-001 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "variables": {
+      "LOG_LEVEL": "debug"
+    }
+  }'
+```
+
+```json title="Response"
+{
+  "message": "Environment env-001 updated."
+}
+```

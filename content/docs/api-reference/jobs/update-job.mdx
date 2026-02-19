@@ -1,0 +1,59 @@
+---
+title: Update Job
+description: Update job configuration, schedule, or retry policy.
+---
+
+```
+PATCH /api/v1/jobs/{jobId}
+```
+
+Update an existing job's configuration, schedule, triggers, or retry policy.
+
+**Required scope:** `manage:jobs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `jobId` | `string` | The job identifier. |
+
+## Request Body
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | Display name. |
+| `description` | `string` | Job description. |
+| `schedule` | `string` | Cron expression. |
+| `timezone` | `string` | IANA timezone for the schedule. |
+| `triggerType` | `string` | One of `PERIODIC`, `CONTINUOUS`, `ONE_TIME`, `FILE_ARRIVAL`, `TABLE_UPDATE`. |
+| `maxConcurrentRuns` | `number` | Maximum concurrent runs. |
+| `retryPolicy` | `object` | Retry configuration. |
+| `retryPolicy.maxRetries` | `number` | Maximum retry attempts. |
+| `retryPolicy.retryIntervalSeconds` | `number` | Seconds between retries. |
+| `retryPolicy.retryOnTimeout` | `boolean` | Retry on timeout. |
+| `alertDestinations` | `object[]` | Alert notification targets. |
+| `settings` | `object` | Execution settings (clusterId, notebookPath, timeoutSeconds). |
+| `state` | `string` | One of `ACTIVE`, `PAUSED`, `DISABLED`. |
+| `tags` | `object` | Key-value tags. |
+
+## Response `200`
+
+Returns the updated job.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/jobs/job-001 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "schedule": "0 */2 * * *",
+    "state": "PAUSED"
+  }'
+```
+
+```json title="Response"
+{
+  "message": "Job job-001 updated."
+}
+```

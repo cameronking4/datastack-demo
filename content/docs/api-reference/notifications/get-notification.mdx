@@ -1,0 +1,43 @@
+---
+title: Get Notification Channel
+description: Get notification channel details including delivery statistics.
+---
+
+```
+GET /api/v1/notifications/{notificationId}
+```
+
+Returns full details for a notification channel, including delivery statistics.
+
+**Required scope:** `read:notifications`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `notificationId` | `string` | The notification channel identifier. |
+
+## Response `200`
+
+Returns the notification channel object.
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/notifications/notif-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "notif-001",
+  "name": "Ops Slack",
+  "type": "slack",
+  "enabled": true,
+  "config": {
+    "slackChannel": "#ops-alerts"
+  },
+  "severityFilter": ["error", "critical"],
+  "createdAt": "2024-03-01T09:00:00Z"
+}
+```

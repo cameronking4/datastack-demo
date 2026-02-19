@@ -7,7 +7,7 @@ description: List all API keys for the authenticated user.
 GET /api/v1/auth/api-keys
 ```
 
-Returns all API keys belonging to the authenticated user.
+Returns all API keys with usage statistics and expiration info.
 
 **Required scope:** `manage:api_keys`
 
@@ -15,7 +15,7 @@ Returns all API keys belonging to the authenticated user.
 
 | Parameter | Type | Description |
 |---|---|---|
-| `status` | `string` | Filter by key status (`ACTIVE`, `REVOKED`). |
+| `status` | `string` | Filter by key status: `active`, `expired`, or `revoked`. |
 
 ## Response `200`
 

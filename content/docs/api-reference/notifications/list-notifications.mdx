@@ -1,0 +1,48 @@
+---
+title: List Notification Channels
+description: List configured notification channels and preferences.
+---
+
+```
+GET /api/v1/notifications
+```
+
+Returns all configured notification channels, optionally filtered by type or enabled status.
+
+**Required scope:** `read:notifications`
+
+## Query Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `type` | `string` | Filter by channel type: `email`, `slack`, `pagerduty`, `webhook`, or `teams`. |
+| `enabled` | `boolean` | Filter by enabled status. |
+
+## Response `200`
+
+Returns an array of notification channel objects.
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/notifications?type=slack&enabled=true" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "channels": [
+    {
+      "id": "notif-001",
+      "name": "Ops Slack",
+      "type": "slack",
+      "enabled": true,
+      "config": {
+        "slackChannel": "#ops-alerts"
+      },
+      "createdAt": "2024-03-01T09:00:00Z"
+    }
+  ],
+  "totalCount": 1
+}
+```

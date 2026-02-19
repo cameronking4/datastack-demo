@@ -14,14 +14,17 @@
     "pipelines",
     "notebooks",
     "queries",
+    "schedules",
     "---Data Management---",
     "catalogs",
     "connections",
     "---Infrastructure---",
     "stacks",
     "deployments",
+    "environments",
     "workspaces",
-    "---Other---",
+    "---Observability---",
+    "notifications",
     "webhooks"
   ]
 }

@@ -1,6 +1,6 @@
 ---
 title: Generate Token
-description: Exchange credentials for an access token using the OAuth2 client_credentials grant.
+description: Exchange credentials for an access token using the OAuth2 client_credentials or refresh_token grant.
 ---
 
 ```
@@ -13,8 +13,10 @@ Exchange client credentials for a short-lived access token.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `grantType` | `string` | No | Grant type. Use `client_credentials`. |
+| `grantType` | `string` | Yes | Grant type. One of `client_credentials` or `refresh_token`. |
 | `scopes` | `string[]` | No | Requested permission scopes. Defaults to `["read:users", "read:workspaces"]`. |
+| `refreshToken` | `string` | No | Required when `grantType` is `refresh_token`. |
+| `audience` | `string` | No | Target audience for the token. |
 
 ## Response `200`
 

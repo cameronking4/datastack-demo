@@ -1,0 +1,39 @@
+---
+title: List Environments
+description: List deployment environments with promotion rules and access controls.
+---
+
+```
+GET /api/v1/environments
+```
+
+Returns all deployment environments configured in the workspace.
+
+**Required scope:** `read:environments`
+
+## Response `200`
+
+Returns an array of environment objects.
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/environments \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "environments": [
+    {
+      "id": "env-001",
+      "name": "Production",
+      "slug": "production",
+      "workspaceId": "ws-001",
+      "protected": true,
+      "createdAt": "2024-03-01T09:00:00Z"
+    }
+  ],
+  "totalCount": 1
+}
+```

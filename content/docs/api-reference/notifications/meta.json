@@ -1,0 +1,10 @@
+{
+  "title": "Notifications",
+  "pages": [
+    "list-notifications",
+    "create-notification",
+    "get-notification",
+    "update-notification",
+    "delete-notification"
+  ]
+}

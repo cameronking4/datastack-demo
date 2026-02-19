@@ -18,7 +18,7 @@ See [Authentication](/docs/getting-started/authentication) for details.
 
 List endpoints support pagination via query parameters. Three patterns are used:
 
-**Page-based** (clusters, SQL warehouses, users, stacks, connections, queries, deployments):
+**Page-based** (clusters, SQL warehouses, users, stacks, connections, queries, deployments, environments, notifications, schedules):
 
 | Parameter | Default | Max |
 |---|---|---|
@@ -50,6 +50,10 @@ List responses wrap results in a typed array with a count:
 ```
 
 Single-resource responses return the object directly.
+
+## Token Refresh
+
+Access tokens expire after 3600 seconds. Use the [Refresh Token](/docs/api-reference/authentication/refresh-token) endpoint to obtain a new access token without re-authenticating.
 
 ## Timestamps
 

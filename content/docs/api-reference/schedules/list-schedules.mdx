@@ -1,0 +1,48 @@
+---
+title: List Schedules
+description: List unified schedules across jobs, pipelines, and maintenance windows.
+---
+
+```
+GET /api/v1/schedules
+```
+
+Returns all schedules, optionally filtered by resource type or active status.
+
+**Required scope:** `read:schedules`
+
+## Query Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `resourceType` | `string` | Filter by type: `job`, `pipeline`, or `maintenance`. |
+| `active` | `boolean` | Filter by active status. |
+
+## Response `200`
+
+Returns an array of schedule objects.
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/schedules?resourceType=job&active=true" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "schedules": [
+    {
+      "id": "sched-001",
+      "name": "Nightly ETL",
+      "resourceType": "job",
+      "resourceId": "job-001",
+      "scheduleExpression": "0 2 * * *",
+      "timezone": "America/New_York",
+      "active": true,
+      "createdAt": "2024-03-01T09:00:00Z"
+    }
+  ],
+  "totalCount": 1
+}
+```

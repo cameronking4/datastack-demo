@@ -21,7 +21,7 @@ Include the token in subsequent requests:
 Authorization: Bearer <accessToken>
 ```
 
-Tokens expire after **3600 seconds** (1 hour). Use the returned `refreshToken` to obtain a new access token without re-authenticating. Revoke tokens via [Revoke Token](/docs/api-reference/authentication/revoke-token).
+Tokens expire after **3600 seconds** (1 hour). Use the returned `refreshToken` with the [Refresh Token](/docs/api-reference/authentication/refresh-token) endpoint to obtain a new access token without re-authenticating. Revoke tokens via [Revoke Token](/docs/api-reference/authentication/revoke-token).
 
 ## API Keys
 
@@ -74,5 +74,11 @@ Scopes control what a token or API key can access. Request only the scopes you n
 | `manage:queries` | Create, update, execute, and delete queries |
 | `read:deployments` | List and view deployments |
 | `manage:deployments` | Promote and rollback deployments |
+| `read:environments` | List and view environments |
+| `manage:environments` | Create, update, and delete environments |
+| `read:notifications` | List and view notification channels |
+| `manage:notifications` | Create, update, and delete notification channels |
+| `read:schedules` | List and view schedules |
+| `manage:schedules` | Create, update, and delete schedules |
 | `manage:webhooks` | Create, update, and delete webhooks |
 | `manage:api_keys` | Create and revoke API keys |

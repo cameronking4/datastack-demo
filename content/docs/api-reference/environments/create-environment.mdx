@@ -1,0 +1,64 @@
+---
+title: Create Environment
+description: Create a new deployment environment with approval and promotion configuration.
+---
+
+```
+POST /api/v1/environments
+```
+
+Create a new deployment environment with optional promotion rules and access controls.
+
+**Required scope:** `manage:environments`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Display name. |
+| `slug` | `string` | Yes | URL-safe identifier. |
+| `workspaceId` | `string` | Yes | Parent workspace. |
+| `description` | `string` | No | Environment description. |
+| `color` | `string` | No | Display color. |
+| `promotionRules` | `object` | No | Promotion configuration. |
+| `promotionRules.requiresApproval` | `boolean` | No | Require approval before promotion. |
+| `promotionRules.approvers` | `string[]` | No | User IDs who can approve. |
+| `promotionRules.autoPromoteFrom` | `string` | No | Environment slug to auto-promote from. |
+| `promotionRules.requiredChecks` | `string[]` | No | Checks that must pass before promotion. |
+| `accessControl` | `object` | No | Access restrictions. |
+| `accessControl.allowedRoles` | `string[]` | No | Roles with deploy access. |
+| `accessControl.allowedTeamIds` | `string[]` | No | Team IDs with deploy access. |
+| `variables` | `object` | No | Environment-specific variables. |
+| `protected` | `boolean` | No | Prevent accidental deletion. |
+
+## Response `201`
+
+Returns the created environment.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/environments \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Staging",
+    "slug": "staging",
+    "workspaceId": "ws-001",
+    "promotionRules": {
+      "requiresApproval": false,
+      "autoPromoteFrom": "development"
+    }
+  }'
+```
+
+```json title="Response"
+{
+  "id": "env-002",
+  "name": "Staging",
+  "slug": "staging",
+  "workspaceId": "ws-001",
+  "protected": false,
+  "createdAt": "2024-06-01T10:00:00Z"
+}
+```
