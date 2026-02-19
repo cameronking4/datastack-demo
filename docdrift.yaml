@@ -29,7 +29,8 @@ pathMappings:
   - match: lib/api/preview.ts
     impacts:
       - ./content/docs/*
-mode: auto
+mode: strict
+branchStrategy: single
 devin:
   apiVersion: v1
   unlisted: true
