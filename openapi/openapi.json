@@ -5058,6 +5058,471 @@
           }
         }
       }
+    },
+    "/api/v1/data-contracts": {
+      "get": {
+        "summary": "List data contracts",
+        "description": "List data contracts with optional filters for status, owner, and table",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "DRAFT",
+                "VIOLATED",
+                "EXPIRED",
+                "ARCHIVED"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "owner",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "table",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "name",
+                "createdAt",
+                "updatedAt",
+                "status"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortOrder",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create data contract",
+        "description": "Create a new data contract between a producer and consumer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "producer",
+                  "consumer",
+                  "table",
+                  "schema"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "producer": {
+                    "type": "object",
+                    "required": [
+                      "team"
+                    ],
+                    "properties": {
+                      "team": {
+                        "type": "string"
+                      },
+                      "contactEmail": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "consumer": {
+                    "type": "object",
+                    "required": [
+                      "team"
+                    ],
+                    "properties": {
+                      "team": {
+                        "type": "string"
+                      },
+                      "contactEmail": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "table": {
+                    "type": "string"
+                  },
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "column",
+                        "type"
+                      ],
+                      "properties": {
+                        "column": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "nullable": {
+                          "type": "boolean"
+                        },
+                        "piiClassification": {
+                          "type": "string",
+                          "enum": [
+                            "NONE",
+                            "LOW",
+                            "MEDIUM",
+                            "HIGH"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "sla": {
+                    "type": "object",
+                    "properties": {
+                      "freshnessMinutes": {
+                        "type": "integer"
+                      },
+                      "uptimePercent": {
+                        "type": "number"
+                      },
+                      "maxNullPercent": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "qualityRules": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "rule": {
+                          "type": "string"
+                        },
+                        "column": {
+                          "type": "string"
+                        },
+                        "threshold": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "expiresAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/data-contracts/{contractId}": {
+      "get": {
+        "summary": "Get data contract",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contractId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update data contract",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contractId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ACTIVE",
+                      "DRAFT",
+                      "EXPIRED",
+                      "ARCHIVED"
+                    ]
+                  },
+                  "producer": {
+                    "type": "object",
+                    "properties": {
+                      "team": {
+                        "type": "string"
+                      },
+                      "contactEmail": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "consumer": {
+                    "type": "object",
+                    "properties": {
+                      "team": {
+                        "type": "string"
+                      },
+                      "contactEmail": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "column": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "nullable": {
+                          "type": "boolean"
+                        },
+                        "piiClassification": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "sla": {
+                    "type": "object",
+                    "properties": {
+                      "freshnessMinutes": {
+                        "type": "integer"
+                      },
+                      "uptimePercent": {
+                        "type": "number"
+                      },
+                      "maxNullPercent": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "qualityRules": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "rule": {
+                          "type": "string"
+                        },
+                        "column": {
+                          "type": "string"
+                        },
+                        "threshold": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "expiresAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete data contract",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contractId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/api/v1/data-contracts/{contractId}/verify": {
+      "post": {
+        "summary": "Verify data contract",
+        "description": "Run verification checks against a data contract to validate schema conformance, SLA compliance, and quality rules",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contractId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "checks": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "SCHEMA",
+                        "SLA",
+                        "QUALITY",
+                        "FRESHNESS",
+                        "ALL"
+                      ]
+                    }
+                  },
+                  "sampleSize": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/data-contracts/{contractId}/violations": {
+      "get": {
+        "summary": "List contract violations",
+        "description": "List violations detected for a data contract with optional severity and date filters",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "contractId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "severity",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CRITICAL",
+                "HIGH",
+                "MEDIUM",
+                "LOW"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "since",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "in": "query",
+            "name": "resolved",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
     }
   },
   "tags": []
