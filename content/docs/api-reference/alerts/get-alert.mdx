@@ -1,0 +1,59 @@
+---
+title: Get Alert
+description: Get alert details including trigger history and notification channels.
+---
+
+```
+GET /api/v1/alerts/{alertId}
+```
+
+Returns full details for a single alert.
+
+**Required scope:** `read:alerts`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `alertId` | `string` | The alert identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Alert identifier. |
+| `name` | `string` | Alert name. |
+| `condition` | `string` | Trigger condition expression. |
+| `severity` | `string` | Severity level. |
+| `target` | `object` | Monitored resource. |
+| `target.type` | `string` | Resource type. |
+| `target.id` | `string` | Resource identifier. |
+| `channels` | `string[]` | Notification channels. |
+| `active` | `boolean` | Whether the alert is active. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `createdBy` | `string` | Creator email. |
+| `lastTriggeredAt` | `string\|null` | Last trigger timestamp. |
+| `triggerCount` | `number` | Total trigger count. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/alerts/alert-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "alert-001",
+  "name": "Job Failure Alert",
+  "condition": "job.status == FAILED",
+  "severity": "CRITICAL",
+  "target": { "type": "job", "id": "1001" },
+  "channels": ["email", "slack"],
+  "active": true,
+  "createdAt": "2024-03-10T08:00:00Z",
+  "createdBy": "ada@datastack.dev",
+  "lastTriggeredAt": "2024-06-09T14:22:00Z",
+  "triggerCount": 3
+}
+```

@@ -1,0 +1,58 @@
+---
+title: Update Alert
+description: Update an existing alert's configuration, severity, or notification channels.
+---
+
+```
+PATCH /api/v1/alerts/{alertId}
+```
+
+Update an existing alert's configuration.
+
+**Required scope:** `manage:alerts`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `alertId` | `string` | The alert identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Alert name. |
+| `condition` | `string` | No | Trigger condition expression. |
+| `severity` | `string` | No | Severity level. |
+| `channels` | `string[]` | No | Notification channels. |
+| `active` | `boolean` | No | Whether the alert is active. |
+
+## Response `200`
+
+Returns the updated alert object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/alerts/alert-001 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "severity": "WARNING",
+    "channels": ["email", "slack", "pagerduty"],
+    "active": false
+  }'
+```
+
+```json title="Response"
+{
+  "id": "alert-001",
+  "name": "Job Failure Alert",
+  "condition": "job.status == FAILED",
+  "severity": "WARNING",
+  "target": { "type": "job", "id": "1001" },
+  "channels": ["email", "slack", "pagerduty"],
+  "active": false,
+  "updatedAt": "2024-06-10T12:00:00Z"
+}
+```

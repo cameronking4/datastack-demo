@@ -1,0 +1,10 @@
+{
+  "title": "Alerts",
+  "pages": [
+    "list-alerts",
+    "create-alert",
+    "get-alert",
+    "update-alert",
+    "delete-alert"
+  ]
+}

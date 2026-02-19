@@ -1,0 +1,66 @@
+---
+title: List Alerts
+description: List monitoring alerts with severity and status information.
+---
+
+```
+GET /api/v1/alerts
+```
+
+Returns all monitoring alerts configured in the workspace.
+
+**Required scope:** `read:alerts`
+
+## Query Parameters
+
+| Parameter | Type | Default | Max | Description |
+|---|---|---|---|---|
+| `pageSize` | `integer` | `25` | `100` | Number of alerts per page. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `alerts` | `object[]` | Array of alert objects. |
+| `alerts[].id` | `string` | Alert identifier. |
+| `alerts[].name` | `string` | Alert name. |
+| `alerts[].condition` | `string` | Trigger condition expression. |
+| `alerts[].severity` | `string` | Severity level (e.g., `CRITICAL`, `WARNING`). |
+| `alerts[].target` | `object` | Monitored resource. |
+| `alerts[].target.type` | `string` | Resource type (e.g., `job`, `cluster`, `pipeline`). |
+| `alerts[].target.id` | `string` | Resource identifier. |
+| `alerts[].channels` | `string[]` | Notification channels (e.g., `email`, `slack`, `pagerduty`). |
+| `alerts[].active` | `boolean` | Whether the alert is active. |
+| `alerts[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `alerts[].createdBy` | `string` | Creator email. |
+| `alerts[].lastTriggeredAt` | `string\|null` | Last trigger timestamp, or `null` if never triggered. |
+| `alerts[].triggerCount` | `number` | Total number of times the alert has fired. |
+| `totalCount` | `number` | Total number of alerts. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/alerts \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "alerts": [
+    {
+      "id": "alert-001",
+      "name": "Job Failure Alert",
+      "condition": "job.status == FAILED",
+      "severity": "CRITICAL",
+      "target": { "type": "job", "id": "1001" },
+      "channels": ["email", "slack"],
+      "active": true,
+      "createdAt": "2024-03-10T08:00:00Z",
+      "createdBy": "ada@datastack.dev",
+      "lastTriggeredAt": "2024-06-09T14:22:00Z",
+      "triggerCount": 3
+    }
+  ],
+  "totalCount": 3
+}
+```

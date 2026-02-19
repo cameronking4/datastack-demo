@@ -1,0 +1,60 @@
+---
+title: Create Alert
+description: Create a new monitoring alert with condition, severity, and notification channels.
+---
+
+```
+POST /api/v1/alerts
+```
+
+Create a new monitoring alert.
+
+**Required scope:** `manage:alerts`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Alert name. |
+| `condition` | `string` | Yes | Trigger condition expression (e.g., `job.status == FAILED`). |
+| `severity` | `string` | Yes | Severity level (e.g., `CRITICAL`, `WARNING`). |
+| `target` | `object` | Yes | Resource to monitor. |
+| `target.type` | `string` | Yes | Resource type (e.g., `job`, `cluster`, `pipeline`). |
+| `target.id` | `string` | Yes | Resource identifier. |
+| `channels` | `string[]` | Yes | Notification channels (e.g., `email`, `slack`, `pagerduty`). |
+| `active` | `boolean` | No | Whether the alert is active. Defaults to `true`. |
+
+## Response `201`
+
+Returns the created alert object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/alerts \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Job Failure Alert",
+    "condition": "job.status == FAILED",
+    "severity": "CRITICAL",
+    "target": { "type": "job", "id": "1001" },
+    "channels": ["email", "slack"]
+  }'
+```
+
+```json title="Response"
+{
+  "id": "alert-new",
+  "name": "Job Failure Alert",
+  "condition": "job.status == FAILED",
+  "severity": "CRITICAL",
+  "target": { "type": "job", "id": "1001" },
+  "channels": ["email", "slack"],
+  "active": true,
+  "createdAt": "2024-06-10T12:00:00Z",
+  "createdBy": "api",
+  "lastTriggeredAt": null,
+  "triggerCount": 0
+}
+```

@@ -25,6 +25,8 @@
     "---Scheduling & Notifications---",
     "schedules",
     "notifications",
+    "---Monitoring---",
+    "alerts",
     "---Other---",
     "webhooks"
   ]
