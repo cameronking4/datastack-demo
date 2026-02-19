@@ -5,13 +5,28 @@ import { NextRequest, NextResponse } from "next/server";
  * /api/v1/users:
  *   get:
  *     summary: List users
- *     description: List users with pagination and filters
+ *     description: List users with pagination, role, and team filters
+ *     parameters:
+ *       - in: query
+ *         name: role
+ *         schema:
+ *           type: string
+ *           enum: [admin, editor, viewer, service_account]
+ *       - in: query
+ *         name: teamId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *           enum: [active, inactive, suspended, pending_verification]
  *     responses:
  *       200:
  *         description: Success
  *   post:
  *     summary: Create user
- *     description: Create a new user
+ *     description: Create a new user or service account
  *     requestBody:
  *       required: true
  *       content:
@@ -19,23 +34,39 @@ import { NextRequest, NextResponse } from "next/server";
  *           schema:
  *             type: object
  *             required:
- *               - fullName
+ *               - displayName
  *               - email
  *               - role
  *             properties:
- *               fullName:
+ *               displayName:
  *                 type: string
  *               email:
  *                 type: string
+ *                 format: email
  *               role:
  *                 type: string
+ *                 enum: [admin, editor, viewer, service_account]
+ *               department:
+ *                 type: string
+ *               teamIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               permissions:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               mfaEnabled:
+ *                 type: boolean
+ *               externalId:
+ *                 type: string
+ *               metadata:
+ *                 type: object
+ *                 additionalProperties:
+ *                   type: string
  *     responses:
  *       201:
  *         description: Created
- */
-/**
- * GET /api/v1/users
- * List users with pagination and filters
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -46,7 +77,7 @@ export async function GET(request: NextRequest) {
     data: [
       {
         id: "u1",
-        fullName: "Ada Lovelace",
+        displayName: "Ada Lovelace",
         email: "ada@datastack.dev",
         avatarUrl: "https://api.datastack.dev/avatars/ada.png",
         department: "Engineering",
@@ -55,6 +86,10 @@ export async function GET(request: NextRequest) {
         role: "admin",
         status: "active",
         lastLoginAt: "2024-06-10T08:00:00Z",
+        mfaEnabled: true,
+        teamIds: ["team-eng", "team-platform"],
+        permissions: ["clusters:write", "jobs:write", "pipelines:write", "admin:users"],
+        externalId: null,
       },
     ],
     pagination: {
@@ -66,21 +101,33 @@ export async function GET(request: NextRequest) {
   });
 }
 
-/**
- * POST /api/v1/users
- * Create a new user
- */
 export async function POST(request: NextRequest) {
-  const body = (await request.json()) as { fullName: string; email: string; role: string };
+  const body = (await request.json()) as {
+    displayName: string;
+    email: string;
+    role: string;
+    department?: string;
+    teamIds?: string[];
+    permissions?: string[];
+    mfaEnabled?: boolean;
+    externalId?: string;
+    metadata?: Record<string, string>;
+  };
   return NextResponse.json(
     {
       id: "u-new",
-      fullName: body.fullName,
+      displayName: body.displayName,
       email: body.email,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       role: body.role,
       status: "pending_verification",
+      department: body.department ?? null,
+      teamIds: body.teamIds ?? [],
+      permissions: body.permissions ?? [],
+      mfaEnabled: body.mfaEnabled ?? false,
+      externalId: body.externalId ?? null,
+      metadata: body.metadata ?? {},
     },
     { status: 201 }
   );

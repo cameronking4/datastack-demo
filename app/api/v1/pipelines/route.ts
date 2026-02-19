@@ -6,12 +6,24 @@ import { isPreviewEnabled } from "@/lib/api/preview";
  * /api/v1/pipelines:
  *   get:
  *     summary: List pipelines
- *     description: List Delta Live Tables pipelines
+ *     description: List Delta Live Tables pipelines with state and edition filters
+ *     parameters:
+ *       - in: query
+ *         name: state
+ *         schema:
+ *           type: string
+ *           enum: [RUNNING, IDLE, FAILED, STARTING, STOPPING]
+ *       - in: query
+ *         name: edition
+ *         schema:
+ *           type: string
+ *           enum: [CORE, PRO, ADVANCED]
  *     responses:
  *       200:
  *         description: Success
  *   post:
  *     summary: Create pipeline
+ *     description: Create a new Delta Live Tables pipeline with notification and library configuration
  *     requestBody:
  *       required: true
  *       content:
@@ -39,13 +51,66 @@ import { isPreviewEnabled } from "@/lib/api/preview";
  *                 type: boolean
  *               edition:
  *                 type: string
+ *                 enum: [CORE, PRO, ADVANCED]
+ *               developmentMode:
+ *                 type: boolean
+ *               channel:
+ *                 type: string
+ *                 enum: [CURRENT, PREVIEW]
+ *               notifications:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     emailRecipients:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                     onStart:
+ *                       type: boolean
+ *                     onSuccess:
+ *                       type: boolean
+ *                     onFailure:
+ *                       type: boolean
+ *               libraries:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     notebook:
+ *                       type: object
+ *                       properties:
+ *                         path:
+ *                           type: string
+ *                     jar:
+ *                       type: string
+ *                     maven:
+ *                       type: object
+ *                       properties:
+ *                         coordinates:
+ *                           type: string
+ *               clusterConfig:
+ *                 type: object
+ *                 properties:
+ *                   label:
+ *                     type: string
+ *                   nodeType:
+ *                     type: string
+ *                   numWorkers:
+ *                     type: integer
+ *                   autoscale:
+ *                     type: object
+ *                     properties:
+ *                       minWorkers:
+ *                         type: integer
+ *                       maxWorkers:
+ *                         type: integer
+ *                       mode:
+ *                         type: string
+ *                         enum: [ENHANCED, LEGACY]
  *     responses:
  *       201:
  *         description: Created
- */
-/**
- * GET /api/v1/pipelines
- * List Delta Live Tables pipelines
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -64,17 +129,24 @@ export async function GET(request: NextRequest) {
         continuous: true,
         photon: true,
         edition: "PRO",
-        clusters: [
-          {
-            label: "default",
-            nodeType: "i3.xlarge",
-            workerCount: 4,
-            enableAutoscaling: true,
-          },
+        developmentMode: false,
+        channel: "CURRENT",
+        clusterConfig: {
+          label: "default",
+          nodeType: "i3.xlarge",
+          numWorkers: 4,
+          autoscale: { minWorkers: 2, maxWorkers: 8, mode: "ENHANCED" },
+        },
+        libraries: [
+          { notebook: { path: "/Workspace/Pipelines/bronze_ingestion" } },
+        ],
+        notifications: [
+          { emailRecipients: ["team@datastack.dev"], onStart: false, onSuccess: false, onFailure: true },
         ],
         createdAt: "2024-03-01T09:00:00Z",
         createdBy: "ada@datastack.dev",
         lastRunAt: "2024-06-10T02:00:00Z",
+        lastRunStatus: "SUCCESS",
       },
       {
         id: "pipe-002",
@@ -87,21 +159,27 @@ export async function GET(request: NextRequest) {
         continuous: false,
         photon: false,
         edition: "CORE",
-        clusters: [],
+        developmentMode: true,
+        channel: "PREVIEW",
+        clusterConfig: {
+          label: "default",
+          nodeType: "m5.xlarge",
+          numWorkers: 2,
+          autoscale: null,
+        },
+        libraries: [],
+        notifications: [],
         createdAt: "2024-04-15T14:00:00Z",
         createdBy: "bob@datastack.dev",
+        lastRunAt: null,
+        lastRunStatus: null,
       },
     ],
     totalCount: 2,
   });
 }
 
-/**
- * POST /api/v1/pipelines
- * Create pipeline
- */
 export async function POST(request: NextRequest) {
-  const preview = isPreviewEnabled(request);
   const body = (await request.json()) as {
     name: string;
     workspaceId: string;
@@ -111,32 +189,33 @@ export async function POST(request: NextRequest) {
     continuous?: boolean;
     photon?: boolean;
     edition?: string;
-    notifications?: { emailRecipients?: string[]; onStart?: boolean; onSuccess?: boolean; onFailure?: boolean }[];
     developmentMode?: boolean;
     channel?: string;
+    notifications?: { emailRecipients?: string[]; onStart?: boolean; onSuccess?: boolean; onFailure?: boolean }[];
+    libraries?: Record<string, unknown>[];
+    clusterConfig?: Record<string, unknown>;
   };
 
-  const response: Record<string, unknown> = {
-    id: "pipe-new",
-    name: body.name,
-    workspaceId: body.workspaceId,
-    state: "IDLE",
-    target: body.target,
-    catalog: body.catalog ?? "main",
-    schema: body.schema ?? "default",
-    continuous: body.continuous ?? false,
-    photon: body.photon ?? false,
-    edition: body.edition ?? "CORE",
-    clusters: [],
-    createdAt: new Date().toISOString(),
-    createdBy: "api",
-  };
-
-  if (preview) {
-    response.notifications = body.notifications ?? [];
-    response.developmentMode = body.developmentMode ?? false;
-    response.channel = body.channel ?? "CURRENT";
-  }
-
-  return NextResponse.json(response, { status: 201 });
+  return NextResponse.json(
+    {
+      id: "pipe-new",
+      name: body.name,
+      workspaceId: body.workspaceId,
+      state: "IDLE",
+      target: body.target,
+      catalog: body.catalog ?? "main",
+      schema: body.schema ?? "default",
+      continuous: body.continuous ?? false,
+      photon: body.photon ?? false,
+      edition: body.edition ?? "CORE",
+      developmentMode: body.developmentMode ?? false,
+      channel: body.channel ?? "CURRENT",
+      notifications: body.notifications ?? [],
+      libraries: body.libraries ?? [],
+      clusterConfig: body.clusterConfig ?? null,
+      createdAt: new Date().toISOString(),
+      createdBy: "api",
+    },
+    { status: 201 }
+  );
 }
