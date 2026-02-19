@@ -1,0 +1,72 @@
+---
+title: Create Data Quality Rule
+description: Define a new data quality rule with expectations and alerting.
+---
+
+```
+POST /api/v1/data-quality/rules
+```
+
+Define a new data quality rule with expectations, scheduling, and alerting.
+
+**Required scope:** `manage:data_quality`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Rule name. |
+| `description` | `string` | No | Rule description. |
+| `tableId` | `string` | Yes | Target table identifier. |
+| `column` | `string` | No | Target column name. |
+| `expectation` | `object` | Yes | Expectation definition. |
+| `expectation.type` | `string` | Yes | Expectation type (`not_null`, `unique`, `range`, `regex`, `custom_sql`, `freshness`, `row_count`, `referential_integrity`). |
+| `expectation.params` | `object` | No | Type-specific parameters. |
+| `severity` | `string` | No | Failure severity (`warn`, `error`, `critical`). |
+| `schedule` | `object` | No | Execution schedule. |
+| `schedule.cron` | `string` | No | Cron expression. |
+| `schedule.timezone` | `string` | No | IANA timezone. |
+| `alertOnFailure` | `boolean` | No | Send alert on rule failure. |
+| `tags` | `string[]` | No | Categorization tags. |
+
+## Response `201`
+
+Returns the created data quality rule object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/data-quality/rules" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Revenue column range check",
+    "tableId": "table-001",
+    "column": "revenue",
+    "expectation": {
+      "type": "range",
+      "params": { "min": 0, "max": 1000000 }
+    },
+    "severity": "error",
+    "schedule": { "cron": "0 6 * * *", "timezone": "UTC" },
+    "alertOnFailure": true
+  }'
+```
+
+```json title="Response"
+{
+  "id": "dq-new",
+  "name": "Revenue column range check",
+  "tableId": "table-001",
+  "column": "revenue",
+  "expectation": {
+    "type": "range",
+    "params": { "min": 0, "max": 1000000 }
+  },
+  "severity": "error",
+  "schedule": { "cron": "0 6 * * *", "timezone": "UTC" },
+  "alertOnFailure": true,
+  "status": "pending",
+  "createdAt": "2024-06-10T10:00:00Z"
+}
+```

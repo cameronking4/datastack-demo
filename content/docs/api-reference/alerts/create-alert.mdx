@@ -1,0 +1,87 @@
+---
+title: Create Alert Rule
+description: Create a new alert rule with conditions, thresholds, and notification channels.
+---
+
+```
+POST /api/v1/alerts
+```
+
+Creates a new alert rule with structured metric-based conditions and typed notification channels.
+
+**Required scope:** `manage:alerts`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Alert rule name. |
+| `description` | `string` | No | Alert description. |
+| `condition` | `object` | Yes | Trigger condition. |
+| `condition.metric` | `string` | Yes | Metric name to evaluate. |
+| `condition.operator` | `string` | Yes | Comparison operator (`gt`, `gte`, `lt`, `lte`, `eq`, `neq`). |
+| `condition.threshold` | `number` | Yes | Threshold value. |
+| `condition.windowMinutes` | `integer` | No | Evaluation window in minutes. |
+| `condition.aggregation` | `string` | No | Aggregation function (`avg`, `sum`, `min`, `max`, `count`, `p99`). |
+| `severity` | `string` | No | Severity level (`info`, `warning`, `critical`). |
+| `channels` | `object[]` | Yes | Notification channels. |
+| `channels[].type` | `string` | Yes | Channel type (`email`, `slack`, `pagerduty`, `webhook`). |
+| `channels[].target` | `string` | No | Channel target (e.g., email address, Slack channel). |
+| `resource` | `string` | No | Resource identifier to monitor. |
+| `resourceType` | `string` | No | Resource type (`pipeline`, `cluster`, `stream`, `job`). |
+| `cooldownMinutes` | `integer` | No | Minimum minutes between alerts. |
+| `enabled` | `boolean` | No | Whether the alert is enabled (default: `true`). |
+
+## Response `201`
+
+Returns the created alert rule object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/alerts" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Pipeline Failure Rate",
+    "condition": {
+      "metric": "failure_rate",
+      "operator": "gt",
+      "threshold": 0.1,
+      "windowMinutes": 15,
+      "aggregation": "avg"
+    },
+    "severity": "critical",
+    "channels": [
+      { "type": "slack", "target": "#data-alerts" },
+      { "type": "email", "target": "oncall@acme.dev" }
+    ],
+    "resource": "pipe-001",
+    "resourceType": "pipeline",
+    "cooldownMinutes": 30
+  }'
+```
+
+```json title="Response"
+{
+  "id": "alert-new",
+  "name": "Pipeline Failure Rate",
+  "condition": {
+    "metric": "failure_rate",
+    "operator": "gt",
+    "threshold": 0.1,
+    "windowMinutes": 15,
+    "aggregation": "avg"
+  },
+  "severity": "critical",
+  "channels": [
+    { "type": "slack", "target": "#data-alerts" },
+    { "type": "email", "target": "oncall@acme.dev" }
+  ],
+  "resource": "pipe-001",
+  "resourceType": "pipeline",
+  "cooldownMinutes": 30,
+  "enabled": true,
+  "createdAt": "2024-06-10T10:00:00Z"
+}
+```

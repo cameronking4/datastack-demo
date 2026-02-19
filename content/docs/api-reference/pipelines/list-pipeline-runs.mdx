@@ -1,0 +1,65 @@
+---
+title: List Pipeline Runs
+description: List execution history for a pipeline.
+---
+
+```
+GET /api/v1/pipelines/{pipelineId}/runs
+```
+
+List execution history for a pipeline with duration, status, and error details.
+
+**Required scope:** `read:pipelines`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `pipelineId` | `string` | Pipeline identifier. |
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `status` | `string` | — | Filter by status (`RUNNING`, `SUCCESS`, `FAILED`, `CANCELLED`, `QUEUED`). |
+| `limit` | `integer` | `25` | Results per page. |
+| `offset` | `integer` | `0` | Number of results to skip. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `runs` | `object[]` | Array of pipeline run objects. |
+| `runs[].id` | `string` | Run identifier. |
+| `runs[].pipelineId` | `string` | Pipeline identifier. |
+| `runs[].status` | `string` | Run status. |
+| `runs[].startedAt` | `string` | ISO 8601 start timestamp. |
+| `runs[].completedAt` | `string` | ISO 8601 completion timestamp. |
+| `runs[].durationMs` | `number` | Duration in milliseconds. |
+| `runs[].triggeredBy` | `string` | Trigger source (e.g., `manual`, `schedule`). |
+| `totalCount` | `number` | Total number of runs. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/pipelines/pipe-001/runs?status=FAILED&limit=5" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "runs": [
+    {
+      "id": "run-001",
+      "pipelineId": "pipe-001",
+      "status": "FAILED",
+      "startedAt": "2024-06-10T06:00:00Z",
+      "completedAt": "2024-06-10T06:05:33Z",
+      "durationMs": 333000,
+      "triggeredBy": "schedule",
+      "error": "Connection timeout to source database"
+    }
+  ],
+  "totalCount": 1
+}
+```
