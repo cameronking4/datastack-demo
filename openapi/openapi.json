@@ -55,20 +55,7 @@
         "description": "Liveness/readiness check. Returns 200 when the API is accepting requests.",
         "responses": {
           "200": {
-            "description": "API is healthy",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "string", "example": "ok" },
-                    "version": { "type": "string" },
-                    "timestamp": { "type": "string", "format": "date-time" },
-                    "requestId": { "type": "string" }
-                  }
-                }
-              }
-            }
+            "description": "API is healthy"
           }
         }
       }
