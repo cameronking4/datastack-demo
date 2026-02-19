@@ -1,0 +1,58 @@
+---
+title: List Data Quality Rules
+description: List data quality validation rules with pass/fail statistics.
+---
+
+```
+GET /api/v1/data-quality/rules
+```
+
+List data quality validation rules with pass/fail statistics and schedule info.
+
+**Required scope:** `read:data_quality`
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `tableId` | `string` | — | Filter by table identifier. |
+| `status` | `string` | — | Filter by status (`passing`, `failing`, `disabled`, `pending`). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `rules` | `object[]` | Array of data quality rule objects. |
+| `rules[].id` | `string` | Rule identifier. |
+| `rules[].name` | `string` | Rule name. |
+| `rules[].tableId` | `string` | Target table identifier. |
+| `rules[].column` | `string` | Target column (if applicable). |
+| `rules[].expectation` | `object` | Expectation definition. |
+| `rules[].status` | `string` | Current status. |
+| `rules[].lastRunAt` | `string` | ISO 8601 last execution timestamp. |
+| `totalCount` | `number` | Total number of rules. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/data-quality/rules?status=failing" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "rules": [
+    {
+      "id": "dq-001",
+      "name": "Customer ID not null",
+      "tableId": "table-001",
+      "column": "customer_id",
+      "expectation": { "type": "not_null" },
+      "severity": "error",
+      "status": "failing",
+      "lastRunAt": "2024-06-10T06:00:00Z"
+    }
+  ],
+  "totalCount": 1
+}
+```

@@ -25,9 +25,19 @@ All fields are optional. Only provided fields are updated.
 |---|---|---|
 | `name` | `string` | New display name. |
 | `description` | `string` | New description. |
+| `version` | `string` | Stack version label. |
 | `layers` | `object[]` | Replacement layer list. |
+| `layers[].name` | `string` | Layer name. |
+| `layers[].resourceType` | `string` | Resource type. |
+| `layers[].resourceId` | `string` | Referenced resource identifier. |
+| `layers[].order` | `integer` | Execution order. |
+| `layers[].config` | `object` | Layer-specific configuration. |
+| `layers[].dependsOn` | `string[]` | Layer dependencies. |
 | `connections` | `string[]` | Replacement connection list. |
 | `tags` | `object` | Replacement key-value tags. |
+| `autoDeployOnPush` | `boolean` | Enable auto-deploy on git push. |
+| `gitRepository` | `string` | Git repository URL. |
+| `gitBranch` | `string` | Git branch name. |
 
 ## Response `200`
 
@@ -39,7 +49,7 @@ Returns the updated stack object.
 curl -X PATCH "/api/v1/stacks/stack-001" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{ "name": "Analytics Platform v2" }'
+  -d '{ "name": "Analytics Platform v2", "gitRepository": "https://github.com/acme/infra" }'
 ```
 
 ```json title="Response"
@@ -48,12 +58,15 @@ curl -X PATCH "/api/v1/stacks/stack-001" \
   "name": "Analytics Platform v2",
   "description": "End-to-end analytics stack",
   "workspaceId": "ws-001",
-  "status": "DRAFT",
-  "environment": "PRODUCTION",
-  "layers": [],
-  "connections": [],
-  "version": 4,
+  "lifecycleState": "DRAFT",
+  "environment": "production",
+  "owner": "data-eng",
+  "modules": [],
+  "policies": {},
+  "compliance": {},
+  "revision": 4,
   "tags": {},
+  "gitRepository": "https://github.com/acme/infra",
   "createdAt": "2024-02-01T10:00:00Z",
   "updatedAt": "2024-06-10T12:00:00Z",
   "createdBy": "ada@datastack.dev"

@@ -1,13 +1,13 @@
 ---
 title: List Stacks
-description: Retrieve a paginated list of composable infrastructure stacks.
+description: Retrieve a list of composable infrastructure stacks.
 ---
 
 ```
 GET /api/v1/stacks
 ```
 
-Returns a paginated list of infrastructure stacks.
+Returns a list of infrastructure stacks with module graph, lifecycle state, and compliance metadata.
 
 **Required scope:** `read:stacks`
 
@@ -15,8 +15,9 @@ Returns a paginated list of infrastructure stacks.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `page` | `number` | `1` | Page number (min 1). |
-| `pageSize` | `number` | `25` | Results per page (1–100). |
+| `environment` | `string` | — | Filter by environment (`development`, `staging`, `production`). |
+| `lifecycleState` | `string` | — | Filter by lifecycle state (`DRAFT`, `ACTIVE`, `DEPLOYING`, `FAILED`, `DECOMMISSIONED`). |
+| `owner` | `string` | — | Filter by owner identity. |
 
 ## Response `200`
 
@@ -27,26 +28,26 @@ Returns a paginated list of infrastructure stacks.
 | `stacks[].name` | `string` | Display name. |
 | `stacks[].description` | `string` | Stack description. |
 | `stacks[].workspaceId` | `string` | Workspace the stack belongs to. |
-| `stacks[].status` | `string` | Current status (`DRAFT`, `DEPLOYED`, `FAILED`). |
-| `stacks[].environment` | `string` | Target environment (`DEVELOPMENT`, `STAGING`, `PRODUCTION`). |
-| `stacks[].layers` | `object[]` | Ordered list of resource layers. |
-| `stacks[].layers[].name` | `string` | Layer name. |
-| `stacks[].layers[].resourceType` | `string` | Resource type (`pipeline`, `cluster`, `job`, `warehouse`). |
-| `stacks[].layers[].resourceId` | `string` | Referenced resource identifier. |
-| `stacks[].layers[].order` | `number` | Execution order. |
-| `stacks[].connections` | `string[]` | Connection identifiers used by the stack. |
-| `stacks[].version` | `number` | Stack version number. |
+| `stacks[].lifecycleState` | `string` | Lifecycle state (`DRAFT`, `ACTIVE`, `DEPLOYING`, `FAILED`, `DECOMMISSIONED`). |
+| `stacks[].environment` | `string` | Target environment (`development`, `staging`, `production`). |
+| `stacks[].owner` | `string` | Owner identity. |
+| `stacks[].modules` | `object[]` | List of infrastructure modules. |
+| `stacks[].modules[].name` | `string` | Module name. |
+| `stacks[].modules[].provider` | `string` | Cloud provider. |
+| `stacks[].modules[].resourceType` | `string` | Resource type. |
+| `stacks[].modules[].resourceId` | `string` | Referenced resource identifier. |
+| `stacks[].policies` | `object` | Stack governance policies. |
+| `stacks[].compliance` | `object` | Compliance metadata. |
+| `stacks[].revision` | `number` | Stack revision number. |
 | `stacks[].createdAt` | `string` | ISO 8601 creation timestamp. |
 | `stacks[].updatedAt` | `string` | ISO 8601 last-updated timestamp. |
 | `stacks[].createdBy` | `string` | Creator identity. |
 | `totalCount` | `number` | Total number of stacks. |
-| `page` | `number` | Current page number. |
-| `pageSize` | `number` | Results per page. |
 
 ## Example
 
 ```bash title="cURL"
-curl "/api/v1/stacks?page=1&pageSize=10" \
+curl "/api/v1/stacks?environment=production&lifecycleState=ACTIVE" \
   -H "Authorization: Bearer <accessToken>"
 ```
 
@@ -56,23 +57,41 @@ curl "/api/v1/stacks?page=1&pageSize=10" \
     {
       "id": "stack-001",
       "name": "Analytics Platform",
-      "description": "End-to-end analytics stack with ingestion, transformation, and serving layers",
+      "description": "End-to-end analytics stack",
       "workspaceId": "ws-001",
-      "status": "DEPLOYED",
-      "environment": "PRODUCTION",
-      "layers": [
-        { "name": "ingestion", "resourceType": "pipeline", "resourceId": "pipe-001", "order": 1 },
-        { "name": "compute", "resourceType": "cluster", "resourceId": "cluster-001", "order": 2 }
+      "lifecycleState": "ACTIVE",
+      "environment": "production",
+      "owner": "data-eng",
+      "modules": [
+        {
+          "name": "ingestion",
+          "provider": "datastack",
+          "resourceType": "pipeline",
+          "resourceId": "pipe-001",
+          "version": "2.1.0"
+        },
+        {
+          "name": "compute",
+          "provider": "aws",
+          "resourceType": "cluster",
+          "resourceId": "cluster-001",
+          "dependsOn": ["ingestion"]
+        }
       ],
-      "connections": ["conn-001", "conn-002"],
-      "version": 3,
+      "policies": {
+        "driftDetection": { "enabled": true, "intervalMinutes": 30 },
+        "rollback": { "enabled": true, "maxRevisions": 5 }
+      },
+      "compliance": {
+        "frameworks": ["SOC2"],
+        "dataClassification": "internal"
+      },
+      "revision": 3,
       "createdAt": "2024-02-01T10:00:00Z",
       "updatedAt": "2024-06-10T08:00:00Z",
       "createdBy": "ada@datastack.dev"
     }
   ],
-  "totalCount": 2,
-  "page": 1,
-  "pageSize": 10
+  "totalCount": 2
 }
 ```

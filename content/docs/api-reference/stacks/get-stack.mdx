@@ -1,13 +1,13 @@
 ---
 title: Get Stack
-description: Retrieve a stack by identifier with full layer details.
+description: Retrieve a stack by identifier with full module details.
 ---
 
 ```
 GET /api/v1/stacks/{stackId}
 ```
 
-Returns a single stack with detailed layer status.
+Returns a single stack with detailed module graph, policies, compliance metadata, and revision history.
 
 **Required scope:** `read:stacks`
 
@@ -25,17 +25,22 @@ Returns a single stack with detailed layer status.
 | `name` | `string` | Display name. |
 | `description` | `string` | Stack description. |
 | `workspaceId` | `string` | Workspace identifier. |
-| `status` | `string` | Current status (`DRAFT`, `DEPLOYED`, `FAILED`). |
-| `environment` | `string` | Target environment. |
-| `layers` | `object[]` | Ordered resource layers with health status. |
-| `layers[].name` | `string` | Layer name. |
-| `layers[].resourceType` | `string` | Resource type. |
-| `layers[].resourceId` | `string` | Referenced resource identifier. |
-| `layers[].order` | `number` | Execution order. |
-| `layers[].status` | `string` | Layer health status (`HEALTHY`, `DEGRADED`, `FAILED`). |
-| `layers[].lastSyncAt` | `string` | ISO 8601 last sync timestamp. |
-| `connections` | `string[]` | Connection identifiers. |
-| `version` | `number` | Stack version. |
+| `lifecycleState` | `string` | Lifecycle state (`DRAFT`, `ACTIVE`, `DEPLOYING`, `FAILED`, `DECOMMISSIONED`). |
+| `environment` | `string` | Target environment (`development`, `staging`, `production`). |
+| `owner` | `string` | Owner identity. |
+| `modules` | `object[]` | Infrastructure modules with health and dependency info. |
+| `modules[].name` | `string` | Module name. |
+| `modules[].provider` | `string` | Cloud provider. |
+| `modules[].resourceType` | `string` | Resource type. |
+| `modules[].resourceId` | `string` | Referenced resource identifier. |
+| `modules[].version` | `string` | Module version. |
+| `modules[].inputs` | `object` | Module input parameters. |
+| `modules[].outputs` | `string[]` | Module output names. |
+| `modules[].dependsOn` | `string[]` | Module dependencies. |
+| `modules[].healthCheck` | `object` | Health check configuration. |
+| `policies` | `object` | Stack governance policies (drift detection, rollback, approval). |
+| `compliance` | `object` | Compliance metadata (frameworks, data classification). |
+| `revision` | `number` | Stack revision number. |
 | `tags` | `object` | Key-value tags. |
 | `createdAt` | `string` | ISO 8601 creation timestamp. |
 | `updatedAt` | `string` | ISO 8601 last-updated timestamp. |
@@ -52,22 +57,39 @@ curl "/api/v1/stacks/stack-001" \
 {
   "id": "stack-001",
   "name": "Analytics Platform",
-  "description": "End-to-end analytics stack with ingestion, transformation, and serving layers",
+  "description": "End-to-end analytics stack",
   "workspaceId": "ws-001",
-  "status": "DEPLOYED",
-  "environment": "PRODUCTION",
-  "layers": [
+  "lifecycleState": "ACTIVE",
+  "environment": "production",
+  "owner": "data-eng",
+  "modules": [
     {
       "name": "ingestion",
+      "provider": "datastack",
       "resourceType": "pipeline",
       "resourceId": "pipe-001",
-      "order": 1,
-      "status": "HEALTHY",
-      "lastSyncAt": "2024-06-10T02:15:33Z"
+      "version": "2.1.0",
+      "outputs": ["raw_table"],
+      "healthCheck": { "enabled": true, "endpoint": "/health", "intervalSeconds": 60 }
+    },
+    {
+      "name": "compute",
+      "provider": "aws",
+      "resourceType": "cluster",
+      "resourceId": "cluster-001",
+      "dependsOn": ["ingestion"]
     }
   ],
-  "connections": ["conn-001", "conn-002"],
-  "version": 3,
+  "policies": {
+    "driftDetection": { "enabled": true, "intervalMinutes": 30, "autoRemediate": false },
+    "rollback": { "enabled": true, "maxRevisions": 5 },
+    "approval": { "required": true, "approvers": ["platform-team"] }
+  },
+  "compliance": {
+    "frameworks": ["SOC2"],
+    "dataClassification": "internal"
+  },
+  "revision": 3,
   "tags": { "team": "data-eng", "tier": "critical" },
   "createdAt": "2024-02-01T10:00:00Z",
   "updatedAt": "2024-06-10T08:00:00Z",

@@ -35,6 +35,8 @@ export const SCOPES = {
   MANAGE_DEPLOYMENTS: "manage:deployments",
   MANAGE_WEBHOOKS: "manage:webhooks",
   MANAGE_API_KEYS: "manage:api_keys",
+  READ_ANALYTICS: "read:analytics",
+  MANAGE_ANALYTICS: "manage:analytics",
 } as const;
 
 export type Scope = (typeof SCOPES)[keyof typeof SCOPES];
