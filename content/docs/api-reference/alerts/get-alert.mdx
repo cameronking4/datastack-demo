@@ -1,0 +1,29 @@
+---
+title: Get Alert Rule
+description: Retrieve alert rule details including trigger history.
+---
+
+```
+GET /api/v1/alerts/{alertId}
+```
+
+Returns alert rule details including trigger history.
+
+**Required scope:** `read:alerts`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `alertId` | `string` | Alert rule identifier. |
+
+## Response `200`
+
+Returns the alert rule object with trigger history.
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/alerts/alert-001" \
+  -H "Authorization: Bearer <accessToken>"
+```

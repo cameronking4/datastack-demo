@@ -1,0 +1,56 @@
+---
+title: List Workspace Members
+description: List members of a workspace with roles and access details.
+---
+
+```
+GET /api/v1/workspaces/{workspaceId}/members
+```
+
+Returns a list of members for a workspace with their roles.
+
+**Required scope:** `read:workspaces`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `workspaceId` | `string` | Workspace identifier. |
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `role` | `string` | — | Filter by role (`admin`, `editor`, `viewer`). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `members` | `object[]` | Array of member objects. |
+| `members[].userId` | `string` | User identifier. |
+| `members[].email` | `string` | User email address. |
+| `members[].role` | `string` | Member role (`admin`, `editor`, `viewer`). |
+| `members[].joinedAt` | `string` | ISO 8601 join timestamp. |
+| `totalCount` | `number` | Total number of members. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/workspaces/ws-001/members?role=admin" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "members": [
+    {
+      "userId": "user-001",
+      "email": "ada@datastack.dev",
+      "role": "admin",
+      "joinedAt": "2024-01-10T08:00:00Z"
+    }
+  ],
+  "totalCount": 1
+}
+```
