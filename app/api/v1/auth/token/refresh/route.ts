@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 /**
  * @swagger
- * /api/v1/auth/token:
+ * /api/v1/auth/token/refresh:
  *   post:
- *     summary: Get access token
- *     description: Exchange credentials for access token (OAuth2 client_credentials or refresh_token grant)
+ *     summary: Refresh access token
+ *     description: Exchange a refresh token for a new access token without re-authenticating
  *     requestBody:
  *       required: true
  *       content:
@@ -13,35 +13,27 @@ import { NextRequest, NextResponse } from "next/server";
  *           schema:
  *             type: object
  *             required:
- *               - grantType
+ *               - refreshToken
  *             properties:
- *               grantType:
+ *               refreshToken:
  *                 type: string
- *                 enum: [client_credentials, refresh_token]
  *               scopes:
  *                 type: array
  *                 items:
  *                   type: string
- *               refreshToken:
- *                 type: string
- *               audience:
- *                 type: string
  *     responses:
  *       200:
  *         description: Success
+ *       401:
+ *         description: Invalid or expired refresh token
  */
 export async function POST(request: NextRequest) {
-  const body = (await request.json()) as {
-    grantType: string;
-    scopes?: string[];
-    refreshToken?: string;
-    audience?: string;
-  };
+  const body = (await request.json()) as { refreshToken: string; scopes?: string[] };
   return NextResponse.json({
-    accessToken: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+    accessToken: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.refreshed...",
     tokenType: "Bearer",
     expiresIn: 3600,
-    refreshToken: "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4...",
+    refreshToken: "dGhpcyBpcyBhIG5ldyByZWZyZXNoIHRva2Vu...",
     scope: (body.scopes ?? ["read"]).join(" "),
     issuedAt: new Date().toISOString(),
   });

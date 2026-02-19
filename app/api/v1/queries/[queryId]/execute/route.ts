@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
  * /api/v1/queries/{queryId}/execute:
  *   post:
  *     summary: Execute query
- *     description: Execute a saved SQL query against its warehouse
+ *     description: Execute a saved SQL query with optional parameter overrides and result format
  *     parameters:
  *       - in: path
  *         name: queryId
@@ -25,33 +25,34 @@ import { NextRequest, NextResponse } from "next/server";
  *                   type: string
  *               limit:
  *                 type: integer
+ *               resultFormat:
+ *                 type: string
+ *                 enum: [JSON, CSV, ARROW]
+ *               timeout:
+ *                 type: integer
+ *               catalog:
+ *                 type: string
+ *               schema:
+ *                 type: string
+ *               warehouseOverride:
+ *                 type: string
  *     responses:
  *       202:
  *         description: Accepted
- */
-/**
- * POST /api/v1/queries/:queryId/execute
- * Execute a saved SQL query against its warehouse
  */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ queryId: string }> }
 ) {
   const { queryId } = await params;
-  const body = (await request.json()) as {
-    parameters?: Record<string, string>;
-    limit?: number;
-  };
+  const body = (await request.json().catch(() => ({}))) as Record<string, unknown>;
   return NextResponse.json(
     {
-      executionId: "exec-new",
+      executionId: "exec-" + Date.now(),
       queryId,
-      warehouseId: "wh-001",
-      status: "RUNNING",
-      parameters: body.parameters ?? {},
-      limit: body.limit ?? 1000,
+      status: "QUEUED",
+      resultFormat: body.resultFormat ?? "JSON",
       submittedAt: new Date().toISOString(),
-      submittedBy: "api",
     },
     { status: 202 }
   );

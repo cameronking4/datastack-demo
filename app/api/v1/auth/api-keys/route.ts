@@ -5,11 +5,19 @@ import { NextRequest, NextResponse } from "next/server";
  * /api/v1/auth/api-keys:
  *   get:
  *     summary: List API keys
+ *     description: List API keys with usage statistics and expiration info
+ *     parameters:
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *           enum: [active, expired, revoked]
  *     responses:
  *       200:
  *         description: Success
  *   post:
  *     summary: Create API key
+ *     description: Create a new API key with scopes, expiration, and rate limiting
  *     requestBody:
  *       required: true
  *       content:
@@ -28,54 +36,80 @@ import { NextRequest, NextResponse } from "next/server";
  *                   type: string
  *               expiresInDays:
  *                 type: integer
+ *               rateLimit:
+ *                 type: object
+ *                 properties:
+ *                   requestsPerMinute:
+ *                     type: integer
+ *                   requestsPerDay:
+ *                     type: integer
+ *               rotationPolicy:
+ *                 type: object
+ *                 properties:
+ *                   autoRotate:
+ *                     type: boolean
+ *                   rotationIntervalDays:
+ *                     type: integer
+ *               allowedIpRanges:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               metadata:
+ *                 type: object
+ *                 additionalProperties:
+ *                   type: string
  *     responses:
  *       201:
  *         description: Created
  */
-/**
- * GET /api/v1/auth/api-keys
- * List all API keys for the authenticated user
- */
 export async function GET(request: NextRequest) {
-  const status = request.nextUrl.searchParams.get("status");
   return NextResponse.json({
     apiKeys: [
       {
         id: "key-001",
-        name: "CI/CD Pipeline Key",
-        prefix: "dsk_live_abc",
-        scopes: ["read:clusters", "manage:jobs"],
-        expiresAt: "2025-06-01T00:00:00Z",
-        createdAt: "2024-06-01T10:00:00Z",
+        name: "Production API Key",
+        prefix: "dsk_prod_****",
+        scopes: ["clusters:read", "jobs:read", "pipelines:read"],
+        status: "active",
+        rateLimit: { requestsPerMinute: 100, requestsPerDay: 10000 },
+        rotationPolicy: { autoRotate: true, rotationIntervalDays: 90 },
+        allowedIpRanges: ["10.0.0.0/8"],
+        createdAt: "2024-01-15T10:00:00Z",
+        expiresAt: "2025-01-15T10:00:00Z",
         lastUsedAt: "2024-06-10T08:00:00Z",
-        status: "ACTIVE",
+        usageCount: 15420,
       },
     ],
     totalCount: 1,
   });
 }
 
-/**
- * POST /api/v1/auth/api-keys
- * Create a new API key (full key returned only once)
- */
 export async function POST(request: NextRequest) {
   const body = (await request.json()) as {
     name: string;
     scopes: string[];
     expiresInDays?: number;
+    rateLimit?: { requestsPerMinute: number; requestsPerDay: number };
+    rotationPolicy?: { autoRotate: boolean; rotationIntervalDays: number };
+    allowedIpRanges?: string[];
+    metadata?: Record<string, string>;
   };
-  const expiresAt = new Date();
-  expiresAt.setDate(expiresAt.getDate() + (body.expiresInDays ?? 90));
   return NextResponse.json(
     {
       id: "key-new",
       name: body.name,
-      key: "dsk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-      prefix: "dsk_live_xxx",
+      key: "dsk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      prefix: "dsk_live_****",
       scopes: body.scopes,
-      expiresAt: expiresAt.toISOString(),
+      status: "active",
+      rateLimit: body.rateLimit ?? { requestsPerMinute: 60, requestsPerDay: 5000 },
+      rotationPolicy: body.rotationPolicy ?? { autoRotate: false, rotationIntervalDays: 0 },
+      allowedIpRanges: body.allowedIpRanges ?? [],
+      metadata: body.metadata ?? {},
       createdAt: new Date().toISOString(),
+      expiresAt: body.expiresInDays
+        ? new Date(Date.now() + body.expiresInDays * 86400000).toISOString()
+        : null,
     },
     { status: 201 }
   );
