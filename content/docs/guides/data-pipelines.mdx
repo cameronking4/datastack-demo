@@ -146,8 +146,28 @@ Set `photon: true` to enable the vectorized query engine for faster processing. 
 - Large aggregations
 - Join-intensive workloads
 
+## Execution History
+
+View past pipeline runs and their outcomes:
+
+```bash title="List recent runs"
+curl "/api/v1/pipelines/pipeline-001/runs?limit=5" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+You can also manually trigger a pipeline run with parameter overrides:
+
+```bash title="Trigger a run"
+curl -X POST "/api/v1/pipelines/pipeline-001/runs" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{ "parameters": { "start_date": "2024-06-01" }, "priority": "high" }'
+```
+
 ## Related
 
 - [Create Pipeline](/docs/api-reference/pipelines/create-pipeline) — Full endpoint reference
 - [Pipeline Events](/docs/api-reference/pipelines/list-pipeline-events) — Event stream reference
+- [Pipeline Runs](/docs/api-reference/pipelines/list-pipeline-runs) — Execution history reference
+- [Trigger Run](/docs/api-reference/pipelines/trigger-pipeline-run) — Manual trigger reference
 - [Webhooks Guide](/docs/guides/webhooks-guide) — Event-driven orchestration
