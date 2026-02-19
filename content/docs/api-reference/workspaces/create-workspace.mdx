@@ -1,0 +1,67 @@
+---
+title: Create Workspace
+description: Create a new workspace with quotas, settings, and tier configuration.
+---
+
+```
+POST /api/v1/workspaces
+```
+
+Creates a new workspace with tier, region, quotas, and settings.
+
+**Required scope:** `manage:workspaces`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Workspace display name. |
+| `region` | `string` | Yes | Deployment region (e.g., `us-west-2`). |
+| `tier` | `string` | No | Workspace tier (`free`, `standard`, `premium`, `enterprise`). |
+| `settings` | `object` | No | Workspace settings. |
+| `settings.defaultCatalog` | `string` | No | Default catalog name. |
+| `settings.enableIpAccessList` | `boolean` | No | Enable IP access list restrictions. |
+| `tags` | `object` | No | Key-value tags. |
+
+## Response `201`
+
+Returns the created workspace object including quotas and usage.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/workspaces" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Acme Analytics",
+    "region": "us-west-2",
+    "tier": "standard"
+  }'
+```
+
+```json title="Response"
+{
+  "id": "ws-new",
+  "name": "Acme Analytics",
+  "region": "us-west-2",
+  "tier": "standard",
+  "deploymentUrl": "https://acme-analytics.datastack.cloud",
+  "status": "ACTIVE",
+  "quotas": {
+    "maxClusters": 10,
+    "maxPipelines": 50,
+    "maxStorageGb": 500
+  },
+  "usage": {
+    "clusters": 0,
+    "pipelines": 0,
+    "storageGb": 0
+  },
+  "settings": {
+    "defaultCatalog": "main",
+    "enableIpAccessList": false
+  },
+  "createdAt": "2024-06-10T10:00:00Z"
+}
+```

@@ -1,0 +1,29 @@
+---
+title: Delete Alert Rule
+description: Permanently delete an alert rule.
+---
+
+```
+DELETE /api/v1/alerts/{alertId}
+```
+
+Permanently deletes an alert rule.
+
+**Required scope:** `manage:alerts`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `alertId` | `string` | Alert rule identifier. |
+
+## Response `204`
+
+No content returned on success.
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE "/api/v1/alerts/alert-001" \
+  -H "Authorization: Bearer <accessToken>"
+```

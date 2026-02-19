@@ -1,0 +1,56 @@
+---
+title: Trigger Pipeline Run
+description: Manually trigger a pipeline execution with optional parameter overrides.
+---
+
+```
+POST /api/v1/pipelines/{pipelineId}/runs
+```
+
+Manually trigger a pipeline execution with optional parameter overrides.
+
+**Required scope:** `manage:pipelines`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `pipelineId` | `string` | Pipeline identifier. |
+
+## Request Body
+
+All fields are optional.
+
+| Field | Type | Description |
+|---|---|---|
+| `parameters` | `object` | Key-value parameter overrides for this run. |
+| `priority` | `string` | Execution priority (`low`, `normal`, `high`, `critical`). |
+| `dryRun` | `boolean` | When `true`, validates without executing. |
+
+## Response `201`
+
+Returns the created pipeline run object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/pipelines/pipe-001/runs" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "parameters": { "start_date": "2024-06-01" },
+    "priority": "high"
+  }'
+```
+
+```json title="Response"
+{
+  "id": "run-new",
+  "pipelineId": "pipe-001",
+  "status": "QUEUED",
+  "parameters": { "start_date": "2024-06-01" },
+  "priority": "high",
+  "triggeredBy": "manual",
+  "createdAt": "2024-06-10T10:00:00Z"
+}
+```

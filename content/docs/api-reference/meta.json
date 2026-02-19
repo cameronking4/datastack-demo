@@ -6,6 +6,7 @@
     "authentication",
     "users",
     "secrets",
+    "audit-log",
     "---Compute---",
     "clusters",
     "sql-warehouses",
@@ -18,10 +19,14 @@
     "catalogs",
     "connections",
     "data-contracts",
+    "data-quality",
+    "lineage",
     "---Infrastructure---",
     "stacks",
     "deployments",
     "workspaces",
+    "---Monitoring---",
+    "alerts",
     "---Other---",
     "webhooks"
   ]
