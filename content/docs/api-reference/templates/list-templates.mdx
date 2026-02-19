@@ -1,0 +1,39 @@
+---
+title: List Templates
+description: List available stack and pipeline templates.
+---
+
+```
+GET /api/v1/templates
+```
+
+Returns a paginated list of templates for quick-start provisioning.
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `page` | `number` | `1` | Page number (min 1). |
+| `pageSize` | `number` | `25` | Results per page (1-100). |
+| `category` | `string` | — | Filter by category (`pipeline`, `stack`). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `templates` | `object[]` | Array of template objects. |
+| `templates[].id` | `string` | Template identifier. |
+| `templates[].name` | `string` | Display name. |
+| `templates[].description` | `string` | Template description. |
+| `templates[].category` | `string` | Category (`pipeline` or `stack`). |
+| `templates[].resourceCount` | `number` | Number of resources in the template. |
+| `templates[].popularity` | `number` | Usage count. |
+| `templates[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `totalCount` | `number` | Total number of templates. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/templates?category=pipeline" \
+  -H "Authorization: Bearer <accessToken>"
+```

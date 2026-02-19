@@ -1,0 +1,33 @@
+---
+title: Clone Pipeline
+description: Clone a pipeline with a new name (copy configuration).
+---
+
+```
+POST /api/v1/pipelines/{pipelineId}/clone
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `pipelineId` | `string` | Source pipeline identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Name for the cloned pipeline. Defaults to "Clone of \{pipelineId\}". |
+
+## Response `201`
+
+Returns the cloned pipeline object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/pipelines/pipe-001/clone" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Bronze Ingestion v2"}'
+```

@@ -1,0 +1,25 @@
+---
+title: Update Dashboard
+description: Update dashboard name or widget layout.
+---
+
+```
+PATCH /api/v1/dashboards/{dashboardId}
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `dashboardId` | `string` | Dashboard identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | New display name. |
+| `widgets` | `object[]` | No | Updated widget layout. |
+
+## Response `200`
+
+Returns the updated dashboard object.

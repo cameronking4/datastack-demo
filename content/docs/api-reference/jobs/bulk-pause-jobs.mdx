@@ -1,0 +1,31 @@
+---
+title: Bulk Pause Jobs
+description: Pause multiple jobs in a single request.
+---
+
+```
+POST /api/v1/jobs/bulk-pause
+```
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `jobIds` | `string[]` | Yes | Array of job identifiers to pause. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `paused` | `string[]` | Job IDs that were paused. |
+| `failed` | `string[]` | Job IDs that failed to pause. |
+| `message` | `string` | Summary message. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/jobs/bulk-pause" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"jobIds": ["job-001", "job-002"]}'
+```

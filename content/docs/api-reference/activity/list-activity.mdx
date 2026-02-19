@@ -1,0 +1,57 @@
+---
+title: List Activity
+description: List recent activity across the workspace (runs, deployments, edits).
+---
+
+```
+GET /api/v1/activity
+```
+
+Returns a paginated list of recent workspace activity using offset-based pagination.
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `limit` | `number` | `50` | Maximum results to return (1-100). |
+| `offset` | `number` | `0` | Number of results to skip. |
+| `resourceType` | `string` | — | Filter by resource type (e.g., `job_run`, `deployment`, `query`). |
+| `action` | `string` | — | Filter by action (e.g., `completed`, `promoted`, `executed`). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `activities` | `object[]` | Array of activity objects. |
+| `activities[].id` | `string` | Activity identifier. |
+| `activities[].resourceType` | `string` | Type of resource. |
+| `activities[].resourceId` | `string` | Resource identifier. |
+| `activities[].action` | `string` | Action performed. |
+| `activities[].userId` | `string` | User who performed the action. |
+| `activities[].timestamp` | `string` | ISO 8601 timestamp. |
+| `activities[].metadata` | `object` | Additional context. |
+| `totalCount` | `number` | Total number of activities. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/activity?limit=10&resourceType=job_run" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "activities": [
+    {
+      "id": "act-001",
+      "resourceType": "job_run",
+      "resourceId": "run-1234",
+      "action": "completed",
+      "userId": "ada@datastack.dev",
+      "timestamp": "2024-06-10T09:15:00Z",
+      "metadata": { "jobId": "1001", "duration": 342 }
+    }
+  ],
+  "totalCount": 5
+}
+```

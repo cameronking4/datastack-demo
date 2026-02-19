@@ -1,0 +1,22 @@
+---
+title: Unlock Stack
+description: Release the lock on a stack.
+---
+
+```
+POST /api/v1/stacks/{stackId}/unlock
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `stackId` | `string` | Stack identifier. |
+
+## Response `200`
+
+Lock released successfully.
+
+## Response `404`
+
+Stack not found.

@@ -1,0 +1,27 @@
+---
+title: Get Preferences
+description: Get the current user's UI and notification preferences.
+---
+
+```
+GET /api/v1/me/preferences
+```
+
+Returns the caller's UI and notification preferences.
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `theme` | `string` | UI theme (`system`, `light`, `dark`). |
+| `defaultPageSize` | `number` | Default page size for list views. |
+| `timezone` | `string` | IANA timezone. |
+| `dateFormat` | `string` | Date display format. |
+| `notifications` | `object` | Notification settings. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/me/preferences" \
+  -H "Authorization: Bearer <accessToken>"
+```

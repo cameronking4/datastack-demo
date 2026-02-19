@@ -1,0 +1,37 @@
+---
+title: List Favorites
+description: List the caller's favorited resources.
+---
+
+```
+GET /api/v1/favorites
+```
+
+Returns a paginated list of the caller's favorited resources.
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `page` | `number` | `1` | Page number (min 1). |
+| `pageSize` | `number` | `25` | Results per page (1-100). |
+| `resourceType` | `string` | — | Filter by resource type (e.g., `query`, `pipeline`, `cluster`). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `favorites` | `object[]` | Array of favorite objects. |
+| `favorites[].id` | `string` | Favorite identifier. |
+| `favorites[].resourceType` | `string` | Type of favorited resource. |
+| `favorites[].resourceId` | `string` | Resource identifier. |
+| `favorites[].resourceName` | `string` | Resource display name. |
+| `favorites[].addedAt` | `string` | ISO 8601 timestamp. |
+| `totalCount` | `number` | Total number of favorites. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/favorites?resourceType=query" \
+  -H "Authorization: Bearer <accessToken>"
+```

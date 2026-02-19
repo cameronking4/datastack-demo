@@ -1,0 +1,10 @@
+{
+  "title": "Dashboards",
+  "pages": [
+    "list-dashboards",
+    "create-dashboard",
+    "get-dashboard",
+    "update-dashboard",
+    "delete-dashboard"
+  ]
+}

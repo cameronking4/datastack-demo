@@ -1,0 +1,9 @@
+{
+  "title": "Me",
+  "pages": [
+    "get-current-user",
+    "get-preferences",
+    "update-preferences",
+    "get-recent"
+  ]
+}

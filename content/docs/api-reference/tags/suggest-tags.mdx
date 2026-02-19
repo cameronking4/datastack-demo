@@ -1,0 +1,32 @@
+---
+title: Suggest Tags
+description: Suggest tag keys/values based on partial input (autocomplete).
+---
+
+```
+GET /api/v1/tags/suggest
+```
+
+Returns tag suggestions matching the query string.
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `q` | `string` | — | Partial text to match against tag keys and values. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `suggestions` | `object[]` | Matching tag suggestions. |
+| `suggestions[].key` | `string` | Tag key. |
+| `suggestions[].value` | `string` | Tag value. |
+| `suggestions[].match` | `string` | Combined `key:value` string. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/tags/suggest?q=team" \
+  -H "Authorization: Bearer <accessToken>"
+```

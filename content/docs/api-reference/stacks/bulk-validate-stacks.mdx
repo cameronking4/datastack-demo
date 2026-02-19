@@ -1,0 +1,33 @@
+---
+title: Bulk Validate Stacks
+description: Validate multiple stacks in parallel.
+---
+
+```
+POST /api/v1/stacks/bulk-validate
+```
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `stackIds` | `string[]` | Yes | Array of stack identifiers to validate. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `results` | `object[]` | Per-stack validation results. |
+| `results[].stackId` | `string` | Stack identifier. |
+| `results[].valid` | `boolean` | Whether validation passed. |
+| `results[].checks` | `object[]` | Individual check results (`name`, `status`). |
+| `summary` | `object` | Aggregate counts (`total`, `passed`, `failed`). |
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/stacks/bulk-validate" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"stackIds": ["stack-001", "stack-002"]}'
+```

@@ -1,0 +1,19 @@
+---
+title: Add Favorite
+description: Add a resource to favorites.
+---
+
+```
+POST /api/v1/favorites
+```
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `resourceType` | `string` | Yes | Type of resource to favorite. |
+| `resourceId` | `string` | Yes | Resource identifier. |
+
+## Response `201`
+
+Returns the created favorite object.

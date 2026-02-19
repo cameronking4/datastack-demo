@@ -1,0 +1,31 @@
+---
+title: Get Limits
+description: Get account and workspace limits (quotas).
+---
+
+```
+GET /api/v1/limits
+```
+
+Returns the current quota limits and usage for a workspace.
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | — | Workspace to query. Defaults to caller's workspace. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `workspaceId` | `string` | Workspace identifier. |
+| `limits` | `object` | Resource limits with `max` and `current` for each type. |
+| `tier` | `string` | Account tier (e.g., `enterprise`). |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/limits?workspaceId=ws-001" \
+  -H "Authorization: Bearer <accessToken>"
+```

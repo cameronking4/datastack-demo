@@ -1,0 +1,33 @@
+---
+title: Clone Query
+description: Clone a saved query with a new name.
+---
+
+```
+POST /api/v1/queries/{queryId}/clone
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `queryId` | `string` | Source query identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Name for the cloned query. |
+
+## Response `201`
+
+Returns the cloned query object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/queries/q-001/clone" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Daily Active Users (copy)"}'
+```

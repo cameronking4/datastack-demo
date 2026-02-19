@@ -1,0 +1,19 @@
+---
+title: Create Tag
+description: Create or register a tag key-value.
+---
+
+```
+POST /api/v1/tags
+```
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | Yes | Tag key. |
+| `value` | `string` | Yes | Tag value. |
+
+## Response `201`
+
+Returns the created tag object.

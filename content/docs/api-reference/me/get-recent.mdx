@@ -1,0 +1,26 @@
+---
+title: Get Recent Resources
+description: Get resources the current user recently viewed or edited.
+---
+
+```
+GET /api/v1/me/recent
+```
+
+Returns recently accessed resources grouped by type.
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `queries` | `object[]` | Recently viewed queries. |
+| `pipelines` | `object[]` | Recently viewed pipelines. |
+| `clusters` | `object[]` | Recently viewed clusters. |
+| `stacks` | `object[]` | Recently viewed stacks. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/me/recent" \
+  -H "Authorization: Bearer <accessToken>"
+```

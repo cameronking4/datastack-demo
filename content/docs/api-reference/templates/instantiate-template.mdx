@@ -1,0 +1,35 @@
+---
+title: Instantiate Template
+description: Create a stack or pipeline from a template with variable substitution.
+---
+
+```
+POST /api/v1/templates/{templateId}/instantiate
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `templateId` | `string` | Template identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | Yes | Target workspace. |
+| `name` | `string` | Yes | Name for the created resource. |
+| `variables` | `object` | No | Key-value map of template variables. |
+
+## Response `201`
+
+Returns the created resource object with a `PROVISIONING` status.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/templates/tmpl-etl-bronze-silver/instantiate" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"workspaceId": "ws-001", "name": "My ETL Pipeline", "variables": {"catalog_name": "main"}}'
+```

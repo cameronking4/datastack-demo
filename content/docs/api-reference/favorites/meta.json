@@ -1,0 +1,8 @@
+{
+  "title": "Favorites",
+  "pages": [
+    "list-favorites",
+    "add-favorite",
+    "remove-favorite"
+  ]
+}

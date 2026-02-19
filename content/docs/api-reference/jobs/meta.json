@@ -5,6 +5,8 @@
     "create-job",
     "get-job",
     "trigger-job-run",
-    "get-job-run"
+    "get-job-run",
+    "bulk-pause-jobs",
+    "bulk-resume-jobs"
   ]
 }

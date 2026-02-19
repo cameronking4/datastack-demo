@@ -1,0 +1,22 @@
+---
+title: Update Workspace Settings
+description: Update workspace-level settings.
+---
+
+```
+PATCH /api/v1/workspaces/{workspaceId}/settings
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `workspaceId` | `string` | Workspace identifier. |
+
+## Request Body
+
+Pass any subset of the settings object to update. Unspecified fields are left unchanged.
+
+## Response `200`
+
+Returns the updated settings object.

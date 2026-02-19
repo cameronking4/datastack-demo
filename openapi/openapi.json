@@ -15,19 +15,38 @@
     "schemas": {
       "ApiError": {
         "type": "object",
-        "required": ["error"],
+        "required": [
+          "error"
+        ],
         "properties": {
           "error": {
             "type": "object",
-            "required": ["code", "message"],
+            "required": [
+              "code",
+              "message"
+            ],
             "properties": {
               "code": {
                 "type": "string",
-                "enum": ["BAD_REQUEST", "UNAUTHORIZED", "FORBIDDEN", "NOT_FOUND", "CONFLICT", "RATE_LIMITED", "INTERNAL_ERROR"]
+                "enum": [
+                  "BAD_REQUEST",
+                  "UNAUTHORIZED",
+                  "FORBIDDEN",
+                  "NOT_FOUND",
+                  "CONFLICT",
+                  "RATE_LIMITED",
+                  "INTERNAL_ERROR"
+                ]
               },
-              "message": { "type": "string" },
-              "details": { "type": "object" },
-              "requestId": { "type": "string" }
+              "message": {
+                "type": "string"
+              },
+              "details": {
+                "type": "object"
+              },
+              "requestId": {
+                "type": "string"
+              }
             }
           }
         }
@@ -1870,16 +1889,24 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "reason": { "type": "string" },
-                  "ttlSeconds": { "type": "integer" }
+                  "reason": {
+                    "type": "string"
+                  },
+                  "ttlSeconds": {
+                    "type": "integer"
+                  }
                 }
               }
             }
           }
         },
         "responses": {
-          "200": { "description": "Success" },
-          "409": { "description": "Stack is already locked" }
+          "200": {
+            "description": "Success"
+          },
+          "409": {
+            "description": "Stack is already locked"
+          }
         }
       }
     },
@@ -1898,8 +1925,12 @@
           }
         ],
         "responses": {
-          "200": { "description": "Success" },
-          "404": { "description": "Stack not found" }
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Stack not found"
+          }
         }
       }
     },
@@ -1908,11 +1939,52 @@
         "summary": "List stacks",
         "description": "List composable infrastructure stacks with pagination",
         "parameters": [
-          { "in": "query", "name": "page", "schema": { "type": "integer", "default": 1 } },
-          { "in": "query", "name": "pageSize", "schema": { "type": "integer", "default": 25 } },
-          { "in": "query", "name": "perPage", "schema": { "type": "integer" } },
-          { "in": "query", "name": "environment", "schema": { "type": "string", "enum": ["development", "staging", "production"] } },
-          { "in": "query", "name": "lockState", "schema": { "type": "string", "enum": ["LOCKED", "UNLOCKED"] } }
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "schema": {
+              "type": "integer",
+              "default": 25
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "environment",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "development",
+                "staging",
+                "production"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "lockState",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "LOCKED",
+                "UNLOCKED"
+              ]
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -2334,6 +2406,873 @@
       "get": {
         "summary": "List workspaces",
         "description": "List workspaces the caller has access to",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/activity": {
+      "get": {
+        "summary": "List activity",
+        "description": "List recent activity across the workspace (runs, deployments, edits)",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 50
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "in": "query",
+            "name": "resourceType",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "action",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/connections/bulk-test": {
+      "post": {
+        "summary": "Bulk test connections",
+        "description": "Test connectivity for multiple connections in parallel",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "connectionIds"
+                ],
+                "properties": {
+                  "connectionIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/dashboards": {
+      "get": {
+        "summary": "List dashboards",
+        "description": "List saved dashboards (widget layouts)",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "schema": {
+              "type": "integer",
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create dashboard",
+        "description": "Create a new dashboard",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "workspaceId"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "workspaceId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/dashboards/{dashboardId}": {
+      "get": {
+        "summary": "Get dashboard",
+        "description": "Get dashboard with widget configuration",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dashboardId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update dashboard",
+        "description": "Update dashboard name or widget layout",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dashboardId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "widgets": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete dashboard",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dashboardId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/api/v1/favorites": {
+      "get": {
+        "summary": "List favorites",
+        "description": "List the caller's favorited resources",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "schema": {
+              "type": "integer",
+              "default": 25
+            }
+          },
+          {
+            "in": "query",
+            "name": "resourceType",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add favorite",
+        "description": "Add a resource to favorites",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "resourceType",
+                  "resourceId"
+                ],
+                "properties": {
+                  "resourceType": {
+                    "type": "string"
+                  },
+                  "resourceId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/favorites/{resourceType}/{resourceId}": {
+      "delete": {
+        "summary": "Remove favorite",
+        "description": "Remove a resource from favorites",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "resourceType",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "resourceId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/api/v1/jobs/bulk-pause": {
+      "post": {
+        "summary": "Bulk pause jobs",
+        "description": "Pause multiple jobs in a single request",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "jobIds"
+                ],
+                "properties": {
+                  "jobIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/jobs/bulk-resume": {
+      "post": {
+        "summary": "Bulk resume jobs",
+        "description": "Resume multiple paused jobs in a single request",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "jobIds"
+                ],
+                "properties": {
+                  "jobIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/limits": {
+      "get": {
+        "summary": "Get limits",
+        "description": "Get account and workspace limits (quotas)",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "workspaceId",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/me": {
+      "get": {
+        "summary": "Get current user",
+        "description": "Get the current authenticated user's profile",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/me/preferences": {
+      "get": {
+        "summary": "Get preferences",
+        "description": "Get the current user's UI and notification preferences",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update preferences",
+        "description": "Update the current user's preferences",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "theme": {
+                    "type": "string"
+                  },
+                  "defaultPageSize": {
+                    "type": "integer"
+                  },
+                  "timezone": {
+                    "type": "string"
+                  },
+                  "dateFormat": {
+                    "type": "string"
+                  },
+                  "notifications": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/me/recent": {
+      "get": {
+        "summary": "Get recent resources",
+        "description": "Get resources the current user recently viewed or edited",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/pipelines/{pipelineId}/clone": {
+      "post": {
+        "summary": "Clone pipeline",
+        "description": "Clone a pipeline with a new name (copy configuration)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pipelineId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/queries/{queryId}/clone": {
+      "post": {
+        "summary": "Clone query",
+        "description": "Clone a saved query with a new name",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "queryId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/stacks/bulk-validate": {
+      "post": {
+        "summary": "Bulk validate stacks",
+        "description": "Validate multiple stacks in parallel",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "stackIds"
+                ],
+                "properties": {
+                  "stackIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/tags": {
+      "get": {
+        "summary": "List tags",
+        "description": "List tags used across the workspace (tag taxonomy)",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "schema": {
+              "type": "integer",
+              "default": 50
+            }
+          },
+          {
+            "in": "query",
+            "name": "prefix",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create tag",
+        "description": "Create or register a tag key-value (for taxonomy)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "key",
+                  "value"
+                ],
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/tags/suggest": {
+      "get": {
+        "summary": "Suggest tags",
+        "description": "Suggest tag keys/values based on partial input (autocomplete)",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/templates": {
+      "get": {
+        "summary": "List templates",
+        "description": "List available stack and pipeline templates for quick-start",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "schema": {
+              "type": "integer",
+              "default": 25
+            }
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/templates/{templateId}": {
+      "get": {
+        "summary": "Get template",
+        "description": "Get template details and configuration",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "templateId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/templates/{templateId}/instantiate": {
+      "post": {
+        "summary": "Instantiate template",
+        "description": "Create a stack or pipeline from a template with variable substitution",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "templateId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "workspaceId",
+                  "name"
+                ],
+                "properties": {
+                  "workspaceId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/usage": {
+      "get": {
+        "summary": "Get usage",
+        "description": "Get workspace usage stats (compute, storage, API calls)",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "workspaceId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "period",
+            "schema": {
+              "type": "string",
+              "default": "current_month"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/workspaces/{workspaceId}/export": {
+      "get": {
+        "summary": "Export workspace",
+        "description": "Request or retrieve a workspace configuration export (stacks, jobs, connections metadata)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "format",
+            "schema": {
+              "type": "string",
+              "default": "json"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/workspaces/{workspaceId}/settings": {
+      "get": {
+        "summary": "Get workspace settings",
+        "description": "Get workspace-level settings (defaults, features, retention)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update workspace settings",
+        "description": "Update workspace-level settings",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success"

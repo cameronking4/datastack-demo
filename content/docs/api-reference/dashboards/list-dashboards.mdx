@@ -1,0 +1,55 @@
+---
+title: List Dashboards
+description: Retrieve a paginated list of saved dashboards.
+---
+
+```
+GET /api/v1/dashboards
+```
+
+Returns a paginated list of dashboards.
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `page` | `number` | `1` | Page number (min 1). |
+| `pageSize` | `number` | `25` | Results per page (1-100). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `dashboards` | `object[]` | Array of dashboard objects. |
+| `dashboards[].id` | `string` | Dashboard identifier. |
+| `dashboards[].name` | `string` | Display name. |
+| `dashboards[].workspaceId` | `string` | Owning workspace. |
+| `dashboards[].widgetCount` | `number` | Number of widgets. |
+| `dashboards[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `dashboards[].updatedAt` | `string` | ISO 8601 last-update timestamp. |
+| `dashboards[].createdBy` | `string` | Creator email. |
+| `totalCount` | `number` | Total number of dashboards. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/dashboards?page=1&pageSize=10" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "dashboards": [
+    {
+      "id": "dash-001",
+      "name": "Platform Overview",
+      "workspaceId": "ws-001",
+      "widgetCount": 6,
+      "createdAt": "2024-04-01T10:00:00Z",
+      "updatedAt": "2024-06-01T12:00:00Z",
+      "createdBy": "ada@datastack.dev"
+    }
+  ],
+  "totalCount": 2
+}
+```

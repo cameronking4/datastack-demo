@@ -1,0 +1,29 @@
+---
+title: Lock Stack
+description: Acquire an exclusive lock on a stack to prevent concurrent modifications.
+---
+
+```
+POST /api/v1/stacks/{stackId}/lock
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `stackId` | `string` | Stack identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `reason` | `string` | No | Reason for locking. |
+| `ttlSeconds` | `integer` | No | Lock time-to-live in seconds. |
+
+## Response `200`
+
+Returns the lock details.
+
+## Response `409`
+
+Stack is already locked by another user.

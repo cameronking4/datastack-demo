@@ -18,20 +18,20 @@ See [Authentication](/docs/getting-started/authentication) for details.
 
 List endpoints support pagination via query parameters. Three patterns are used:
 
-**Page-based** (clusters, SQL warehouses, users, stacks, connections, queries, deployments):
+**Page-based** (clusters, SQL warehouses, users, stacks, connections, queries, deployments, dashboards, favorites, tags, templates):
 
 | Parameter | Default | Max |
 |---|---|---|
 | `page` | `1` | — |
 | `pageSize` / `perPage` | `20`–`25` | `100` |
 
-**pageSize-only** (pipelines, catalogs, workspaces):
+**pageSize-only** (catalogs, workspaces):
 
 | Parameter | Default | Max |
 |---|---|---|
 | `pageSize` | `25` | `100` |
 
-**Offset-based** (jobs, notebooks):
+**Offset-based** (jobs, notebooks, activity):
 
 | Parameter | Default | Max |
 |---|---|---|

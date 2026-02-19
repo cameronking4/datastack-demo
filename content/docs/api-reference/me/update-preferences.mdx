@@ -1,0 +1,22 @@
+---
+title: Update Preferences
+description: Update the current user's preferences.
+---
+
+```
+PATCH /api/v1/me/preferences
+```
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `theme` | `string` | No | UI theme. |
+| `defaultPageSize` | `number` | No | Default page size. |
+| `timezone` | `string` | No | IANA timezone. |
+| `dateFormat` | `string` | No | Date display format. |
+| `notifications` | `object` | No | Notification settings. |
+
+## Response `200`
+
+Returns the updated preferences object.

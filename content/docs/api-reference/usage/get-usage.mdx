@@ -1,0 +1,36 @@
+---
+title: Get Usage
+description: Get workspace usage stats (compute, storage, API calls).
+---
+
+```
+GET /api/v1/usage
+```
+
+Returns usage metrics for a workspace over the specified period.
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | — | Workspace to query. Defaults to caller's workspace. |
+| `period` | `string` | `current_month` | Reporting period. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `workspaceId` | `string` | Workspace identifier. |
+| `period` | `string` | Reporting period. |
+| `dbus` | `object` | DBU consumption (`used`, `limit`, `unit`). |
+| `storage` | `object` | Storage usage (`usedGb`, `limitGb`). |
+| `apiCalls` | `object` | API call counts (`used`, `limit`). |
+| `clusters` | `object` | Cluster stats (`active`, `maxConcurrent`, `totalRuntimeHours`). |
+| `queries` | `object` | Query stats (`executed`, `avgLatencyMs`). |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/usage?workspaceId=ws-001" \
+  -H "Authorization: Bearer <accessToken>"
+```

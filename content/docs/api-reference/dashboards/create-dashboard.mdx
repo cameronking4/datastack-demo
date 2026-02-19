@@ -1,0 +1,28 @@
+---
+title: Create Dashboard
+description: Create a new dashboard.
+---
+
+```
+POST /api/v1/dashboards
+```
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Dashboard name. |
+| `workspaceId` | `string` | Yes | Target workspace. |
+
+## Response `201`
+
+Returns the created dashboard object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/dashboards" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "ETL Health", "workspaceId": "ws-001"}'
+```

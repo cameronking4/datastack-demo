@@ -1,0 +1,34 @@
+---
+title: Bulk Test Connections
+description: Test connectivity for multiple connections in parallel.
+---
+
+```
+POST /api/v1/connections/bulk-test
+```
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `connectionIds` | `string[]` | Yes | Array of connection identifiers to test. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `results` | `object[]` | Per-connection test results. |
+| `results[].connectionId` | `string` | Connection identifier. |
+| `results[].status` | `string` | Test result (`SUCCESS` or `FAILED`). |
+| `results[].latencyMs` | `number` | Connection latency in milliseconds. |
+| `results[].message` | `string` | Status message. |
+| `summary` | `object` | Aggregate counts (`total`, `successful`, `failed`). |
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/connections/bulk-test" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"connectionIds": ["conn-001", "conn-002"]}'
+```

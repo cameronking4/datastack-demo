@@ -1,0 +1,35 @@
+---
+title: Get Current User
+description: Get the current authenticated user's profile.
+---
+
+```
+GET /api/v1/me
+```
+
+Returns the profile of the currently authenticated user.
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | User identifier. |
+| `displayName` | `string` | Display name. |
+| `email` | `string` | Email address. |
+| `avatarUrl` | `string` | Avatar image URL. |
+| `role` | `string` | User role (e.g., `admin`, `viewer`). |
+| `status` | `string` | Account status. |
+| `department` | `string` | Department. |
+| `teamIds` | `string[]` | Team memberships. |
+| `permissions` | `string[]` | Granted permissions. |
+| `mfaEnabled` | `boolean` | Whether MFA is enabled. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `lastLoginAt` | `string` | ISO 8601 last login timestamp. |
+| `preferredWorkspaceId` | `string` | Preferred workspace. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/me" \
+  -H "Authorization: Bearer <accessToken>"
+```

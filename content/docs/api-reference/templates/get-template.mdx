@@ -1,0 +1,25 @@
+---
+title: Get Template
+description: Get template details and configuration.
+---
+
+```
+GET /api/v1/templates/{templateId}
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `templateId` | `string` | Template identifier. |
+
+## Response `200`
+
+Returns the template object including its `config` with layers, connections, and variables.
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/templates/tmpl-etl-bronze-silver" \
+  -H "Authorization: Bearer <accessToken>"
+```

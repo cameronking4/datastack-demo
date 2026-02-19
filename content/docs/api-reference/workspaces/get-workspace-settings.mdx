@@ -1,0 +1,31 @@
+---
+title: Get Workspace Settings
+description: Get workspace-level settings (defaults, features, retention).
+---
+
+```
+GET /api/v1/workspaces/{workspaceId}/settings
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `workspaceId` | `string` | Workspace identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `workspaceId` | `string` | Workspace identifier. |
+| `defaults` | `object` | Default settings (auto-termination, retry policy, pipeline edition). |
+| `features` | `object` | Feature flags (Photon, Delta Sharing, MLflow tracking). |
+| `retention` | `object` | Data retention policies (job logs, query history, audit logs). |
+| `security` | `object` | Security settings (IP access lists, MFA requirements). |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/workspaces/ws-001/settings" \
+  -H "Authorization: Bearer <accessToken>"
+```

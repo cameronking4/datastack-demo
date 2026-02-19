@@ -21,6 +21,16 @@
     "stacks",
     "deployments",
     "workspaces",
+    "templates",
+    "---Observability & Usage---",
+    "dashboards",
+    "activity",
+    "usage",
+    "limits",
+    "---Personalisation---",
+    "me",
+    "favorites",
+    "tags",
     "---Other---",
     "webhooks"
   ]

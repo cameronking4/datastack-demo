@@ -1,0 +1,35 @@
+---
+title: List Tags
+description: List tags used across the workspace.
+---
+
+```
+GET /api/v1/tags
+```
+
+Returns a paginated list of tags (key-value pairs) used across the workspace.
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `page` | `number` | `1` | Page number (min 1). |
+| `pageSize` | `number` | `50` | Results per page (1-100). |
+| `prefix` | `string` | — | Filter tags by key or value prefix. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `tags` | `object[]` | Array of tag objects. |
+| `tags[].key` | `string` | Tag key. |
+| `tags[].value` | `string` | Tag value. |
+| `tags[].resourceCount` | `number` | Number of resources with this tag. |
+| `totalCount` | `number` | Total number of tags. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/tags?prefix=team" \
+  -H "Authorization: Bearer <accessToken>"
+```

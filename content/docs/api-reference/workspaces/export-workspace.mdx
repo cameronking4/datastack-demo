@@ -1,0 +1,41 @@
+---
+title: Export Workspace
+description: Request or retrieve a workspace configuration export.
+---
+
+```
+GET /api/v1/workspaces/{workspaceId}/export
+```
+
+Export workspace configuration including stacks, jobs, connections, and other metadata.
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `workspaceId` | `string` | Workspace identifier. |
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `format` | `string` | `json` | Export format (e.g., `json`). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `workspaceId` | `string` | Workspace identifier. |
+| `format` | `string` | Export format. |
+| `status` | `string` | Export status (`ready`). |
+| `exportedAt` | `string` | ISO 8601 timestamp. |
+| `resources` | `object` | Counts of exported resource types. |
+| `downloadUrl` | `string` | Temporary download URL. |
+| `expiresAt` | `string` | URL expiration timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/workspaces/ws-001/export?format=json" \
+  -H "Authorization: Bearer <accessToken>"
+```
