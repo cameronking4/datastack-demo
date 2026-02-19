@@ -1,5 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { isPreviewEnabled } from "@/lib/api/preview";
+import {
+  listResponse,
+  created,
+  parsePagePagination,
+  getRequestId,
+} from "@/lib/api/response";
 
 /**
  * @swagger
@@ -104,16 +110,15 @@ import { isPreviewEnabled } from "@/lib/api/preview";
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
-  const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get("pageSize") ?? "25", 10)));
+  const { page, pageSize } = parsePagePagination(searchParams, { pageSize: 25 });
+  const requestId = getRequestId(request);
   const state = searchParams.get("state");
   const sortBy = searchParams.get("sortBy") ?? "createdAt";
   const sortOrder = searchParams.get("sortOrder") ?? "desc";
 
-  return NextResponse.json({
-    clusters: [
-      {
-        id: "cluster-001",
+  const clusters = [
+    {
+      id: "cluster-001",
         name: "Analytics Cluster",
         clusterSize: "Medium",
         region: "us-east-1",
@@ -147,10 +152,17 @@ export async function GET(request: NextRequest) {
         createdAt: "2024-03-15T14:00:00Z",
         lastActivityAt: "2024-06-10T07:30:00Z",
       },
-    ],
-    totalCount: 2,
+    ];
+
+  let filtered = state ? clusters.filter((c) => c.state === state) : clusters;
+  const totalCount = filtered.length;
+  const start = (page - 1) * pageSize;
+  const paged = filtered.slice(start, start + pageSize);
+
+  return listResponse("clusters", paged, totalCount, {
     page,
     pageSize,
+    requestId,
   });
 }
 
@@ -178,6 +190,7 @@ export async function POST(request: NextRequest) {
     tags?: Record<string, string>;
   };
 
+  const requestId = getRequestId(request);
   const response: Record<string, unknown> = {
     id: "cluster-new",
     name: body.name,
@@ -206,5 +219,5 @@ export async function POST(request: NextRequest) {
     createdBy: "api",
   };
 
-  return NextResponse.json(response, { status: 201 });
+  return created(response as Record<string, unknown>, { requestId });
 }

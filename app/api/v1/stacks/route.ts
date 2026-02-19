@@ -1,4 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import {
+  listResponse,
+  created,
+  parsePagePagination,
+  getRequestId,
+} from "@/lib/api/response";
 
 /**
  * @swagger
@@ -99,36 +105,52 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
+  const { page, pageSize } = parsePagePagination(searchParams, { pageSize: 25 });
+  const requestId = getRequestId(request);
 
-  return NextResponse.json({
-    stacks: [
-      {
-        id: "stack-001",
-        name: "Analytics Platform",
-        description: "End-to-end analytics pipeline",
-        workspaceId: "ws-001",
-        environment: "production",
-        version: "2.4.1",
-        lockState: "UNLOCKED",
-        lockedBy: null,
-        lockedAt: null,
-        layers: [
-          { name: "Storage", resourceType: "catalog", resourceId: "cat-001", order: 1, dependsOn: [] },
-          { name: "Ingestion", resourceType: "pipeline", resourceId: "pipe-001", order: 2, dependsOn: ["Storage"] },
-          { name: "Transform", resourceType: "job", resourceId: "job-1001", order: 3, dependsOn: ["Ingestion"] },
-        ],
-        connections: ["conn-001", "conn-002"],
-        tags: { team: "platform", tier: "critical" },
-        autoDeployOnPush: true,
-        gitRepository: "https://github.com/acme/analytics-stack",
-        gitBranch: "main",
-        createdAt: "2024-02-01T10:00:00Z",
-        updatedAt: "2024-06-05T14:00:00Z",
-        lastDeployedAt: "2024-06-05T14:30:00Z",
-        lastDeployStatus: "SUCCESS",
-      },
-    ],
-    totalCount: 1,
+  const environment = searchParams.get("environment");
+  const lockState = searchParams.get("lockState");
+
+  const stacks = [
+    {
+      id: "stack-001",
+      name: "Analytics Platform",
+      description: "End-to-end analytics pipeline",
+      workspaceId: "ws-001",
+      environment: "production",
+      version: "2.4.1",
+      lockState: "UNLOCKED",
+      lockedBy: null,
+      lockedAt: null,
+      layers: [
+        { name: "Storage", resourceType: "catalog", resourceId: "cat-001", order: 1, dependsOn: [] },
+        { name: "Ingestion", resourceType: "pipeline", resourceId: "pipe-001", order: 2, dependsOn: ["Storage"] },
+        { name: "Transform", resourceType: "job", resourceId: "job-1001", order: 3, dependsOn: ["Ingestion"] },
+      ],
+      connections: ["conn-001", "conn-002"],
+      tags: { team: "platform", tier: "critical" },
+      autoDeployOnPush: true,
+      gitRepository: "https://github.com/acme/analytics-stack",
+      gitBranch: "main",
+      createdAt: "2024-02-01T10:00:00Z",
+      updatedAt: "2024-06-05T14:00:00Z",
+      lastDeployedAt: "2024-06-05T14:30:00Z",
+      lastDeployStatus: "SUCCESS",
+    },
+  ];
+
+  let filtered = stacks;
+  if (environment) filtered = filtered.filter((s) => s.environment === environment);
+  if (lockState) filtered = filtered.filter((s) => s.lockState === lockState);
+
+  const totalCount = filtered.length;
+  const start = (page - 1) * pageSize;
+  const paged = filtered.slice(start, start + pageSize);
+
+  return listResponse("stacks", paged, totalCount, {
+    page,
+    pageSize,
+    requestId,
   });
 }
 
@@ -146,7 +168,8 @@ export async function POST(request: NextRequest) {
     gitRepository?: string;
     gitBranch?: string;
   };
-  return NextResponse.json(
+  const requestId = getRequestId(request);
+  return created(
     {
       id: "stack-new",
       name: body.name,
@@ -166,6 +189,6 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     },
-    { status: 201 }
+    { requestId }
   );
 }

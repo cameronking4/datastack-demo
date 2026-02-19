@@ -1,5 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { isPreviewEnabled } from "@/lib/api/preview";
+import {
+  listResponse,
+  created,
+  parsePagePagination,
+  getRequestId,
+} from "@/lib/api/response";
 
 /**
  * @swagger
@@ -115,10 +121,12 @@ import { isPreviewEnabled } from "@/lib/api/preview";
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get("pageSize") ?? "25", 10)));
+  const requestId = getRequestId(request);
+  const state = searchParams.get("state");
+  const edition = searchParams.get("edition");
 
-  return NextResponse.json({
-    pipelines: [
-      {
+  const pipelines = [
+    {
         id: "pipe-001",
         name: "Bronze Ingestion",
         workspaceId: "ws-001",
@@ -174,12 +182,22 @@ export async function GET(request: NextRequest) {
         lastRunAt: null,
         lastRunStatus: null,
       },
-    ],
-    totalCount: 2,
+    ];
+
+  let filtered = pipelines;
+  if (state) filtered = filtered.filter((p) => p.state === state);
+  if (edition) filtered = filtered.filter((p) => p.edition === edition);
+  const totalCount = filtered.length;
+  const paged = filtered.slice(0, pageSize);
+
+  return listResponse("pipelines", paged, totalCount, {
+    pageSize,
+    requestId,
   });
 }
 
 export async function POST(request: NextRequest) {
+  const requestId = getRequestId(request);
   const body = (await request.json()) as {
     name: string;
     workspaceId: string;
@@ -196,7 +214,7 @@ export async function POST(request: NextRequest) {
     clusterConfig?: Record<string, unknown>;
   };
 
-  return NextResponse.json(
+  return created(
     {
       id: "pipe-new",
       name: body.name,
@@ -216,6 +234,6 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString(),
       createdBy: "api",
     },
-    { status: 201 }
+    { requestId }
   );
 }

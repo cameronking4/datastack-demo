@@ -1,4 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import {
+  listResponse,
+  parsePagePagination,
+  getRequestId,
+} from "@/lib/api/response";
 
 /**
  * @swagger
@@ -16,12 +21,14 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
-  const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get("pageSize") ?? "25", 10)));
+  const { page, pageSize } = parsePagePagination(searchParams, { pageSize: 25 });
+  const requestId = getRequestId(request);
+  const stackId = searchParams.get("stackId");
+  const environment = searchParams.get("environment");
+  const status = searchParams.get("status");
 
-  return NextResponse.json({
-    deployments: [
-      {
+  const deployments = [
+    {
         id: "deploy-003",
         stackId: "stack-001",
         stackName: "Analytics Platform",
@@ -63,9 +70,19 @@ export async function GET(request: NextRequest) {
         startedBy: "bob@datastack.dev",
         promotedFrom: null,
       },
-    ],
-    totalCount: 3,
+    ];
+
+  let filtered = deployments;
+  if (stackId) filtered = filtered.filter((d) => d.stackId === stackId);
+  if (environment) filtered = filtered.filter((d) => d.environment === environment);
+  if (status) filtered = filtered.filter((d) => d.status === status);
+  const totalCount = filtered.length;
+  const start = (page - 1) * pageSize;
+  const paged = filtered.slice(start, start + pageSize);
+
+  return listResponse("deployments", paged, totalCount, {
     page,
     pageSize,
+    requestId,
   });
 }

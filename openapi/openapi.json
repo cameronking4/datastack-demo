@@ -12,6 +12,27 @@
     }
   ],
   "components": {
+    "schemas": {
+      "ApiError": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": ["code", "message"],
+            "properties": {
+              "code": {
+                "type": "string",
+                "enum": ["BAD_REQUEST", "UNAUTHORIZED", "FORBIDDEN", "NOT_FOUND", "CONFLICT", "RATE_LIMITED", "INTERNAL_ERROR"]
+              },
+              "message": { "type": "string" },
+              "details": { "type": "object" },
+              "requestId": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
     "securitySchemes": {
       "ApiKeyAuth": {
         "type": "apiKey",
@@ -28,6 +49,30 @@
   },
   "security": [],
   "paths": {
+    "/api/v1/health": {
+      "get": {
+        "summary": "Health check",
+        "description": "Liveness/readiness check. Returns 200 when the API is accepting requests.",
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "ok" },
+                    "version": { "type": "string" },
+                    "timestamp": { "type": "string", "format": "date-time" },
+                    "requestId": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/auth/api-keys/{keyId}": {
       "delete": {
         "summary": "Revoke API key",
@@ -1817,10 +1862,71 @@
         }
       }
     },
+    "/api/v1/stacks/{stackId}/lock": {
+      "post": {
+        "summary": "Lock stack",
+        "description": "Acquire an exclusive lock on a stack to prevent concurrent modifications",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stackId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": { "type": "string" },
+                  "ttlSeconds": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Success" },
+          "409": { "description": "Stack is already locked" }
+        }
+      }
+    },
+    "/api/v1/stacks/{stackId}/unlock": {
+      "post": {
+        "summary": "Unlock stack",
+        "description": "Release the lock on a stack",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stackId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Success" },
+          "404": { "description": "Stack not found" }
+        }
+      }
+    },
     "/api/v1/stacks": {
       "get": {
         "summary": "List stacks",
-        "description": "List composable infrastructure stacks",
+        "description": "List composable infrastructure stacks with pagination",
+        "parameters": [
+          { "in": "query", "name": "page", "schema": { "type": "integer", "default": 1 } },
+          { "in": "query", "name": "pageSize", "schema": { "type": "integer", "default": 25 } },
+          { "in": "query", "name": "perPage", "schema": { "type": "integer" } },
+          { "in": "query", "name": "environment", "schema": { "type": "string", "enum": ["development", "staging", "production"] } },
+          { "in": "query", "name": "lockState", "schema": { "type": "string", "enum": ["LOCKED", "UNLOCKED"] } }
+        ],
         "responses": {
           "200": {
             "description": "Success"

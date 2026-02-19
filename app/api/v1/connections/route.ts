@@ -1,4 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import {
+  listResponse,
+  created,
+  parsePagePagination,
+  getRequestId,
+} from "@/lib/api/response";
 
 /**
  * @swagger
@@ -71,12 +77,13 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
-  const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get("pageSize") ?? "25", 10)));
+  const { page, pageSize } = parsePagePagination(searchParams, { pageSize: 25 });
+  const requestId = getRequestId(request);
+  const type = searchParams.get("type");
+  const status = searchParams.get("status");
 
-  return NextResponse.json({
-    connections: [
-      {
+  const connections = [
+    {
         id: "conn-001",
         name: "Production S3",
         type: "S3",
@@ -123,14 +130,24 @@ export async function GET(request: NextRequest) {
         lastTestStatus: "SUCCESS",
         lastHealthCheckAt: "2024-06-10T08:01:00Z",
       },
-    ],
-    totalCount: 2,
+    ];
+
+  let filtered = connections;
+  if (type) filtered = filtered.filter((c) => c.type === type);
+  if (status) filtered = filtered.filter((c) => c.status === status);
+  const totalCount = filtered.length;
+  const start = (page - 1) * pageSize;
+  const paged = filtered.slice(start, start + pageSize);
+
+  return listResponse("connections", paged, totalCount, {
     page,
     pageSize,
+    requestId,
   });
 }
 
 export async function POST(request: NextRequest) {
+  const requestId = getRequestId(request);
   const body = (await request.json()) as {
     name: string;
     type: string;
@@ -143,7 +160,7 @@ export async function POST(request: NextRequest) {
     properties?: Record<string, unknown>;
     tags?: Record<string, string>;
   };
-  return NextResponse.json(
+  return created(
     {
       id: "conn-new",
       name: body.name,
@@ -163,6 +180,6 @@ export async function POST(request: NextRequest) {
       lastTestedAt: null,
       lastTestStatus: null,
     },
-    { status: 201 }
+    { requestId }
   );
 }

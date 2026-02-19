@@ -1,4 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import {
+  listResponse,
+  created,
+  parseOffsetPagination,
+  getRequestId,
+} from "@/lib/api/response";
 
 /**
  * @swagger
@@ -74,11 +80,14 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") ?? "25", 10)));
+  const { limit, offset } = parseOffsetPagination(searchParams, { limit: 25 });
+  const requestId = getRequestId(request);
+  const warehouseId = searchParams.get("warehouseId");
+  const ownerId = searchParams.get("ownerId");
+  const tag = searchParams.get("tag");
 
-  return NextResponse.json({
-    queries: [
-      {
+  const queries = [
+    {
         id: "q-001",
         name: "Daily Active Users",
         description: "Count DAU by platform",
@@ -96,12 +105,24 @@ export async function GET(request: NextRequest) {
         lastExecutedAt: "2024-06-10T09:00:00Z",
         executionCount: 180,
       },
-    ],
-    totalCount: 1,
+    ];
+
+  let filtered = queries;
+  if (warehouseId) filtered = filtered.filter((q) => q.warehouseId === warehouseId);
+  if (ownerId) filtered = filtered.filter((q) => q.createdBy === ownerId);
+  if (tag) filtered = filtered.filter((q) => q.tags?.includes(tag));
+  const totalCount = filtered.length;
+  const paged = filtered.slice(offset, offset + limit);
+
+  return listResponse("queries", paged, totalCount, {
+    limit,
+    offset,
+    requestId,
   });
 }
 
 export async function POST(request: NextRequest) {
+  const requestId = getRequestId(request);
   const body = (await request.json()) as {
     name: string;
     description?: string;
@@ -114,7 +135,7 @@ export async function POST(request: NextRequest) {
     parameters?: { name: string; type: string; defaultValue: string }[];
     tags?: string[];
   };
-  return NextResponse.json(
+  return created(
     {
       id: "q-new",
       name: body.name,
@@ -131,6 +152,6 @@ export async function POST(request: NextRequest) {
       updatedAt: new Date().toISOString(),
       createdBy: "api",
     },
-    { status: 201 }
+    { requestId }
   );
 }

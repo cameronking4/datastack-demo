@@ -1,4 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import {
+  listResponse,
+  created,
+  parsePagePagination,
+  getRequestId,
+} from "@/lib/api/response";
 
 /**
  * @swagger
@@ -63,10 +69,12 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
+  const { page, pageSize } = parsePagePagination(searchParams, { pageSize: 25 });
+  const requestId = getRequestId(request);
+  const activeParam = searchParams.get("active");
 
-  return NextResponse.json({
-    webhooks: [
-      {
+  const webhooks = [
+    {
         id: "wh-001",
         url: "https://hooks.acme.dev/datastack",
         events: ["job.completed", "job.failed", "pipeline.failed"],
@@ -85,12 +93,26 @@ export async function GET(request: NextRequest) {
           lastDeliveryStatus: "SUCCESS",
         },
       },
-    ],
-    totalCount: 1,
+    ];
+
+  let filtered = webhooks;
+  if (activeParam !== null && activeParam !== undefined) {
+    const active = activeParam === "true";
+    filtered = filtered.filter((w) => w.active === active);
+  }
+  const totalCount = filtered.length;
+  const start = (page - 1) * pageSize;
+  const paged = filtered.slice(start, start + pageSize);
+
+  return listResponse("webhooks", paged, totalCount, {
+    page,
+    pageSize,
+    requestId,
   });
 }
 
 export async function POST(request: NextRequest) {
+  const requestId = getRequestId(request);
   const body = (await request.json()) as {
     url: string;
     events: string[];
@@ -101,7 +123,7 @@ export async function POST(request: NextRequest) {
     retryPolicy?: { maxRetries: number; retryIntervalSeconds: number; exponentialBackoff: boolean };
     contentType?: string;
   };
-  return NextResponse.json(
+  return created(
     {
       id: "wh-new",
       url: body.url,
@@ -121,6 +143,6 @@ export async function POST(request: NextRequest) {
         lastDeliveryStatus: null,
       },
     },
-    { status: 201 }
+    { requestId }
   );
 }
