@@ -51,21 +51,6 @@
     "/api/v1/auth/api-keys": {
       "get": {
         "summary": "List API keys",
-        "description": "List API keys with usage statistics and expiration info",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "status",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "active",
-                "expired",
-                "revoked"
-              ]
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -74,7 +59,6 @@
       },
       "post": {
         "summary": "Create API key",
-        "description": "Create a new API key with scopes, expiration, and rate limiting",
         "requestBody": {
           "required": true,
           "content": {
@@ -97,40 +81,6 @@
                   },
                   "expiresInDays": {
                     "type": "integer"
-                  },
-                  "rateLimit": {
-                    "type": "object",
-                    "properties": {
-                      "requestsPerMinute": {
-                        "type": "integer"
-                      },
-                      "requestsPerDay": {
-                        "type": "integer"
-                      }
-                    }
-                  },
-                  "rotationPolicy": {
-                    "type": "object",
-                    "properties": {
-                      "autoRotate": {
-                        "type": "boolean"
-                      },
-                      "rotationIntervalDays": {
-                        "type": "integer"
-                      }
-                    }
-                  },
-                  "allowedIpRanges": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "metadata": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
                   }
                 }
               }
@@ -140,44 +90,6 @@
         "responses": {
           "201": {
             "description": "Created"
-          }
-        }
-      }
-    },
-    "/api/v1/auth/token/refresh": {
-      "post": {
-        "summary": "Refresh access token",
-        "description": "Exchange a refresh token for a new access token without re-authenticating",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "refreshToken"
-                ],
-                "properties": {
-                  "refreshToken": {
-                    "type": "string"
-                  },
-                  "scopes": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "401": {
-            "description": "Invalid or expired refresh token"
           }
         }
       }
@@ -214,35 +126,22 @@
     "/api/v1/auth/token": {
       "post": {
         "summary": "Get access token",
-        "description": "Exchange credentials for access token (OAuth2 client_credentials or refresh_token grant)",
+        "description": "Exchange credentials for access token (OAuth2 client_credentials grant)",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "grantType"
-                ],
                 "properties": {
                   "grantType": {
-                    "type": "string",
-                    "enum": [
-                      "client_credentials",
-                      "refresh_token"
-                    ]
+                    "type": "string"
                   },
                   "scopes": {
                     "type": "array",
                     "items": {
                       "type": "string"
                     }
-                  },
-                  "refreshToken": {
-                    "type": "string"
-                  },
-                  "audience": {
-                    "type": "string"
                   }
                 }
               }
@@ -526,7 +425,6 @@
     "/api/v1/clusters/{clusterId}": {
       "get": {
         "summary": "Get cluster",
-        "description": "Get cluster details including runtime metrics and configuration",
         "parameters": [
           {
             "in": "path",
@@ -537,83 +435,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update cluster",
-        "description": "Update cluster configuration. Some changes require a restart.",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "clusterId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "numWorkers": {
-                    "type": "integer"
-                  },
-                  "nodeType": {
-                    "type": "string"
-                  },
-                  "driverNodeType": {
-                    "type": "string"
-                  },
-                  "autoTerminationMinutes": {
-                    "type": "integer"
-                  },
-                  "enableAutoscaling": {
-                    "type": "boolean"
-                  },
-                  "minWorkers": {
-                    "type": "integer"
-                  },
-                  "maxWorkers": {
-                    "type": "integer"
-                  },
-                  "spotInstances": {
-                    "type": "boolean"
-                  },
-                  "runtimeEngine": {
-                    "type": "string",
-                    "enum": [
-                      "STANDARD",
-                      "PHOTON"
-                    ]
-                  },
-                  "customSparkConf": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  },
-                  "tags": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Success"
@@ -621,8 +442,7 @@
         }
       },
       "delete": {
-        "summary": "Terminate cluster",
-        "description": "Permanently terminate a cluster and release all resources",
+        "summary": "Delete cluster",
         "parameters": [
           {
             "in": "path",
@@ -643,54 +463,7 @@
     "/api/v1/clusters": {
       "get": {
         "summary": "List clusters",
-        "description": "List clusters in workspace with optional state and tag filters",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "state",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "RUNNING",
-                "PENDING",
-                "TERMINATED",
-                "ERROR",
-                "RESIZING"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "sortBy",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "name",
-                "createdAt",
-                "state",
-                "numWorkers"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "sortOrder",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "tagFilter",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "description": "List clusters in workspace with optional state filter",
         "responses": {
           "200": {
             "description": "Success"
@@ -699,7 +472,7 @@
       },
       "post": {
         "summary": "Create cluster",
-        "description": "Create a new compute cluster with autoscaling, spot instances, and custom configurations",
+        "description": "Create a new compute cluster",
         "requestBody": {
           "required": true,
           "content": {
@@ -709,7 +482,7 @@
                 "required": [
                   "name",
                   "workspaceId",
-                  "runtimeVersion",
+                  "sparkVersion",
                   "nodeType"
                 ],
                 "properties": {
@@ -719,16 +492,13 @@
                   "workspaceId": {
                     "type": "string"
                   },
-                  "runtimeVersion": {
+                  "sparkVersion": {
                     "type": "string"
                   },
                   "nodeType": {
                     "type": "string"
                   },
-                  "driverNodeType": {
-                    "type": "string"
-                  },
-                  "numWorkers": {
+                  "workerCount": {
                     "type": "integer"
                   },
                   "enableAutoscaling": {
@@ -742,53 +512,6 @@
                   },
                   "autoTerminationMinutes": {
                     "type": "integer"
-                  },
-                  "spotInstances": {
-                    "type": "boolean"
-                  },
-                  "spotFallbackToOnDemand": {
-                    "type": "boolean"
-                  },
-                  "instancePoolId": {
-                    "type": "string"
-                  },
-                  "clusterPolicyId": {
-                    "type": "string"
-                  },
-                  "runtimeEngine": {
-                    "type": "string",
-                    "enum": [
-                      "STANDARD",
-                      "PHOTON"
-                    ]
-                  },
-                  "initScripts": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "workspace": {
-                          "type": "object",
-                          "properties": {
-                            "destination": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "customSparkConf": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  },
-                  "sshPublicKeys": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
                   },
                   "tags": {
                     "type": "object",
@@ -811,7 +534,6 @@
     "/api/v1/connections/{connectionId}": {
       "get": {
         "summary": "Get connection",
-        "description": "Get connection details including health check status and credentials metadata",
         "parameters": [
           {
             "in": "path",
@@ -830,7 +552,6 @@
       },
       "patch": {
         "summary": "Update connection",
-        "description": "Update connection configuration, credentials, or health check settings",
         "parameters": [
           {
             "in": "path",
@@ -854,41 +575,11 @@
                   "host": {
                     "type": "string"
                   },
-                  "port": {
-                    "type": "integer"
-                  },
-                  "authMethod": {
-                    "type": "string",
-                    "enum": [
-                      "API_KEY",
-                      "OAUTH2",
-                      "SERVICE_ACCOUNT",
-                      "IAM_ROLE",
-                      "USERNAME_PASSWORD"
-                    ]
-                  },
-                  "credentialRef": {
+                  "secretScope": {
                     "type": "string"
-                  },
-                  "healthCheck": {
-                    "type": "object",
-                    "properties": {
-                      "enabled": {
-                        "type": "boolean"
-                      },
-                      "intervalSeconds": {
-                        "type": "integer"
-                      }
-                    }
                   },
                   "properties": {
                     "type": "object"
-                  },
-                  "tags": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
                   }
                 }
               }
@@ -903,7 +594,6 @@
       },
       "delete": {
         "summary": "Delete connection",
-        "description": "Delete a connection. Fails if any active pipelines or jobs reference it.",
         "parameters": [
           {
             "in": "path",
@@ -955,41 +645,7 @@
     "/api/v1/connections": {
       "get": {
         "summary": "List connections",
-        "description": "List external data source and sink connections with health status",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "type",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "S3",
-                "POSTGRESQL",
-                "MYSQL",
-                "KAFKA",
-                "SNOWFLAKE",
-                "BIGQUERY",
-                "REDSHIFT",
-                "MONGODB",
-                "AZURE_BLOB",
-                "GCS"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "status",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ACTIVE",
-                "INACTIVE",
-                "ERROR",
-                "PENDING_VALIDATION"
-              ]
-            }
-          }
-        ],
+        "description": "List external data source and sink connections",
         "responses": {
           "200": {
             "description": "Success"
@@ -998,7 +654,7 @@
       },
       "post": {
         "summary": "Create connection",
-        "description": "Create a new data source or sink connection with authentication",
+        "description": "Create a new data source or sink connection",
         "requestBody": {
           "required": true,
           "content": {
@@ -1009,69 +665,26 @@
                   "name",
                   "type",
                   "host",
-                  "workspaceId",
-                  "authMethod"
+                  "workspaceId"
                 ],
                 "properties": {
                   "name": {
                     "type": "string"
                   },
                   "type": {
-                    "type": "string",
-                    "enum": [
-                      "S3",
-                      "POSTGRESQL",
-                      "MYSQL",
-                      "KAFKA",
-                      "SNOWFLAKE",
-                      "BIGQUERY",
-                      "REDSHIFT",
-                      "MONGODB",
-                      "AZURE_BLOB",
-                      "GCS"
-                    ]
+                    "type": "string"
                   },
                   "host": {
                     "type": "string"
                   },
-                  "port": {
-                    "type": "integer"
-                  },
                   "workspaceId": {
                     "type": "string"
                   },
-                  "authMethod": {
-                    "type": "string",
-                    "enum": [
-                      "API_KEY",
-                      "OAUTH2",
-                      "SERVICE_ACCOUNT",
-                      "IAM_ROLE",
-                      "USERNAME_PASSWORD"
-                    ]
-                  },
-                  "credentialRef": {
+                  "secretScope": {
                     "type": "string"
-                  },
-                  "healthCheck": {
-                    "type": "object",
-                    "properties": {
-                      "enabled": {
-                        "type": "boolean"
-                      },
-                      "intervalSeconds": {
-                        "type": "integer"
-                      }
-                    }
                   },
                   "properties": {
                     "type": "object"
-                  },
-                  "tags": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
                   }
                 }
               }
@@ -1184,240 +797,9 @@
         }
       }
     },
-    "/api/v1/environments/{environmentId}": {
-      "get": {
-        "summary": "Get environment",
-        "description": "Get environment details including promotion rules, variables, and deployment count",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "environmentId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update environment",
-        "description": "Update environment settings, promotion rules, or access controls",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "environmentId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "color": {
-                    "type": "string"
-                  },
-                  "promotionRules": {
-                    "type": "object",
-                    "properties": {
-                      "requiresApproval": {
-                        "type": "boolean"
-                      },
-                      "approvers": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "autoPromoteFrom": {
-                        "type": "string"
-                      },
-                      "requiredChecks": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "accessControl": {
-                    "type": "object",
-                    "properties": {
-                      "allowedRoles": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "allowedTeamIds": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "variables": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  },
-                  "protected": {
-                    "type": "boolean"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete environment",
-        "description": "Delete an environment. Protected environments cannot be deleted.",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "environmentId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/api/v1/environments": {
-      "get": {
-        "summary": "List environments",
-        "description": "List deployment environments with promotion rules and access controls",
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create environment",
-        "description": "Create a new deployment environment with approval and promotion configuration",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "name",
-                  "slug",
-                  "workspaceId"
-                ],
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "slug": {
-                    "type": "string"
-                  },
-                  "workspaceId": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "color": {
-                    "type": "string"
-                  },
-                  "promotionRules": {
-                    "type": "object",
-                    "properties": {
-                      "requiresApproval": {
-                        "type": "boolean"
-                      },
-                      "approvers": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "autoPromoteFrom": {
-                        "type": "string"
-                      },
-                      "requiredChecks": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "accessControl": {
-                    "type": "object",
-                    "properties": {
-                      "allowedRoles": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "allowedTeamIds": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "variables": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  },
-                  "protected": {
-                    "type": "boolean"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        }
-      }
-    },
     "/api/v1/jobs/{jobId}": {
       "get": {
         "summary": "Get job",
-        "description": "Get job configuration, schedule, and recent run history",
         "parameters": [
           {
             "in": "path",
@@ -1431,137 +813,6 @@
         "responses": {
           "200": {
             "description": "Success"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update job",
-        "description": "Update job configuration, schedule, or retry policy",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "jobId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "schedule": {
-                    "type": "string"
-                  },
-                  "timezone": {
-                    "type": "string"
-                  },
-                  "triggerType": {
-                    "type": "string",
-                    "enum": [
-                      "PERIODIC",
-                      "CONTINUOUS",
-                      "ONE_TIME",
-                      "FILE_ARRIVAL",
-                      "TABLE_UPDATE"
-                    ]
-                  },
-                  "maxConcurrentRuns": {
-                    "type": "integer"
-                  },
-                  "retryPolicy": {
-                    "type": "object",
-                    "properties": {
-                      "maxRetries": {
-                        "type": "integer"
-                      },
-                      "retryIntervalSeconds": {
-                        "type": "integer"
-                      },
-                      "retryOnTimeout": {
-                        "type": "boolean"
-                      }
-                    }
-                  },
-                  "alertDestinations": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string"
-                        },
-                        "destination": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "settings": {
-                    "type": "object",
-                    "properties": {
-                      "clusterId": {
-                        "type": "string"
-                      },
-                      "notebookPath": {
-                        "type": "string"
-                      },
-                      "timeoutSeconds": {
-                        "type": "integer"
-                      }
-                    }
-                  },
-                  "state": {
-                    "type": "string",
-                    "enum": [
-                      "ACTIVE",
-                      "PAUSED",
-                      "DISABLED"
-                    ]
-                  },
-                  "tags": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete job",
-        "description": "Permanently delete a job and its run history",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "jobId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No content"
           }
         }
       }
@@ -1641,35 +892,6 @@
     "/api/v1/jobs": {
       "get": {
         "summary": "List jobs",
-        "description": "List jobs with optional filters by state, owner, and tags",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "state",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ACTIVE",
-                "PAUSED",
-                "DISABLED"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "ownerId",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "tagFilter",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -1678,7 +900,6 @@
       },
       "post": {
         "summary": "Create job",
-        "description": "Create a new scheduled or triggered job",
         "requestBody": {
           "required": true,
           "content": {
@@ -1687,7 +908,8 @@
                 "type": "object",
                 "required": [
                   "name",
-                  "triggerType",
+                  "schedule",
+                  "trigger",
                   "settings"
                 ],
                 "properties": {
@@ -1700,64 +922,8 @@
                   "schedule": {
                     "type": "string"
                   },
-                  "timezone": {
+                  "trigger": {
                     "type": "string"
-                  },
-                  "triggerType": {
-                    "type": "string",
-                    "enum": [
-                      "PERIODIC",
-                      "CONTINUOUS",
-                      "ONE_TIME",
-                      "FILE_ARRIVAL",
-                      "TABLE_UPDATE"
-                    ]
-                  },
-                  "maxConcurrentRuns": {
-                    "type": "integer"
-                  },
-                  "retryPolicy": {
-                    "type": "object",
-                    "properties": {
-                      "maxRetries": {
-                        "type": "integer"
-                      },
-                      "retryIntervalSeconds": {
-                        "type": "integer"
-                      },
-                      "retryOnTimeout": {
-                        "type": "boolean"
-                      }
-                    }
-                  },
-                  "alertDestinations": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "enum": [
-                            "EMAIL",
-                            "SLACK",
-                            "PAGERDUTY",
-                            "WEBHOOK"
-                          ]
-                        },
-                        "destination": {
-                          "type": "string"
-                        },
-                        "onStart": {
-                          "type": "boolean"
-                        },
-                        "onSuccess": {
-                          "type": "boolean"
-                        },
-                        "onFailure": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
                   },
                   "settings": {
                     "type": "object",
@@ -1770,35 +936,7 @@
                       },
                       "timeoutSeconds": {
                         "type": "integer"
-                      },
-                      "environmentVars": {
-                        "type": "object",
-                        "additionalProperties": {
-                          "type": "string"
-                        }
-                      },
-                      "libraries": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "pypi": {
-                              "type": "object",
-                              "properties": {
-                                "package": {
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          }
-                        }
                       }
-                    }
-                  },
-                  "tags": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
                     }
                   }
                 }
@@ -1869,266 +1007,6 @@
         "responses": {
           "200": {
             "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/v1/notifications/{notificationId}": {
-      "get": {
-        "summary": "Get notification channel",
-        "description": "Get notification channel details including delivery statistics",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "notificationId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update notification channel",
-        "description": "Update notification channel configuration, filters, or quiet hours",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "notificationId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "config": {
-                    "type": "object",
-                    "properties": {
-                      "recipients": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "webhookUrl": {
-                        "type": "string"
-                      },
-                      "slackChannel": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "eventFilters": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "severityFilter": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "enabled": {
-                    "type": "boolean"
-                  },
-                  "quietHours": {
-                    "type": "object",
-                    "properties": {
-                      "enabled": {
-                        "type": "boolean"
-                      },
-                      "startTime": {
-                        "type": "string"
-                      },
-                      "endTime": {
-                        "type": "string"
-                      },
-                      "timezone": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "rateLimitPerHour": {
-                    "type": "integer"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete notification channel",
-        "description": "Remove a notification channel",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "notificationId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/api/v1/notifications": {
-      "get": {
-        "summary": "List notification channels",
-        "description": "List configured notification channels and preferences",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "type",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "email",
-                "slack",
-                "pagerduty",
-                "webhook",
-                "teams"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "enabled",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create notification channel",
-        "description": "Register a new notification channel for alerts and event notifications",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "name",
-                  "type",
-                  "config"
-                ],
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string",
-                    "enum": [
-                      "email",
-                      "slack",
-                      "pagerduty",
-                      "webhook",
-                      "teams"
-                    ]
-                  },
-                  "config": {
-                    "type": "object",
-                    "properties": {
-                      "recipients": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "webhookUrl": {
-                        "type": "string"
-                      },
-                      "slackChannel": {
-                        "type": "string"
-                      },
-                      "pagerdutyServiceKey": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "eventFilters": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "severityFilter": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "enum": [
-                        "info",
-                        "warning",
-                        "error",
-                        "critical"
-                      ]
-                    }
-                  },
-                  "enabled": {
-                    "type": "boolean"
-                  },
-                  "quietHours": {
-                    "type": "object",
-                    "properties": {
-                      "enabled": {
-                        "type": "boolean"
-                      },
-                      "startTime": {
-                        "type": "string"
-                      },
-                      "endTime": {
-                        "type": "string"
-                      },
-                      "timezone": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "rateLimitPerHour": {
-                    "type": "integer"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created"
           }
         }
       }
@@ -2254,35 +1132,7 @@
     "/api/v1/pipelines": {
       "get": {
         "summary": "List pipelines",
-        "description": "List Delta Live Tables pipelines with state and edition filters",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "state",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "RUNNING",
-                "IDLE",
-                "FAILED",
-                "STARTING",
-                "STOPPING"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "edition",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "CORE",
-                "PRO",
-                "ADVANCED"
-              ]
-            }
-          }
-        ],
+        "description": "List Delta Live Tables pipelines",
         "responses": {
           "200": {
             "description": "Success"
@@ -2291,7 +1141,6 @@
       },
       "post": {
         "summary": "Create pipeline",
-        "description": "Create a new Delta Live Tables pipeline with notification and library configuration",
         "requestBody": {
           "required": true,
           "content": {
@@ -2326,104 +1175,7 @@
                     "type": "boolean"
                   },
                   "edition": {
-                    "type": "string",
-                    "enum": [
-                      "CORE",
-                      "PRO",
-                      "ADVANCED"
-                    ]
-                  },
-                  "developmentMode": {
-                    "type": "boolean"
-                  },
-                  "channel": {
-                    "type": "string",
-                    "enum": [
-                      "CURRENT",
-                      "PREVIEW"
-                    ]
-                  },
-                  "notifications": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "emailRecipients": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "onStart": {
-                          "type": "boolean"
-                        },
-                        "onSuccess": {
-                          "type": "boolean"
-                        },
-                        "onFailure": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  },
-                  "libraries": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "notebook": {
-                          "type": "object",
-                          "properties": {
-                            "path": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "jar": {
-                          "type": "string"
-                        },
-                        "maven": {
-                          "type": "object",
-                          "properties": {
-                            "coordinates": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "clusterConfig": {
-                    "type": "object",
-                    "properties": {
-                      "label": {
-                        "type": "string"
-                      },
-                      "nodeType": {
-                        "type": "string"
-                      },
-                      "numWorkers": {
-                        "type": "integer"
-                      },
-                      "autoscale": {
-                        "type": "object",
-                        "properties": {
-                          "minWorkers": {
-                            "type": "integer"
-                          },
-                          "maxWorkers": {
-                            "type": "integer"
-                          },
-                          "mode": {
-                            "type": "string",
-                            "enum": [
-                              "ENHANCED",
-                              "LEGACY"
-                            ]
-                          }
-                        }
-                      }
-                    }
+                    "type": "string"
                   }
                 }
               }
@@ -2440,7 +1192,7 @@
     "/api/v1/queries/{queryId}/execute": {
       "post": {
         "summary": "Execute query",
-        "description": "Execute a saved SQL query with optional parameter overrides and result format",
+        "description": "Execute a saved SQL query against its warehouse",
         "parameters": [
           {
             "in": "path",
@@ -2466,26 +1218,6 @@
                   },
                   "limit": {
                     "type": "integer"
-                  },
-                  "resultFormat": {
-                    "type": "string",
-                    "enum": [
-                      "JSON",
-                      "CSV",
-                      "ARROW"
-                    ]
-                  },
-                  "timeout": {
-                    "type": "integer"
-                  },
-                  "catalog": {
-                    "type": "string"
-                  },
-                  "schema": {
-                    "type": "string"
-                  },
-                  "warehouseOverride": {
-                    "type": "string"
                   }
                 }
               }
@@ -2523,7 +1255,6 @@
     "/api/v1/queries/{queryId}": {
       "get": {
         "summary": "Get query",
-        "description": "Get saved query details including execution history",
         "parameters": [
           {
             "in": "path",
@@ -2542,7 +1273,6 @@
       },
       "patch": {
         "summary": "Update query",
-        "description": "Update query text, parameters, or metadata",
         "parameters": [
           {
             "in": "path",
@@ -2566,45 +1296,11 @@
                   "description": {
                     "type": "string"
                   },
-                  "queryText": {
+                  "sql": {
                     "type": "string"
                   },
                   "warehouseId": {
                     "type": "string"
-                  },
-                  "catalog": {
-                    "type": "string"
-                  },
-                  "schema": {
-                    "type": "string"
-                  },
-                  "resultFormat": {
-                    "type": "string",
-                    "enum": [
-                      "JSON",
-                      "CSV",
-                      "ARROW"
-                    ]
-                  },
-                  "timeout": {
-                    "type": "integer"
-                  },
-                  "parameters": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "string"
-                        },
-                        "defaultValue": {
-                          "type": "string"
-                        }
-                      }
-                    }
                   },
                   "tags": {
                     "type": "array",
@@ -2625,7 +1321,6 @@
       },
       "delete": {
         "summary": "Delete query",
-        "description": "Permanently delete a saved query",
         "parameters": [
           {
             "in": "path",
@@ -2646,30 +1341,7 @@
     "/api/v1/queries": {
       "get": {
         "summary": "List queries",
-        "description": "List saved SQL queries with optional filters",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "warehouseId",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "ownerId",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "tag",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "description": "List saved SQL queries",
         "responses": {
           "200": {
             "description": "Success"
@@ -2678,7 +1350,7 @@
       },
       "post": {
         "summary": "Create query",
-        "description": "Save a new SQL query with catalog/schema context and result format preferences",
+        "description": "Save a new SQL query",
         "requestBody": {
           "required": true,
           "content": {
@@ -2688,7 +1360,7 @@
                 "required": [
                   "name",
                   "warehouseId",
-                  "queryText"
+                  "sql"
                 ],
                 "properties": {
                   "name": {
@@ -2700,251 +1372,12 @@
                   "warehouseId": {
                     "type": "string"
                   },
-                  "queryText": {
+                  "sql": {
                     "type": "string"
-                  },
-                  "catalog": {
-                    "type": "string"
-                  },
-                  "schema": {
-                    "type": "string"
-                  },
-                  "resultFormat": {
-                    "type": "string",
-                    "enum": [
-                      "JSON",
-                      "CSV",
-                      "ARROW"
-                    ]
-                  },
-                  "timeout": {
-                    "type": "integer"
-                  },
-                  "parameters": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "string"
-                        },
-                        "defaultValue": {
-                          "type": "string"
-                        }
-                      }
-                    }
                   },
                   "tags": {
                     "type": "array",
                     "items": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        }
-      }
-    },
-    "/api/v1/schedules/{scheduleId}": {
-      "get": {
-        "summary": "Get schedule",
-        "description": "Get schedule details including fire history and next execution time",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "scheduleId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update schedule",
-        "description": "Update schedule expression, timezone, or activation state",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "scheduleId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "scheduleExpression": {
-                    "type": "string"
-                  },
-                  "timezone": {
-                    "type": "string"
-                  },
-                  "active": {
-                    "type": "boolean"
-                  },
-                  "startDate": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "endDate": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "skipIfRunning": {
-                    "type": "boolean"
-                  },
-                  "catchUpMissed": {
-                    "type": "boolean"
-                  },
-                  "parameters": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete schedule",
-        "description": "Delete a schedule. The associated resource will no longer be triggered automatically.",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "scheduleId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No content"
-          }
-        }
-      }
-    },
-    "/api/v1/schedules": {
-      "get": {
-        "summary": "List schedules",
-        "description": "List unified schedules across jobs, pipelines, and maintenance windows",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "resourceType",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "job",
-                "pipeline",
-                "maintenance"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "active",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create schedule",
-        "description": "Create a new cron or interval-based schedule for a resource",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "name",
-                  "resourceType",
-                  "resourceId",
-                  "scheduleExpression"
-                ],
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "resourceType": {
-                    "type": "string",
-                    "enum": [
-                      "job",
-                      "pipeline",
-                      "maintenance"
-                    ]
-                  },
-                  "resourceId": {
-                    "type": "string"
-                  },
-                  "scheduleExpression": {
-                    "type": "string"
-                  },
-                  "timezone": {
-                    "type": "string"
-                  },
-                  "active": {
-                    "type": "boolean"
-                  },
-                  "startDate": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "endDate": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "skipIfRunning": {
-                    "type": "boolean"
-                  },
-                  "catchUpMissed": {
-                    "type": "boolean"
-                  },
-                  "parameters": {
-                    "type": "object",
-                    "additionalProperties": {
                       "type": "string"
                     }
                   }
@@ -3238,52 +1671,9 @@
         }
       }
     },
-    "/api/v1/stacks/{stackId}/lock": {
-      "post": {
-        "summary": "Lock stack",
-        "description": "Acquire an exclusive lock on a stack to prevent concurrent modifications",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "stackId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "reason": {
-                    "type": "string"
-                  },
-                  "ttlSeconds": {
-                    "type": "integer"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "409": {
-            "description": "Stack is already locked"
-          }
-        }
-      }
-    },
     "/api/v1/stacks/{stackId}": {
       "get": {
         "summary": "Get stack",
-        "description": "Get stack details including layers, version history, and lock state",
         "parameters": [
           {
             "in": "path",
@@ -3302,7 +1692,6 @@
       },
       "patch": {
         "summary": "Update stack",
-        "description": "Update stack configuration, layers, or git integration settings",
         "parameters": [
           {
             "in": "path",
@@ -3324,9 +1713,6 @@
                     "type": "string"
                   },
                   "description": {
-                    "type": "string"
-                  },
-                  "version": {
                     "type": "string"
                   },
                   "layers": {
@@ -3354,12 +1740,6 @@
                         },
                         "config": {
                           "type": "object"
-                        },
-                        "dependsOn": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
                         }
                       }
                     }
@@ -3375,15 +1755,6 @@
                     "additionalProperties": {
                       "type": "string"
                     }
-                  },
-                  "autoDeployOnPush": {
-                    "type": "boolean"
-                  },
-                  "gitRepository": {
-                    "type": "string"
-                  },
-                  "gitBranch": {
-                    "type": "string"
                   }
                 }
               }
@@ -3398,7 +1769,6 @@
       },
       "delete": {
         "summary": "Delete stack",
-        "description": "Delete a stack. The stack must be unlocked and have no active deployments.",
         "parameters": [
           {
             "in": "path",
@@ -3412,42 +1782,6 @@
         "responses": {
           "204": {
             "description": "No content"
-          }
-        }
-      }
-    },
-    "/api/v1/stacks/{stackId}/unlock": {
-      "post": {
-        "summary": "Unlock stack",
-        "description": "Release the exclusive lock on a stack",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "stackId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "force": {
-                    "type": "boolean"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
           }
         }
       }
@@ -3486,32 +1820,7 @@
     "/api/v1/stacks": {
       "get": {
         "summary": "List stacks",
-        "description": "List composable infrastructure stacks with version and lock state",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "environment",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "development",
-                "staging",
-                "production"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "lockState",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "LOCKED",
-                "UNLOCKED"
-              ]
-            }
-          }
-        ],
+        "description": "List composable infrastructure stacks",
         "responses": {
           "200": {
             "description": "Success"
@@ -3520,7 +1829,7 @@
       },
       "post": {
         "summary": "Create stack",
-        "description": "Create a new composable infrastructure stack with versioning",
+        "description": "Create a new composable infrastructure stack",
         "requestBody": {
           "required": true,
           "content": {
@@ -3544,14 +1853,6 @@
                     "type": "string"
                   },
                   "environment": {
-                    "type": "string",
-                    "enum": [
-                      "development",
-                      "staging",
-                      "production"
-                    ]
-                  },
-                  "version": {
                     "type": "string"
                   },
                   "layers": {
@@ -3579,26 +1880,6 @@
                         },
                         "config": {
                           "type": "object"
-                        },
-                        "dependsOn": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "healthCheck": {
-                          "type": "object",
-                          "properties": {
-                            "enabled": {
-                              "type": "boolean"
-                            },
-                            "endpoint": {
-                              "type": "string"
-                            },
-                            "intervalSeconds": {
-                              "type": "integer"
-                            }
-                          }
                         }
                       }
                     }
@@ -3614,15 +1895,6 @@
                     "additionalProperties": {
                       "type": "string"
                     }
-                  },
-                  "autoDeployOnPush": {
-                    "type": "boolean"
-                  },
-                  "gitRepository": {
-                    "type": "string"
-                  },
-                  "gitBranch": {
-                    "type": "string"
                   }
                 }
               }
@@ -3639,7 +1911,6 @@
     "/api/v1/users/{id}": {
       "get": {
         "summary": "Get user by ID",
-        "description": "Get user profile including teams, permissions, and activity summary",
         "parameters": [
           {
             "in": "path",
@@ -3658,7 +1929,6 @@
       },
       "patch": {
         "summary": "Update user",
-        "description": "Update user profile, role, teams, or permissions",
         "parameters": [
           {
             "in": "path",
@@ -3676,47 +1946,17 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "displayName": {
+                  "fullName": {
                     "type": "string"
                   },
                   "email": {
-                    "type": "string",
-                    "format": "email"
+                    "type": "string"
                   },
                   "role": {
-                    "type": "string",
-                    "enum": [
-                      "admin",
-                      "editor",
-                      "viewer",
-                      "service_account"
-                    ]
+                    "type": "string"
                   },
                   "department": {
                     "type": "string"
-                  },
-                  "teamIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "permissions": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "mfaEnabled": {
-                    "type": "boolean"
-                  },
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "active",
-                      "inactive",
-                      "suspended"
-                    ]
                   }
                 }
               }
@@ -3731,7 +1971,6 @@
       },
       "delete": {
         "summary": "Delete user",
-        "description": "Permanently delete a user. Active sessions will be revoked.",
         "parameters": [
           {
             "in": "path",
@@ -3752,42 +1991,7 @@
     "/api/v1/users": {
       "get": {
         "summary": "List users",
-        "description": "List users with pagination, role, and team filters",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "role",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "admin",
-                "editor",
-                "viewer",
-                "service_account"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "teamId",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "status",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "active",
-                "inactive",
-                "suspended",
-                "pending_verification"
-              ]
-            }
-          }
-        ],
+        "description": "List users with pagination and filters",
         "responses": {
           "200": {
             "description": "Success"
@@ -3796,7 +2000,7 @@
       },
       "post": {
         "summary": "Create user",
-        "description": "Create a new user or service account",
+        "description": "Create a new user",
         "requestBody": {
           "required": true,
           "content": {
@@ -3804,53 +2008,19 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "displayName",
+                  "fullName",
                   "email",
                   "role"
                 ],
                 "properties": {
-                  "displayName": {
+                  "fullName": {
                     "type": "string"
                   },
                   "email": {
-                    "type": "string",
-                    "format": "email"
+                    "type": "string"
                   },
                   "role": {
-                    "type": "string",
-                    "enum": [
-                      "admin",
-                      "editor",
-                      "viewer",
-                      "service_account"
-                    ]
-                  },
-                  "department": {
                     "type": "string"
-                  },
-                  "teamIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "permissions": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "mfaEnabled": {
-                    "type": "boolean"
-                  },
-                  "externalId": {
-                    "type": "string"
-                  },
-                  "metadata": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
                   }
                 }
               }
@@ -3887,7 +2057,6 @@
     "/api/v1/webhooks/{webhookId}": {
       "get": {
         "summary": "Get webhook",
-        "description": "Get webhook configuration and delivery statistics",
         "parameters": [
           {
             "in": "path",
@@ -3906,7 +2075,6 @@
       },
       "patch": {
         "summary": "Update webhook",
-        "description": "Update webhook URL, events, retry policy, or signing configuration",
         "parameters": [
           {
             "in": "path",
@@ -3925,8 +2093,7 @@
                 "type": "object",
                 "properties": {
                   "url": {
-                    "type": "string",
-                    "format": "uri"
+                    "type": "string"
                   },
                   "events": {
                     "type": "array",
@@ -3934,38 +2101,11 @@
                       "type": "string"
                     }
                   },
-                  "signingSecret": {
+                  "secret": {
                     "type": "string"
-                  },
-                  "signingAlgorithm": {
-                    "type": "string",
-                    "enum": [
-                      "HMAC_SHA256",
-                      "HMAC_SHA512"
-                    ]
                   },
                   "active": {
                     "type": "boolean"
-                  },
-                  "headers": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  },
-                  "retryPolicy": {
-                    "type": "object",
-                    "properties": {
-                      "maxRetries": {
-                        "type": "integer"
-                      },
-                      "retryIntervalSeconds": {
-                        "type": "integer"
-                      },
-                      "exponentialBackoff": {
-                        "type": "boolean"
-                      }
-                    }
                   }
                 }
               }
@@ -3980,7 +2120,6 @@
       },
       "delete": {
         "summary": "Delete webhook",
-        "description": "Unregister a webhook endpoint",
         "parameters": [
           {
             "in": "path",
@@ -4031,16 +2170,7 @@
     "/api/v1/webhooks": {
       "get": {
         "summary": "List webhooks",
-        "description": "List registered webhooks with delivery stats",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "active",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
+        "description": "List registered webhooks",
         "responses": {
           "200": {
             "description": "Success"
@@ -4049,7 +2179,6 @@
       },
       "post": {
         "summary": "Create webhook",
-        "description": "Register a new webhook endpoint with event subscriptions and retry configuration",
         "requestBody": {
           "required": true,
           "content": {
@@ -4062,8 +2191,7 @@
                 ],
                 "properties": {
                   "url": {
-                    "type": "string",
-                    "format": "uri"
+                    "type": "string"
                   },
                   "events": {
                     "type": "array",
@@ -4071,45 +2199,11 @@
                       "type": "string"
                     }
                   },
-                  "signingSecret": {
+                  "secret": {
                     "type": "string"
-                  },
-                  "signingAlgorithm": {
-                    "type": "string",
-                    "enum": [
-                      "HMAC_SHA256",
-                      "HMAC_SHA512"
-                    ]
                   },
                   "active": {
                     "type": "boolean"
-                  },
-                  "headers": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  },
-                  "retryPolicy": {
-                    "type": "object",
-                    "properties": {
-                      "maxRetries": {
-                        "type": "integer"
-                      },
-                      "retryIntervalSeconds": {
-                        "type": "integer"
-                      },
-                      "exponentialBackoff": {
-                        "type": "boolean"
-                      }
-                    }
-                  },
-                  "contentType": {
-                    "type": "string",
-                    "enum": [
-                      "application/json",
-                      "application/x-www-form-urlencoded"
-                    ]
                   }
                 }
               }
