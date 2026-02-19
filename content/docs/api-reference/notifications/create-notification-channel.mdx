@@ -1,0 +1,66 @@
+---
+title: Create Notification Channel
+description: Register a new notification channel for alerts and event notifications.
+---
+
+```
+POST /api/v1/notifications
+```
+
+Creates a new notification channel.
+
+**Required scope:** `manage:notifications`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Channel name. |
+| `type` | `string` | Yes | Channel type (`email`, `slack`, `pagerduty`, `webhook`, `teams`). |
+| `config` | `object` | Yes | Type-specific configuration (e.g., webhook URL, email address). |
+| `eventFilters` | `string[]` | No | Event types to receive (e.g., `pipeline.failed`, `alert.triggered`). |
+| `severityFilter` | `string[]` | No | Severity levels to receive (`info`, `warning`, `critical`). |
+| `enabled` | `boolean` | No | Whether the channel is enabled (default: `true`). |
+| `quietHours` | `object` | No | Quiet hours configuration. |
+| `quietHours.start` | `string` | No | Start time (HH:MM). |
+| `quietHours.end` | `string` | No | End time (HH:MM). |
+| `quietHours.timezone` | `string` | No | Timezone for quiet hours. |
+| `rateLimitPerHour` | `integer` | No | Maximum notifications per hour. |
+
+## Response `201`
+
+Returns the created notification channel object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/notifications" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Critical Alerts Slack",
+    "type": "slack",
+    "config": {
+      "webhookUrl": "https://hooks.slack.com/services/...",
+      "channel": "#critical-alerts"
+    },
+    "severityFilter": ["critical"],
+    "rateLimitPerHour": 10
+  }'
+```
+
+```json title="Response"
+{
+  "id": "notif-002",
+  "name": "Critical Alerts Slack",
+  "type": "slack",
+  "config": {
+    "webhookUrl": "https://hooks.slack.com/services/...",
+    "channel": "#critical-alerts"
+  },
+  "severityFilter": ["critical"],
+  "rateLimitPerHour": 10,
+  "enabled": true,
+  "createdAt": "2024-06-10T10:00:00Z"
+}
+```

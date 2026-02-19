@@ -1,0 +1,29 @@
+---
+title: Get Notification Channel
+description: Get notification channel details including delivery statistics.
+---
+
+```
+GET /api/v1/notifications/{notificationId}
+```
+
+Returns notification channel details including delivery statistics.
+
+**Required scope:** `read:notifications`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `notificationId` | `string` | Notification channel identifier. |
+
+## Response `200`
+
+Returns the notification channel object with delivery statistics.
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/notifications/notif-001" \
+  -H "Authorization: Bearer <accessToken>"
+```

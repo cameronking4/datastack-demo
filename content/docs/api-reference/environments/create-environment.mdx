@@ -1,0 +1,72 @@
+---
+title: Create Environment
+description: Create a new deployment environment with approval and promotion configuration.
+---
+
+```
+POST /api/v1/environments
+```
+
+Creates a new deployment environment.
+
+**Required scope:** `manage:environments`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Environment name. |
+| `slug` | `string` | Yes | URL-safe slug. |
+| `workspaceId` | `string` | Yes | Owning workspace identifier. |
+| `description` | `string` | No | Environment description. |
+| `color` | `string` | No | Display color (hex). |
+| `promotionRules` | `object` | No | Rules governing promotions into this environment. |
+| `promotionRules.requireApproval` | `boolean` | No | Whether promotions require approval. |
+| `promotionRules.requiredApprovers` | `integer` | No | Number of required approvers. |
+| `promotionRules.allowedSourceEnvironments` | `string[]` | No | Environments allowed to promote into this one. |
+| `accessControl` | `object` | No | Access control settings. |
+| `accessControl.deployRoles` | `string[]` | No | Roles allowed to deploy. |
+| `accessControl.approveRoles` | `string[]` | No | Roles allowed to approve. |
+| `variables` | `object` | No | Environment-specific variables (key-value pairs). |
+| `protected` | `boolean` | No | Whether the environment is protected from deletion. |
+
+## Response `201`
+
+Returns the created environment object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/environments" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Staging",
+    "slug": "staging",
+    "workspaceId": "ws-001",
+    "description": "Pre-production validation environment",
+    "promotionRules": {
+      "requireApproval": true,
+      "requiredApprovers": 1,
+      "allowedSourceEnvironments": ["development"]
+    },
+    "protected": false
+  }'
+```
+
+```json title="Response"
+{
+  "id": "env-002",
+  "name": "Staging",
+  "slug": "staging",
+  "workspaceId": "ws-001",
+  "description": "Pre-production validation environment",
+  "promotionRules": {
+    "requireApproval": true,
+    "requiredApprovers": 1,
+    "allowedSourceEnvironments": ["development"]
+  },
+  "protected": false,
+  "createdAt": "2024-06-10T10:00:00Z"
+}
+```

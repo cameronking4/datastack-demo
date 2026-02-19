@@ -1,0 +1,60 @@
+---
+title: List Schedules
+description: List unified schedules across jobs, pipelines, and maintenance windows.
+---
+
+```
+GET /api/v1/schedules
+```
+
+Returns a list of schedules across all resource types.
+
+**Required scope:** `read:schedules`
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `resourceType` | `string` | — | Filter by resource type (`job`, `pipeline`, `maintenance`). |
+| `active` | `boolean` | — | Filter by active state. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `schedules` | `object[]` | Array of schedule objects. |
+| `schedules[].id` | `string` | Schedule identifier. |
+| `schedules[].name` | `string` | Schedule name. |
+| `schedules[].resourceType` | `string` | Type of resource being scheduled. |
+| `schedules[].resourceId` | `string` | Identifier of the scheduled resource. |
+| `schedules[].scheduleExpression` | `string` | Cron or interval expression. |
+| `schedules[].timezone` | `string` | Timezone for the schedule. |
+| `schedules[].active` | `boolean` | Whether the schedule is active. |
+| `schedules[].nextFireTime` | `string` | Next scheduled execution time (ISO 8601). |
+| `totalCount` | `number` | Total number of schedules. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/schedules?resourceType=pipeline&active=true" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "schedules": [
+    {
+      "id": "sched-001",
+      "name": "Nightly ETL",
+      "resourceType": "pipeline",
+      "resourceId": "pipe-001",
+      "scheduleExpression": "0 2 * * *",
+      "timezone": "America/New_York",
+      "active": true,
+      "nextFireTime": "2024-06-11T06:00:00Z",
+      "createdAt": "2024-03-01T09:00:00Z"
+    }
+  ],
+  "totalCount": 1
+}
+```

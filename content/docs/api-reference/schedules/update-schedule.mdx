@@ -1,0 +1,45 @@
+---
+title: Update Schedule
+description: Update schedule expression, timezone, or activation state.
+---
+
+```
+PATCH /api/v1/schedules/{scheduleId}
+```
+
+Updates an existing schedule.
+
+**Required scope:** `manage:schedules`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `scheduleId` | `string` | Schedule identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Schedule name. |
+| `scheduleExpression` | `string` | No | Cron expression or interval. |
+| `timezone` | `string` | No | Timezone. |
+| `active` | `boolean` | No | Whether the schedule is active. |
+| `startDate` | `string` | No | Earliest fire date. |
+| `endDate` | `string` | No | Latest fire date. |
+| `skipIfRunning` | `boolean` | No | Skip if resource is already running. |
+| `catchUpMissed` | `boolean` | No | Execute missed runs on catch-up. |
+| `parameters` | `object` | No | Execution parameters. |
+
+## Response `200`
+
+Returns the updated schedule object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH "/api/v1/schedules/sched-001" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"active": false}'
+```

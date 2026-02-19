@@ -1,0 +1,29 @@
+---
+title: Get Environment
+description: Get environment details including promotion rules, variables, and deployment count.
+---
+
+```
+GET /api/v1/environments/{environmentId}
+```
+
+Returns environment details including promotion rules, variables, and deployment count.
+
+**Required scope:** `read:environments`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `environmentId` | `string` | Environment identifier. |
+
+## Response `200`
+
+Returns the environment object with full details.
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/environments/env-001" \
+  -H "Authorization: Bearer <accessToken>"
+```

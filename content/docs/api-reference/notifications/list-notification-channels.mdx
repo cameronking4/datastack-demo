@@ -1,0 +1,56 @@
+---
+title: List Notification Channels
+description: List configured notification channels and preferences.
+---
+
+```
+GET /api/v1/notifications
+```
+
+Returns a list of configured notification channels.
+
+**Required scope:** `read:notifications`
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `type` | `string` | — | Filter by channel type (`email`, `slack`, `pagerduty`, `webhook`, `teams`). |
+| `enabled` | `boolean` | — | Filter by enabled state. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `notifications` | `object[]` | Array of notification channel objects. |
+| `notifications[].id` | `string` | Channel identifier. |
+| `notifications[].name` | `string` | Channel name. |
+| `notifications[].type` | `string` | Channel type. |
+| `notifications[].enabled` | `boolean` | Whether the channel is enabled. |
+| `totalCount` | `number` | Total number of channels. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/notifications?type=slack&enabled=true" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "notifications": [
+    {
+      "id": "notif-001",
+      "name": "Ops Slack",
+      "type": "slack",
+      "config": {
+        "webhookUrl": "https://hooks.slack.com/...",
+        "channel": "#ops-alerts"
+      },
+      "enabled": true,
+      "createdAt": "2024-03-01T09:00:00Z"
+    }
+  ],
+  "totalCount": 1
+}
+```

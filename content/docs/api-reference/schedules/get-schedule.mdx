@@ -1,0 +1,29 @@
+---
+title: Get Schedule
+description: Get schedule details including fire history and next execution time.
+---
+
+```
+GET /api/v1/schedules/{scheduleId}
+```
+
+Returns schedule details including fire history and next execution time.
+
+**Required scope:** `read:schedules`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `scheduleId` | `string` | Schedule identifier. |
+
+## Response `200`
+
+Returns the schedule object with fire history.
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/schedules/sched-001" \
+  -H "Authorization: Bearer <accessToken>"
+```

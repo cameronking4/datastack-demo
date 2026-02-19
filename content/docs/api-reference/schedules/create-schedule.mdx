@@ -1,0 +1,65 @@
+---
+title: Create Schedule
+description: Create a new cron or interval-based schedule for a resource.
+---
+
+```
+POST /api/v1/schedules
+```
+
+Creates a new schedule for a resource.
+
+**Required scope:** `manage:schedules`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Schedule name. |
+| `resourceType` | `string` | Yes | Type of resource (`job`, `pipeline`, `maintenance`). |
+| `resourceId` | `string` | Yes | Identifier of the resource to schedule. |
+| `scheduleExpression` | `string` | Yes | Cron expression or interval (e.g., `0 2 * * *`). |
+| `timezone` | `string` | No | Timezone (default: `UTC`). |
+| `active` | `boolean` | No | Whether the schedule is active (default: `true`). |
+| `startDate` | `string` | No | Earliest date the schedule can fire (ISO 8601). |
+| `endDate` | `string` | No | Latest date the schedule can fire (ISO 8601). |
+| `skipIfRunning` | `boolean` | No | Skip execution if the resource is already running. |
+| `catchUpMissed` | `boolean` | No | Execute missed runs on catch-up. |
+| `parameters` | `object` | No | Parameters to pass to the resource on each execution. |
+
+## Response `201`
+
+Returns the created schedule object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/schedules" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Nightly ETL",
+    "resourceType": "pipeline",
+    "resourceId": "pipe-001",
+    "scheduleExpression": "0 2 * * *",
+    "timezone": "America/New_York",
+    "skipIfRunning": true,
+    "catchUpMissed": false
+  }'
+```
+
+```json title="Response"
+{
+  "id": "sched-002",
+  "name": "Nightly ETL",
+  "resourceType": "pipeline",
+  "resourceId": "pipe-001",
+  "scheduleExpression": "0 2 * * *",
+  "timezone": "America/New_York",
+  "active": true,
+  "skipIfRunning": true,
+  "catchUpMissed": false,
+  "nextFireTime": "2024-06-11T06:00:00Z",
+  "createdAt": "2024-06-10T10:00:00Z"
+}
+```

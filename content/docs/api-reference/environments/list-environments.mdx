@@ -1,0 +1,49 @@
+---
+title: List Environments
+description: List deployment environments with promotion rules and access controls.
+---
+
+```
+GET /api/v1/environments
+```
+
+Returns a list of deployment environments.
+
+**Required scope:** `read:environments`
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `environments` | `object[]` | Array of environment objects. |
+| `environments[].id` | `string` | Environment identifier. |
+| `environments[].name` | `string` | Environment name. |
+| `environments[].slug` | `string` | URL-safe slug. |
+| `environments[].workspaceId` | `string` | Owning workspace. |
+| `environments[].protected` | `boolean` | Whether the environment is protected. |
+| `environments[].color` | `string` | Display color. |
+| `totalCount` | `number` | Total number of environments. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/environments" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "environments": [
+    {
+      "id": "env-001",
+      "name": "Production",
+      "slug": "production",
+      "workspaceId": "ws-001",
+      "protected": true,
+      "color": "#e53e3e",
+      "createdAt": "2024-03-01T09:00:00Z"
+    }
+  ],
+  "totalCount": 1
+}
+```
