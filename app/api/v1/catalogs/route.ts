@@ -1,4 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import {
+  listResponse,
+  created,
+  getRequestId,
+} from "@/lib/api/response";
 
 /**
  * @swagger
@@ -35,6 +40,7 @@ import { NextRequest, NextResponse } from "next/server";
  *       201:
  *         description: Created
  */
+
 /**
  * GET /api/v1/catalogs
  * List Unity Catalog catalogs in workspace
@@ -42,10 +48,10 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get("pageSize") ?? "25", 10)));
+  const requestId = getRequestId(request);
 
-  return NextResponse.json({
-    catalogs: [
-      {
+  const catalogs = [
+    {
         name: "main",
         owner: "ada@datastack.dev",
         comment: "Primary production catalog",
@@ -67,9 +73,14 @@ export async function GET(request: NextRequest) {
         updatedAt: "2024-05-20T09:00:00Z",
         createdBy: "bob@datastack.dev",
       },
-    ],
-    totalCount: 2,
+    ];
+
+  const totalCount = catalogs.length;
+  const paged = catalogs.slice(0, pageSize);
+
+  return listResponse("catalogs", paged, totalCount, {
     pageSize,
+    requestId,
   });
 }
 
@@ -78,13 +89,14 @@ export async function GET(request: NextRequest) {
  * Create a new catalog
  */
 export async function POST(request: NextRequest) {
+  const requestId = getRequestId(request);
   const body = (await request.json()) as {
     name: string;
     comment?: string;
     properties?: Record<string, string>;
     isolation?: string;
   };
-  return NextResponse.json(
+  return created(
     {
       name: body.name,
       owner: "api",
@@ -96,6 +108,6 @@ export async function POST(request: NextRequest) {
       updatedAt: new Date().toISOString(),
       createdBy: "api",
     },
-    { status: 201 }
+    { requestId }
   );
 }

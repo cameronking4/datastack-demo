@@ -1,4 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import {
+  listResponse,
+  created,
+  parsePagePagination,
+  getRequestId,
+} from "@/lib/api/response";
 
 /**
  * @swagger
@@ -70,11 +76,13 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
-  const perPage = Math.min(100, Math.max(1, parseInt(searchParams.get("perPage") ?? "20", 10)));
+  const { page, pageSize } = parsePagePagination(searchParams, { pageSize: 20 });
+  const requestId = getRequestId(request);
+  const role = searchParams.get("role");
+  const teamId = searchParams.get("teamId");
+  const status = searchParams.get("status");
 
-  return NextResponse.json({
-    data: [
+  const users = [
       {
         id: "u1",
         displayName: "Ada Lovelace",
@@ -91,17 +99,25 @@ export async function GET(request: NextRequest) {
         permissions: ["clusters:write", "jobs:write", "pipelines:write", "admin:users"],
         externalId: null,
       },
-    ],
-    pagination: {
-      total: 1,
-      page,
-      perPage,
-      hasMore: false,
-    },
+    ];
+
+  let filtered = users;
+  if (role) filtered = filtered.filter((u) => u.role === role);
+  if (teamId) filtered = filtered.filter((u) => u.teamIds?.includes(teamId));
+  if (status) filtered = filtered.filter((u) => u.status === status);
+  const totalCount = filtered.length;
+  const start = (page - 1) * pageSize;
+  const paged = filtered.slice(start, start + pageSize);
+
+  return listResponse("users", paged, totalCount, {
+    page,
+    pageSize,
+    requestId,
   });
 }
 
 export async function POST(request: NextRequest) {
+  const requestId = getRequestId(request);
   const body = (await request.json()) as {
     displayName: string;
     email: string;
@@ -113,7 +129,7 @@ export async function POST(request: NextRequest) {
     externalId?: string;
     metadata?: Record<string, string>;
   };
-  return NextResponse.json(
+  return created(
     {
       id: "u-new",
       displayName: body.displayName,
@@ -129,6 +145,6 @@ export async function POST(request: NextRequest) {
       externalId: body.externalId ?? null,
       metadata: body.metadata ?? {},
     },
-    { status: 201 }
+    { requestId }
   );
 }

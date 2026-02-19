@@ -1,4 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import {
+  listResponse,
+  parsePagePagination,
+  getRequestId,
+} from "@/lib/api/response";
 
 /**
  * @swagger
@@ -15,12 +20,12 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
-  const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get("pageSize") ?? "25", 10)));
+  const { page, pageSize } = parsePagePagination(searchParams, { pageSize: 25 });
+  const requestId = getRequestId(request);
+  const state = searchParams.get("state");
 
-  return NextResponse.json({
-    warehouses: [
-      {
+  const warehouses = [
+    {
         id: "wh-001",
         name: "BI Warehouse",
         clusterSize: "Small",
@@ -40,7 +45,17 @@ export async function GET(request: NextRequest) {
           "Driver={DataStack};Server=wh-002.us-west-2.datastack.cloud;Port=443",
         createdAt: "2024-02-05T14:00:00Z",
       },
-    ],
-    totalCount: 2,
+    ];
+
+  let filtered = warehouses;
+  if (state) filtered = filtered.filter((w) => w.state === state);
+  const totalCount = filtered.length;
+  const start = (page - 1) * pageSize;
+  const paged = filtered.slice(start, start + pageSize);
+
+  return listResponse("warehouses", paged, totalCount, {
+    page,
+    pageSize,
+    requestId,
   });
 }

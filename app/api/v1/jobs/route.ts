@@ -1,4 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import {
+  listResponse,
+  created,
+  parseOffsetPagination,
+  getRequestId,
+} from "@/lib/api/response";
 
 /**
  * @swagger
@@ -108,12 +114,14 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") ?? "25", 10)));
-  const offset = Math.max(0, parseInt(searchParams.get("offset") ?? "0", 10));
+  const { limit, offset } = parseOffsetPagination(searchParams, { limit: 25 });
+  const requestId = getRequestId(request);
+  const state = searchParams.get("state");
+  const ownerId = searchParams.get("ownerId");
+  const tagFilter = searchParams.get("tagFilter");
 
-  return NextResponse.json({
-    jobs: [
-      {
+  const jobs = [
+    {
         jobId: 1001,
         name: "Daily ETL",
         description: "Ingest and transform raw events",
@@ -167,12 +175,24 @@ export async function GET(request: NextRequest) {
         lastRunStatus: "SUCCESS",
         nextRunAt: "2024-06-10T09:00:00Z",
       },
-    ],
-    totalCount: 2,
+    ];
+
+  let filtered = jobs;
+  if (state) filtered = filtered.filter((j) => j.state === state);
+  if (ownerId) filtered = filtered.filter((j) => j.createdBy === ownerId);
+  if (tagFilter) filtered = filtered.filter((j) => Object.values(j.tags ?? {}).some((v) => String(v).includes(tagFilter)));
+  const totalCount = filtered.length;
+  const paged = filtered.slice(offset, offset + limit);
+
+  return listResponse("jobs", paged, totalCount, {
+    limit,
+    offset,
+    requestId,
   });
 }
 
 export async function POST(request: NextRequest) {
+  const requestId = getRequestId(request);
   const body = (await request.json()) as {
     name: string;
     description?: string;
@@ -186,7 +206,7 @@ export async function POST(request: NextRequest) {
     tags?: Record<string, string>;
   };
 
-  return NextResponse.json(
+  return created(
     {
       jobId: 2001,
       name: body.name,
@@ -203,6 +223,6 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString(),
       createdBy: "api",
     },
-    { status: 201 }
+    { requestId }
   );
 }

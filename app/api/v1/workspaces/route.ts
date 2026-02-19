@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { listResponse, getRequestId } from "@/lib/api/response";
 
 /**
  * @swagger
@@ -17,9 +18,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get("pageSize") ?? "25", 10)));
+  const requestId = getRequestId(request);
 
-  return NextResponse.json({
-    workspaces: [
+  const workspaces = [
       {
         id: "ws-001",
         name: "Acme Corp Production",
@@ -36,8 +37,13 @@ export async function GET(request: NextRequest) {
         status: "ACTIVE",
         createdAt: "2024-02-01T12:00:00Z",
       },
-    ],
-    totalCount: 2,
-    nextPageToken: undefined,
+    ];
+
+  const totalCount = workspaces.length;
+  const paged = workspaces.slice(0, pageSize);
+
+  return listResponse("workspaces", paged, totalCount, {
+    pageSize,
+    requestId,
   });
 }

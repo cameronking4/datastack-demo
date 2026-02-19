@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { ok, noContent, getRequestId } from "@/lib/api/response";
 
 /**
  * @swagger
@@ -92,11 +93,12 @@ import { NextRequest, NextResponse } from "next/server";
  *         description: No content
  */
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ stackId: string }> }
 ) {
   const { stackId } = await params;
-  return NextResponse.json({
+  const requestId = getRequestId(request);
+  return ok({
     id: stackId,
     name: "Analytics Platform",
     description: "End-to-end analytics pipeline",
@@ -124,7 +126,7 @@ export async function GET(
       { version: "2.4.1", deployedAt: "2024-06-05T14:30:00Z", deployedBy: "api" },
       { version: "2.4.0", deployedAt: "2024-05-20T10:00:00Z", deployedBy: "ada@datastack.dev" },
     ],
-  });
+  }, { requestId });
 }
 
 export async function PATCH(
@@ -133,17 +135,21 @@ export async function PATCH(
 ) {
   const { stackId } = await params;
   const body = (await request.json()) as Record<string, unknown>;
-  return NextResponse.json({
-    id: stackId,
-    ...body,
-    updatedAt: new Date().toISOString(),
-  });
+  const requestId = getRequestId(request);
+  return ok(
+    {
+      id: stackId,
+      ...body,
+      updatedAt: new Date().toISOString(),
+    },
+    { requestId }
+  );
 }
 
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ stackId: string }> }
 ) {
   await params;
-  return new NextResponse(null, { status: 204 });
+  return noContent({ requestId: getRequestId(request) });
 }
