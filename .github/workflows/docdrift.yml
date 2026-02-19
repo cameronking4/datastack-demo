@@ -1,0 +1,83 @@
+name: docdrift
+
+on:
+  push:
+    branches: ["main"]
+  # pull_request:
+  #   branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  docdrift:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - run: npm install
+
+      - name: Determine SHAs
+        id: shas
+        run: |
+          HEAD_SHA="${{ github.sha }}"
+          BASE_SHA="${{ github.event.before }}"
+          if [ -z "$BASE_SHA" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            BASE_SHA="$(git rev-parse HEAD^)"
+          fi
+          echo "head=${HEAD_SHA}" >> $GITHUB_OUTPUT
+          echo "base=${BASE_SHA}" >> $GITHUB_OUTPUT
+
+      - name: Restore docdrift state
+        uses: actions/cache/restore@v4
+        id: docdrift-cache
+        with:
+          path: .docdrift
+          key: docdrift-state-${{ github.event_name }}-${{ 'main' }}-${{ github.run_id }}
+          restore-keys: |
+            docdrift-state-${{ github.event_name }}-${{ 'main' }}-
+
+      - name: Validate config
+        run: npx @devinnn/docdrift validate
+
+      - name: Run Doc Drift
+        env:
+          DEVIN_API_KEY: ${{ secrets.DEVIN_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_PR_NUMBER: ${{ steps.shas.outputs.pr_number }}
+        run: |
+          PR_ARGS=""
+          if [ -n "$GITHUB_PR_NUMBER" ]; then
+            PR_ARGS="--trigger pull_request --pr-number $GITHUB_PR_NUMBER"
+          fi
+          npx @devinnn/docdrift run --base ${{ steps.shas.outputs.base }} --head ${{ steps.shas.outputs.head }} $PR_ARGS
+
+      - name: Save docdrift state
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .docdrift
+          key: docdrift-state-${{ github.event_name }}-${{ 'main' }}-${{ github.run_id }}
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: docdrift-artifacts
+          path: |
+            .docdrift/drift_report.json
+            .docdrift/metrics.json
+            .docdrift/run-output.json
+            .docdrift/evidence/**
+            .docdrift/state.json
