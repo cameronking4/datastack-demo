@@ -3,8 +3,6 @@ name: docdrift
 on:
   push:
     branches: ["main"]
-  # pull_request:
-  #   branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -56,12 +54,7 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_PR_NUMBER: ${{ steps.shas.outputs.pr_number }}
-        run: |
-          PR_ARGS=""
-          if [ -n "$GITHUB_PR_NUMBER" ]; then
-            PR_ARGS="--trigger pull_request --pr-number $GITHUB_PR_NUMBER"
-          fi
-          npx @devinnn/docdrift run --base ${{ steps.shas.outputs.base }} --head ${{ steps.shas.outputs.head }} $PR_ARGS
+        run: npx @devinnn/docdrift run --base ${{ steps.shas.outputs.base }} --head ${{ steps.shas.outputs.head }} $PR_ARGS
 
       - name: Save docdrift state
         if: always()
