@@ -12,6 +12,7 @@ export const FEATURE_STREAMING_HEADER = "x-datastack-feature-streaming";
 export const FEATURE_MLOPS_HEADER = "x-datastack-feature-mlops";
 export const FEATURE_ALERTS_HEADER = "x-datastack-feature-alerts";
 export const FEATURE_CATALOG_HEADER = "x-datastack-feature-catalog";
+export const FEATURE_ANALYTICS_HEADER = "x-datastack-feature-analytics";
 
 export function isPreviewEnabled(request: NextRequest): boolean {
   return request.headers.get(PREVIEW_HEADER) === "true";
