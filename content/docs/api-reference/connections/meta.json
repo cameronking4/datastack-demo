@@ -1,0 +1,11 @@
+{
+  "title": "Connections",
+  "pages": [
+    "list-connections",
+    "create-connection",
+    "get-connection",
+    "update-connection",
+    "delete-connection",
+    "test-connection"
+  ]
+}

@@ -1,0 +1,66 @@
+---
+title: Webhooks Guide
+description: Set up and manage webhook integrations with DataStack.
+---
+
+Webhooks let you receive real-time notifications when events occur in your DataStack workspace.
+
+## Supported Events
+
+| Event | Description |
+|---|---|
+| `job.completed` | A job run finished successfully. |
+| `job.failed` | A job run failed. |
+| `cluster.terminated` | A cluster was terminated. |
+| `pipeline.completed` | A pipeline update completed. |
+| `pipeline.failed` | A pipeline update failed. |
+| `test.ping` | Test event sent via the [Test Webhook](/docs/api-reference/webhooks/test-webhook) endpoint. |
+
+## Setup
+
+### 1. Create a Webhook
+
+Register your endpoint URL and subscribe to the events you care about:
+
+```bash
+curl -X POST /api/v1/webhooks \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://your-app.com/webhooks/datastack",
+    "events": ["job.completed", "job.failed"],
+    "secret": "whsec_your_secret"
+  }'
+```
+
+### 2. Verify Connectivity
+
+Send a test ping to confirm your endpoint is reachable:
+
+```bash
+curl -X POST /api/v1/webhooks/wh-001/test \
+  -H "Authorization: Bearer <token>"
+```
+
+### 3. Monitor Deliveries
+
+Check delivery history to debug failures:
+
+```bash
+curl /api/v1/webhooks/wh-001/deliveries \
+  -H "Authorization: Bearer <token>"
+```
+
+## Payload Verification
+
+If you set a `secret` when creating the webhook, DataStack signs each payload. Verify the signature to ensure the payload originated from DataStack and was not tampered with.
+
+## Failure Handling
+
+DataStack tracks consecutive delivery failures in the `failureCount` field. If deliveries consistently fail, check:
+
+1. Your endpoint returns a `2xx` status code within 10 seconds.
+2. Your endpoint is accessible over HTTPS.
+3. Your server is not rate-limiting DataStack requests.
+
+Use the [List Deliveries](/docs/api-reference/webhooks/list-deliveries) endpoint to inspect individual delivery attempts, including response status codes and round-trip times.

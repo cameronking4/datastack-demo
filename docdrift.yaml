@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://unpkg.com/@devinnn/docdrift@latest/docdrift.schema.json
+version: 2
+specProviders:
+  - format: openapi3
+    current:
+      type: export
+      command: npm run openapi:export
+      outputPath: openapi/generated.json
+    published: openapi/openapi.json
+exclude:
+  - '**/CHANGELOG*'
+  - '**/blog/**'
+requireHumanReview:
+  - ./content/docs/faq/**
+  - /content/docs/api-reference/overview.mdx
+pathMappings:
+  - match: app/api/v1/**
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/overview.mdx
+      - ./content/docs/*
+  - match: lib/api/auth.ts
+    impacts:
+      - ./content/docs/getting-started/authentication.mdx
+      - ./content/docs/api-reference/overview.mdx
+  - match: content/docs/**/meta.json
+    impacts:
+      - ./content/docs/**
+  - match: lib/api/preview.ts
+    impacts:
+      - ./content/docs/*
+mode: strict
+branchStrategy: single
+devin:
+  apiVersion: v1
+  unlisted: true
+  maxAcuLimit: 2
+  tags:
+    - docdrift
+policy:
+  prCaps:
+    maxPrsPerDay: 10
+    maxFilesTouched: 100
+  confidence:
+    autopatchThreshold: 0.75
+  allowlist:
+    - openapi/**
+    - ./**
+  verification:
+    commands:
+      - npm run build
+  slaDays: 7
+  slaLabel: docdrift
+  allowNewFiles: true
+docsite: app/docs

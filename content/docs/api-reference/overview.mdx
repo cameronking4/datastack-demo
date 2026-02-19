@@ -1,0 +1,71 @@
+---
+title: API Overview
+description: DataStack REST API v1 conventions, authentication, pagination, and error handling.
+---
+
+The DataStack API is organized around REST. All endpoints live under `/api/v1` and return JSON.
+
+## Authentication
+
+Every request must include one of:
+
+- `Authorization: Bearer <token>` — short-lived JWT from [Generate Token](/docs/api-reference/authentication/generate-token)
+- `X-API-Key: <key>` — long-lived key from [Create API Key](/docs/api-reference/authentication/create-api-key)
+
+See [Authentication](/docs/getting-started/authentication) for details.
+
+## Pagination
+
+List endpoints support pagination via query parameters. Three patterns are used:
+
+**Page-based** (clusters, SQL warehouses, users, stacks, connections, queries, deployments):
+
+| Parameter | Default | Max |
+|---|---|---|
+| `page` | `1` | — |
+| `pageSize` / `perPage` | `20`–`25` | `100` |
+
+**pageSize-only** (pipelines, catalogs, workspaces):
+
+| Parameter | Default | Max |
+|---|---|---|
+| `pageSize` | `25` | `100` |
+
+**Offset-based** (jobs, notebooks):
+
+| Parameter | Default | Max |
+|---|---|---|
+| `limit` | `25` | `100` |
+| `offset` | `0` | — |
+
+## Response Envelope
+
+List responses wrap results in a typed array with a count:
+
+```json
+{
+  "clusters": [ ... ],
+  "totalCount": 42
+}
+```
+
+Single-resource responses return the object directly.
+
+## Timestamps
+
+All timestamps use ISO 8601 format in UTC (e.g., `2024-03-01T09:00:00Z`).
+
+## HTTP Status Codes
+
+| Code | Meaning |
+|---|---|
+| `200` | Success |
+| `201` | Resource created |
+| `202` | Accepted (async operation started) |
+| `204` | Deleted (no body) |
+| `400` | Bad request |
+| `401` | Unauthorized |
+| `403` | Forbidden (insufficient scopes) |
+| `404` | Not found |
+| `429` | Rate limited |
+| `500` | Internal server error |

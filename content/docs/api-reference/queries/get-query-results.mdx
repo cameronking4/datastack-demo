@@ -1,0 +1,64 @@
+---
+title: Get Query Results
+description: Get results of the most recent query execution.
+---
+
+```
+GET /api/v1/queries/{queryId}/results
+```
+
+Returns results from the most recent execution of a saved query.
+
+**Required scope:** `read:queries`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `queryId` | `string` | Query identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `queryId` | `string` | Query identifier. |
+| `executionId` | `string` | Execution identifier. |
+| `status` | `string` | Execution status (`SUCCEEDED`, `FAILED`, `RUNNING`). |
+| `columns` | `object[]` | Column definitions. |
+| `columns[].name` | `string` | Column name. |
+| `columns[].type` | `string` | Column data type. |
+| `data` | `array[]` | Result rows as arrays of values. |
+| `rowCount` | `number` | Number of rows returned. |
+| `truncated` | `boolean` | Whether results were truncated by the row limit. |
+| `executionDurationMs` | `number` | Execution duration in milliseconds. |
+| `bytesScanned` | `number` | Data scanned in bytes. |
+| `completedAt` | `string` | ISO 8601 completion timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/queries/query-001/results" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "queryId": "query-001",
+  "executionId": "exec-001",
+  "status": "SUCCEEDED",
+  "columns": [
+    { "name": "day", "type": "DATE" },
+    { "name": "dau", "type": "BIGINT" }
+  ],
+  "data": [
+    ["2024-06-10", 12450],
+    ["2024-06-09", 11230],
+    ["2024-06-08", 9870]
+  ],
+  "rowCount": 3,
+  "truncated": false,
+  "executionDurationMs": 1250,
+  "bytesScanned": 524288000,
+  "completedAt": "2024-06-10T09:00:01Z"
+}
+```

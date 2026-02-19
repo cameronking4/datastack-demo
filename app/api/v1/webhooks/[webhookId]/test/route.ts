@@ -1,6 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/webhooks/{webhookId}/test:
+ *   post:
+ *     summary: Test webhook
+ *     parameters:
+ *       - in: path
+ *         name: webhookId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * POST /api/v1/webhooks/:webhookId/test
  * Send test payload to webhook URL
  */

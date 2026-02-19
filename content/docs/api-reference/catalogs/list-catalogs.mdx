@@ -1,0 +1,62 @@
+---
+title: List Catalogs
+description: List Unity Catalog catalogs in the workspace.
+---
+
+```
+GET /api/v1/catalogs
+```
+
+Returns a list of catalogs.
+
+**Required scope:** `read:catalogs`
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `pageSize` | `number` | `25` | Results per page (1–100). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `catalogs` | `object[]` | Array of catalog objects. |
+| `catalogs[].name` | `string` | Catalog name. |
+| `catalogs[].owner` | `string` | Catalog owner. |
+| `catalogs[].comment` | `string` | Description. |
+| `catalogs[].properties` | `object` | Key-value properties. |
+| `catalogs[].isolation` | `string` | Isolation mode (`OPEN`, `ISOLATED`). |
+| `catalogs[].schemasCount` | `number` | Number of schemas in the catalog. |
+| `catalogs[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `catalogs[].updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+| `catalogs[].createdBy` | `string` | Creator identity. |
+| `totalCount` | `number` | Total number of catalogs. |
+| `pageSize` | `number` | Results per page. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/catalogs" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "catalogs": [
+    {
+      "name": "main",
+      "owner": "ada@datastack.dev",
+      "comment": "Primary production catalog",
+      "properties": { "environment": "production" },
+      "isolation": "OPEN",
+      "schemasCount": 5,
+      "createdAt": "2024-01-10T08:00:00Z",
+      "updatedAt": "2024-06-01T12:00:00Z",
+      "createdBy": "ada@datastack.dev"
+    }
+  ],
+  "totalCount": 2,
+  "pageSize": 25
+}
+```

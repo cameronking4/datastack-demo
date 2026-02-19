@@ -1,0 +1,78 @@
+---
+title: Authentication
+description: Authenticate with the DataStack API using bearer tokens or API keys.
+---
+
+DataStack supports two authentication methods: **bearer tokens** (short-lived) and **API keys** (long-lived).
+
+## Bearer Tokens
+
+Exchange client credentials for a JWT access token using the [Generate Token](/docs/api-reference/authentication/generate-token) endpoint.
+
+```bash
+curl -X POST /api/v1/auth/token \
+  -H "Content-Type: application/json" \
+  -d '{"grantType": "client_credentials", "scopes": ["read:clusters"]}'
+```
+
+Include the token in subsequent requests:
+
+```
+Authorization: Bearer <accessToken>
+```
+
+Tokens expire after **3600 seconds** (1 hour). Use the returned `refreshToken` to obtain a new access token without re-authenticating. Revoke tokens via [Revoke Token](/docs/api-reference/authentication/revoke-token).
+
+## API Keys
+
+For machine-to-machine integrations, create a long-lived API key via [Create API Key](/docs/api-reference/authentication/create-api-key). Keys default to a 90-day expiry.
+
+```bash
+curl -X POST /api/v1/auth/api-keys \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "CI/CD Key", "scopes": ["read:clusters", "manage:jobs"]}'
+```
+
+Pass the key in the `X-API-Key` header:
+
+```
+X-API-Key: dsk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+The full key value is returned **only once** at creation time. Store it securely.
+
+## Scopes
+
+Scopes control what a token or API key can access. Request only the scopes you need.
+
+| Scope | Description |
+|---|---|
+| `read:users` | Read user profiles |
+| `write:users` | Create and update users |
+| `read:workspaces` | List and view workspaces |
+| `manage:workspaces` | Create and modify workspaces |
+| `read:clusters` | List and view clusters |
+| `manage:clusters` | Create, resize, and delete clusters |
+| `read:jobs` | List and view jobs and runs |
+| `manage:jobs` | Create jobs and trigger runs |
+| `read:notebooks` | List and export notebooks |
+| `manage:notebooks` | Create and update notebooks |
+| `read:sql` | View SQL warehouses |
+| `manage:sql` | Start and stop warehouses |
+| `read:pipelines` | List and view pipelines |
+| `manage:pipelines` | Create, start, and stop pipelines |
+| `read:stacks` | List and view stacks |
+| `manage:stacks` | Create, update, deploy, and delete stacks |
+| `read:connections` | List and view connections |
+| `manage:connections` | Create, update, test, and delete connections |
+| `read:catalogs` | List catalogs, schemas, and tables |
+| `manage:catalogs` | Create catalogs, schemas, and tables |
+| `read:secrets` | List secret scopes and keys |
+| `manage:secrets` | Create scopes, put and delete secrets |
+| `read:queries` | List and view saved queries |
+| `manage:queries` | Create, update, execute, and delete queries |
+| `read:deployments` | List and view deployments |
+| `manage:deployments` | Promote and rollback deployments |
+| `manage:webhooks` | Create, update, and delete webhooks |
+| `manage:api_keys` | Create and revoke API keys |

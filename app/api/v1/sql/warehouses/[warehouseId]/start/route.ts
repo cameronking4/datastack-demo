@@ -1,6 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/sql/warehouses/{warehouseId}/start:
+ *   post:
+ *     summary: Start SQL warehouse
+ *     parameters:
+ *       - in: path
+ *         name: warehouseId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * POST /api/v1/sql/warehouses/:warehouseId/start
  * Start a stopped warehouse
  */

@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/notebooks/export:
+ *   get:
+ *     summary: Export notebook
+ *     description: Export notebook at path in requested format (SOURCE, HTML, JUPYTER)
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * GET /api/v1/notebooks/export
  * Export notebook at path in requested format (SOURCE, HTML, JUPYTER)
  */

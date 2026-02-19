@@ -1,0 +1,11 @@
+{
+  "title": "Catalogs",
+  "pages": [
+    "list-catalogs",
+    "create-catalog",
+    "list-schemas",
+    "create-schema",
+    "list-tables",
+    "create-table"
+  ]
+}

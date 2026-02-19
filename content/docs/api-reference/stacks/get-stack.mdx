@@ -1,0 +1,76 @@
+---
+title: Get Stack
+description: Retrieve a stack by identifier with full layer details.
+---
+
+```
+GET /api/v1/stacks/{stackId}
+```
+
+Returns a single stack with detailed layer status.
+
+**Required scope:** `read:stacks`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `stackId` | `string` | Stack identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Stack identifier. |
+| `name` | `string` | Display name. |
+| `description` | `string` | Stack description. |
+| `workspaceId` | `string` | Workspace identifier. |
+| `status` | `string` | Current status (`DRAFT`, `DEPLOYED`, `FAILED`). |
+| `environment` | `string` | Target environment. |
+| `layers` | `object[]` | Ordered resource layers with health status. |
+| `layers[].name` | `string` | Layer name. |
+| `layers[].resourceType` | `string` | Resource type. |
+| `layers[].resourceId` | `string` | Referenced resource identifier. |
+| `layers[].order` | `number` | Execution order. |
+| `layers[].status` | `string` | Layer health status (`HEALTHY`, `DEGRADED`, `FAILED`). |
+| `layers[].lastSyncAt` | `string` | ISO 8601 last sync timestamp. |
+| `connections` | `string[]` | Connection identifiers. |
+| `version` | `number` | Stack version. |
+| `tags` | `object` | Key-value tags. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+| `updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+| `createdBy` | `string` | Creator identity. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/stacks/stack-001" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "stack-001",
+  "name": "Analytics Platform",
+  "description": "End-to-end analytics stack with ingestion, transformation, and serving layers",
+  "workspaceId": "ws-001",
+  "status": "DEPLOYED",
+  "environment": "PRODUCTION",
+  "layers": [
+    {
+      "name": "ingestion",
+      "resourceType": "pipeline",
+      "resourceId": "pipe-001",
+      "order": 1,
+      "status": "HEALTHY",
+      "lastSyncAt": "2024-06-10T02:15:33Z"
+    }
+  ],
+  "connections": ["conn-001", "conn-002"],
+  "version": 3,
+  "tags": { "team": "data-eng", "tier": "critical" },
+  "createdAt": "2024-02-01T10:00:00Z",
+  "updatedAt": "2024-06-10T08:00:00Z",
+  "createdBy": "ada@datastack.dev"
+}
+```

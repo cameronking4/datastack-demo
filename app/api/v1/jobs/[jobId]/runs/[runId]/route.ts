@@ -1,6 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
+ * @swagger
+ * /api/v1/jobs/{jobId}/runs/{runId}:
+ *   get:
+ *     summary: Get job run status
+ *     parameters:
+ *       - in: path
+ *         name: jobId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: runId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+/**
  * GET /api/v1/jobs/:jobId/runs/:runId
  * Get job run status
  */

@@ -1,0 +1,13 @@
+{
+  "title": "DataStack",
+  "pages": [
+    "---Getting Started---",
+    "...getting-started",
+    "---API Reference---",
+    "...api-reference",
+    "---Guides---",
+    "...guides",
+    "---Resources---",
+    "...faq"
+  ]
+}

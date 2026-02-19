@@ -1,0 +1,56 @@
+---
+title: List Schemas
+description: List schemas in a catalog.
+---
+
+```
+GET /api/v1/catalogs/{catalogName}/schemas
+```
+
+Returns a list of schemas within a catalog.
+
+**Required scope:** `read:catalogs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `catalogName` | `string` | Catalog name. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `schemas` | `object[]` | Array of schema objects. |
+| `schemas[].name` | `string` | Schema name. |
+| `schemas[].catalogName` | `string` | Parent catalog name. |
+| `schemas[].owner` | `string` | Schema owner. |
+| `schemas[].comment` | `string` | Description. |
+| `schemas[].tablesCount` | `number` | Number of tables in the schema. |
+| `schemas[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `schemas[].updatedAt` | `string` | ISO 8601 last-updated timestamp. |
+| `totalCount` | `number` | Total number of schemas. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/catalogs/main/schemas" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "schemas": [
+    {
+      "name": "bronze",
+      "catalogName": "main",
+      "owner": "ada@datastack.dev",
+      "comment": "Raw ingested data",
+      "tablesCount": 12,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-06-01T12:00:00Z"
+    }
+  ],
+  "totalCount": 3
+}
+```

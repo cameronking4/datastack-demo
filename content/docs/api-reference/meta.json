@@ -1,0 +1,27 @@
+{
+  "title": "API Reference",
+  "pages": [
+    "overview",
+    "---Security & Identity---",
+    "authentication",
+    "users",
+    "secrets",
+    "---Compute---",
+    "clusters",
+    "sql-warehouses",
+    "---Data Processing---",
+    "jobs",
+    "pipelines",
+    "notebooks",
+    "queries",
+    "---Data Management---",
+    "catalogs",
+    "connections",
+    "---Infrastructure---",
+    "stacks",
+    "deployments",
+    "workspaces",
+    "---Other---",
+    "webhooks"
+  ]
+}

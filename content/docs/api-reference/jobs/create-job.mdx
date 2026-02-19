@@ -1,0 +1,63 @@
+---
+title: Create Job
+description: Create a new scheduled job in your workspace.
+---
+
+```
+POST /api/v1/jobs
+```
+
+Creates a new scheduled job.
+
+**Required scope:** `manage:jobs`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Job name. |
+| `description` | `string` | No | Job description. |
+| `schedule` | `string` | Yes | Cron expression for scheduling (e.g., `"0 0 2 * * ?"`). |
+| `settings` | `object` | Yes | Job execution settings. |
+| `settings.clusterId` | `string` | Yes | Cluster used for execution. |
+| `settings.notebookPath` | `string` | Yes | Path to the notebook to execute. |
+| `settings.timeoutSeconds` | `number` | No | Maximum run duration in seconds. |
+
+## Response `201`
+
+Returns the created job object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/jobs" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Daily ETL",
+    "description": "Ingest and transform raw events",
+    "schedule": "0 0 2 * * ?",
+    "settings": {
+      "clusterId": "cluster-001",
+      "notebookPath": "/Workspace/ETL/daily_pipeline",
+      "timeoutSeconds": 3600
+    }
+  }'
+```
+
+```json title="Response"
+{
+  "jobId": 1003,
+  "name": "Daily ETL",
+  "description": "Ingest and transform raw events",
+  "schedule": "0 0 2 * * ?",
+  "trigger": "PERIODIC",
+  "settings": {
+    "clusterId": "cluster-001",
+    "notebookPath": "/Workspace/ETL/daily_pipeline",
+    "timeoutSeconds": 3600
+  },
+  "createdAt": "2024-06-10T10:00:00Z",
+  "createdBy": "ada@datastack.dev"
+}
+```

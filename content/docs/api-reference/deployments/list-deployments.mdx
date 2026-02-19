@@ -1,0 +1,71 @@
+---
+title: List Deployments
+description: List all stack deployments across environments.
+---
+
+```
+GET /api/v1/deployments
+```
+
+Returns a paginated list of stack deployments.
+
+**Required scope:** `read:deployments`
+
+## Query Parameters
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `page` | `number` | `1` | Page number (min 1). |
+| `pageSize` | `number` | `25` | Results per page (1–100). |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `deployments` | `object[]` | Array of deployment objects. |
+| `deployments[].id` | `string` | Deployment identifier. |
+| `deployments[].stackId` | `string` | Stack identifier. |
+| `deployments[].stackName` | `string` | Stack display name. |
+| `deployments[].version` | `number` | Stack version deployed. |
+| `deployments[].environment` | `string` | Target environment (`DEVELOPMENT`, `STAGING`, `PRODUCTION`). |
+| `deployments[].status` | `string` | Status (`SUCCEEDED`, `FAILED`, `IN_PROGRESS`). |
+| `deployments[].layersDeployed` | `number` | Layers successfully deployed. |
+| `deployments[].layersFailed` | `number` | Layers that failed. |
+| `deployments[].startedAt` | `string` | ISO 8601 start timestamp. |
+| `deployments[].completedAt` | `string` | ISO 8601 completion timestamp (null if in progress). |
+| `deployments[].startedBy` | `string` | Initiator identity. |
+| `deployments[].promotedFrom` | `string` | Source deployment ID if promoted (null otherwise). |
+| `totalCount` | `number` | Total number of deployments. |
+| `page` | `number` | Current page number. |
+| `pageSize` | `number` | Results per page. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/deployments?page=1&pageSize=10" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "deployments": [
+    {
+      "id": "deploy-003",
+      "stackId": "stack-001",
+      "stackName": "Analytics Platform",
+      "version": 3,
+      "environment": "PRODUCTION",
+      "status": "SUCCEEDED",
+      "layersDeployed": 4,
+      "layersFailed": 0,
+      "startedAt": "2024-06-10T08:00:00Z",
+      "completedAt": "2024-06-10T08:05:33Z",
+      "startedBy": "ada@datastack.dev",
+      "promotedFrom": "deploy-002"
+    }
+  ],
+  "totalCount": 3,
+  "page": 1,
+  "pageSize": 10
+}
+```

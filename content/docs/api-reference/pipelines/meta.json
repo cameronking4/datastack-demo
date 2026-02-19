@@ -1,0 +1,12 @@
+{
+  "title": "Pipelines",
+  "pages": [
+    "list-pipelines",
+    "create-pipeline",
+    "get-pipeline",
+    "delete-pipeline",
+    "start-pipeline",
+    "stop-pipeline",
+    "list-pipeline-events"
+  ]
+}
