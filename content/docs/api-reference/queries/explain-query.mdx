@@ -1,0 +1,70 @@
+---
+title: Explain Query
+description: Get the execution plan and optimization suggestions for a saved query.
+---
+
+```
+POST /api/v1/queries/{queryId}/explain
+```
+
+Returns the physical execution plan, estimated cost, and optimization suggestions for a query without executing it.
+
+**Required scope:** `read:queries`
+
+> This endpoint requires the `x-datastack-feature-query-intelligence: true` header.
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `queryId` | `string` | Query identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `format` | `string` | No | Plan output format (e.g. `PHYSICAL`, `LOGICAL`). |
+| `verbose` | `boolean` | No | Include additional detail in each plan node. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `queryId` | `string` | Query identifier. |
+| `executionPlan` | `object` | Execution plan tree. |
+| `executionPlan.type` | `string` | Plan type (`PHYSICAL`). |
+| `executionPlan.nodes` | `array` | Ordered list of plan nodes. |
+| `estimatedDurationMs` | `number` | Estimated execution time in milliseconds. |
+| `estimatedBytesScanned` | `number` | Estimated bytes scanned. |
+| `suggestions` | `string[]` | Optimization recommendations. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/queries/query-001/explain \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "x-datastack-feature-query-intelligence: true" \
+  -H "Content-Type: application/json" \
+  -d '{ "verbose": true }'
+```
+
+```json title="Response — 200 OK"
+{
+  "queryId": "query-001",
+  "executionPlan": {
+    "type": "PHYSICAL",
+    "nodes": [
+      { "id": 1, "operation": "Scan", "table": "events", "estimatedRows": 1000000, "cost": 450.0 },
+      { "id": 2, "operation": "Filter", "predicate": "date >= '2025-01-01'", "estimatedRows": 500000, "cost": 120.0 },
+      { "id": 3, "operation": "HashAggregate", "keys": ["user_id"], "estimatedRows": 50000, "cost": 200.0 },
+      { "id": 4, "operation": "Sort", "keys": ["count DESC"], "estimatedRows": 50000, "cost": 80.0 }
+    ]
+  },
+  "estimatedDurationMs": 3200,
+  "estimatedBytesScanned": 2147483648,
+  "suggestions": [
+    "Add partition pruning on date column to reduce scan",
+    "Consider materialized view for frequently accessed aggregation"
+  ]
+}
+```
