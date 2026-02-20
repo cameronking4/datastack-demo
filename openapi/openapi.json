@@ -854,47 +854,6 @@
         }
       }
     },
-    "/api/v1/clusters/{clusterId}/resize": {
-      "post": {
-        "summary": "Resize cluster",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "clusterId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "workerCount"
-                ],
-                "properties": {
-                  "workerCount": {
-                    "type": "integer"
-                  },
-                  "nodeType": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
     "/api/v1/clusters/{clusterId}": {
       "get": {
         "summary": "Get cluster",
