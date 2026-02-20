@@ -16,9 +16,9 @@ curl -X POST /api/v1/clusters \
   -d '{
     "name": "Analytics Cluster",
     "workspaceId": "ws-001",
-    "sparkVersion": "3.5.x-scala2.12",
+    "runtimeVersion": "3.5.x-scala2.12",
     "nodeType": "i3.xlarge",
-    "workerCount": 4,
+    "numWorkers": 4,
     "autoTerminationMinutes": 30,
     "tags": { "team": "data-engineering", "env": "production" }
   }'
@@ -48,7 +48,7 @@ curl -X POST /api/v1/clusters \
   -d '{
     "name": "Autoscaling Cluster",
     "workspaceId": "ws-001",
-    "sparkVersion": "3.5.x-scala2.12",
+    "runtimeVersion": "3.5.x-scala2.12",
     "nodeType": "i3.xlarge",
     "enableAutoscaling": true,
     "minWorkers": 2,
