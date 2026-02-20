@@ -16,11 +16,17 @@ Creates a new external data connection.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `name` | `string` | Yes | Display name. |
-| `type` | `string` | Yes | Connection type (`S3`, `POSTGRESQL`, `KAFKA`, etc.). |
+| `type` | `string` | Yes | Connection type (`S3`, `POSTGRESQL`, `MYSQL`, `KAFKA`, `SNOWFLAKE`, `BIGQUERY`, `REDSHIFT`, `MONGODB`, `AZURE_BLOB`, `GCS`). |
 | `host` | `string` | Yes | Host or endpoint URI. |
+| `port` | `integer` | No | Port number. |
 | `workspaceId` | `string` | Yes | Target workspace. |
-| `secretScope` | `string` | No | Secret scope for credentials. |
+| `authMethod` | `string` | Yes | Authentication method (`API_KEY`, `OAUTH2`, `SERVICE_ACCOUNT`, `IAM_ROLE`, `USERNAME_PASSWORD`). |
+| `credentialRef` | `string` | No | Reference to stored credentials. |
+| `healthCheck` | `object` | No | Health-check configuration. |
+| `healthCheck.enabled` | `boolean` | No | Enable periodic health checks. |
+| `healthCheck.intervalSeconds` | `integer` | No | Seconds between checks. |
 | `properties` | `object` | No | Type-specific configuration. |
+| `tags` | `object` | No | Key-value metadata tags. |
 
 ## Response `201`
 
@@ -37,8 +43,9 @@ curl -X POST "/api/v1/connections" \
     "type": "POSTGRESQL",
     "host": "staging-db.acme.internal",
     "workspaceId": "ws-001",
-    "secretScope": "db-staging",
-    "properties": { "port": 5432, "database": "analytics", "sslMode": "require" }
+    "authMethod": "USERNAME_PASSWORD",
+    "credentialRef": "db-staging",
+    "properties": { "database": "analytics", "sslMode": "require" }
   }'
 ```
 
@@ -50,8 +57,9 @@ curl -X POST "/api/v1/connections" \
   "host": "staging-db.acme.internal",
   "status": "PENDING_VALIDATION",
   "workspaceId": "ws-001",
-  "secretScope": "db-staging",
-  "properties": { "port": 5432, "database": "analytics", "sslMode": "require" },
+  "authMethod": "USERNAME_PASSWORD",
+  "credentialRef": "db-staging",
+  "properties": { "database": "analytics", "sslMode": "require" },
   "createdAt": "2024-06-10T10:00:00Z",
   "updatedAt": "2024-06-10T10:00:00Z",
   "createdBy": "api",

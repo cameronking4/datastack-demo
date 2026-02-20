@@ -1,0 +1,35 @@
+---
+title: Refresh Token
+description: Exchange a refresh token for a new access token without re-authenticating.
+---
+
+```
+POST /api/v1/auth/token/refresh
+```
+
+Exchange a refresh token for a new access token without re-authenticating.
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `refreshToken` | `string` | Yes | The refresh token obtained from a previous token response. |
+| `scopes` | `string[]` | No | Optionally narrow the scopes for the new access token. |
+
+## Response `200`
+
+Returns a new access token.
+
+## Errors
+
+| Status | Description |
+|---|---|
+| `401` | Invalid or expired refresh token. |
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/auth/token/refresh \
+  -H "Content-Type: application/json" \
+  -d '{"refreshToken": "drt_refresh_demo_token"}'
+```

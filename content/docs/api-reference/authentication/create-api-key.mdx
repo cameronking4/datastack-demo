@@ -17,7 +17,15 @@ Create a new API key with the specified name and scopes. The full key value is r
 |---|---|---|---|
 | `name` | `string` | Yes | Display name for the key. |
 | `scopes` | `string[]` | Yes | Permission scopes to grant. |
-| `expiresInDays` | `number` | No | Days until expiration. Defaults to `90`. |
+| `expiresInDays` | `integer` | No | Days until expiration. Defaults to `90`. |
+| `rateLimit` | `object` | No | Rate-limiting configuration. |
+| `rateLimit.requestsPerMinute` | `integer` | No | Maximum requests per minute. |
+| `rateLimit.requestsPerDay` | `integer` | No | Maximum requests per day. |
+| `rotationPolicy` | `object` | No | Automatic key rotation policy. |
+| `rotationPolicy.autoRotate` | `boolean` | No | Enable automatic rotation. |
+| `rotationPolicy.rotationIntervalDays` | `integer` | No | Days between rotations. |
+| `allowedIpRanges` | `string[]` | No | IP CIDR ranges allowed to use this key. |
+| `metadata` | `object` | No | Arbitrary key-value metadata. |
 
 ## Response `201`
 

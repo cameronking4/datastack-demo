@@ -17,11 +17,24 @@ Creates a new scheduled job.
 |---|---|---|---|
 | `name` | `string` | Yes | Job name. |
 | `description` | `string` | No | Job description. |
-| `schedule` | `string` | Yes | Cron expression for scheduling (e.g., `"0 0 2 * * ?"`). |
+| `schedule` | `string` | No | Cron expression for scheduling (e.g., `"0 0 2 * * ?"`). |
+| `timezone` | `string` | No | IANA timezone for the schedule (e.g., `"America/New_York"`). |
+| `triggerType` | `string` | Yes | Trigger type (`PERIODIC`, `CONTINUOUS`, `ONE_TIME`, `FILE_ARRIVAL`, `TABLE_UPDATE`). |
+| `maxConcurrentRuns` | `integer` | No | Maximum concurrent runs allowed. |
+| `retryPolicy` | `object` | No | Retry configuration. |
+| `retryPolicy.maxRetries` | `integer` | No | Maximum number of retries. |
+| `retryPolicy.retryIntervalSeconds` | `integer` | No | Seconds between retries. |
+| `retryPolicy.retryOnTimeout` | `boolean` | No | Whether to retry on timeout. |
+| `alertDestinations` | `object[]` | No | Alert notification destinations. |
+| `alertDestinations[].type` | `string` | No | Destination type. |
+| `alertDestinations[].destination` | `string` | No | Destination target. |
 | `settings` | `object` | Yes | Job execution settings. |
 | `settings.clusterId` | `string` | Yes | Cluster used for execution. |
 | `settings.notebookPath` | `string` | Yes | Path to the notebook to execute. |
-| `settings.timeoutSeconds` | `number` | No | Maximum run duration in seconds. |
+| `settings.timeoutSeconds` | `integer` | No | Maximum run duration in seconds. |
+| `settings.environmentVars` | `object` | No | Environment variables for the run. |
+| `settings.libraries` | `array` | No | Libraries to install before execution. |
+| `tags` | `object` | No | Key-value metadata tags. |
 
 ## Response `201`
 
@@ -36,6 +49,7 @@ curl -X POST "/api/v1/jobs" \
   -d '{
     "name": "Daily ETL",
     "description": "Ingest and transform raw events",
+    "triggerType": "PERIODIC",
     "schedule": "0 0 2 * * ?",
     "settings": {
       "clusterId": "cluster-001",
