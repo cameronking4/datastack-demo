@@ -37,6 +37,8 @@ devin:
   maxAcuLimit: 2
   tags:
     - docdrift
+  customInstructions:
+    - .docdrift/DocDrift.md
 policy:
   prCaps:
     maxPrsPerDay: 10
@@ -44,7 +46,6 @@ policy:
   confidence:
     autopatchThreshold: 0.75
   allowlist:
-    - openapi/**
     - ./**
   verification:
     commands:

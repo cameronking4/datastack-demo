@@ -9,3 +9,4 @@ Project guidance:
 - NEVER TRUST openapi/OPENAPI.json in the codebase, always run export command to get freshly generated & accurate spec for what needs to be represented in docs. The nav should include all public endpoints
 - Document feature flags and preview features, create new pages or guides if need be
 - All APIs in api folder should have Swagger
+- When acting on a new commit, always see what files changed in current commit to better infer what docs need to be updated in content folder.
