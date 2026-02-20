@@ -1,0 +1,55 @@
+---
+title: Update Cluster
+description: Update cluster configuration. Some changes require a restart.
+---
+
+```
+PATCH /api/v1/clusters/{clusterId}
+```
+
+Update cluster configuration. Some changes require a restart.
+
+**Required scope:** `manage:clusters`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `clusterId` | `string` | The cluster identifier. |
+
+## Request Body
+
+All fields are optional. Only provided fields are updated.
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | Cluster display name. |
+| `numWorkers` | `integer` | Number of worker nodes. |
+| `nodeType` | `string` | VM instance type. |
+| `driverNodeType` | `string` | Driver node instance type. |
+| `autoTerminationMinutes` | `integer` | Idle timeout in minutes. |
+| `enableAutoscaling` | `boolean` | Enable autoscaling. |
+| `minWorkers` | `integer` | Minimum workers when autoscaling. |
+| `maxWorkers` | `integer` | Maximum workers when autoscaling. |
+| `spotInstances` | `boolean` | Use spot/preemptible instances. |
+| `runtimeEngine` | `string` | Runtime engine (`STANDARD`, `PHOTON`). |
+| `customSparkConf` | `object` | Custom Spark configuration key-value pairs. |
+| `tags` | `object` | Key-value metadata tags. |
+
+## Response `200`
+
+Returns the updated cluster object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/clusters/cluster-001 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "numWorkers": 8,
+    "enableAutoscaling": true,
+    "minWorkers": 2,
+    "maxWorkers": 16
+  }'
+```

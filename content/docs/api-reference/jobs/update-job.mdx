@@ -1,0 +1,64 @@
+---
+title: Update Job
+description: Update job configuration, schedule, or retry policy.
+---
+
+```
+PATCH /api/v1/jobs/{jobId}
+```
+
+Update job configuration, schedule, or retry policy.
+
+**Required scope:** `manage:jobs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `jobId` | `string` | The job identifier. |
+
+## Request Body
+
+All fields are optional. Only provided fields are updated.
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | Job name. |
+| `description` | `string` | Job description. |
+| `schedule` | `string` | Cron expression for scheduling. |
+| `timezone` | `string` | IANA timezone for the schedule. |
+| `triggerType` | `string` | Trigger type (`PERIODIC`, `CONTINUOUS`, `ONE_TIME`, `FILE_ARRIVAL`, `TABLE_UPDATE`). |
+| `maxConcurrentRuns` | `integer` | Maximum concurrent runs allowed. |
+| `retryPolicy` | `object` | Retry configuration. |
+| `retryPolicy.maxRetries` | `integer` | Maximum number of retries. |
+| `retryPolicy.retryIntervalSeconds` | `integer` | Seconds between retries. |
+| `retryPolicy.retryOnTimeout` | `boolean` | Whether to retry on timeout. |
+| `alertDestinations` | `object[]` | Alert notification destinations. |
+| `alertDestinations[].type` | `string` | Destination type. |
+| `alertDestinations[].destination` | `string` | Destination target. |
+| `settings` | `object` | Execution settings. |
+| `settings.clusterId` | `string` | Cluster for execution. |
+| `settings.notebookPath` | `string` | Notebook path. |
+| `settings.timeoutSeconds` | `integer` | Timeout in seconds. |
+| `state` | `string` | Job state (`ACTIVE`, `PAUSED`, `DISABLED`). |
+| `tags` | `object` | Key-value metadata tags. |
+
+## Response `200`
+
+Returns the updated job object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/jobs/1001 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "schedule": "0 0 3 * * ?",
+    "retryPolicy": {
+      "maxRetries": 3,
+      "retryIntervalSeconds": 120,
+      "retryOnTimeout": true
+    }
+  }'
+```

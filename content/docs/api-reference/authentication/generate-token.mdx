@@ -13,8 +13,10 @@ Exchange client credentials for a short-lived access token.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `grantType` | `string` | No | Grant type. Use `client_credentials`. |
+| `grantType` | `string` | Yes | Grant type (`client_credentials`, `refresh_token`). |
 | `scopes` | `string[]` | No | Requested permission scopes. Defaults to `["read:users", "read:workspaces"]`. |
+| `refreshToken` | `string` | No | Refresh token (required when `grantType` is `refresh_token`). |
+| `audience` | `string` | No | Target audience for the token. |
 
 ## Response `200`
 
