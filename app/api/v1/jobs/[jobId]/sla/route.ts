@@ -15,6 +15,8 @@ export async function PUT(
     deadlineCron?: string;
     alertOnBreach?: boolean;
     notifyEmails?: string[];
+    priority?: "low" | "normal" | "high" | "critical";
+    escalationPolicy?: string;
   };
 
   return NextResponse.json({
@@ -24,6 +26,8 @@ export async function PUT(
       deadlineCron: body.deadlineCron ?? "0 0 6 * * ?",
       alertOnBreach: body.alertOnBreach ?? true,
       notifyEmails: body.notifyEmails ?? [],
+      priority: body.priority ?? "normal",
+      escalationPolicy: body.escalationPolicy ?? "default",
     },
     currentCompliance: {
       last30Days: { met: 28, breached: 2, complianceRate: 93.3 },
