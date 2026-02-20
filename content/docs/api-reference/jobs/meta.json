@@ -7,6 +7,8 @@
     "update-job",
     "delete-job",
     "trigger-job-run",
-    "get-job-run"
+    "get-job-run",
+    "reset-job",
+    "cancel-job-run"
   ]
 }
