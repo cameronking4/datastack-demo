@@ -1,0 +1,29 @@
+---
+title: List data quality incidents
+description: List open or resolved data quality incidents
+---
+
+```
+GET /api/v1/data-quality/incidents
+```
+
+List open or resolved data quality incidents
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `status` | `string` | No | The status value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/data-quality/incidents" \
+  -H "Authorization: Bearer <accessToken>"
+```

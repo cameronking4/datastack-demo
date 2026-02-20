@@ -1,0 +1,37 @@
+---
+title: Search catalog
+description: Search catalog assets by query and filters
+---
+
+```
+POST /api/v1/catalog/search
+```
+
+Search catalog assets by query and filters
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `query` | `string` | No | The query value. |
+| `filters` | `object` | No | The filters value. |
+| `limit` | `integer` | No | The limit value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/catalog/search" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "query": "example-query",
+  "filters": {},
+  "limit": 10
+}'
+```

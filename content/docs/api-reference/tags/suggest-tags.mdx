@@ -1,0 +1,29 @@
+---
+title: Suggest tags
+description: Suggest tag keys/values based on partial input (autocomplete)
+---
+
+```
+GET /api/v1/tags/suggest
+```
+
+Suggest tag keys/values based on partial input (autocomplete)
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `q` | `string` | No | The q value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/tags/suggest" \
+  -H "Authorization: Bearer <accessToken>"
+```

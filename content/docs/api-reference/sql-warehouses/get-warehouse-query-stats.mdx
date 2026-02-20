@@ -1,0 +1,29 @@
+---
+title: Get warehouse query stats
+description: Get warehouse query stats
+---
+
+```
+GET /api/v1/sql/warehouses/{warehouseId}/query-stats
+```
+
+Get warehouse query stats
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `warehouseId` | `string` | Yes | The warehouseId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/sql/warehouses/example-war/query-stats" \
+  -H "Authorization: Bearer <accessToken>"
+```

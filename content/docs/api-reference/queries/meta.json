@@ -8,6 +8,10 @@
     "delete-query",
     "execute-query",
     "get-query-results",
-    "explain-query"
+    "explain-query",
+    "clone-query",
+    "create-cache-strategy",
+    "optimize-query",
+    "list-slow-queries"
   ]
 }

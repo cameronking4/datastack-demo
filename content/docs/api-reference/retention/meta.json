@@ -1,0 +1,10 @@
+{
+  "title": "Retention",
+  "pages": [
+    "get-retention-policy",
+    "update-retention-policy",
+    "delete-retention-policy",
+    "list-retention-policies",
+    "create-retention-policy"
+  ]
+}

@@ -1,0 +1,36 @@
+---
+title: List app versions
+description: List app versions
+---
+
+```
+GET /api/v1/apps/{appId}/versions
+```
+
+List app versions
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `appId` | `string` | Yes | The appId value. |
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `page` | `integer` | No | The page value. |
+| `pageSize` | `integer` | No | The pageSize value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/apps/example-app/versions" \
+  -H "Authorization: Bearer <accessToken>"
+```

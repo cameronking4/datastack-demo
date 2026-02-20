@@ -1,0 +1,37 @@
+---
+title: Create notification channel
+description: Create notification channel
+---
+
+```
+POST /api/v1/alerts/channels
+```
+
+Create notification channel
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `type` | `string` | No | The type value. |
+| `config` | `object` | No | The config value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/alerts/channels" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "type": "example-type",
+  "config": {}
+}'
+```

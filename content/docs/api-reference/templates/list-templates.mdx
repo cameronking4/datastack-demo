@@ -1,0 +1,29 @@
+---
+title: List templates
+description: List available stack and pipeline templates for quick-start
+---
+
+```
+GET /api/v1/templates
+```
+
+List available stack and pipeline templates for quick-start
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `category` | `string` | No | The category value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/templates" \
+  -H "Authorization: Bearer <accessToken>"
+```

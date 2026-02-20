@@ -1,0 +1,29 @@
+---
+title: Get model metrics
+description: Get model metrics
+---
+
+```
+GET /api/v1/ml/models/{modelId}/metrics
+```
+
+Get model metrics
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `modelId` | `string` | Yes | The modelId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/ml/models/example-mod/metrics" \
+  -H "Authorization: Bearer <accessToken>"
+```

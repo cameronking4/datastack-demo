@@ -9,6 +9,15 @@
     "trigger-job-run",
     "get-job-run",
     "reset-job",
-    "cancel-job-run"
+    "cancel-job-run",
+    "backfill-job",
+    "get-job-dependencies",
+    "duplicate-job",
+    "update-job-sla",
+    "batch-run-jobs",
+    "bulk-pause-jobs",
+    "bulk-resume-jobs",
+    "conditional-trigger",
+    "get-job-dag"
   ]
 }

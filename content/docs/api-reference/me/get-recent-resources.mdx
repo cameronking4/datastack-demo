@@ -1,0 +1,23 @@
+---
+title: Get recent resources
+description: Get resources the current user recently viewed or edited
+---
+
+```
+GET /api/v1/me/recent
+```
+
+Get resources the current user recently viewed or edited
+
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/me/recent" \
+  -H "Authorization: Bearer <accessToken>"
+```

@@ -10,6 +10,7 @@
     "validate-stack",
     "list-stack-deployments",
     "lock-stack",
-    "unlock-stack"
+    "unlock-stack",
+    "bulk-validate-stacks"
   ]
 }

@@ -1,0 +1,33 @@
+---
+title: Bulk validate stacks
+description: Validate multiple stacks in parallel
+---
+
+```
+POST /api/v1/stacks/bulk-validate
+```
+
+Validate multiple stacks in parallel
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `stackIds` | `string[]` | No | The stackIds value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/stacks/bulk-validate" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "stackIds": []
+}'
+```

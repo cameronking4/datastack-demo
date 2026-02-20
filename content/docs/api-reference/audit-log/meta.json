@@ -1,6 +1,7 @@
 {
   "title": "Audit Log",
   "pages": [
-    "list-audit-log"
+    "list-audit-log",
+    "export-audit-log"
   ]
 }

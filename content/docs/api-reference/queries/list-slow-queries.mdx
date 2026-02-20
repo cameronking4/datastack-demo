@@ -1,0 +1,29 @@
+---
+title: List slow queries
+description: List queries exceeding a duration threshold
+---
+
+```
+GET /api/v1/queries/slow
+```
+
+List queries exceeding a duration threshold
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `thresholdMs` | `string` | No | The thresholdMs value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/queries/slow" \
+  -H "Authorization: Bearer <accessToken>"
+```

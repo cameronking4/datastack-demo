@@ -1,6 +1,9 @@
 {
   "title": "Lineage",
   "pages": [
-    "get-lineage"
+    "get-lineage",
+    "get-column-lineage",
+    "trigger-lineage-scan",
+    "get-table-lineage"
   ]
 }

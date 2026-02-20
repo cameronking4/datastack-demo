@@ -1,0 +1,41 @@
+---
+title: Restore from backup
+description: Restore a workspace from a backup
+---
+
+```
+POST /api/v1/backups/{backupId}/restore
+```
+
+Restore a workspace from a backup
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `backupId` | `string` | Yes | The backupId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `targetWorkspaceId` | `string` | No | The targetWorkspaceId value. |
+| `overwrite` | `boolean` | No | The overwrite value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/backups/example-bac/restore" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "targetWorkspaceId": "example-targetWorkspaceId",
+  "overwrite": true
+}'
+```

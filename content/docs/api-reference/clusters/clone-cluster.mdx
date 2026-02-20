@@ -1,0 +1,41 @@
+---
+title: Clone cluster
+description: Clone an existing cluster (preview only)
+---
+
+```
+POST /api/v1/clusters/{clusterId}/clone
+```
+
+Clone an existing cluster (preview only)
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `clusterId` | `string` | Yes | The clusterId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `newName` | `string` | No | The newName value. |
+| `overrideTags` | `object` | No | The overrideTags value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/clusters/example-clu/clone" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "newName": "example-newName",
+  "overrideTags": {}
+}'
+```

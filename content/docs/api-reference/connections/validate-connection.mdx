@@ -1,0 +1,39 @@
+---
+title: Validate connection
+description: Test connectivity and authentication for a connection config
+---
+
+```
+POST /api/v1/connections/validate
+```
+
+Test connectivity and authentication for a connection config
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `type` | `string` | Yes | The type value. |
+| `host` | `string` | Yes | The host value. |
+| `port` | `integer` | No | The port value. |
+| `authMethod` | `string` | Yes | The authMethod value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/connections/validate" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "type": "example-type",
+  "host": "example-host",
+  "port": 10,
+  "authMethod": "example-authMethod"
+}'
+```

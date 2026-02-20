@@ -1,0 +1,7 @@
+{
+  "title": "Snapshots",
+  "pages": [
+    "list-snapshots",
+    "create-snapshot"
+  ]
+}

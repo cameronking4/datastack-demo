@@ -1,0 +1,13 @@
+{
+  "title": "Apps",
+  "pages": [
+    "deploy-app",
+    "get-app",
+    "update-app",
+    "delete-app",
+    "list-app-versions",
+    "create-app-version",
+    "list-apps",
+    "create-app"
+  ]
+}

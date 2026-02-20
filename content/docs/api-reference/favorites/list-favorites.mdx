@@ -1,0 +1,31 @@
+---
+title: List favorites
+description: List the caller's favorited resources (queries, clusters, pipelines, etc)
+---
+
+```
+GET /api/v1/favorites
+```
+
+List the caller's favorited resources (queries, clusters, pipelines, etc)
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `resourceType` | `string` | No | The resourceType value. |
+| `page` | `integer` | No | The page value. |
+| `pageSize` | `integer` | No | The pageSize value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/favorites" \
+  -H "Authorization: Bearer <accessToken>"
+```

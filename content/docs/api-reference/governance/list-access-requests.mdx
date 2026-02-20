@@ -1,0 +1,29 @@
+---
+title: List access requests
+description: List access requests
+---
+
+```
+GET /api/v1/governance/access-requests
+```
+
+List access requests
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `status` | `string` | No | The status value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/governance/access-requests" \
+  -H "Authorization: Bearer <accessToken>"
+```

@@ -1,0 +1,39 @@
+---
+title: Duplicate job
+description: Duplicate job
+---
+
+```
+POST /api/v1/jobs/{jobId}/duplicate
+```
+
+Duplicate job
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `jobId` | `string` | Yes | The jobId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/jobs/example-job/duplicate" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name"
+}'
+```

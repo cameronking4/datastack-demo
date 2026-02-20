@@ -1,0 +1,32 @@
+---
+title: List activity
+description: List recent activity across the workspace (runs, deployments, edits)
+---
+
+```
+GET /api/v1/activity
+```
+
+List recent activity across the workspace (runs, deployments, edits)
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `resourceType` | `string` | No | The resourceType value. |
+| `action` | `string` | No | The action value. |
+| `limit` | `integer` | No | The limit value. |
+| `offset` | `integer` | No | The offset value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/activity" \
+  -H "Authorization: Bearer <accessToken>"
+```

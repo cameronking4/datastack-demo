@@ -1,0 +1,41 @@
+---
+title: Create app version
+description: Create app version
+---
+
+```
+POST /api/v1/apps/{appId}/versions
+```
+
+Create app version
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `appId` | `string` | Yes | The appId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `tag` | `string` | No | The tag value. |
+| `assets` | `object` | No | The assets value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/apps/example-app/versions" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "tag": "example-tag",
+  "assets": {}
+}'
+```

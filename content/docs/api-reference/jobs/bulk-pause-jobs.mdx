@@ -1,0 +1,33 @@
+---
+title: Bulk pause jobs
+description: Bulk pause jobs
+---
+
+```
+POST /api/v1/jobs/bulk-pause
+```
+
+Bulk pause jobs
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `jobIds` | `string[]` | No | The jobIds value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/jobs/bulk-pause" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "jobIds": []
+}'
+```

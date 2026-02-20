@@ -6,6 +6,8 @@
     "get-connection",
     "update-connection",
     "delete-connection",
-    "test-connection"
+    "test-connection",
+    "bulk-test-connections",
+    "validate-connection"
   ]
 }

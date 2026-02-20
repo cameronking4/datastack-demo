@@ -1,0 +1,35 @@
+---
+title: Generate compliance report
+description: Generate compliance report
+---
+
+```
+POST /api/v1/governance/compliance/report
+```
+
+Generate compliance report
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `framework` | `string` | No | The framework value. |
+| `scope` | `string` | No | The scope value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/governance/compliance/report" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "framework": "example-framework",
+  "scope": "example-scope"
+}'
+```

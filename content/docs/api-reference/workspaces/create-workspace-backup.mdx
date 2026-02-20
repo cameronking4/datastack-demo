@@ -1,0 +1,43 @@
+---
+title: Create workspace backup
+description: Queue a workspace backup (metadata or full)
+---
+
+```
+POST /api/v1/workspaces/{workspaceId}/backup
+```
+
+Queue a workspace backup (metadata or full)
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | Yes | The workspaceId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scope` | `string` | No | The scope value. One of: `metadata`, `full`. |
+| `includeSecrets` | `boolean` | No | The includeSecrets value. |
+| `destinationPath` | `string` | No | The destinationPath value. |
+
+## Response `202`
+
+Returns accepted.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/workspaces/example-wor/backup" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "scope": "metadata",
+  "includeSecrets": true,
+  "destinationPath": "example-destinationPath"
+}'
+```

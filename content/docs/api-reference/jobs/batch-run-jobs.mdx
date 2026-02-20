@@ -1,0 +1,35 @@
+---
+title: Batch run jobs
+description: Batch run jobs
+---
+
+```
+POST /api/v1/jobs/batch-run
+```
+
+Batch run jobs
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `jobIds` | `string[]` | No | The jobIds value. |
+| `waitForCompletion` | `boolean` | No | The waitForCompletion value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/jobs/batch-run" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "jobIds": [],
+  "waitForCompletion": true
+}'
+```

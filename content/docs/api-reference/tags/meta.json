@@ -1,0 +1,8 @@
+{
+  "title": "Tags",
+  "pages": [
+    "list-tags",
+    "create-tag",
+    "suggest-tags"
+  ]
+}

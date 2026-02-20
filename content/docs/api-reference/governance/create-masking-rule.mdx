@@ -1,0 +1,39 @@
+---
+title: Create masking rule
+description: Create masking rule
+---
+
+```
+POST /api/v1/governance/data-masking
+```
+
+Create masking rule
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `table` | `string` | No | The table value. |
+| `column` | `string` | No | The column value. |
+| `maskType` | `string` | No | The maskType value. |
+| `applyTo` | `string[]` | No | The applyTo value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/governance/data-masking" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "table": "example-table",
+  "column": "example-column",
+  "maskType": "example-maskType",
+  "applyTo": []
+}'
+```

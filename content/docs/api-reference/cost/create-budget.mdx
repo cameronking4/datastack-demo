@@ -1,0 +1,39 @@
+---
+title: Create budget
+description: Create a cost budget with alert thresholds
+---
+
+```
+POST /api/v1/cost/budgets
+```
+
+Create a cost budget with alert thresholds
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `monthlyLimit` | `number` | No | The monthlyLimit value. |
+| `alertThresholds` | `number[]` | No | The alertThresholds value. |
+| `notifyEmails` | `string[]` | No | The notifyEmails value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/cost/budgets" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "monthlyLimit": 0.5,
+  "alertThresholds": [],
+  "notifyEmails": []
+}'
+```

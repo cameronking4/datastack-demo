@@ -1,0 +1,31 @@
+---
+title: List roles
+description: List roles
+---
+
+```
+GET /api/v1/roles
+```
+
+List roles
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | No | The workspaceId value. |
+| `page` | `integer` | No | The page value. |
+| `pageSize` | `integer` | No | The pageSize value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/roles" \
+  -H "Authorization: Bearer <accessToken>"
+```

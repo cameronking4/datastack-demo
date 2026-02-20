@@ -1,0 +1,31 @@
+---
+title: Get usage
+description: Get workspace usage stats (compute, storage, API calls, streaming, AI units)
+---
+
+```
+GET /api/v1/usage
+```
+
+Get workspace usage stats (compute, storage, API calls, streaming, AI units)
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | No | The workspaceId value. |
+| `period` | `string` | No | The period value. |
+| `includeForecast` | `boolean` | No | The includeForecast value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/usage" \
+  -H "Authorization: Bearer <accessToken>"
+```

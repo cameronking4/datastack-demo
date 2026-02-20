@@ -1,0 +1,41 @@
+---
+title: Create access policy
+description: Create access policy
+---
+
+```
+POST /api/v1/governance/policies
+```
+
+Create access policy
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `resource` | `string` | No | The resource value. |
+| `principal` | `string` | No | The principal value. |
+| `permissions` | `string[]` | No | The permissions value. |
+| `conditions` | `object` | No | The conditions value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/governance/policies" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "resource": "example-resource",
+  "principal": "example-principal",
+  "permissions": [],
+  "conditions": {}
+}'
+```

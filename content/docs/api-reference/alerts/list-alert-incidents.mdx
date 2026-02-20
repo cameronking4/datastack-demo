@@ -1,0 +1,29 @@
+---
+title: List alert incidents
+description: List alert incidents
+---
+
+```
+GET /api/v1/alerts/incidents
+```
+
+List alert incidents
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `status` | `string` | No | The status value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/alerts/incidents" \
+  -H "Authorization: Bearer <accessToken>"
+```

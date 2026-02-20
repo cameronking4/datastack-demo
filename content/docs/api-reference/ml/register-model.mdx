@@ -1,0 +1,41 @@
+---
+title: Register model
+description: Register model
+---
+
+```
+POST /api/v1/ml/models
+```
+
+Register model
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `framework` | `string` | No | The framework value. |
+| `version` | `string` | No | The version value. |
+| `description` | `string` | No | The description value. |
+| `tags` | `object` | No | The tags value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/ml/models" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "framework": "example-framework",
+  "version": "example-version",
+  "description": "example-description",
+  "tags": {}
+}'
+```

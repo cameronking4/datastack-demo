@@ -1,0 +1,30 @@
+---
+title: Update dashboard
+description: Update dashboard name or widget layout
+---
+
+```
+PATCH /api/v1/dashboards/{dashboardId}
+```
+
+Update dashboard name or widget layout
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `dashboardId` | `string` | Yes | The dashboardId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH "/api/v1/dashboards/example-das" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json"
+```

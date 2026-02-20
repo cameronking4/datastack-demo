@@ -1,0 +1,47 @@
+---
+title: Update retention policy
+description: Update retention policy
+---
+
+```
+PATCH /api/v1/retention/policies/{policyId}
+```
+
+Update retention policy
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `policyId` | `string` | Yes | The policyId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `description` | `string` | No | The description value. |
+| `retentionDays` | `integer` | No | The retentionDays value. |
+| `action` | `string` | No | The action value. |
+| `enabled` | `boolean` | No | The enabled value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH "/api/v1/retention/policies/example-pol" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "description": "example-description",
+  "retentionDays": 10,
+  "action": "example-action",
+  "enabled": true
+}'
+```

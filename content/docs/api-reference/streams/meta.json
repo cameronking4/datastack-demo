@@ -1,0 +1,10 @@
+{
+  "title": "Streams",
+  "pages": [
+    "create-checkpoint",
+    "get-stream-metrics",
+    "scale-stream",
+    "get-stream-status",
+    "create-stream"
+  ]
+}

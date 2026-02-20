@@ -1,0 +1,32 @@
+---
+title: List run metrics
+description: List run metrics
+---
+
+```
+GET /api/v1/run-metrics
+```
+
+List run metrics
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `jobId` | `string` | No | The jobId value. |
+| `runId` | `string` | No | The runId value. |
+| `from` | `string` | No | The from value. |
+| `to` | `string` | No | The to value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/run-metrics" \
+  -H "Authorization: Bearer <accessToken>"
+```

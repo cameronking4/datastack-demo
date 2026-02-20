@@ -1,0 +1,29 @@
+---
+title: Preview alert rule
+description: Evaluate whether a rule would trigger with current data
+---
+
+```
+GET /api/v1/alerts/preview
+```
+
+Evaluate whether a rule would trigger with current data
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `ruleId` | `string` | No | The ruleId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/alerts/preview" \
+  -H "Authorization: Bearer <accessToken>"
+```

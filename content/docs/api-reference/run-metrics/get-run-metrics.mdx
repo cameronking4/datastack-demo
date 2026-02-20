@@ -1,0 +1,29 @@
+---
+title: Get run metrics
+description: Get run metrics
+---
+
+```
+GET /api/v1/run-metrics/{runId}
+```
+
+Get run metrics
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `runId` | `string` | Yes | The runId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/run-metrics/example-run" \
+  -H "Authorization: Bearer <accessToken>"
+```

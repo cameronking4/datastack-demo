@@ -1,0 +1,37 @@
+---
+title: Trigger lineage scan
+description: Trigger lineage scan
+---
+
+```
+POST /api/v1/lineage/scan
+```
+
+Trigger lineage scan
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `catalog` | `string` | No | The catalog value. |
+| `schema` | `string` | No | The schema value. |
+| `depth` | `integer` | No | The depth value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/lineage/scan" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "catalog": "example-catalog",
+  "schema": "example-schema",
+  "depth": 10
+}'
+```

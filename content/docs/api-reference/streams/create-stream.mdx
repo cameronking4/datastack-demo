@@ -1,0 +1,39 @@
+---
+title: Create stream
+description: Create a new streaming job
+---
+
+```
+POST /api/v1/streams
+```
+
+Create a new streaming job
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `source` | `object` | No | The source value. |
+| `sink` | `object` | No | The sink value. |
+| `format` | `string` | No | The format value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/streams" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "source": {},
+  "sink": {},
+  "format": "example-format"
+}'
+```

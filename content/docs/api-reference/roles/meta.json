@@ -1,0 +1,10 @@
+{
+  "title": "Roles",
+  "pages": [
+    "get-role",
+    "update-role",
+    "delete-role",
+    "list-roles",
+    "create-role"
+  ]
+}

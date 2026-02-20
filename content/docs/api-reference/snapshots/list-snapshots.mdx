@@ -1,0 +1,32 @@
+---
+title: List snapshots
+description: List table or volume snapshots with optional workspace and type filters
+---
+
+```
+GET /api/v1/snapshots
+```
+
+List table or volume snapshots with optional workspace and type filters
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | No | The workspaceId value. |
+| `type` | `string` | No | The type value. One of: `table`, `volume`. |
+| `limit` | `integer` | No | The limit value. |
+| `offset` | `integer` | No | The offset value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/snapshots" \
+  -H "Authorization: Bearer <accessToken>"
+```

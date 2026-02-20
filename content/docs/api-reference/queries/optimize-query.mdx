@@ -1,0 +1,33 @@
+---
+title: Optimize query
+description: Get optimized SQL and improvement suggestions
+---
+
+```
+POST /api/v1/queries/optimize
+```
+
+Get optimized SQL and improvement suggestions
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `sql` | `string` | No | The sql value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/queries/optimize" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "sql": "example-sql"
+}'
+```

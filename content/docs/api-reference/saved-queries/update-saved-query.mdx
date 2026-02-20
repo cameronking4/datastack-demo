@@ -1,0 +1,43 @@
+---
+title: Update saved query
+description: Update saved query
+---
+
+```
+PATCH /api/v1/saved-queries/{savedQueryId}
+```
+
+Update saved query
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `savedQueryId` | `string` | Yes | The savedQueryId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `description` | `string` | No | The description value. |
+| `sql` | `string` | No | The sql value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH "/api/v1/saved-queries/example-sav" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "description": "example-description",
+  "sql": "example-sql"
+}'
+```

@@ -1,0 +1,33 @@
+---
+title: List query history
+description: List query history
+---
+
+```
+GET /api/v1/query-history
+```
+
+List query history
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `warehouseId` | `string` | No | The warehouseId value. |
+| `userId` | `string` | No | The userId value. |
+| `status` | `string` | No | The status value. |
+| `limit` | `integer` | No | The limit value. |
+| `offset` | `integer` | No | The offset value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/query-history" \
+  -H "Authorization: Bearer <accessToken>"
+```

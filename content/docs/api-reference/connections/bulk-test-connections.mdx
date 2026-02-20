@@ -1,0 +1,33 @@
+---
+title: Bulk test connections
+description: Test connectivity for multiple connections in parallel
+---
+
+```
+POST /api/v1/connections/bulk-test
+```
+
+Test connectivity for multiple connections in parallel
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `connectionIds` | `string[]` | No | The connectionIds value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/connections/bulk-test" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "connectionIds": []
+}'
+```

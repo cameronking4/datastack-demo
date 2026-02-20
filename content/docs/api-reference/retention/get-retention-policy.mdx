@@ -1,0 +1,29 @@
+---
+title: Get retention policy
+description: Get a retention policy by ID
+---
+
+```
+GET /api/v1/retention/policies/{policyId}
+```
+
+Get a retention policy by ID
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `policyId` | `string` | Yes | The policyId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/retention/policies/example-pol" \
+  -H "Authorization: Bearer <accessToken>"
+```

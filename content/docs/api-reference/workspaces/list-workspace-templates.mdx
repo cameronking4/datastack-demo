@@ -1,0 +1,37 @@
+---
+title: List workspace templates
+description: List reusable templates available in the workspace
+---
+
+```
+GET /api/v1/workspaces/{workspaceId}/templates
+```
+
+List reusable templates available in the workspace
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | Yes | The workspaceId value. |
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `category` | `string` | No | The category value. |
+| `page` | `integer` | No | The page value. |
+| `pageSize` | `integer` | No | The pageSize value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/workspaces/example-wor/templates" \
+  -H "Authorization: Bearer <accessToken>"
+```

@@ -1,0 +1,41 @@
+---
+title: Create snapshot
+description: Create a new table or volume snapshot
+---
+
+```
+POST /api/v1/snapshots
+```
+
+Create a new table or volume snapshot
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | Yes | The workspaceId value. |
+| `resourceType` | `string` | Yes | The resourceType value. One of: `table`, `volume`. |
+| `resourceId` | `string` | Yes | The resourceId value. |
+| `name` | `string` | No | The name value. |
+| `retentionDays` | `integer` | No | The retentionDays value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/snapshots" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "workspaceId": "example-workspaceId",
+  "resourceType": "table",
+  "resourceId": "example-resourceId",
+  "name": "example-name",
+  "retentionDays": 10
+}'
+```

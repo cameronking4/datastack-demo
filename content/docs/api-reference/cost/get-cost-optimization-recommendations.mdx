@@ -1,0 +1,35 @@
+---
+title: Get cost optimization recommendations
+description: Get recommendations to reduce cost
+---
+
+```
+POST /api/v1/cost/optimization/recommendations
+```
+
+Get recommendations to reduce cost
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scope` | `string` | No | The scope value. |
+| `categories` | `string[]` | No | The categories value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/cost/optimization/recommendations" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "scope": "example-scope",
+  "categories": []
+}'
+```

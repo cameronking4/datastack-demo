@@ -1,0 +1,48 @@
+---
+title: Update job SLA
+description: Update job SLA
+---
+
+```
+PUT /api/v1/jobs/{jobId}/sla
+```
+
+Update job SLA
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `jobId` | `string` | Yes | The jobId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `maxDurationMinutes` | `integer` | No | The maxDurationMinutes value. |
+| `deadlineCron` | `string` | No | The deadlineCron value. |
+| `alertOnBreach` | `boolean` | No | The alertOnBreach value. |
+| `notifyEmails` | `string[]` | No | The notifyEmails value. |
+| `priority` | `string` | No | The priority value. |
+| `escalationPolicy` | `string` | No | The escalationPolicy value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X PUT "/api/v1/jobs/example-job/sla" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "maxDurationMinutes": 10,
+  "deadlineCron": "example-deadlineCron",
+  "alertOnBreach": true,
+  "notifyEmails": [],
+  "priority": "example-priority"
+}'
+```

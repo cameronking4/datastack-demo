@@ -1,0 +1,29 @@
+---
+title: Delete role
+description: Delete role
+---
+
+```
+DELETE /api/v1/roles/{roleId}
+```
+
+Delete role
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `roleId` | `string` | Yes | The roleId value. |
+
+## Response `204`
+
+Returns no content.
+
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE "/api/v1/roles/example-rol" \
+  -H "Authorization: Bearer <accessToken>"
+```

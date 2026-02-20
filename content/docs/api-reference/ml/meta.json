@@ -1,0 +1,11 @@
+{
+  "title": "Machine Learning",
+  "pages": [
+    "create-experiment",
+    "list-feature-store-features",
+    "deploy-model",
+    "get-model-metrics",
+    "list-model-versions",
+    "register-model"
+  ]
+}

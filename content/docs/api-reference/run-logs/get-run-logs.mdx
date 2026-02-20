@@ -1,0 +1,36 @@
+---
+title: Get run logs
+description: Get run logs
+---
+
+```
+GET /api/v1/run-logs/{runId}
+```
+
+Get run logs
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `runId` | `string` | Yes | The runId value. |
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `level` | `string` | No | The level value. |
+| `limit` | `integer` | No | The limit value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/run-logs/example-run" \
+  -H "Authorization: Bearer <accessToken>"
+```

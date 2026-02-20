@@ -5,6 +5,14 @@
     "create-workspace",
     "get-workspace",
     "list-workspace-members",
-    "add-workspace-member"
+    "add-workspace-member",
+    "create-workspace-backup",
+    "get-workspace-export",
+    "list-role-assignments",
+    "assign-role",
+    "get-workspace-settings",
+    "update-workspace-settings",
+    "list-workspace-templates",
+    "get-usage-report"
   ]
 }

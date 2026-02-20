@@ -9,6 +9,11 @@
     "stop-pipeline",
     "list-pipeline-events",
     "list-pipeline-runs",
-    "trigger-pipeline-run"
+    "trigger-pipeline-run",
+    "clone-pipeline",
+    "get-pipeline-dependencies",
+    "update-pipeline-dependencies",
+    "get-pipeline-health",
+    "validate-pipeline"
   ]
 }

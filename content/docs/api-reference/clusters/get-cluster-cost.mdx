@@ -1,0 +1,29 @@
+---
+title: Get cluster cost
+description: Get cost breakdown and recommendations for a cluster
+---
+
+```
+GET /api/v1/clusters/{clusterId}/cost
+```
+
+Get cost breakdown and recommendations for a cluster
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `clusterId` | `string` | Yes | The clusterId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/clusters/example-clu/cost" \
+  -H "Authorization: Bearer <accessToken>"
+```
