@@ -3,12 +3,9 @@ title: Create checkpoint
 description: Create or manage stream checkpoint
 ---
 
-```
-POST /api/v1/streams/{streamId}/checkpoint
-```
+`POST /api/v1/streams/{streamId}/checkpoint`
 
 Create or manage stream checkpoint
-
 
 ## Path Parameters
 
@@ -24,13 +21,12 @@ Create or manage stream checkpoint
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/streams/example-str/checkpoint" \
+curl -X POST "/api/v1/streams/{streamId}/checkpoint" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

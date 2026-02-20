@@ -1,10 +1,10 @@
 {
   "title": "Saved Queries",
   "pages": [
+    "list-saved-queries",
+    "create-saved-query",
     "get-saved-query",
     "update-saved-query",
-    "delete-saved-query",
-    "list-saved-queries",
-    "create-saved-query"
+    "delete-saved-query"
   ]
 }

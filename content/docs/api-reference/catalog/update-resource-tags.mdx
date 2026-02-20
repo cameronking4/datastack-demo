@@ -3,12 +3,9 @@ title: Update resource tags
 description: Set or update tags on a catalog resource
 ---
 
-```
-PUT /api/v1/catalog/{resourceType}/{resourceId}/tags
-```
+`PUT /api/v1/catalog/{resourceType}/{resourceId}/tags`
 
 Set or update tags on a catalog resource
-
 
 ## Path Parameters
 
@@ -21,17 +18,16 @@ Set or update tags on a catalog resource
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `tags` | `string[]` | No | The tags value. |
+| `tags` | `array<string>` | No | The tags value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PUT "/api/v1/catalog/example-res/example-res/tags" \
+curl -X PUT "/api/v1/catalog/{resourceType}/{resourceId}/tags" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

@@ -1,48 +1,51 @@
 ---
-title: Update Schedule
-description: Update schedule expression, timezone, or activation state.
+title: Update schedule
+description: Update schedule expression, timezone, or activation state
 ---
 
-```
-PATCH /api/v1/schedules/{scheduleId}
-```
+`PATCH /api/v1/schedules/{scheduleId}`
 
-Update an existing schedule.
-
-**Required scope:** `manage:jobs`
+Update schedule expression, timezone, or activation state
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `scheduleId` | `string` | The schedule identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `scheduleId` | `string` | Yes | The scheduleId value. |
 
 ## Request Body
 
-| Field | Type | Description |
-|---|---|---|
-| `name` | `string` | Display name. |
-| `scheduleExpression` | `string` | Cron or interval expression. |
-| `timezone` | `string` | Schedule timezone. |
-| `active` | `boolean` | Whether the schedule is active. |
-| `startDate` | `string` | ISO 8601 start date. |
-| `endDate` | `string` | ISO 8601 end date. |
-| `skipIfRunning` | `boolean` | Whether to skip if previous run is active. |
-| `catchUpMissed` | `boolean` | Whether to catch up missed runs. |
-| `parameters` | `object` | Key-value execution parameters. |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `scheduleExpression` | `string` | No | The scheduleExpression value. |
+| `timezone` | `string` | No | The timezone value. |
+| `active` | `boolean` | No | The active value. |
+| `startDate` | `string` | No | The startDate value. |
+| `endDate` | `string` | No | The endDate value. |
+| `skipIfRunning` | `boolean` | No | The skipIfRunning value. |
+| `catchUpMissed` | `boolean` | No | The catchUpMissed value. |
+| `parameters` | `object` | No | The parameters value. |
 
 ## Response `200`
 
-Returns the updated schedule object.
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH /api/v1/schedules/sched-001 \
+curl -X PATCH "/api/v1/schedules/{scheduleId}" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "scheduleExpression": "0 3 * * *",
-    "timezone": "America/Chicago"
-  }'
+  "name": "example-name",
+  "scheduleExpression": "example-scheduleExpression",
+  "timezone": "example-timezone",
+  "active": true,
+  "startDate": "example-startDate",
+  "endDate": "example-endDate",
+  "skipIfRunning": true,
+  "catchUpMissed": true,
+  "parameters": {}
+}'
 ```

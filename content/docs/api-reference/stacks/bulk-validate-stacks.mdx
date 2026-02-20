@@ -3,23 +3,19 @@ title: Bulk validate stacks
 description: Validate multiple stacks in parallel
 ---
 
-```
-POST /api/v1/stacks/bulk-validate
-```
+`POST /api/v1/stacks/bulk-validate`
 
 Validate multiple stacks in parallel
-
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `stackIds` | `string[]` | No | The stackIds value. |
+| `stackIds` | `array<string>` | No | The stackIds value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 

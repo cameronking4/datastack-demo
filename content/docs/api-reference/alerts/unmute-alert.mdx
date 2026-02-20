@@ -3,12 +3,9 @@ title: Unmute alert
 description: Unmute alert
 ---
 
-```
-DELETE /api/v1/alerts/{alertId}/mute
-```
+`DELETE /api/v1/alerts/{alertId}/mute`
 
 Unmute alert
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Unmute alert
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X DELETE "/api/v1/alerts/example-ale/mute" \
+curl -X DELETE "/api/v1/alerts/{alertId}/mute" \
   -H "Authorization: Bearer <accessToken>"
 ```

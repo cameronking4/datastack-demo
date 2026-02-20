@@ -3,12 +3,9 @@ title: Create role
 description: Create role
 ---
 
-```
-POST /api/v1/roles
-```
+`POST /api/v1/roles`
 
 Create role
-
 
 ## Request Body
 
@@ -17,12 +14,11 @@ Create role
 | `name` | `string` | No | The name value. |
 | `description` | `string` | No | The description value. |
 | `workspaceId` | `string` | No | The workspaceId value. |
-| `permissions` | `string[]` | No | The permissions value. |
+| `permissions` | `array<string>` | No | The permissions value. |
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 

@@ -3,23 +3,19 @@ title: Health check
 description: Liveness/readiness check for load balancers and orchestrators. Query param probe=readiness includes dependency checks.
 ---
 
-```
-GET /api/v1/health
-```
+`GET /api/v1/health`
 
 Liveness/readiness check for load balancers and orchestrators. Query param probe=readiness includes dependency checks.
-
 
 ## Query Parameters
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `probe` | `string` | No | The probe value. One of: `readiness`. |
+| `probe` | `string` | No | The probe value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 

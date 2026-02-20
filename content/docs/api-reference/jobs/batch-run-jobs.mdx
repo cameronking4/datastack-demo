@@ -3,24 +3,20 @@ title: Batch run jobs
 description: Batch run jobs
 ---
 
-```
-POST /api/v1/jobs/batch-run
-```
+`POST /api/v1/jobs/batch-run`
 
 Batch run jobs
-
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `jobIds` | `string[]` | No | The jobIds value. |
+| `jobIds` | `array<string>` | No | The jobIds value. |
 | `waitForCompletion` | `boolean` | No | The waitForCompletion value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 

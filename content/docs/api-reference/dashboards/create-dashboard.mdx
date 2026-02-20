@@ -3,12 +3,9 @@ title: Create dashboard
 description: Create dashboard
 ---
 
-```
-POST /api/v1/dashboards
-```
+`POST /api/v1/dashboards`
 
 Create dashboard
-
 
 ## Request Body
 
@@ -16,12 +13,11 @@ Create dashboard
 |---|---|---|---|
 | `name` | `string` | No | The name value. |
 | `workspaceId` | `string` | No | The workspaceId value. |
-| `widgets` | `any[]` | No | The widgets value. |
+| `widgets` | `array<any>` | No | The widgets value. |
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 

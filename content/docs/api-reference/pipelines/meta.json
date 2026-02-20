@@ -1,19 +1,19 @@
 {
   "title": "Pipelines",
   "pages": [
+    "list-pipeline-events",
+    "list-pipeline-runs",
     "list-pipelines",
     "create-pipeline",
     "get-pipeline",
+    "get-pipeline-dependencies",
+    "get-pipeline-health",
+    "update-pipeline-dependencies",
     "delete-pipeline",
+    "clone-pipeline",
     "start-pipeline",
     "stop-pipeline",
-    "list-pipeline-events",
-    "list-pipeline-runs",
     "trigger-pipeline-run",
-    "clone-pipeline",
-    "get-pipeline-dependencies",
-    "update-pipeline-dependencies",
-    "get-pipeline-health",
     "validate-pipeline"
   ]
 }

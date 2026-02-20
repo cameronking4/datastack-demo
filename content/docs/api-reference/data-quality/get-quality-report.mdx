@@ -3,12 +3,9 @@ title: Get quality report
 description: Get data quality report and score for a table
 ---
 
-```
-GET /api/v1/data-quality/reports/{tableId}
-```
+`GET /api/v1/data-quality/reports/{tableId}`
 
 Get data quality report and score for a table
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Get data quality report and score for a table
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/data-quality/reports/example-tab" \
+curl -X GET "/api/v1/data-quality/reports/{tableId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

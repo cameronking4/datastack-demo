@@ -3,12 +3,9 @@ title: Restore from backup
 description: Restore a workspace from a backup
 ---
 
-```
-POST /api/v1/backups/{backupId}/restore
-```
+`POST /api/v1/backups/{backupId}/restore`
 
 Restore a workspace from a backup
-
 
 ## Path Parameters
 
@@ -25,13 +22,12 @@ Restore a workspace from a backup
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/backups/example-bac/restore" \
+curl -X POST "/api/v1/backups/{backupId}/restore" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

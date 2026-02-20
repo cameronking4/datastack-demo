@@ -1,48 +1,47 @@
 ---
-title: Update Environment
-description: Update environment settings, promotion rules, or access controls.
+title: Update environment
+description: Update environment settings, promotion rules, or access controls
 ---
 
-```
-PATCH /api/v1/environments/{environmentId}
-```
+`PATCH /api/v1/environments/{environmentId}`
 
-Update an existing environment.
-
-**Required scope:** `manage:deployments`
+Update environment settings, promotion rules, or access controls
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `environmentId` | `string` | The environment identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `environmentId` | `string` | Yes | The environmentId value. |
 
 ## Request Body
 
-| Field | Type | Description |
-|---|---|---|
-| `name` | `string` | Display name. |
-| `description` | `string` | Environment description. |
-| `color` | `string` | Display color. |
-| `promotionRules` | `object` | Promotion configuration. |
-| `accessControl` | `object` | Access restrictions. |
-| `variables` | `object` | Key-value environment variables. |
-| `protected` | `boolean` | Whether the environment is protected. |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `description` | `string` | No | The description value. |
+| `color` | `string` | No | The color value. |
+| `promotionRules` | `object` | No | The promotionRules value. |
+| `accessControl` | `object` | No | The accessControl value. |
+| `variables` | `object` | No | The variables value. |
+| `protected` | `boolean` | No | The protected value. |
 
 ## Response `200`
 
-Returns the updated environment object.
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH /api/v1/environments/env-001 \
+curl -X PATCH "/api/v1/environments/{environmentId}" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "promotionRules": {
-      "requiresApproval": true,
-      "approvers": ["user-001", "user-002"]
-    }
-  }'
+  "name": "example-name",
+  "description": "example-description",
+  "color": "example-color",
+  "promotionRules": {},
+  "accessControl": {},
+  "variables": {},
+  "protected": true
+}'
 ```

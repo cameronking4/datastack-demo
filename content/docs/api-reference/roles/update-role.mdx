@@ -3,12 +3,9 @@ title: Update role
 description: Update role
 ---
 
-```
-PATCH /api/v1/roles/{roleId}
-```
+`PATCH /api/v1/roles/{roleId}`
 
 Update role
-
 
 ## Path Parameters
 
@@ -22,17 +19,16 @@ Update role
 |---|---|---|---|
 | `name` | `string` | No | The name value. |
 | `description` | `string` | No | The description value. |
-| `permissions` | `string[]` | No | The permissions value. |
+| `permissions` | `array<string>` | No | The permissions value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH "/api/v1/roles/example-rol" \
+curl -X PATCH "/api/v1/roles/{roleId}" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

@@ -3,12 +3,9 @@ title: List role assignments
 description: List user-role assignments in the workspace
 ---
 
-```
-GET /api/v1/workspaces/{workspaceId}/roles
-```
+`GET /api/v1/workspaces/{workspaceId}/roles`
 
 List user-role assignments in the workspace
-
 
 ## Path Parameters
 
@@ -25,12 +22,11 @@ List user-role assignments in the workspace
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/workspaces/example-wor/roles" \
+curl -X GET "/api/v1/workspaces/{workspaceId}/roles" \
   -H "Authorization: Bearer <accessToken>"
 ```

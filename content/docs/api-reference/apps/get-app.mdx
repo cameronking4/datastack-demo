@@ -3,12 +3,9 @@ title: Get app
 description: Get app
 ---
 
-```
-GET /api/v1/apps/{appId}
-```
+`GET /api/v1/apps/{appId}`
 
 Get app
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Get app
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/apps/example-app" \
+curl -X GET "/api/v1/apps/{appId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

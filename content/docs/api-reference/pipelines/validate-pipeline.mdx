@@ -3,12 +3,9 @@ title: Validate pipeline
 description: Validate pipeline configuration before starting (preview only)
 ---
 
-```
-POST /api/v1/pipelines/{pipelineId}/validate
-```
+`POST /api/v1/pipelines/{pipelineId}/validate`
 
 Validate pipeline configuration before starting (preview only)
-
 
 ## Path Parameters
 
@@ -24,13 +21,12 @@ Validate pipeline configuration before starting (preview only)
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/pipelines/example-pip/validate" \
+curl -X POST "/api/v1/pipelines/{pipelineId}/validate" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

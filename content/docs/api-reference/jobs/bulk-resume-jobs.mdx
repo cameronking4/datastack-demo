@@ -3,23 +3,19 @@ title: Bulk resume jobs
 description: Bulk resume jobs
 ---
 
-```
-POST /api/v1/jobs/bulk-resume
-```
+`POST /api/v1/jobs/bulk-resume`
 
 Bulk resume jobs
-
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `jobIds` | `string[]` | No | The jobIds value. |
+| `jobIds` | `array<string>` | No | The jobIds value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 

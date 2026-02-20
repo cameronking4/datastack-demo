@@ -1,31 +1,26 @@
 ---
-title: Create Workspace
-description: Create a new workspace with quotas, settings, and tier configuration.
+title: Create workspace
+description: Create a new workspace with region, quotas, and initial configuration
 ---
 
-```
-POST /api/v1/workspaces
-```
+`POST /api/v1/workspaces`
 
-Creates a new workspace with tier, region, quotas, and settings.
-
-**Required scope:** `manage:workspaces`
+Create a new workspace with region, quotas, and initial configuration
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | Workspace display name. |
-| `region` | `string` | Yes | Deployment region (e.g., `us-west-2`). |
-| `tier` | `string` | No | Workspace tier (`free`, `standard`, `premium`, `enterprise`). |
-| `settings` | `object` | No | Workspace settings. |
-| `settings.defaultCatalog` | `string` | No | Default catalog name. |
-| `settings.enableIpAccessList` | `boolean` | No | Enable IP access list restrictions. |
-| `tags` | `object` | No | Key-value tags. |
+| `name` | `string` | Yes | The name value. |
+| `displayName` | `string` | No | The displayName value. |
+| `region` | `string` | Yes | The region value. |
+| `tier` | `string` | No | The tier value. |
+| `quotas` | `object` | No | The quotas value. |
+| `settings` | `object` | No | The settings value. |
 
 ## Response `201`
 
-Returns the created workspace object including quotas and usage.
+Created
 
 ## Example
 
@@ -34,34 +29,11 @@ curl -X POST "/api/v1/workspaces" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Acme Analytics",
-    "region": "us-west-2",
-    "tier": "standard"
-  }'
-```
-
-```json title="Response"
-{
-  "id": "ws-new",
-  "name": "Acme Analytics",
-  "region": "us-west-2",
-  "tier": "standard",
-  "deploymentUrl": "https://acme-analytics.datastack.cloud",
-  "status": "ACTIVE",
-  "quotas": {
-    "maxClusters": 10,
-    "maxPipelines": 50,
-    "maxStorageGb": 500
-  },
-  "usage": {
-    "clusters": 0,
-    "pipelines": 0,
-    "storageGb": 0
-  },
-  "settings": {
-    "defaultCatalog": "main",
-    "enableIpAccessList": false
-  },
-  "createdAt": "2024-06-10T10:00:00Z"
-}
+  "name": "example-name",
+  "displayName": "example-displayName",
+  "region": "example-region",
+  "tier": "example-tier",
+  "quotas": {},
+  "settings": {}
+}'
 ```

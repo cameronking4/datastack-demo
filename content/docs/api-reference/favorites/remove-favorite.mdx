@@ -3,12 +3,9 @@ title: Remove favorite
 description: Remove a resource from favorites
 ---
 
-```
-DELETE /api/v1/favorites/{resourceType}/{resourceId}
-```
+`DELETE /api/v1/favorites/{resourceType}/{resourceId}`
 
 Remove a resource from favorites
-
 
 ## Path Parameters
 
@@ -19,12 +16,11 @@ Remove a resource from favorites
 
 ## Response `204`
 
-Returns no content.
-
+No content
 
 ## Example
 
 ```bash title="cURL"
-curl -X DELETE "/api/v1/favorites/example-res/example-res" \
+curl -X DELETE "/api/v1/favorites/{resourceType}/{resourceId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

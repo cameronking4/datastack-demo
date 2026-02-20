@@ -1,11 +1,11 @@
 {
   "title": "SQL Warehouses",
   "pages": [
-    "list-warehouses",
-    "get-warehouse",
-    "start-warehouse",
-    "stop-warehouse",
+    "list-sql-warehouses",
+    "create-sql-warehouse",
+    "get-sql-warehouse",
     "get-warehouse-query-stats",
-    "create-sql-warehouse"
+    "start-sql-warehouse",
+    "stop-sql-warehouse"
   ]
 }

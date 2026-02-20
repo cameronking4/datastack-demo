@@ -1,65 +1,41 @@
 ---
-title: Create API Key
-description: Create a new API key. The full key is returned only once.
+title: Create API key
+description: Create a new API key with scopes, expiration, and rate limiting
 ---
 
-```
-POST /api/v1/auth/api-keys
-```
+`POST /api/v1/auth/api-keys`
 
-Create a new API key with the specified name and scopes. The full key value is returned **only in this response** — store it securely.
-
-**Required scope:** `manage:api_keys`
+Create a new API key with scopes, expiration, and rate limiting
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | Display name for the key. |
-| `scopes` | `string[]` | Yes | Permission scopes to grant. |
-| `expiresInDays` | `integer` | No | Days until expiration. Defaults to `90`. |
-| `rateLimit` | `object` | No | Rate-limiting configuration. |
-| `rateLimit.requestsPerMinute` | `integer` | No | Maximum requests per minute. |
-| `rateLimit.requestsPerDay` | `integer` | No | Maximum requests per day. |
-| `rotationPolicy` | `object` | No | Automatic key rotation policy. |
-| `rotationPolicy.autoRotate` | `boolean` | No | Enable automatic rotation. |
-| `rotationPolicy.rotationIntervalDays` | `integer` | No | Days between rotations. |
-| `allowedIpRanges` | `string[]` | No | IP CIDR ranges allowed to use this key. |
-| `metadata` | `object` | No | Arbitrary key-value metadata. |
+| `name` | `string` | Yes | The name value. |
+| `scopes` | `array<string>` | Yes | The scopes value. |
+| `expiresInDays` | `integer` | No | The expiresInDays value. |
+| `rateLimit` | `object` | No | The rateLimit value. |
+| `rotationPolicy` | `object` | No | The rotationPolicy value. |
+| `allowedIpRanges` | `array<string>` | No | The allowedIpRanges value. |
+| `metadata` | `object` | No | The metadata value. |
 
 ## Response `201`
 
-| Field | Type | Description |
-|---|---|---|
-| `id` | `string` | Key identifier. |
-| `name` | `string` | Display name. |
-| `key` | `string` | Full API key value (shown only once). |
-| `prefix` | `string` | Key prefix for identification. |
-| `scopes` | `string[]` | Granted scopes. |
-| `expiresAt` | `string` | ISO 8601 expiration timestamp. |
-| `createdAt` | `string` | ISO 8601 creation timestamp. |
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST /api/v1/auth/api-keys \
+curl -X POST "/api/v1/auth/api-keys" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "CI/CD Pipeline Key",
-    "scopes": ["read:clusters", "manage:jobs"],
-    "expiresInDays": 180
-  }'
-```
-
-```json title="Response"
-{
-  "id": "key-new",
-  "name": "CI/CD Pipeline Key",
-  "key": "dsk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  "prefix": "dsk_live_xxx",
-  "scopes": ["read:clusters", "manage:jobs"],
-  "expiresAt": "2025-12-01T00:00:00Z",
-  "createdAt": "2024-06-01T10:00:00Z"
-}
+  "name": "example-name",
+  "scopes": [],
+  "expiresInDays": 10,
+  "rateLimit": {},
+  "rotationPolicy": {},
+  "allowedIpRanges": [],
+  "metadata": {}
+}'
 ```

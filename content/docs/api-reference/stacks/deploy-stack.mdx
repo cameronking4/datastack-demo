@@ -1,71 +1,39 @@
 ---
-title: Deploy Stack
-description: Deploy all layers of a stack to the target environment.
+title: Deploy stack
+description: Deploy all layers of a stack to the target environment
 ---
 
-```
-POST /api/v1/stacks/{stackId}/deploy
-```
+`POST /api/v1/stacks/{stackId}/deploy`
 
-Triggers a deployment of all stack layers. Supports dry-run mode for validation without applying changes.
-
-**Required scope:** `manage:stacks`
+Deploy all layers of a stack to the target environment
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `stackId` | `string` | Stack identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `stackId` | `string` | Yes | The stackId value. |
 
 ## Request Body
 
-| Field | Type | Default | Description |
+| Field | Type | Required | Description |
 |---|---|---|---|
-| `environment` | `string` | `PRODUCTION` | Target environment. |
-| `dryRun` | `boolean` | `false` | When `true`, validates without deploying. |
-| `force` | `boolean` | `false` | Force deploy even if validation warnings exist. |
+| `environment` | `string` | No | The environment value. |
+| `dryRun` | `boolean` | No | The dryRun value. |
+| `force` | `boolean` | No | The force value. |
 
 ## Response `202`
 
-| Field | Type | Description |
-|---|---|---|
-| `deploymentId` | `string` | New deployment identifier. |
-| `stackId` | `string` | Stack identifier. |
-| `environment` | `string` | Target environment. |
-| `dryRun` | `boolean` | Whether this was a dry run. |
-| `status` | `string` | Deployment status (`IN_PROGRESS` or `VALIDATED` for dry runs). |
-| `version` | `number` | Stack version being deployed. |
-| `steps` | `object[]` | Per-layer deployment steps. |
-| `steps[].layer` | `string` | Layer name. |
-| `steps[].resourceType` | `string` | Resource type. |
-| `steps[].resourceId` | `string` | Referenced resource identifier. |
-| `steps[].action` | `string` | Planned action (`CREATE`, `UPDATE`, `NO_CHANGE`). |
-| `steps[].status` | `string` | Step status. |
-| `startedAt` | `string` | ISO 8601 timestamp. |
-| `startedBy` | `string` | Initiator identity. |
+Accepted
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/stacks/stack-001/deploy" \
+curl -X POST "/api/v1/stacks/{stackId}/deploy" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{ "environment": "PRODUCTION", "dryRun": false }'
-```
-
-```json title="Response"
-{
-  "deploymentId": "deploy-new",
-  "stackId": "stack-001",
-  "environment": "PRODUCTION",
-  "dryRun": false,
-  "status": "IN_PROGRESS",
-  "version": 4,
-  "steps": [
-    { "layer": "ingestion", "resourceType": "pipeline", "resourceId": "pipe-001", "action": "UPDATE", "status": "IN_PROGRESS" },
-    { "layer": "compute", "resourceType": "cluster", "resourceId": "cluster-001", "action": "NO_CHANGE", "status": "SKIPPED" }
-  ],
-  "startedAt": "2024-06-10T12:00:00Z",
-  "startedBy": "api"
-}
+  -d '{
+  "environment": "example-environment",
+  "dryRun": true,
+  "force": true
+}'
 ```

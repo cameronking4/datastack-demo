@@ -1,36 +1,30 @@
 ---
-title: Create Connection
-description: Create a new data source or sink connection.
+title: Create connection
+description: Create a new data source or sink connection with authentication
 ---
 
-```
-POST /api/v1/connections
-```
+`POST /api/v1/connections`
 
-Creates a new external data connection.
-
-**Required scope:** `manage:connections`
+Create a new data source or sink connection with authentication
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | Display name. |
-| `type` | `string` | Yes | Connection type (`S3`, `POSTGRESQL`, `MYSQL`, `KAFKA`, `SNOWFLAKE`, `BIGQUERY`, `REDSHIFT`, `MONGODB`, `AZURE_BLOB`, `GCS`). |
-| `host` | `string` | Yes | Host or endpoint URI. |
-| `port` | `integer` | No | Port number. |
-| `workspaceId` | `string` | Yes | Target workspace. |
-| `authMethod` | `string` | Yes | Authentication method (`API_KEY`, `OAUTH2`, `SERVICE_ACCOUNT`, `IAM_ROLE`, `USERNAME_PASSWORD`). |
-| `credentialRef` | `string` | No | Reference to stored credentials. |
-| `healthCheck` | `object` | No | Health-check configuration. |
-| `healthCheck.enabled` | `boolean` | No | Enable periodic health checks. |
-| `healthCheck.intervalSeconds` | `integer` | No | Seconds between checks. |
-| `properties` | `object` | No | Type-specific configuration. |
-| `tags` | `object` | No | Key-value metadata tags. |
+| `name` | `string` | Yes | The name value. |
+| `type` | `string` | Yes | The type value. |
+| `host` | `string` | Yes | The host value. |
+| `port` | `integer` | No | The port value. |
+| `workspaceId` | `string` | Yes | The workspaceId value. |
+| `authMethod` | `string` | Yes | The authMethod value. |
+| `credentialRef` | `string` | No | The credentialRef value. |
+| `healthCheck` | `object` | No | The healthCheck value. |
+| `properties` | `object` | No | The properties value. |
+| `tags` | `object` | No | The tags value. |
 
 ## Response `201`
 
-Returns the created connection object with `status` set to `PENDING_VALIDATION`.
+Created
 
 ## Example
 
@@ -39,31 +33,15 @@ curl -X POST "/api/v1/connections" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Staging Postgres",
-    "type": "POSTGRESQL",
-    "host": "staging-db.acme.internal",
-    "workspaceId": "ws-001",
-    "authMethod": "USERNAME_PASSWORD",
-    "credentialRef": "db-staging",
-    "properties": { "database": "analytics", "sslMode": "require" }
-  }'
-```
-
-```json title="Response"
-{
-  "id": "conn-new",
-  "name": "Staging Postgres",
-  "type": "POSTGRESQL",
-  "host": "staging-db.acme.internal",
-  "status": "PENDING_VALIDATION",
-  "workspaceId": "ws-001",
-  "authMethod": "USERNAME_PASSWORD",
-  "credentialRef": "db-staging",
-  "properties": { "database": "analytics", "sslMode": "require" },
-  "createdAt": "2024-06-10T10:00:00Z",
-  "updatedAt": "2024-06-10T10:00:00Z",
-  "createdBy": "api",
-  "lastTestedAt": null,
-  "lastTestStatus": null
-}
+  "name": "example-name",
+  "type": "example-type",
+  "host": "example-host",
+  "port": 10,
+  "workspaceId": "example-workspaceId",
+  "authMethod": "example-authMethod",
+  "credentialRef": "example-credentialRef",
+  "healthCheck": {},
+  "properties": {},
+  "tags": {}
+}'
 ```

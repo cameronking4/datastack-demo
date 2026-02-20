@@ -3,12 +3,9 @@ title: Get cluster metrics
 description: Get cluster performance metrics (preview only)
 ---
 
-```
-GET /api/v1/clusters/{clusterId}/metrics
-```
+`GET /api/v1/clusters/{clusterId}/metrics`
 
 Get cluster performance metrics (preview only)
-
 
 ## Path Parameters
 
@@ -26,12 +23,11 @@ Get cluster performance metrics (preview only)
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/clusters/example-clu/metrics" \
+curl -X GET "/api/v1/clusters/{clusterId}/metrics" \
   -H "Authorization: Bearer <accessToken>"
 ```

@@ -1,29 +1,30 @@
 ---
-title: Create Query
-description: Save a new SQL query.
+title: Create query
+description: Save a new SQL query with catalog/schema context and result format preferences
 ---
 
-```
-POST /api/v1/queries
-```
+`POST /api/v1/queries`
 
-Saves a new SQL query for later execution.
-
-**Required scope:** `manage:queries`
+Save a new SQL query with catalog/schema context and result format preferences
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | Display name. |
-| `description` | `string` | No | Query description. |
-| `warehouseId` | `string` | Yes | Target warehouse identifier. |
-| `sql` | `string` | Yes | SQL statement. |
-| `tags` | `string[]` | No | Tags for categorization. |
+| `name` | `string` | Yes | The name value. |
+| `description` | `string` | No | The description value. |
+| `warehouseId` | `string` | Yes | The warehouseId value. |
+| `queryText` | `string` | Yes | The queryText value. |
+| `catalog` | `string` | No | The catalog value. |
+| `schema` | `string` | No | The schema value. |
+| `resultFormat` | `string` | No | The resultFormat value. |
+| `timeout` | `integer` | No | The timeout value. |
+| `parameters` | `array<object>` | No | The parameters value. |
+| `tags` | `array<string>` | No | The tags value. |
 
 ## Response `201`
 
-Returns the created query object.
+Created
 
 ## Example
 
@@ -32,27 +33,15 @@ curl -X POST "/api/v1/queries" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Revenue by Region",
-    "description": "Monthly revenue breakdown",
-    "warehouseId": "wh-001",
-    "sql": "SELECT region, SUM(amount) FROM main.gold.orders GROUP BY 1",
-    "tags": ["finance", "reporting"]
-  }'
-```
-
-```json title="Response"
-{
-  "id": "query-new",
-  "name": "Revenue by Region",
-  "description": "Monthly revenue breakdown",
-  "warehouseId": "wh-001",
-  "sql": "SELECT region, SUM(amount) FROM main.gold.orders GROUP BY 1",
-  "status": "SAVED",
-  "tags": ["finance", "reporting"],
-  "lastExecutedAt": null,
-  "lastExecutionDurationMs": null,
-  "createdAt": "2024-06-10T10:00:00Z",
-  "updatedAt": "2024-06-10T10:00:00Z",
-  "createdBy": "api"
-}
+  "name": "example-name",
+  "description": "example-description",
+  "warehouseId": "example-warehouseId",
+  "queryText": "example-queryText",
+  "catalog": "example-catalog",
+  "schema": "example-schema",
+  "resultFormat": "example-resultFormat",
+  "timeout": 10,
+  "parameters": [],
+  "tags": []
+}'
 ```

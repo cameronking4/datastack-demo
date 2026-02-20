@@ -1,0 +1,26 @@
+---
+title: List notification channels
+description: List configured notification channels and preferences
+---
+
+`GET /api/v1/notifications`
+
+List configured notification channels and preferences
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `type` | `string` | No | The type value. |
+| `enabled` | `boolean` | No | The enabled value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/notifications" \
+  -H "Authorization: Bearer <accessToken>"
+```

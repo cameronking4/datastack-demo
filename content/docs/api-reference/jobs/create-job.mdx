@@ -1,44 +1,30 @@
 ---
-title: Create Job
-description: Create a new scheduled job in your workspace.
+title: Create job
+description: Create a new scheduled or triggered job
 ---
 
-```
-POST /api/v1/jobs
-```
+`POST /api/v1/jobs`
 
-Creates a new scheduled job.
-
-**Required scope:** `manage:jobs`
+Create a new scheduled or triggered job
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | Job name. |
-| `description` | `string` | No | Job description. |
-| `schedule` | `string` | No | Cron expression for scheduling (e.g., `"0 0 2 * * ?"`). |
-| `timezone` | `string` | No | IANA timezone for the schedule (e.g., `"America/New_York"`). |
-| `triggerType` | `string` | Yes | Trigger type (`PERIODIC`, `CONTINUOUS`, `ONE_TIME`, `FILE_ARRIVAL`, `TABLE_UPDATE`). |
-| `maxConcurrentRuns` | `integer` | No | Maximum concurrent runs allowed. |
-| `retryPolicy` | `object` | No | Retry configuration. |
-| `retryPolicy.maxRetries` | `integer` | No | Maximum number of retries. |
-| `retryPolicy.retryIntervalSeconds` | `integer` | No | Seconds between retries. |
-| `retryPolicy.retryOnTimeout` | `boolean` | No | Whether to retry on timeout. |
-| `alertDestinations` | `object[]` | No | Alert notification destinations. |
-| `alertDestinations[].type` | `string` | No | Destination type. |
-| `alertDestinations[].destination` | `string` | No | Destination target. |
-| `settings` | `object` | Yes | Job execution settings. |
-| `settings.clusterId` | `string` | Yes | Cluster used for execution. |
-| `settings.notebookPath` | `string` | Yes | Path to the notebook to execute. |
-| `settings.timeoutSeconds` | `integer` | No | Maximum run duration in seconds. |
-| `settings.environmentVars` | `object` | No | Environment variables for the run. |
-| `settings.libraries` | `array` | No | Libraries to install before execution. |
-| `tags` | `object` | No | Key-value metadata tags. |
+| `name` | `string` | Yes | The name value. |
+| `description` | `string` | No | The description value. |
+| `schedule` | `string` | No | The schedule value. |
+| `timezone` | `string` | No | The timezone value. |
+| `triggerType` | `string` | Yes | The triggerType value. |
+| `maxConcurrentRuns` | `integer` | No | The maxConcurrentRuns value. |
+| `retryPolicy` | `object` | No | The retryPolicy value. |
+| `alertDestinations` | `array<object>` | No | The alertDestinations value. |
+| `settings` | `object` | Yes | The settings value. |
+| `tags` | `object` | No | The tags value. |
 
 ## Response `201`
 
-Returns the created job object.
+Created
 
 ## Example
 
@@ -47,31 +33,15 @@ curl -X POST "/api/v1/jobs" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Daily ETL",
-    "description": "Ingest and transform raw events",
-    "triggerType": "PERIODIC",
-    "schedule": "0 0 2 * * ?",
-    "settings": {
-      "clusterId": "cluster-001",
-      "notebookPath": "/Workspace/ETL/daily_pipeline",
-      "timeoutSeconds": 3600
-    }
-  }'
-```
-
-```json title="Response"
-{
-  "jobId": 1003,
-  "name": "Daily ETL",
-  "description": "Ingest and transform raw events",
-  "schedule": "0 0 2 * * ?",
-  "trigger": "PERIODIC",
-  "settings": {
-    "clusterId": "cluster-001",
-    "notebookPath": "/Workspace/ETL/daily_pipeline",
-    "timeoutSeconds": 3600
-  },
-  "createdAt": "2024-06-10T10:00:00Z",
-  "createdBy": "ada@datastack.dev"
-}
+  "name": "example-name",
+  "description": "example-description",
+  "schedule": "example-schedule",
+  "timezone": "example-timezone",
+  "triggerType": "example-triggerType",
+  "maxConcurrentRuns": 10,
+  "retryPolicy": {},
+  "alertDestinations": [],
+  "settings": {},
+  "tags": {}
+}'
 ```

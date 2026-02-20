@@ -3,12 +3,9 @@ title: Clone pipeline
 description: Clone a pipeline with a new name (copy configuration)
 ---
 
-```
-POST /api/v1/pipelines/{pipelineId}/clone
-```
+`POST /api/v1/pipelines/{pipelineId}/clone`
 
 Clone a pipeline with a new name (copy configuration)
-
 
 ## Path Parameters
 
@@ -24,13 +21,12 @@ Clone a pipeline with a new name (copy configuration)
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/pipelines/example-pip/clone" \
+curl -X POST "/api/v1/pipelines/{pipelineId}/clone" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

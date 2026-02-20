@@ -1,28 +1,24 @@
 ---
-title: Create Catalog
-description: Create a new Unity Catalog catalog.
+title: Create catalog
+description: Create a new catalog
 ---
 
-```
-POST /api/v1/catalogs
-```
+`POST /api/v1/catalogs`
 
-Creates a new catalog in the workspace.
-
-**Required scope:** `manage:catalogs`
+Create a new catalog
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | Catalog name. |
-| `comment` | `string` | No | Description. |
-| `properties` | `object` | No | Key-value properties. |
-| `isolation` | `string` | No | Isolation mode (`OPEN` or `ISOLATED`). Defaults to `OPEN`. |
+| `name` | `string` | Yes | The name value. |
+| `comment` | `string` | No | The comment value. |
+| `properties` | `object` | No | The properties value. |
+| `isolation` | `string` | No | The isolation value. |
 
 ## Response `201`
 
-Returns the created catalog object.
+Created
 
 ## Example
 
@@ -30,19 +26,10 @@ Returns the created catalog object.
 curl -X POST "/api/v1/catalogs" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{ "name": "sandbox", "comment": "Development catalog", "isolation": "ISOLATED" }'
-```
-
-```json title="Response"
-{
-  "name": "sandbox",
-  "owner": "api",
-  "comment": "Development catalog",
+  -d '{
+  "name": "example-name",
+  "comment": "example-comment",
   "properties": {},
-  "isolation": "ISOLATED",
-  "schemasCount": 0,
-  "createdAt": "2024-06-10T10:00:00Z",
-  "updatedAt": "2024-06-10T10:00:00Z",
-  "createdBy": "api"
-}
+  "isolation": "example-isolation"
+}'
 ```

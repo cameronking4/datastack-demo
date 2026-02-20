@@ -1,56 +1,41 @@
 ---
-title: Resize Cluster
-description: Adjust the worker count of a running cluster.
+title: Resize cluster
+description: Resize cluster workers or node type
 ---
 
-```
-POST /api/v1/clusters/{clusterId}/resize
-```
+`POST /api/v1/clusters/{clusterId}/resize`
 
-Submit a resize request for a running cluster. The request is queued and applied after the next restart or when autoscale runs.
-
-**Required scope:** `manage:clusters`
+Resize cluster workers or node type
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `clusterId` | `string` | The cluster identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `clusterId` | `string` | Yes | The clusterId value. |
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `workerCount` | `integer` | Yes | Desired number of worker nodes. |
-| `nodeType` | `string` | No | Instance type for workers. |
+| `numWorkers` | `integer` | No | The numWorkers value. |
+| `minWorkers` | `integer` | No | The minWorkers value. |
+| `maxWorkers` | `integer` | No | The maxWorkers value. |
+| `nodeType` | `string` | No | The nodeType value. |
 
-## Response `200`
+## Response `202`
 
-Returns a confirmation of the resize operation.
-
-| Field | Type | Description |
-|---|---|---|
-| `clusterId` | `string` | Cluster identifier. |
-| `workerCount` | `integer` | Effective worker count. |
-| `nodeType` | `string` | Instance type. |
-| `status` | `string` | Current cluster status. |
-| `requestId` | `string` | Request trace identifier. |
+Accepted
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST /api/v1/clusters/cluster-001/resize \
+curl -X POST "/api/v1/clusters/{clusterId}/resize" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{"workerCount": 8}'
-```
-
-```json title="Response — 200 OK"
-{
-  "clusterId": "cluster-001",
-  "workerCount": 8,
-  "nodeType": "i3.xlarge",
-  "status": "RESIZING",
-  "requestId": "req-abc123"
-}
+  -d '{
+  "numWorkers": 10,
+  "minWorkers": 10,
+  "maxWorkers": 10,
+  "nodeType": "example-nodeType"
+}'
 ```

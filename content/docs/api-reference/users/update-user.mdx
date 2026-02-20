@@ -1,57 +1,49 @@
 ---
-title: Update User
-description: Update an existing user's properties.
+title: Update user
+description: Update user profile, role, teams, or permissions
 ---
 
-```
-PATCH /api/v1/users/{id}
-```
+`PATCH /api/v1/users/{id}`
 
-Update one or more properties of an existing user.
-
-**Required scope:** `write:users`
+Update user profile, role, teams, or permissions
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `id` | `string` | The user identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | The id value. |
 
 ## Request Body
 
-All fields are optional. Only the provided fields are updated.
-
-| Field | Type | Description |
-|---|---|---|
-| `fullName` | `string` | Full name. |
-| `email` | `string` | Email address. |
-| `role` | `string` | User role. |
-| `department` | `string` | Department name. |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `displayName` | `string` | No | The displayName value. |
+| `email` | `string` | No | The email value. |
+| `role` | `string` | No | The role value. |
+| `department` | `string` | No | The department value. |
+| `teamIds` | `array<string>` | No | The teamIds value. |
+| `permissions` | `array<string>` | No | The permissions value. |
+| `mfaEnabled` | `boolean` | No | The mfaEnabled value. |
+| `status` | `string` | No | The status value. |
 
 ## Response `200`
 
-Returns the updated user object.
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH /api/v1/users/u1 \
+curl -X PATCH "/api/v1/users/{id}" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{"department": "Data Engineering"}'
-```
-
-```json title="Response"
-{
-  "id": "u1",
-  "fullName": "Ada Lovelace",
-  "email": "ada@datastack.dev",
-  "avatarUrl": "https://api.datastack.dev/avatars/ada.png",
-  "department": "Engineering",
-  "createdAt": "2024-01-15T10:00:00Z",
-  "updatedAt": "2024-06-10T12:00:00Z",
-  "role": "admin",
-  "status": "active",
-  "lastLoginAt": "2024-06-10T08:00:00Z"
-}
+  -d '{
+  "displayName": "example-displayName",
+  "email": "example-email",
+  "role": "example-role",
+  "department": "example-department",
+  "teamIds": [],
+  "permissions": [],
+  "mfaEnabled": true,
+  "status": "example-status"
+}'
 ```

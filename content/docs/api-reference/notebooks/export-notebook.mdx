@@ -1,48 +1,19 @@
 ---
-title: Export Notebook
-description: Export a notebook in a specified format.
+title: Export notebook
+description: Export notebook at path in requested format (SOURCE, HTML, JUPYTER)
 ---
 
-```
-GET /api/v1/notebooks/export
-```
+`GET /api/v1/notebooks/export`
 
-Export a notebook at the given path in the requested format.
-
-**Required scope:** `read:notebooks`
-
-## Query Parameters
-
-| Parameter | Type | Default | Description |
-|---|---|---|---|
-| `path` | `string` | — | Workspace path of the notebook to export. |
-| `format` | `string` | `SOURCE` | Export format (`SOURCE`, `HTML`, `JUPYTER`). |
+Export notebook at path in requested format (SOURCE, HTML, JUPYTER)
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `path` | `string` | Workspace path. |
-| `language` | `string` | Notebook language. |
-| `format` | `string` | Export format used. |
-| `content` | `string` | Exported notebook content. |
-| `createdAt` | `string` | ISO 8601 creation timestamp. |
-| `modifiedAt` | `string` | ISO 8601 modification timestamp. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl "/api/v1/notebooks/export?path=/Workspace/ETL/daily_pipeline&format=SOURCE" \
+curl -X GET "/api/v1/notebooks/export" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "path": "/Workspace/ETL/daily_pipeline",
-  "language": "PYTHON",
-  "format": "SOURCE",
-  "content": "# Databricks notebook source\n# MAGIC %md\n# Sample",
-  "createdAt": "2024-02-01T10:00:00Z",
-  "modifiedAt": "2024-03-09T18:00:00Z"
-}
 ```

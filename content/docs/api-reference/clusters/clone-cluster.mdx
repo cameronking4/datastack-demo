@@ -3,12 +3,9 @@ title: Clone cluster
 description: Clone an existing cluster (preview only)
 ---
 
-```
-POST /api/v1/clusters/{clusterId}/clone
-```
+`POST /api/v1/clusters/{clusterId}/clone`
 
 Clone an existing cluster (preview only)
-
 
 ## Path Parameters
 
@@ -25,13 +22,12 @@ Clone an existing cluster (preview only)
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/clusters/example-clu/clone" \
+curl -X POST "/api/v1/clusters/{clusterId}/clone" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

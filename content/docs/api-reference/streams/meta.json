@@ -2,9 +2,9 @@
   "title": "Streams",
   "pages": [
     "create-checkpoint",
+    "create-stream",
     "get-stream-metrics",
-    "scale-stream",
     "get-stream-status",
-    "create-stream"
+    "scale-stream"
   ]
 }

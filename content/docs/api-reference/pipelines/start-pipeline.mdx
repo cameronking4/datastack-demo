@@ -1,48 +1,25 @@
 ---
-title: Start Pipeline
-description: Start a pipeline update.
+title: Start pipeline
+description: Start pipeline
 ---
 
-```
-POST /api/v1/pipelines/{pipelineId}/start
-```
+`POST /api/v1/pipelines/{pipelineId}/start`
 
-Start a pipeline, triggering a data update. The pipeline transitions to `RUNNING` state.
-
-**Required scope:** `manage:pipelines`
+Start pipeline
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `pipelineId` | `string` | The pipeline identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `pipelineId` | `string` | Yes | The pipelineId value. |
 
 ## Response `200`
 
-Returns the pipeline object with state `RUNNING`.
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST /api/v1/pipelines/pipe-001/start \
+curl -X POST "/api/v1/pipelines/{pipelineId}/start" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "id": "pipe-001",
-  "name": "Bronze Ingestion",
-  "workspaceId": "ws-001",
-  "state": "RUNNING",
-  "target": "PRODUCTION",
-  "catalog": "main",
-  "schema": "bronze",
-  "continuous": true,
-  "photon": true,
-  "edition": "PRO",
-  "clusters": [],
-  "createdAt": "2024-03-01T09:00:00Z",
-  "createdBy": "ada@datastack.dev",
-  "lastRunAt": "2024-06-10T12:00:00Z"
-}
 ```

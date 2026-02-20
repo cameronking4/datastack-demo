@@ -1,0 +1,26 @@
+---
+title: List data quality rules
+description: List data quality validation rules with pass/fail statistics and schedule info
+---
+
+`GET /api/v1/data-quality/rules`
+
+List data quality validation rules with pass/fail statistics and schedule info
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `tableId` | `string` | No | The tableId value. |
+| `status` | `string` | No | The status value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/data-quality/rules" \
+  -H "Authorization: Bearer <accessToken>"
+```

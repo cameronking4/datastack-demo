@@ -3,12 +3,9 @@ title: Create data quality monitor
 description: Create a monitor that runs quality rules on a schedule
 ---
 
-```
-POST /api/v1/data-quality/monitors
-```
+`POST /api/v1/data-quality/monitors`
 
 Create a monitor that runs quality rules on a schedule
-
 
 ## Request Body
 
@@ -16,13 +13,12 @@ Create a monitor that runs quality rules on a schedule
 |---|---|---|---|
 | `table` | `string` | No | The table value. |
 | `schedule` | `string` | No | The schedule value. |
-| `ruleIds` | `string[]` | No | The ruleIds value. |
+| `ruleIds` | `array<string>` | No | The ruleIds value. |
 | `alertOnFailure` | `boolean` | No | The alertOnFailure value. |
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 

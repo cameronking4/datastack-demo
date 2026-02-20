@@ -1,51 +1,25 @@
 ---
-title: Get Webhook
-description: Retrieve details of a specific webhook.
+title: Get webhook
+description: Get webhook configuration and delivery statistics
 ---
 
-```
-GET /api/v1/webhooks/{webhookId}
-```
+`GET /api/v1/webhooks/{webhookId}`
 
-Returns full details for a single webhook.
-
-**Required scope:** `manage:webhooks`
+Get webhook configuration and delivery statistics
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `webhookId` | `string` | The webhook identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `webhookId` | `string` | Yes | The webhookId value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `id` | `string` | Webhook identifier. |
-| `url` | `string` | Delivery URL. |
-| `events` | `string[]` | Subscribed events. |
-| `active` | `boolean` | Active status. |
-| `createdAt` | `string` | Creation timestamp. |
-| `updatedAt` | `string` | Last update timestamp. |
-| `lastTriggeredAt` | `string` | Last delivery timestamp. |
-| `failureCount` | `number` | Consecutive failures. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl /api/v1/webhooks/wh-001 \
+curl -X GET "/api/v1/webhooks/{webhookId}" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "id": "wh-001",
-  "url": "https://example.com/hooks/datastack",
-  "events": ["job.completed", "job.failed"],
-  "active": true,
-  "createdAt": "2024-03-01T09:00:00Z",
-  "updatedAt": "2024-05-15T10:00:00Z",
-  "lastTriggeredAt": "2024-06-10T02:15:33Z",
-  "failureCount": 0
-}
 ```

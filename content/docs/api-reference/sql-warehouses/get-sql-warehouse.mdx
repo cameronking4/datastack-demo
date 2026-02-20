@@ -1,0 +1,25 @@
+---
+title: Get SQL warehouse
+description: Get SQL warehouse
+---
+
+`GET /api/v1/sql/warehouses/{warehouseId}`
+
+Get SQL warehouse
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `warehouseId` | `string` | Yes | The warehouseId value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/sql/warehouses/{warehouseId}" \
+  -H "Authorization: Bearer <accessToken>"
+```

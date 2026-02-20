@@ -3,12 +3,9 @@ title: Create SQL warehouse
 description: Create a new SQL warehouse (preview only)
 ---
 
-```
-POST /api/v1/sql/warehouses/create
-```
+`POST /api/v1/sql/warehouses/create`
 
 Create a new SQL warehouse (preview only)
-
 
 ## Request Body
 
@@ -23,8 +20,7 @@ Create a new SQL warehouse (preview only)
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
@@ -37,6 +33,7 @@ curl -X POST "/api/v1/sql/warehouses/create" \
   "clusterSize": "example-clusterSize",
   "autoStopMinutes": 10,
   "enableServerless": true,
-  "channel": "example-channel"
+  "channel": "example-channel",
+  "tags": {}
 }'
 ```

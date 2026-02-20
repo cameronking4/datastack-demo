@@ -1,43 +1,53 @@
 ---
-title: Update Query
-description: Update a saved SQL query.
+title: Update query
+description: Update query text, parameters, or metadata
 ---
 
-```
-PATCH /api/v1/queries/{queryId}
-```
+`PATCH /api/v1/queries/{queryId}`
 
-Updates one or more fields of a saved query.
-
-**Required scope:** `manage:queries`
+Update query text, parameters, or metadata
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `queryId` | `string` | Query identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `queryId` | `string` | Yes | The queryId value. |
 
 ## Request Body
 
-All fields are optional. Only provided fields are updated.
-
-| Field | Type | Description |
-|---|---|---|
-| `name` | `string` | New display name. |
-| `description` | `string` | New description. |
-| `sql` | `string` | New SQL statement. |
-| `warehouseId` | `string` | New target warehouse. |
-| `tags` | `string[]` | Replacement tags. |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `description` | `string` | No | The description value. |
+| `queryText` | `string` | No | The queryText value. |
+| `warehouseId` | `string` | No | The warehouseId value. |
+| `catalog` | `string` | No | The catalog value. |
+| `schema` | `string` | No | The schema value. |
+| `resultFormat` | `string` | No | The resultFormat value. |
+| `timeout` | `integer` | No | The timeout value. |
+| `parameters` | `array<object>` | No | The parameters value. |
+| `tags` | `array<string>` | No | The tags value. |
 
 ## Response `200`
 
-Returns the updated query object.
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH "/api/v1/queries/query-001" \
+curl -X PATCH "/api/v1/queries/{queryId}" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{ "sql": "SELECT date_trunc('"'"'day'"'"', created_at) AS day, COUNT(DISTINCT user_id) AS dau FROM main.gold.user_sessions WHERE region = '"'"'us-east-1'"'"' GROUP BY 1" }'
+  -d '{
+  "name": "example-name",
+  "description": "example-description",
+  "queryText": "example-queryText",
+  "warehouseId": "example-warehouseId",
+  "catalog": "example-catalog",
+  "schema": "example-schema",
+  "resultFormat": "example-resultFormat",
+  "timeout": 10,
+  "parameters": [],
+  "tags": []
+}'
 ```

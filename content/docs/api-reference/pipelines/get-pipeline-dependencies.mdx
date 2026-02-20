@@ -3,12 +3,9 @@ title: Get pipeline dependencies
 description: Get upstream and downstream dependencies
 ---
 
-```
-GET /api/v1/pipelines/{pipelineId}/dependencies
-```
+`GET /api/v1/pipelines/{pipelineId}/dependencies`
 
 Get upstream and downstream dependencies
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Get upstream and downstream dependencies
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/pipelines/example-pip/dependencies" \
+curl -X GET "/api/v1/pipelines/{pipelineId}/dependencies" \
   -H "Authorization: Bearer <accessToken>"
 ```

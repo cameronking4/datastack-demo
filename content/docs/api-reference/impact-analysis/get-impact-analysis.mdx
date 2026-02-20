@@ -3,12 +3,9 @@ title: Get impact analysis
 description: Get downstream impact of a resource
 ---
 
-```
-GET /api/v1/impact-analysis/{resourceType}/{resourceId}
-```
+`GET /api/v1/impact-analysis/{resourceType}/{resourceId}`
 
 Get downstream impact of a resource
-
 
 ## Path Parameters
 
@@ -19,12 +16,11 @@ Get downstream impact of a resource
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/impact-analysis/example-res/example-res" \
+curl -X GET "/api/v1/impact-analysis/{resourceType}/{resourceId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

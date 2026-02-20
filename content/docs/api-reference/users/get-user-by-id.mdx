@@ -1,0 +1,25 @@
+---
+title: Get user by ID
+description: Get user profile including teams, permissions, and activity summary
+---
+
+`GET /api/v1/users/{id}`
+
+Get user profile including teams, permissions, and activity summary
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | The id value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/users/{id}" \
+  -H "Authorization: Bearer <accessToken>"
+```

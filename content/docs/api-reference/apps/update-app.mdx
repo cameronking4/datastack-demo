@@ -3,12 +3,9 @@ title: Update app
 description: Update app
 ---
 
-```
-PATCH /api/v1/apps/{appId}
-```
+`PATCH /api/v1/apps/{appId}`
 
 Update app
-
 
 ## Path Parameters
 
@@ -18,13 +15,11 @@ Update app
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH "/api/v1/apps/example-app" \
-  -H "Authorization: Bearer <accessToken>" \
-  -H "Content-Type: application/json"
+curl -X PATCH "/api/v1/apps/{appId}" \
+  -H "Authorization: Bearer <accessToken>"
 ```

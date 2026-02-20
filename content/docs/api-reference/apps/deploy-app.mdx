@@ -3,12 +3,9 @@ title: Deploy app
 description: Deploy app
 ---
 
-```
-POST /api/v1/apps/{appId}/deploy
-```
+`POST /api/v1/apps/{appId}/deploy`
 
 Deploy app
-
 
 ## Path Parameters
 
@@ -26,13 +23,12 @@ Deploy app
 
 ## Response `202`
 
-Returns accepted.
-
+Accepted
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/apps/example-app/deploy" \
+curl -X POST "/api/v1/apps/{appId}/deploy" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

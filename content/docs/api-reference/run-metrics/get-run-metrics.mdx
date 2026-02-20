@@ -3,12 +3,9 @@ title: Get run metrics
 description: Get run metrics
 ---
 
-```
-GET /api/v1/run-metrics/{runId}
-```
+`GET /api/v1/run-metrics/{runId}`
 
 Get run metrics
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Get run metrics
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/run-metrics/example-run" \
+curl -X GET "/api/v1/run-metrics/{runId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

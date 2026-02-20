@@ -1,29 +1,25 @@
 ---
-title: Delete Schedule
+title: Delete schedule
 description: Delete a schedule. The associated resource will no longer be triggered automatically.
 ---
 
-```
-DELETE /api/v1/schedules/{scheduleId}
-```
+`DELETE /api/v1/schedules/{scheduleId}`
 
 Delete a schedule. The associated resource will no longer be triggered automatically.
 
-**Required scope:** `manage:jobs`
-
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `scheduleId` | `string` | The schedule identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `scheduleId` | `string` | Yes | The scheduleId value. |
 
 ## Response `204`
 
-No content.
+No content
 
 ## Example
 
 ```bash title="cURL"
-curl -X DELETE /api/v1/schedules/sched-001 \
+curl -X DELETE "/api/v1/schedules/{scheduleId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

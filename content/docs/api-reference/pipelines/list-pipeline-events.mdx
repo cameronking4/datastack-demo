@@ -1,59 +1,25 @@
 ---
-title: List Pipeline Events
-description: Retrieve run events for a pipeline.
+title: List pipeline events
+description: List pipeline events
 ---
 
-```
-GET /api/v1/pipelines/{pipelineId}/events
-```
+`GET /api/v1/pipelines/{pipelineId}/events`
 
-Returns a list of events for a pipeline, such as start, completion, and failure events.
-
-**Required scope:** `read:pipelines`
+List pipeline events
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `pipelineId` | `string` | The pipeline identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `pipelineId` | `string` | Yes | The pipelineId value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `events` | `object[]` | Array of event objects. |
-| `events[].id` | `string` | Event identifier. |
-| `events[].pipelineId` | `string` | Pipeline identifier. |
-| `events[].eventType` | `string` | Event type (`STARTED`, `COMPLETED`, `FAILED`). |
-| `events[].message` | `string` | Human-readable description. |
-| `events[].timestamp` | `string` | ISO 8601 timestamp. |
-| `totalCount` | `number` | Total number of events. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl /api/v1/pipelines/pipe-001/events \
+curl -X GET "/api/v1/pipelines/{pipelineId}/events" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "events": [
-    {
-      "id": "evt-001",
-      "pipelineId": "pipe-001",
-      "eventType": "STARTED",
-      "message": "Pipeline update started",
-      "timestamp": "2024-06-10T02:00:00Z"
-    },
-    {
-      "id": "evt-002",
-      "pipelineId": "pipe-001",
-      "eventType": "COMPLETED",
-      "message": "Pipeline update completed successfully",
-      "timestamp": "2024-06-10T02:15:33Z"
-    }
-  ],
-  "totalCount": 2
-}
 ```

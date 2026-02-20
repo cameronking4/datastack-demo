@@ -1,57 +1,36 @@
 ---
-title: Cancel Job Run
-description: Cancel a running or pending job run.
+title: Cancel job run
+description: Cancel job run
 ---
 
-```
-POST /api/v1/jobs/{jobId}/runs/{runId}/cancel
-```
+`POST /api/v1/jobs/{jobId}/runs/{runId}/cancel`
 
-Requests cancellation of a specific job run. The run transitions to `CANCELLING` and eventually `CANCELLED`.
-
-**Required scope:** `manage:jobs`
-
-> This endpoint requires the preview feature flag. Include the `X-DataStack-Preview: true` header.
+Cancel job run
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `jobId` | `string` | The job identifier. |
-| `runId` | `string` | The run identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `jobId` | `string` | Yes | The jobId value. |
+| `runId` | `string` | Yes | The runId value. |
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `reason` | `string` | No | Free-text reason for cancellation. Stored in the audit log. |
+| `reason` | `string` | No | The reason value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `runId` | `number` | Run identifier. |
-| `jobId` | `number` | Parent job identifier. |
-| `state` | `string` | Run state (`CANCELLING`). |
-| `cancelledAt` | `string` | ISO 8601 cancellation timestamp. |
-| `cancelledBy` | `string` | Identity that requested cancellation. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST /api/v1/jobs/1001/runs/5001/cancel \
+curl -X POST "/api/v1/jobs/{jobId}/runs/{runId}/cancel" \
   -H "Authorization: Bearer <accessToken>" \
-  -H "X-DataStack-Preview: true" \
   -H "Content-Type: application/json" \
-  -d '{ "reason": "Incorrect parameters" }'
-```
-
-```json title="Response — 200 OK"
-{
-  "runId": 5001,
-  "jobId": 1001,
-  "state": "CANCELLING",
-  "cancelledAt": "2024-06-10T12:05:00Z",
-  "cancelledBy": "api"
-}
+  -d '{
+  "reason": "example-reason"
+}'
 ```

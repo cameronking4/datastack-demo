@@ -3,23 +3,19 @@ title: Bulk test connections
 description: Test connectivity for multiple connections in parallel
 ---
 
-```
-POST /api/v1/connections/bulk-test
-```
+`POST /api/v1/connections/bulk-test`
 
 Test connectivity for multiple connections in parallel
-
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `connectionIds` | `string[]` | No | The connectionIds value. |
+| `connectionIds` | `array<string>` | No | The connectionIds value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 

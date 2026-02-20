@@ -1,47 +1,25 @@
 ---
-title: Get Workspace
-description: Retrieve details of a specific workspace.
+title: Get workspace
+description: Get workspace
 ---
 
-```
-GET /api/v1/workspaces/{workspaceId}
-```
+`GET /api/v1/workspaces/{workspaceId}`
 
-Returns full details for a single workspace.
-
-**Required scope:** `read:workspaces`
+Get workspace
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `workspaceId` | `string` | The workspace identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | Yes | The workspaceId value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `id` | `string` | Workspace identifier. |
-| `name` | `string` | Display name. |
-| `region` | `string` | Deployment region. |
-| `deploymentUrl` | `string` | Workspace URL. |
-| `status` | `string` | Workspace status. |
-| `createdAt` | `string` | ISO 8601 creation timestamp. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl /api/v1/workspaces/ws-001 \
+curl -X GET "/api/v1/workspaces/{workspaceId}" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "id": "ws-001",
-  "name": "Acme Corp Production",
-  "region": "us-west-2",
-  "deploymentUrl": "https://acme.datastack.cloud",
-  "status": "ACTIVE",
-  "createdAt": "2024-01-10T08:00:00Z"
-}
 ```

@@ -1,0 +1,25 @@
+---
+title: Get alert rule
+description: Get alert rule details including trigger history
+---
+
+`GET /api/v1/alerts/{alertId}`
+
+Get alert rule details including trigger history
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `alertId` | `string` | Yes | The alertId value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/alerts/{alertId}" \
+  -H "Authorization: Bearer <accessToken>"
+```

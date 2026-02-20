@@ -1,0 +1,27 @@
+---
+title: List alert rules
+description: List configured alert rules with trigger conditions and notification channels
+---
+
+`GET /api/v1/alerts`
+
+List configured alert rules with trigger conditions and notification channels
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `severity` | `string` | No | The severity value. |
+| `enabled` | `boolean` | No | The enabled value. |
+| `resource` | `string` | No | The resource value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/alerts" \
+  -H "Authorization: Bearer <accessToken>"
+```

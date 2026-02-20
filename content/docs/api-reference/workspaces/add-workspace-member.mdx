@@ -1,51 +1,39 @@
 ---
-title: Add Workspace Member
-description: Add a member to a workspace with a specified role.
+title: Add workspace member
+description: Invite a user to the workspace with a specified role
 ---
 
-```
-POST /api/v1/workspaces/{workspaceId}/members
-```
+`POST /api/v1/workspaces/{workspaceId}/members`
 
-Adds a user to a workspace with the specified role.
-
-**Required scope:** `manage:workspaces`
+Invite a user to the workspace with a specified role
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `workspaceId` | `string` | Workspace identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | Yes | The workspaceId value. |
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `userId` | `string` | Yes | User identifier to add. |
-| `role` | `string` | Yes | Role to assign (`admin`, `editor`, `viewer`). |
-| `expiresAt` | `string` | No | ISO 8601 access expiration date-time. |
+| `email` | `string` | Yes | The email value. |
+| `role` | `string` | Yes | The role value. |
+| `expiresAt` | `string` | No | The expiresAt value. |
 
 ## Response `201`
 
-Returns the created membership object.
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/workspaces/ws-001/members" \
+curl -X POST "/api/v1/workspaces/{workspaceId}/members" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "userId": "user-002",
-    "role": "editor"
-  }'
-```
-
-```json title="Response"
-{
-  "userId": "user-002",
-  "workspaceId": "ws-001",
-  "role": "editor",
-  "joinedAt": "2024-06-10T10:00:00Z"
-}
+  "email": "example-email",
+  "role": "example-role",
+  "expiresAt": "example-expiresAt"
+}'
 ```

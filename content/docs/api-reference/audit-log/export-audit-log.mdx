@@ -3,26 +3,22 @@ title: Export audit log
 description: Request an audit log export (async job; download URL provided when ready)
 ---
 
-```
-POST /api/v1/audit-log/export
-```
+`POST /api/v1/audit-log/export`
 
 Request an audit log export (async job; download URL provided when ready)
-
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `since` | `string` | No | The since value. Format: `date-time`. |
-| `until` | `string` | No | The until value. Format: `date-time`. |
-| `format` | `string` | No | The format value. One of: `json`, `csv`. |
-| `resourceTypes` | `string[]` | No | The resourceTypes value. |
+| `since` | `string` | No | The since value. |
+| `until` | `string` | No | The until value. |
+| `format` | `string` | No | The format value. |
+| `resourceTypes` | `array<string>` | No | The resourceTypes value. |
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
@@ -31,9 +27,9 @@ curl -X POST "/api/v1/audit-log/export" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-  "since": "2024-01-01T00:00:00Z",
-  "until": "2024-01-01T00:00:00Z",
-  "format": "json",
+  "since": "example-since",
+  "until": "example-until",
+  "format": "example-format",
   "resourceTypes": []
 }'
 ```

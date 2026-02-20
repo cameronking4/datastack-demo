@@ -1,60 +1,43 @@
 ---
-title: Create Webhook
-description: Register a new webhook endpoint.
+title: Create webhook
+description: Register a new webhook endpoint with event subscriptions and retry configuration
 ---
 
-```
-POST /api/v1/webhooks
-```
+`POST /api/v1/webhooks`
 
-Register a new webhook to receive event notifications.
-
-**Required scope:** `manage:webhooks`
+Register a new webhook endpoint with event subscriptions and retry configuration
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `url` | `string` | Yes | Delivery URL. Must be HTTPS. |
-| `events` | `string[]` | Yes | Event types to subscribe to (e.g., `job.completed`, `job.failed`, `cluster.terminated`). |
-| `secret` | `string` | No | Shared secret for payload signature verification. |
-| `active` | `boolean` | No | Whether the webhook is active. Defaults to `true`. |
+| `url` | `string` | Yes | The url value. |
+| `events` | `array<string>` | Yes | The events value. |
+| `signingSecret` | `string` | No | The signingSecret value. |
+| `signingAlgorithm` | `string` | No | The signingAlgorithm value. |
+| `active` | `boolean` | No | The active value. |
+| `headers` | `object` | No | The headers value. |
+| `retryPolicy` | `object` | No | The retryPolicy value. |
+| `contentType` | `string` | No | The contentType value. |
 
 ## Response `201`
 
-| Field | Type | Description |
-|---|---|---|
-| `id` | `string` | Webhook identifier. |
-| `url` | `string` | Delivery URL. |
-| `events` | `string[]` | Subscribed events. |
-| `secret` | `string` | Shared secret (if provided). |
-| `active` | `boolean` | Active status. |
-| `createdAt` | `string` | ISO 8601 creation timestamp. |
-| `updatedAt` | `string` | ISO 8601 last update timestamp. |
-| `failureCount` | `number` | Consecutive failures (starts at `0`). |
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST /api/v1/webhooks \
+curl -X POST "/api/v1/webhooks" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "url": "https://example.com/hooks/datastack",
-    "events": ["job.completed", "job.failed"],
-    "secret": "whsec_my_secret_key"
-  }'
-```
-
-```json title="Response"
-{
-  "id": "wh-new",
-  "url": "https://example.com/hooks/datastack",
-  "events": ["job.completed", "job.failed"],
-  "secret": "whsec_my_secret_key",
+  "url": "example-url",
+  "events": [],
+  "signingSecret": "example-signingSecret",
+  "signingAlgorithm": "example-signingAlgorithm",
   "active": true,
-  "createdAt": "2024-06-10T12:00:00Z",
-  "updatedAt": "2024-06-10T12:00:00Z",
-  "failureCount": 0
-}
+  "headers": {},
+  "retryPolicy": {},
+  "contentType": "example-contentType"
+}'
 ```

@@ -3,12 +3,9 @@ title: Update job SLA
 description: Update job SLA
 ---
 
-```
-PUT /api/v1/jobs/{jobId}/sla
-```
+`PUT /api/v1/jobs/{jobId}/sla`
 
 Update job SLA
-
 
 ## Path Parameters
 
@@ -23,19 +20,18 @@ Update job SLA
 | `maxDurationMinutes` | `integer` | No | The maxDurationMinutes value. |
 | `deadlineCron` | `string` | No | The deadlineCron value. |
 | `alertOnBreach` | `boolean` | No | The alertOnBreach value. |
-| `notifyEmails` | `string[]` | No | The notifyEmails value. |
+| `notifyEmails` | `array<string>` | No | The notifyEmails value. |
 | `priority` | `string` | No | The priority value. |
 | `escalationPolicy` | `string` | No | The escalationPolicy value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PUT "/api/v1/jobs/example-job/sla" \
+curl -X PUT "/api/v1/jobs/{jobId}/sla" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -43,6 +39,7 @@ curl -X PUT "/api/v1/jobs/example-job/sla" \
   "deadlineCron": "example-deadlineCron",
   "alertOnBreach": true,
   "notifyEmails": [],
-  "priority": "example-priority"
+  "priority": "example-priority",
+  "escalationPolicy": "example-escalationPolicy"
 }'
 ```

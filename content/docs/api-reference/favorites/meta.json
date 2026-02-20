@@ -1,8 +1,8 @@
 {
   "title": "Favorites",
   "pages": [
-    "remove-favorite",
     "list-favorites",
-    "add-favorite"
+    "add-favorite",
+    "remove-favorite"
   ]
 }

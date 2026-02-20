@@ -1,29 +1,25 @@
 ---
-title: Delete User
-description: Delete a user account.
+title: Delete user
+description: Permanently delete a user. Active sessions will be revoked.
 ---
 
-```
-DELETE /api/v1/users/{id}
-```
+`DELETE /api/v1/users/{id}`
 
-Permanently delete a user account.
-
-**Required scope:** `write:users`
+Permanently delete a user. Active sessions will be revoked.
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `id` | `string` | The user identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | The id value. |
 
 ## Response `204`
 
-No content. The user has been deleted.
+No content
 
 ## Example
 
 ```bash title="cURL"
-curl -X DELETE /api/v1/users/u1 \
+curl -X DELETE "/api/v1/users/{id}" \
   -H "Authorization: Bearer <accessToken>"
 ```

@@ -4,12 +4,12 @@
     "list-clusters",
     "create-cluster",
     "get-cluster",
-    "update-cluster",
-    "delete-cluster",
-    "resize-cluster",
-    "clone-cluster",
     "get-cluster-cost",
     "get-cluster-metrics",
-    "schedule-cluster-upgrade"
+    "update-cluster",
+    "clone-cluster",
+    "resize-cluster",
+    "schedule-cluster-upgrade",
+    "terminate-cluster"
   ]
 }

@@ -1,56 +1,39 @@
 ---
-title: Trigger Pipeline Run
-description: Manually trigger a pipeline execution with optional parameter overrides.
+title: Trigger pipeline run
+description: Manually trigger a pipeline execution with optional parameter overrides
 ---
 
-```
-POST /api/v1/pipelines/{pipelineId}/runs
-```
+`POST /api/v1/pipelines/{pipelineId}/runs`
 
-Manually trigger a pipeline execution with optional parameter overrides.
-
-**Required scope:** `manage:pipelines`
+Manually trigger a pipeline execution with optional parameter overrides
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `pipelineId` | `string` | Pipeline identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `pipelineId` | `string` | Yes | The pipelineId value. |
 
 ## Request Body
 
-All fields are optional.
-
-| Field | Type | Description |
-|---|---|---|
-| `parameters` | `object` | Key-value parameter overrides for this run. |
-| `priority` | `string` | Execution priority (`low`, `normal`, `high`, `critical`). |
-| `dryRun` | `boolean` | When `true`, validates without executing. |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameters` | `object` | No | The parameters value. |
+| `priority` | `string` | No | The priority value. |
+| `dryRun` | `boolean` | No | The dryRun value. |
 
 ## Response `201`
 
-Returns the created pipeline run object.
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/pipelines/pipe-001/runs" \
+curl -X POST "/api/v1/pipelines/{pipelineId}/runs" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "parameters": { "start_date": "2024-06-01" },
-    "priority": "high"
-  }'
-```
-
-```json title="Response"
-{
-  "id": "run-new",
-  "pipelineId": "pipe-001",
-  "status": "QUEUED",
-  "parameters": { "start_date": "2024-06-01" },
-  "priority": "high",
-  "triggeredBy": "manual",
-  "createdAt": "2024-06-10T10:00:00Z"
-}
+  "parameters": {},
+  "priority": "example-priority",
+  "dryRun": true
+}'
 ```

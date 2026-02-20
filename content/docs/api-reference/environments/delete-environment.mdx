@@ -1,29 +1,25 @@
 ---
-title: Delete Environment
+title: Delete environment
 description: Delete an environment. Protected environments cannot be deleted.
 ---
 
-```
-DELETE /api/v1/environments/{environmentId}
-```
+`DELETE /api/v1/environments/{environmentId}`
 
 Delete an environment. Protected environments cannot be deleted.
 
-**Required scope:** `manage:deployments`
-
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `environmentId` | `string` | The environment identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `environmentId` | `string` | Yes | The environmentId value. |
 
 ## Response `204`
 
-No content.
+No content
 
 ## Example
 
 ```bash title="cURL"
-curl -X DELETE /api/v1/environments/env-002 \
+curl -X DELETE "/api/v1/environments/{environmentId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

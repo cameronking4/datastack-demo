@@ -1,64 +1,25 @@
 ---
-title: List Workspaces
-description: Retrieve a list of workspaces the caller has access to.
+title: List workspaces
+description: List workspaces with member counts and resource quotas
 ---
 
-```
-GET /api/v1/workspaces
-```
+`GET /api/v1/workspaces`
 
-Returns a list of workspaces accessible to the authenticated user.
-
-**Required scope:** `read:workspaces`
+List workspaces with member counts and resource quotas
 
 ## Query Parameters
 
-| Parameter | Type | Default | Description |
+| Parameter | Type | Required | Description |
 |---|---|---|---|
-| `pageSize` | `number` | `25` | Results per page (1–100). |
+| `region` | `string` | No | The region value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `workspaces` | `object[]` | Array of workspace objects. |
-| `workspaces[].id` | `string` | Workspace identifier. |
-| `workspaces[].name` | `string` | Display name. |
-| `workspaces[].region` | `string` | Deployment region. |
-| `workspaces[].deploymentUrl` | `string` | Workspace URL. |
-| `workspaces[].status` | `string` | Workspace status (`ACTIVE`). |
-| `workspaces[].createdAt` | `string` | ISO 8601 creation timestamp. |
-| `totalCount` | `number` | Total number of workspaces. |
-| `nextPageToken` | `string\|null` | Token for next page, or `null`. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl "/api/v1/workspaces?pageSize=10" \
+curl -X GET "/api/v1/workspaces" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "workspaces": [
-    {
-      "id": "ws-001",
-      "name": "Acme Corp Production",
-      "region": "us-west-2",
-      "deploymentUrl": "https://acme.datastack.cloud",
-      "status": "ACTIVE",
-      "createdAt": "2024-01-10T08:00:00Z"
-    },
-    {
-      "id": "ws-002",
-      "name": "Acme Corp Staging",
-      "region": "us-east-1",
-      "deploymentUrl": "https://acme-staging.datastack.cloud",
-      "status": "ACTIVE",
-      "createdAt": "2024-02-01T12:00:00Z"
-    }
-  ],
-  "totalCount": 2,
-  "nextPageToken": null
-}
 ```

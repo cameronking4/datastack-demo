@@ -1,58 +1,49 @@
 ---
-title: Update Connection
-description: Update a connection configuration.
+title: Update connection
+description: Update connection configuration, credentials, or health check settings
 ---
 
-```
-PATCH /api/v1/connections/{connectionId}
-```
+`PATCH /api/v1/connections/{connectionId}`
 
-Updates one or more fields of an existing connection.
-
-**Required scope:** `manage:connections`
+Update connection configuration, credentials, or health check settings
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `connectionId` | `string` | Connection identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `connectionId` | `string` | Yes | The connectionId value. |
 
 ## Request Body
 
-All fields are optional. Only provided fields are updated.
-
-| Field | Type | Description |
-|---|---|---|
-| `name` | `string` | New display name. |
-| `host` | `string` | New host or endpoint URI. |
-| `secretScope` | `string` | New secret scope. |
-| `properties` | `object` | Replacement configuration properties. |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `host` | `string` | No | The host value. |
+| `port` | `integer` | No | The port value. |
+| `authMethod` | `string` | No | The authMethod value. |
+| `credentialRef` | `string` | No | The credentialRef value. |
+| `healthCheck` | `object` | No | The healthCheck value. |
+| `properties` | `object` | No | The properties value. |
+| `tags` | `object` | No | The tags value. |
 
 ## Response `200`
 
-Returns the updated connection object.
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH "/api/v1/connections/conn-001" \
+curl -X PATCH "/api/v1/connections/{connectionId}" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{ "name": "Production S3 (updated)" }'
-```
-
-```json title="Response"
-{
-  "id": "conn-001",
-  "name": "Production S3 (updated)",
-  "type": "S3",
-  "host": "s3://acme-data-lake",
-  "status": "ACTIVE",
-  "workspaceId": "ws-001",
-  "secretScope": "aws-prod",
+  -d '{
+  "name": "example-name",
+  "host": "example-host",
+  "port": 10,
+  "authMethod": "example-authMethod",
+  "credentialRef": "example-credentialRef",
+  "healthCheck": {},
   "properties": {},
-  "createdAt": "2024-01-20T10:00:00Z",
-  "updatedAt": "2024-06-10T12:00:00Z",
-  "createdBy": "ada@datastack.dev"
-}
+  "tags": {}
+}'
 ```

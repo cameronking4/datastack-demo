@@ -3,12 +3,9 @@ title: Delete dashboard
 description: Delete dashboard
 ---
 
-```
-DELETE /api/v1/dashboards/{dashboardId}
-```
+`DELETE /api/v1/dashboards/{dashboardId}`
 
 Delete dashboard
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Delete dashboard
 
 ## Response `204`
 
-Returns no content.
-
+No content
 
 ## Example
 
 ```bash title="cURL"
-curl -X DELETE "/api/v1/dashboards/example-das" \
+curl -X DELETE "/api/v1/dashboards/{dashboardId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

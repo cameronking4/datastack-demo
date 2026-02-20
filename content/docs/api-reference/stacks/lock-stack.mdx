@@ -1,47 +1,41 @@
 ---
-title: Lock Stack
-description: Acquire an exclusive lock on a stack to prevent concurrent modifications.
+title: Lock stack
+description: Acquire an exclusive lock on a stack to prevent concurrent modifications
 ---
 
-```
-POST /api/v1/stacks/{stackId}/lock
-```
+`POST /api/v1/stacks/{stackId}/lock`
 
-Acquire an exclusive lock on a stack to prevent concurrent modifications.
-
-**Required scope:** `manage:stacks`
+Acquire an exclusive lock on a stack to prevent concurrent modifications
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `stackId` | `string` | The stack identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `stackId` | `string` | Yes | The stackId value. |
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `reason` | `string` | No | Reason for acquiring the lock. |
-| `ttlSeconds` | `integer` | No | Time-to-live for the lock in seconds. |
+| `reason` | `string` | No | The reason value. |
+| `ttlSeconds` | `integer` | No | The ttlSeconds value. |
 
 ## Response `200`
 
-Returns the lock details.
+Success
 
-## Errors
+## Response `409`
 
-| Code | Description |
-|---|---|
-| `409` | Stack is already locked. |
+Stack is already locked
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST /api/v1/stacks/stack-001/lock \
+curl -X POST "/api/v1/stacks/{stackId}/lock" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "reason": "Deploying v2.1.0",
-    "ttlSeconds": 600
-  }'
+  "reason": "example-reason",
+  "ttlSeconds": 10
+}'
 ```

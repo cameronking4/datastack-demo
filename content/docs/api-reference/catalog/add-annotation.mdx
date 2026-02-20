@@ -3,12 +3,9 @@ title: Add annotation
 description: Add an annotation to a catalog resource
 ---
 
-```
-POST /api/v1/catalog/{resourceType}/{resourceId}/annotations
-```
+`POST /api/v1/catalog/{resourceType}/{resourceId}/annotations`
 
 Add an annotation to a catalog resource
-
 
 ## Path Parameters
 
@@ -26,13 +23,12 @@ Add an annotation to a catalog resource
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/catalog/example-res/example-res/annotations" \
+curl -X POST "/api/v1/catalog/{resourceType}/{resourceId}/annotations" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

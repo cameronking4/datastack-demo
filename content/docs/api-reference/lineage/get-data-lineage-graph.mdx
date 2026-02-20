@@ -1,0 +1,28 @@
+---
+title: Get data lineage graph
+description: Retrieve the lineage graph for a resource showing upstream and downstream dependencies, column-level lineage, and transformation metadata
+---
+
+`GET /api/v1/lineage`
+
+Retrieve the lineage graph for a resource showing upstream and downstream dependencies, column-level lineage, and transformation metadata
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `resourceId` | `string` | Yes | The resourceId value. |
+| `resourceType` | `string` | Yes | The resourceType value. |
+| `depth` | `integer` | No | The depth value. |
+| `direction` | `string` | No | The direction value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/lineage" \
+  -H "Authorization: Bearer <accessToken>"
+```

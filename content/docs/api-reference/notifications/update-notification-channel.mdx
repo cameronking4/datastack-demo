@@ -1,0 +1,47 @@
+---
+title: Update notification channel
+description: Update notification channel configuration, filters, or quiet hours
+---
+
+`PATCH /api/v1/notifications/{notificationId}`
+
+Update notification channel configuration, filters, or quiet hours
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `notificationId` | `string` | Yes | The notificationId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `config` | `object` | No | The config value. |
+| `eventFilters` | `array<string>` | No | The eventFilters value. |
+| `severityFilter` | `array<string>` | No | The severityFilter value. |
+| `enabled` | `boolean` | No | The enabled value. |
+| `quietHours` | `object` | No | The quietHours value. |
+| `rateLimitPerHour` | `integer` | No | The rateLimitPerHour value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH "/api/v1/notifications/{notificationId}" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "config": {},
+  "eventFilters": [],
+  "severityFilter": [],
+  "enabled": true,
+  "quietHours": {},
+  "rateLimitPerHour": 10
+}'
+```

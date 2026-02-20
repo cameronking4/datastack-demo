@@ -3,12 +3,9 @@ title: Get usage report
 description: Get workspace usage summary for a period
 ---
 
-```
-GET /api/v1/workspaces/{workspaceId}/usage-report
-```
+`GET /api/v1/workspaces/{workspaceId}/usage-report`
 
 Get workspace usage summary for a period
-
 
 ## Path Parameters
 
@@ -24,12 +21,11 @@ Get workspace usage summary for a period
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/workspaces/example-wor/usage-report" \
+curl -X GET "/api/v1/workspaces/{workspaceId}/usage-report" \
   -H "Authorization: Bearer <accessToken>"
 ```

@@ -3,12 +3,9 @@ title: Create retention policy
 description: Create a new retention policy
 ---
 
-```
-POST /api/v1/retention/policies
-```
+`POST /api/v1/retention/policies`
 
 Create a new retention policy
-
 
 ## Request Body
 
@@ -24,8 +21,7 @@ Create a new retention policy
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
@@ -38,6 +34,8 @@ curl -X POST "/api/v1/retention/policies" \
   "description": "example-description",
   "workspaceId": "example-workspaceId",
   "targetType": "example-targetType",
-  "targetPattern": "example-targetPattern"
+  "targetPattern": "example-targetPattern",
+  "retentionDays": 10,
+  "action": "example-action"
 }'
 ```

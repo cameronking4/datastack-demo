@@ -3,12 +3,9 @@ title: Get saved query
 description: Get saved query
 ---
 
-```
-GET /api/v1/saved-queries/{savedQueryId}
-```
+`GET /api/v1/saved-queries/{savedQueryId}`
 
 Get saved query
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Get saved query
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/saved-queries/example-sav" \
+curl -X GET "/api/v1/saved-queries/{savedQueryId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

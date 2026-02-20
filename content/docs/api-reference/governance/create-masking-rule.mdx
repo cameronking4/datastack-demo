@@ -3,12 +3,9 @@ title: Create masking rule
 description: Create masking rule
 ---
 
-```
-POST /api/v1/governance/data-masking
-```
+`POST /api/v1/governance/data-masking`
 
 Create masking rule
-
 
 ## Request Body
 
@@ -17,12 +14,11 @@ Create masking rule
 | `table` | `string` | No | The table value. |
 | `column` | `string` | No | The column value. |
 | `maskType` | `string` | No | The maskType value. |
-| `applyTo` | `string[]` | No | The applyTo value. |
+| `applyTo` | `array<string>` | No | The applyTo value. |
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 

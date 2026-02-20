@@ -1,0 +1,25 @@
+---
+title: List webhook deliveries
+description: List webhook deliveries
+---
+
+`GET /api/v1/webhooks/{webhookId}/deliveries`
+
+List webhook deliveries
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `webhookId` | `string` | Yes | The webhookId value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/webhooks/{webhookId}/deliveries" \
+  -H "Authorization: Bearer <accessToken>"
+```

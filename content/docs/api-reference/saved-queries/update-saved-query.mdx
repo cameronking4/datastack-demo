@@ -3,12 +3,9 @@ title: Update saved query
 description: Update saved query
 ---
 
-```
-PATCH /api/v1/saved-queries/{savedQueryId}
-```
+`PATCH /api/v1/saved-queries/{savedQueryId}`
 
 Update saved query
-
 
 ## Path Parameters
 
@@ -26,13 +23,12 @@ Update saved query
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH "/api/v1/saved-queries/example-sav" \
+curl -X PATCH "/api/v1/saved-queries/{savedQueryId}" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

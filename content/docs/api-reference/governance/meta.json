@@ -3,8 +3,8 @@
   "pages": [
     "list-access-requests",
     "list-governance-audit-log",
-    "generate-compliance-report",
+    "create-access-policy",
     "create-masking-rule",
-    "create-access-policy"
+    "generate-compliance-report"
   ]
 }

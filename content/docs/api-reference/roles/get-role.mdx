@@ -3,12 +3,9 @@ title: Get role
 description: Get role
 ---
 
-```
-GET /api/v1/roles/{roleId}
-```
+`GET /api/v1/roles/{roleId}`
 
 Get role
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Get role
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/roles/example-rol" \
+curl -X GET "/api/v1/roles/{roleId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

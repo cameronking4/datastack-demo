@@ -1,62 +1,49 @@
 ---
-title: Create Schedule
-description: Create a new cron or interval-based schedule for a resource.
+title: Create schedule
+description: Create a new cron or interval-based schedule for a resource
 ---
 
-```
-POST /api/v1/schedules
-```
+`POST /api/v1/schedules`
 
-Create a new schedule.
-
-**Required scope:** `manage:jobs`
+Create a new cron or interval-based schedule for a resource
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | Schedule display name. |
-| `resourceType` | `string` | Yes | Resource type (`job`, `pipeline`, `maintenance`). |
-| `resourceId` | `string` | Yes | ID of the resource to schedule. |
-| `scheduleExpression` | `string` | Yes | Cron expression (e.g., `0 2 * * *`) or interval. |
-| `timezone` | `string` | No | Timezone for the schedule. Defaults to `UTC`. |
-| `active` | `boolean` | No | Whether the schedule is active. Defaults to `true`. |
-| `startDate` | `string` | No | ISO 8601 date when the schedule becomes active. |
-| `endDate` | `string` | No | ISO 8601 date when the schedule expires. |
-| `skipIfRunning` | `boolean` | No | Skip execution if the previous run is still active. |
-| `catchUpMissed` | `boolean` | No | Execute missed runs on recovery. |
-| `parameters` | `object` | No | Key-value parameters passed to the resource on execution. |
+| `name` | `string` | Yes | The name value. |
+| `resourceType` | `string` | Yes | The resourceType value. |
+| `resourceId` | `string` | Yes | The resourceId value. |
+| `scheduleExpression` | `string` | Yes | The scheduleExpression value. |
+| `timezone` | `string` | No | The timezone value. |
+| `active` | `boolean` | No | The active value. |
+| `startDate` | `string` | No | The startDate value. |
+| `endDate` | `string` | No | The endDate value. |
+| `skipIfRunning` | `boolean` | No | The skipIfRunning value. |
+| `catchUpMissed` | `boolean` | No | The catchUpMissed value. |
+| `parameters` | `object` | No | The parameters value. |
 
 ## Response `201`
 
-Returns the created schedule object.
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST /api/v1/schedules \
+curl -X POST "/api/v1/schedules" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Nightly ETL",
-    "resourceType": "job",
-    "resourceId": "job-001",
-    "scheduleExpression": "0 2 * * *",
-    "timezone": "America/New_York",
-    "skipIfRunning": true
-  }'
-```
-
-```json title="Response"
-{
-  "id": "sched-new",
-  "name": "Nightly ETL",
-  "resourceType": "job",
-  "resourceId": "job-001",
-  "scheduleExpression": "0 2 * * *",
-  "timezone": "America/New_York",
+  "name": "example-name",
+  "resourceType": "example-resourceType",
+  "resourceId": "example-resourceId",
+  "scheduleExpression": "example-scheduleExpression",
+  "timezone": "example-timezone",
   "active": true,
+  "startDate": "example-startDate",
+  "endDate": "example-endDate",
   "skipIfRunning": true,
-  "createdAt": "2024-03-01T09:00:00Z"
-}
+  "catchUpMissed": true,
+  "parameters": {}
+}'
 ```

@@ -3,12 +3,9 @@ title: List app versions
 description: List app versions
 ---
 
-```
-GET /api/v1/apps/{appId}/versions
-```
+`GET /api/v1/apps/{appId}/versions`
 
 List app versions
-
 
 ## Path Parameters
 
@@ -25,12 +22,11 @@ List app versions
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/apps/example-app/versions" \
+curl -X GET "/api/v1/apps/{appId}/versions" \
   -H "Authorization: Bearer <accessToken>"
 ```

@@ -3,12 +3,9 @@ title: Scale stream
 description: Scale streaming job parallelism
 ---
 
-```
-POST /api/v1/streams/{streamId}/scale
-```
+`POST /api/v1/streams/{streamId}/scale`
 
 Scale streaming job parallelism
-
 
 ## Path Parameters
 
@@ -27,13 +24,12 @@ Scale streaming job parallelism
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/streams/example-str/scale" \
+curl -X POST "/api/v1/streams/{streamId}/scale" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

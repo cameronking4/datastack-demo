@@ -1,77 +1,26 @@
 ---
-title: List Pipelines
-description: Retrieve a paginated list of Delta Live Tables pipelines.
+title: List pipelines
+description: List Delta Live Tables pipelines with state and edition filters
 ---
 
-```
-GET /api/v1/pipelines
-```
+`GET /api/v1/pipelines`
 
-Returns a paginated list of Delta Live Tables pipelines.
-
-**Required scope:** `read:pipelines`
+List Delta Live Tables pipelines with state and edition filters
 
 ## Query Parameters
 
-| Parameter | Type | Default | Description |
+| Parameter | Type | Required | Description |
 |---|---|---|---|
-| `pageSize` | `number` | `25` | Results per page (1–100). |
+| `state` | `string` | No | The state value. |
+| `edition` | `string` | No | The edition value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `pipelines` | `object[]` | Array of pipeline objects. |
-| `pipelines[].id` | `string` | Pipeline identifier. |
-| `pipelines[].name` | `string` | Pipeline name. |
-| `pipelines[].workspaceId` | `string` | Workspace identifier. |
-| `pipelines[].state` | `string` | Current state (`RUNNING`, `IDLE`, `STOPPING`). |
-| `pipelines[].target` | `string` | Target environment (`PRODUCTION`, `DEVELOPMENT`, `STAGING`). |
-| `pipelines[].catalog` | `string` | Unity Catalog name. |
-| `pipelines[].schema` | `string` | Database schema. |
-| `pipelines[].continuous` | `boolean` | Whether the pipeline runs continuously. |
-| `pipelines[].photon` | `boolean` | Whether Photon acceleration is enabled. |
-| `pipelines[].edition` | `string` | Product edition (`CORE`, `PRO`, `ADVANCED`). |
-| `pipelines[].clusters` | `object[]` | Associated cluster configurations. |
-| `pipelines[].createdAt` | `string` | ISO 8601 creation timestamp. |
-| `pipelines[].createdBy` | `string` | Creator email. |
-| `pipelines[].lastRunAt` | `string` | ISO 8601 timestamp of last run. |
-| `totalCount` | `number` | Total number of pipelines. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl "/api/v1/pipelines?pageSize=10" \
+curl -X GET "/api/v1/pipelines" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "pipelines": [
-    {
-      "id": "pipe-001",
-      "name": "Bronze Ingestion",
-      "workspaceId": "ws-001",
-      "state": "RUNNING",
-      "target": "PRODUCTION",
-      "catalog": "main",
-      "schema": "bronze",
-      "continuous": true,
-      "photon": true,
-      "edition": "PRO",
-      "clusters": [
-        {
-          "label": "default",
-          "nodeType": "i3.xlarge",
-          "workerCount": 4,
-          "enableAutoscaling": true
-        }
-      ],
-      "createdAt": "2024-03-01T09:00:00Z",
-      "createdBy": "ada@datastack.dev",
-      "lastRunAt": "2024-06-10T02:00:00Z"
-    }
-  ],
-  "totalCount": 2
-}
 ```

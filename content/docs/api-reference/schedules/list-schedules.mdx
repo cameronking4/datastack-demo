@@ -1,59 +1,26 @@
 ---
-title: List Schedules
-description: List unified schedules across jobs, pipelines, and maintenance windows.
+title: List schedules
+description: List unified schedules across jobs, pipelines, and maintenance windows
 ---
 
-```
-GET /api/v1/schedules
-```
+`GET /api/v1/schedules`
 
-Returns a list of schedules.
-
-**Required scope:** `read:jobs`
+List unified schedules across jobs, pipelines, and maintenance windows
 
 ## Query Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `resourceType` | `string` | Filter by resource type (`job`, `pipeline`, `maintenance`). |
-| `active` | `boolean` | Filter by active state. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `resourceType` | `string` | No | The resourceType value. |
+| `active` | `boolean` | No | The active value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `schedules` | `object[]` | Array of schedule objects. |
-| `schedules[].id` | `string` | Schedule identifier. |
-| `schedules[].name` | `string` | Display name. |
-| `schedules[].resourceType` | `string` | Associated resource type. |
-| `schedules[].resourceId` | `string` | Associated resource identifier. |
-| `schedules[].scheduleExpression` | `string` | Cron or interval expression. |
-| `schedules[].timezone` | `string` | Schedule timezone. |
-| `schedules[].active` | `boolean` | Whether the schedule is active. |
-| `schedules[].createdAt` | `string` | ISO 8601 creation timestamp. |
-| `totalCount` | `number` | Total number of schedules. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl "/api/v1/schedules?resourceType=job&active=true" \
+curl -X GET "/api/v1/schedules" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "schedules": [
-    {
-      "id": "sched-001",
-      "name": "Nightly ETL",
-      "resourceType": "job",
-      "resourceId": "job-001",
-      "scheduleExpression": "0 2 * * *",
-      "timezone": "UTC",
-      "active": true,
-      "createdAt": "2024-03-01T09:00:00Z"
-    }
-  ],
-  "totalCount": 1
-}
 ```

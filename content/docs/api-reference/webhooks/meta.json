@@ -1,12 +1,12 @@
 {
   "title": "Webhooks",
   "pages": [
+    "list-webhook-deliveries",
     "list-webhooks",
     "create-webhook",
     "get-webhook",
     "update-webhook",
     "delete-webhook",
-    "test-webhook",
-    "list-deliveries"
+    "test-webhook"
   ]
 }

@@ -1,0 +1,43 @@
+---
+title: Create notification channel
+description: Register a new notification channel for alerts and event notifications
+---
+
+`POST /api/v1/notifications`
+
+Register a new notification channel for alerts and event notifications
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | The name value. |
+| `type` | `string` | Yes | The type value. |
+| `config` | `object` | Yes | The config value. |
+| `eventFilters` | `array<string>` | No | The eventFilters value. |
+| `severityFilter` | `array<string>` | No | The severityFilter value. |
+| `enabled` | `boolean` | No | The enabled value. |
+| `quietHours` | `object` | No | The quietHours value. |
+| `rateLimitPerHour` | `integer` | No | The rateLimitPerHour value. |
+
+## Response `201`
+
+Created
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/notifications" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "type": "example-type",
+  "config": {},
+  "eventFilters": [],
+  "severityFilter": [],
+  "enabled": true,
+  "quietHours": {},
+  "rateLimitPerHour": 10
+}'
+```

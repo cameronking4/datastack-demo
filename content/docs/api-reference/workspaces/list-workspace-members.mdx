@@ -1,56 +1,31 @@
 ---
-title: List Workspace Members
-description: List members of a workspace with roles and access details.
+title: List workspace members
+description: List members of a workspace with roles and last activity
 ---
 
-```
-GET /api/v1/workspaces/{workspaceId}/members
-```
+`GET /api/v1/workspaces/{workspaceId}/members`
 
-Returns a list of members for a workspace with their roles.
-
-**Required scope:** `read:workspaces`
+List members of a workspace with roles and last activity
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `workspaceId` | `string` | Workspace identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | Yes | The workspaceId value. |
 
 ## Query Parameters
 
-| Parameter | Type | Default | Description |
+| Parameter | Type | Required | Description |
 |---|---|---|---|
-| `role` | `string` | — | Filter by role (`admin`, `editor`, `viewer`). |
+| `role` | `string` | No | The role value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `members` | `object[]` | Array of member objects. |
-| `members[].userId` | `string` | User identifier. |
-| `members[].email` | `string` | User email address. |
-| `members[].role` | `string` | Member role (`admin`, `editor`, `viewer`). |
-| `members[].joinedAt` | `string` | ISO 8601 join timestamp. |
-| `totalCount` | `number` | Total number of members. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl "/api/v1/workspaces/ws-001/members?role=admin" \
+curl -X GET "/api/v1/workspaces/{workspaceId}/members" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "members": [
-    {
-      "userId": "user-001",
-      "email": "ada@datastack.dev",
-      "role": "admin",
-      "joinedAt": "2024-01-10T08:00:00Z"
-    }
-  ],
-  "totalCount": 1
-}
 ```

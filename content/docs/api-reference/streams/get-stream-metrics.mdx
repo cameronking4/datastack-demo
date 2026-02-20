@@ -3,12 +3,9 @@ title: Get stream metrics
 description: Get streaming job throughput and latency metrics
 ---
 
-```
-GET /api/v1/streams/{streamId}/metrics
-```
+`GET /api/v1/streams/{streamId}/metrics`
 
 Get streaming job throughput and latency metrics
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Get streaming job throughput and latency metrics
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/streams/example-str/metrics" \
+curl -X GET "/api/v1/streams/{streamId}/metrics" \
   -H "Authorization: Bearer <accessToken>"
 ```

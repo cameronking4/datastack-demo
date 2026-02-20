@@ -2,7 +2,7 @@
   "title": "Notebooks",
   "pages": [
     "list-notebooks",
-    "create-notebook",
+    "create-or-overwrite-notebook",
     "export-notebook"
   ]
 }

@@ -3,12 +3,9 @@ title: Get column lineage
 description: Get column lineage
 ---
 
-```
-GET /api/v1/lineage/column/{catalogName}/{schemaName}/{tableName}/{columnName}
-```
+`GET /api/v1/lineage/column/{catalogName}/{schemaName}/{tableName}/{columnName}`
 
 Get column lineage
-
 
 ## Path Parameters
 
@@ -21,12 +18,11 @@ Get column lineage
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/lineage/column/example-cat/example-sch/example-tab/example-col" \
+curl -X GET "/api/v1/lineage/column/{catalogName}/{schemaName}/{tableName}/{columnName}" \
   -H "Authorization: Bearer <accessToken>"
 ```

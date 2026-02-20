@@ -1,0 +1,25 @@
+---
+title: Revoke API key
+description: Revoke API key
+---
+
+`DELETE /api/v1/auth/api-keys/{keyId}`
+
+Revoke API key
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `keyId` | `string` | Yes | The keyId value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE "/api/v1/auth/api-keys/{keyId}" \
+  -H "Authorization: Bearer <accessToken>"
+```

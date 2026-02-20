@@ -1,52 +1,39 @@
 ---
-title: Create Schema
-description: Create a new schema in a catalog.
+title: Create schema
+description: Create schema
 ---
 
-```
-POST /api/v1/catalogs/{catalogName}/schemas
-```
+`POST /api/v1/catalogs/{catalogName}/schemas`
 
-Creates a new schema within the specified catalog.
-
-**Required scope:** `manage:catalogs`
+Create schema
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `catalogName` | `string` | Catalog name. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `catalogName` | `string` | Yes | The catalogName value. |
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | Schema name. |
-| `comment` | `string` | No | Description. |
-| `properties` | `object` | No | Key-value properties. |
+| `name` | `string` | Yes | The name value. |
+| `comment` | `string` | No | The comment value. |
+| `properties` | `object` | No | The properties value. |
 
 ## Response `201`
 
-Returns the created schema object.
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/catalogs/main/schemas" \
+curl -X POST "/api/v1/catalogs/{catalogName}/schemas" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{ "name": "platinum", "comment": "ML feature tables" }'
-```
-
-```json title="Response"
-{
-  "name": "platinum",
-  "catalogName": "main",
-  "owner": "api",
-  "comment": "ML feature tables",
-  "properties": {},
-  "tablesCount": 0,
-  "createdAt": "2024-06-10T10:00:00Z",
-  "updatedAt": "2024-06-10T10:00:00Z"
-}
+  -d '{
+  "name": "example-name",
+  "comment": "example-comment",
+  "properties": {}
+}'
 ```

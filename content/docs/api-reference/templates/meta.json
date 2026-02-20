@@ -1,8 +1,8 @@
 {
   "title": "Templates",
   "pages": [
-    "instantiate-template",
+    "list-templates",
     "get-template",
-    "list-templates"
+    "instantiate-template"
   ]
 }

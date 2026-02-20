@@ -3,12 +3,9 @@ title: List model versions
 description: List all registered versions of an ML model
 ---
 
-```
-GET /api/v1/ml/models/{modelId}/versions
-```
+`GET /api/v1/ml/models/{modelId}/versions`
 
 List all registered versions of an ML model
-
 
 ## Path Parameters
 
@@ -25,12 +22,11 @@ List all registered versions of an ML model
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/ml/models/example-mod/versions" \
+curl -X GET "/api/v1/ml/models/{modelId}/versions" \
   -H "Authorization: Bearer <accessToken>"
 ```

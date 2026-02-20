@@ -3,12 +3,9 @@ title: Mute alert
 description: Mute alert
 ---
 
-```
-POST /api/v1/alerts/{alertId}/mute
-```
+`POST /api/v1/alerts/{alertId}/mute`
 
 Mute alert
-
 
 ## Path Parameters
 
@@ -25,13 +22,12 @@ Mute alert
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/alerts/example-ale/mute" \
+curl -X POST "/api/v1/alerts/{alertId}/mute" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

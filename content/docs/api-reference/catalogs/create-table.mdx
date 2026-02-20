@@ -1,76 +1,46 @@
 ---
-title: Create Table
-description: Create a new table in a schema.
+title: Create table
+description: Create table
 ---
 
-```
-POST /api/v1/catalogs/{catalogName}/schemas/{schemaName}/tables
-```
+`POST /api/v1/catalogs/{catalogName}/schemas/{schemaName}/tables`
 
-Creates a new table within the specified schema.
-
-**Required scope:** `manage:catalogs`
+Create table
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `catalogName` | `string` | Catalog name. |
-| `schemaName` | `string` | Schema name. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `catalogName` | `string` | Yes | The catalogName value. |
+| `schemaName` | `string` | Yes | The schemaName value. |
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | Table name. |
-| `columns` | `object[]` | Yes | Column definitions. |
-| `columns[].name` | `string` | Yes | Column name. |
-| `columns[].type` | `string` | Yes | Column data type. |
-| `columns[].nullable` | `boolean` | No | Whether nullable (default `true`). |
-| `columns[].comment` | `string` | No | Column description. |
-| `tableType` | `string` | No | Table type (default `MANAGED`). |
-| `dataSourceFormat` | `string` | No | Storage format (default `DELTA`). |
-| `storageLocation` | `string` | No | Custom storage path. |
-| `comment` | `string` | No | Table description. |
+| `name` | `string` | Yes | The name value. |
+| `tableType` | `string` | No | The tableType value. |
+| `dataSourceFormat` | `string` | No | The dataSourceFormat value. |
+| `columns` | `array<object>` | Yes | The columns value. |
+| `storageLocation` | `string` | No | The storageLocation value. |
+| `comment` | `string` | No | The comment value. |
 
 ## Response `201`
 
-Returns the created table object.
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/catalogs/main/schemas/bronze/tables" \
+curl -X POST "/api/v1/catalogs/{catalogName}/schemas/{schemaName}/tables" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "page_views",
-    "columns": [
-      { "name": "view_id", "type": "STRING", "nullable": false },
-      { "name": "url", "type": "STRING", "nullable": false },
-      { "name": "viewed_at", "type": "TIMESTAMP", "nullable": false }
-    ]
-  }'
-```
-
-```json title="Response"
-{
-  "name": "page_views",
-  "catalogName": "main",
-  "schemaName": "bronze",
-  "tableType": "MANAGED",
-  "dataSourceFormat": "DELTA",
-  "columns": [
-    { "name": "view_id", "type": "STRING", "nullable": false },
-    { "name": "url", "type": "STRING", "nullable": false },
-    { "name": "viewed_at", "type": "TIMESTAMP", "nullable": false }
-  ],
-  "storageLocation": "s3://acme-data-lake/main/bronze/page_views",
-  "comment": "",
-  "rowCount": 0,
-  "sizeBytes": 0,
-  "owner": "api",
-  "createdAt": "2024-06-10T10:00:00Z",
-  "updatedAt": "2024-06-10T10:00:00Z"
-}
+  "name": "example-name",
+  "tableType": "example-tableType",
+  "dataSourceFormat": "example-dataSourceFormat",
+  "columns": [],
+  "storageLocation": "example-storageLocation",
+  "comment": "example-comment"
+}'
 ```

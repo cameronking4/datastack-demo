@@ -1,0 +1,25 @@
+---
+title: Start SQL warehouse
+description: Start SQL warehouse
+---
+
+`POST /api/v1/sql/warehouses/{warehouseId}/start`
+
+Start SQL warehouse
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `warehouseId` | `string` | Yes | The warehouseId value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/sql/warehouses/{warehouseId}/start" \
+  -H "Authorization: Bearer <accessToken>"
+```

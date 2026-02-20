@@ -1,0 +1,25 @@
+---
+title: Get notification channel
+description: Get notification channel details including delivery statistics
+---
+
+`GET /api/v1/notifications/{notificationId}`
+
+Get notification channel details including delivery statistics
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `notificationId` | `string` | Yes | The notificationId value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/notifications/{notificationId}" \
+  -H "Authorization: Bearer <accessToken>"
+```

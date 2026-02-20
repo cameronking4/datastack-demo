@@ -3,23 +3,19 @@ title: Bulk pause jobs
 description: Bulk pause jobs
 ---
 
-```
-POST /api/v1/jobs/bulk-pause
-```
+`POST /api/v1/jobs/bulk-pause`
 
 Bulk pause jobs
-
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `jobIds` | `string[]` | No | The jobIds value. |
+| `jobIds` | `array<string>` | No | The jobIds value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 

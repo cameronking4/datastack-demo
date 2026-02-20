@@ -3,24 +3,20 @@ title: Get cost optimization recommendations
 description: Get recommendations to reduce cost
 ---
 
-```
-POST /api/v1/cost/optimization/recommendations
-```
+`POST /api/v1/cost/optimization/recommendations`
 
 Get recommendations to reduce cost
-
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `scope` | `string` | No | The scope value. |
-| `categories` | `string[]` | No | The categories value. |
+| `categories` | `array<string>` | No | The categories value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 

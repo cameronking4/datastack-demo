@@ -1,57 +1,25 @@
 ---
-title: Get Environment
-description: Get environment details including promotion rules, variables, and deployment count.
+title: Get environment
+description: Get environment details including promotion rules, variables, and deployment count
 ---
 
-```
-GET /api/v1/environments/{environmentId}
-```
+`GET /api/v1/environments/{environmentId}`
 
-Returns full details for a single environment.
-
-**Required scope:** `read:deployments`
+Get environment details including promotion rules, variables, and deployment count
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `environmentId` | `string` | The environment identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `environmentId` | `string` | Yes | The environmentId value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `id` | `string` | Environment identifier. |
-| `name` | `string` | Display name. |
-| `slug` | `string` | URL-friendly identifier. |
-| `workspaceId` | `string` | Owning workspace. |
-| `description` | `string` | Environment description. |
-| `color` | `string` | Display color. |
-| `protected` | `boolean` | Whether the environment is protected. |
-| `promotionRules` | `object` | Promotion configuration. |
-| `accessControl` | `object` | Access restrictions. |
-| `variables` | `object` | Environment variables. |
-| `createdAt` | `string` | ISO 8601 creation timestamp. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl /api/v1/environments/env-001 \
+curl -X GET "/api/v1/environments/{environmentId}" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "id": "env-001",
-  "name": "Production",
-  "slug": "production",
-  "workspaceId": "ws-001",
-  "protected": true,
-  "promotionRules": {
-    "requiresApproval": true,
-    "approvers": ["user-001"],
-    "requiredChecks": ["tests", "lint"]
-  },
-  "createdAt": "2024-03-01T09:00:00Z"
-}
 ```

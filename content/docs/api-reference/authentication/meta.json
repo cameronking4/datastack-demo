@@ -1,11 +1,11 @@
 {
   "title": "Authentication",
   "pages": [
-    "generate-token",
-    "refresh-token",
-    "revoke-token",
     "list-api-keys",
     "create-api-key",
-    "delete-api-key"
+    "get-access-token",
+    "refresh-access-token",
+    "revoke-api-key",
+    "revoke-token"
   ]
 }

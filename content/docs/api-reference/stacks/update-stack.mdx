@@ -1,74 +1,51 @@
 ---
-title: Update Stack
-description: Update a stack configuration.
+title: Update stack
+description: Update stack configuration, layers, or git integration settings
 ---
 
-```
-PATCH /api/v1/stacks/{stackId}
-```
+`PATCH /api/v1/stacks/{stackId}`
 
-Updates one or more fields of an existing stack.
-
-**Required scope:** `manage:stacks`
+Update stack configuration, layers, or git integration settings
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `stackId` | `string` | Stack identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `stackId` | `string` | Yes | The stackId value. |
 
 ## Request Body
 
-All fields are optional. Only provided fields are updated.
-
-| Field | Type | Description |
-|---|---|---|
-| `name` | `string` | New display name. |
-| `description` | `string` | New description. |
-| `version` | `string` | Stack version label. |
-| `layers` | `object[]` | Replacement layer list. |
-| `layers[].name` | `string` | Layer name. |
-| `layers[].resourceType` | `string` | Resource type. |
-| `layers[].resourceId` | `string` | Referenced resource identifier. |
-| `layers[].order` | `integer` | Execution order. |
-| `layers[].config` | `object` | Layer-specific configuration. |
-| `layers[].dependsOn` | `string[]` | Layer dependencies. |
-| `connections` | `string[]` | Replacement connection list. |
-| `tags` | `object` | Replacement key-value tags. |
-| `autoDeployOnPush` | `boolean` | Enable auto-deploy on git push. |
-| `gitRepository` | `string` | Git repository URL. |
-| `gitBranch` | `string` | Git branch name. |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `description` | `string` | No | The description value. |
+| `version` | `string` | No | The version value. |
+| `layers` | `array<object>` | No | The layers value. |
+| `connections` | `array<string>` | No | The connections value. |
+| `tags` | `object` | No | The tags value. |
+| `autoDeployOnPush` | `boolean` | No | The autoDeployOnPush value. |
+| `gitRepository` | `string` | No | The gitRepository value. |
+| `gitBranch` | `string` | No | The gitBranch value. |
 
 ## Response `200`
 
-Returns the updated stack object.
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH "/api/v1/stacks/stack-001" \
+curl -X PATCH "/api/v1/stacks/{stackId}" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{ "name": "Analytics Platform v2", "gitRepository": "https://github.com/acme/infra" }'
-```
-
-```json title="Response"
-{
-  "id": "stack-001",
-  "name": "Analytics Platform v2",
-  "description": "End-to-end analytics stack",
-  "workspaceId": "ws-001",
-  "lifecycleState": "DRAFT",
-  "environment": "production",
-  "owner": "data-eng",
-  "modules": [],
-  "policies": {},
-  "compliance": {},
-  "revision": 4,
+  -d '{
+  "name": "example-name",
+  "description": "example-description",
+  "version": "example-version",
+  "layers": [],
+  "connections": [],
   "tags": {},
-  "gitRepository": "https://github.com/acme/infra",
-  "createdAt": "2024-02-01T10:00:00Z",
-  "updatedAt": "2024-06-10T12:00:00Z",
-  "createdBy": "ada@datastack.dev"
-}
+  "autoDeployOnPush": true,
+  "gitRepository": "example-gitRepository",
+  "gitBranch": "example-gitBranch"
+}'
 ```

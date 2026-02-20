@@ -1,73 +1,26 @@
 ---
-title: List Connections
-description: List external data source and sink connections.
+title: List connections
+description: List external data source and sink connections with health status
 ---
 
-```
-GET /api/v1/connections
-```
+`GET /api/v1/connections`
 
-Returns a paginated list of data connections.
-
-**Required scope:** `read:connections`
+List external data source and sink connections with health status
 
 ## Query Parameters
 
-| Parameter | Type | Default | Description |
+| Parameter | Type | Required | Description |
 |---|---|---|---|
-| `page` | `number` | `1` | Page number (min 1). |
-| `pageSize` | `number` | `25` | Results per page (1–100). |
+| `type` | `string` | No | The type value. |
+| `status` | `string` | No | The status value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `connections` | `object[]` | Array of connection objects. |
-| `connections[].id` | `string` | Connection identifier. |
-| `connections[].name` | `string` | Display name. |
-| `connections[].type` | `string` | Connection type (`S3`, `POSTGRESQL`, `KAFKA`, etc.). |
-| `connections[].host` | `string` | Host or endpoint URI. |
-| `connections[].status` | `string` | Status (`ACTIVE`, `PENDING_VALIDATION`, `FAILED`). |
-| `connections[].workspaceId` | `string` | Workspace identifier. |
-| `connections[].secretScope` | `string` | Secret scope used for credentials. |
-| `connections[].properties` | `object` | Type-specific configuration properties. |
-| `connections[].createdAt` | `string` | ISO 8601 creation timestamp. |
-| `connections[].updatedAt` | `string` | ISO 8601 last-updated timestamp. |
-| `connections[].createdBy` | `string` | Creator identity. |
-| `connections[].lastTestedAt` | `string` | ISO 8601 last test timestamp. |
-| `connections[].lastTestStatus` | `string` | Last test result (`SUCCESS`, `FAILED`). |
-| `totalCount` | `number` | Total number of connections. |
-| `page` | `number` | Current page number. |
-| `pageSize` | `number` | Results per page. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl "/api/v1/connections?page=1&pageSize=10" \
+curl -X GET "/api/v1/connections" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "connections": [
-    {
-      "id": "conn-001",
-      "name": "Production S3",
-      "type": "S3",
-      "host": "s3://acme-data-lake",
-      "status": "ACTIVE",
-      "workspaceId": "ws-001",
-      "secretScope": "aws-prod",
-      "properties": { "region": "us-east-1", "format": "delta", "pathPrefix": "/raw/events" },
-      "createdAt": "2024-01-20T10:00:00Z",
-      "updatedAt": "2024-06-01T12:00:00Z",
-      "createdBy": "ada@datastack.dev",
-      "lastTestedAt": "2024-06-10T08:00:00Z",
-      "lastTestStatus": "SUCCESS"
-    }
-  ],
-  "totalCount": 3,
-  "page": 1,
-  "pageSize": 10
-}
 ```

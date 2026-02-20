@@ -1,60 +1,47 @@
 ---
-title: Execute Query
-description: Execute a saved SQL query against its warehouse.
+title: Execute query
+description: Execute a saved SQL query with optional parameter overrides and result format
 ---
 
-```
-POST /api/v1/queries/{queryId}/execute
-```
+`POST /api/v1/queries/{queryId}/execute`
 
-Submits a saved query for execution. The query runs asynchronously; poll the results endpoint for output.
-
-**Required scope:** `manage:queries`
+Execute a saved SQL query with optional parameter overrides and result format
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `queryId` | `string` | Query identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `queryId` | `string` | Yes | The queryId value. |
 
 ## Request Body
 
-| Field | Type | Default | Description |
+| Field | Type | Required | Description |
 |---|---|---|---|
-| `parameters` | `object` | `{}` | Key-value query parameters for parameterized SQL. |
-| `limit` | `number` | `1000` | Maximum rows to return. |
+| `parameters` | `object` | No | The parameters value. |
+| `limit` | `integer` | No | The limit value. |
+| `resultFormat` | `string` | No | The resultFormat value. |
+| `timeout` | `integer` | No | The timeout value. |
+| `catalog` | `string` | No | The catalog value. |
+| `schema` | `string` | No | The schema value. |
+| `warehouseOverride` | `string` | No | The warehouseOverride value. |
 
 ## Response `202`
 
-| Field | Type | Description |
-|---|---|---|
-| `executionId` | `string` | Execution identifier. |
-| `queryId` | `string` | Query identifier. |
-| `warehouseId` | `string` | Warehouse used for execution. |
-| `status` | `string` | Execution status (`RUNNING`). |
-| `parameters` | `object` | Parameters used. |
-| `limit` | `number` | Row limit. |
-| `submittedAt` | `string` | ISO 8601 submission timestamp. |
-| `submittedBy` | `string` | Submitter identity. |
+Accepted
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/queries/query-001/execute" \
+curl -X POST "/api/v1/queries/{queryId}/execute" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{ "limit": 100 }'
-```
-
-```json title="Response"
-{
-  "executionId": "exec-new",
-  "queryId": "query-001",
-  "warehouseId": "wh-001",
-  "status": "RUNNING",
+  -d '{
   "parameters": {},
-  "limit": 100,
-  "submittedAt": "2024-06-10T10:00:00Z",
-  "submittedBy": "api"
-}
+  "limit": 10,
+  "resultFormat": "example-resultFormat",
+  "timeout": 10,
+  "catalog": "example-catalog",
+  "schema": "example-schema",
+  "warehouseOverride": "example-warehouseOverride"
+}'
 ```

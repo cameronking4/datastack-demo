@@ -1,37 +1,29 @@
 ---
-title: Revoke Token
-description: Revoke an access or refresh token.
+title: Revoke token
+description: Revoke an access or refresh token
 ---
 
-```
-POST /api/v1/auth/token/revoke
-```
+`POST /api/v1/auth/token/revoke`
 
-Revoke an active access token or refresh token. Once revoked, the token can no longer be used for authentication.
+Revoke an access or refresh token
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `token` | `string` | Yes | The access or refresh token to revoke. |
+| `token` | `string` | Yes | The token value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `revoked` | `boolean` | `true` when the token has been revoked. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST /api/v1/auth/token/revoke \
-  -H "Content-Type: application/json" \
+curl -X POST "/api/v1/auth/token/revoke" \
   -H "Authorization: Bearer <accessToken>" \
-  -d '{"token": "eyJhbGciOiJSUzI1NiIs..."}'
-```
-
-```json title="Response"
-{
-  "revoked": true
-}
+  -H "Content-Type: application/json" \
+  -d '{
+  "token": "example-token"
+}'
 ```

@@ -1,0 +1,25 @@
+---
+title: Terminate cluster
+description: Permanently terminate a cluster and release all resources
+---
+
+`DELETE /api/v1/clusters/{clusterId}`
+
+Permanently terminate a cluster and release all resources
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `clusterId` | `string` | Yes | The clusterId value. |
+
+## Response `204`
+
+No content
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE "/api/v1/clusters/{clusterId}" \
+  -H "Authorization: Bearer <accessToken>"
+```

@@ -3,26 +3,22 @@ title: List backups
 description: List workspace backups with optional filters by workspace and status
 ---
 
-```
-GET /api/v1/backups
-```
+`GET /api/v1/backups`
 
 List workspace backups with optional filters by workspace and status
-
 
 ## Query Parameters
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `workspaceId` | `string` | No | The workspaceId value. |
-| `status` | `string` | No | The status value. One of: `pending`, `completed`, `failed`. |
+| `status` | `string` | No | The status value. |
 | `limit` | `integer` | No | The limit value. |
 | `offset` | `integer` | No | The offset value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 

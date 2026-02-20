@@ -1,0 +1,45 @@
+---
+title: Create data quality rule
+description: Define a new data quality rule with expectations and alerting
+---
+
+`POST /api/v1/data-quality/rules`
+
+Define a new data quality rule with expectations and alerting
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | The name value. |
+| `description` | `string` | No | The description value. |
+| `tableId` | `string` | Yes | The tableId value. |
+| `column` | `string` | No | The column value. |
+| `expectation` | `object` | Yes | The expectation value. |
+| `severity` | `string` | No | The severity value. |
+| `schedule` | `object` | No | The schedule value. |
+| `alertOnFailure` | `boolean` | No | The alertOnFailure value. |
+| `tags` | `array<string>` | No | The tags value. |
+
+## Response `201`
+
+Created
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/data-quality/rules" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "description": "example-description",
+  "tableId": "example-tableId",
+  "column": "example-column",
+  "expectation": {},
+  "severity": "example-severity",
+  "schedule": {},
+  "alertOnFailure": true,
+  "tags": []
+}'
+```

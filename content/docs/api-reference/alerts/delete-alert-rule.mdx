@@ -1,0 +1,25 @@
+---
+title: Delete alert rule
+description: Permanently delete an alert rule
+---
+
+`DELETE /api/v1/alerts/{alertId}`
+
+Permanently delete an alert rule
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `alertId` | `string` | Yes | The alertId value. |
+
+## Response `204`
+
+No content
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE "/api/v1/alerts/{alertId}" \
+  -H "Authorization: Bearer <accessToken>"
+```

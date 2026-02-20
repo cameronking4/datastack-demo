@@ -3,27 +3,23 @@ title: Create snapshot
 description: Create a new table or volume snapshot
 ---
 
-```
-POST /api/v1/snapshots
-```
+`POST /api/v1/snapshots`
 
 Create a new table or volume snapshot
-
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `workspaceId` | `string` | Yes | The workspaceId value. |
-| `resourceType` | `string` | Yes | The resourceType value. One of: `table`, `volume`. |
+| `resourceType` | `string` | Yes | The resourceType value. |
 | `resourceId` | `string` | Yes | The resourceId value. |
 | `name` | `string` | No | The name value. |
 | `retentionDays` | `integer` | No | The retentionDays value. |
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
@@ -33,7 +29,7 @@ curl -X POST "/api/v1/snapshots" \
   -H "Content-Type: application/json" \
   -d '{
   "workspaceId": "example-workspaceId",
-  "resourceType": "table",
+  "resourceType": "example-resourceType",
   "resourceId": "example-resourceId",
   "name": "example-name",
   "retentionDays": 10

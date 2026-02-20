@@ -1,0 +1,32 @@
+---
+title: List audit log entries
+description: Query the audit log for user and system actions with filtering by actor, action, resource, and time range
+---
+
+`GET /api/v1/audit-log`
+
+Query the audit log for user and system actions with filtering by actor, action, resource, and time range
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `actor` | `string` | No | The actor value. |
+| `action` | `string` | No | The action value. |
+| `resourceType` | `string` | No | The resourceType value. |
+| `resourceId` | `string` | No | The resourceId value. |
+| `since` | `string` | No | The since value. |
+| `until` | `string` | No | The until value. |
+| `limit` | `integer` | No | The limit value. |
+| `offset` | `integer` | No | The offset value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/audit-log" \
+  -H "Authorization: Bearer <accessToken>"
+```

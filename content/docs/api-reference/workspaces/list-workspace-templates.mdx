@@ -3,12 +3,9 @@ title: List workspace templates
 description: List reusable templates available in the workspace
 ---
 
-```
-GET /api/v1/workspaces/{workspaceId}/templates
-```
+`GET /api/v1/workspaces/{workspaceId}/templates`
 
 List reusable templates available in the workspace
-
 
 ## Path Parameters
 
@@ -26,12 +23,11 @@ List reusable templates available in the workspace
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/workspaces/example-wor/templates" \
+curl -X GET "/api/v1/workspaces/{workspaceId}/templates" \
   -H "Authorization: Bearer <accessToken>"
 ```

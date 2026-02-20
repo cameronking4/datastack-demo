@@ -3,12 +3,9 @@ title: Update workspace settings
 description: Update workspace settings
 ---
 
-```
-PATCH /api/v1/workspaces/{workspaceId}/settings
-```
+`PATCH /api/v1/workspaces/{workspaceId}/settings`
 
 Update workspace settings
-
 
 ## Path Parameters
 
@@ -18,13 +15,11 @@ Update workspace settings
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH "/api/v1/workspaces/example-wor/settings" \
-  -H "Authorization: Bearer <accessToken>" \
-  -H "Content-Type: application/json"
+curl -X PATCH "/api/v1/workspaces/{workspaceId}/settings" \
+  -H "Authorization: Bearer <accessToken>"
 ```

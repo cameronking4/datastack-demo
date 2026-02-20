@@ -3,12 +3,9 @@ title: Get model metrics
 description: Get model metrics
 ---
 
-```
-GET /api/v1/ml/models/{modelId}/metrics
-```
+`GET /api/v1/ml/models/{modelId}/metrics`
 
 Get model metrics
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Get model metrics
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/ml/models/example-mod/metrics" \
+curl -X GET "/api/v1/ml/models/{modelId}/metrics" \
   -H "Authorization: Bearer <accessToken>"
 ```

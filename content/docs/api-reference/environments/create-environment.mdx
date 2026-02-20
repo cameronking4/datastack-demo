@@ -1,68 +1,45 @@
 ---
-title: Create Environment
-description: Create a new deployment environment with approval and promotion configuration.
+title: Create environment
+description: Create a new deployment environment with approval and promotion configuration
 ---
 
-```
-POST /api/v1/environments
-```
+`POST /api/v1/environments`
 
-Create a new deployment environment.
-
-**Required scope:** `manage:deployments`
+Create a new deployment environment with approval and promotion configuration
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | Environment display name. |
-| `slug` | `string` | Yes | URL-friendly identifier. |
-| `workspaceId` | `string` | Yes | Target workspace ID. |
-| `description` | `string` | No | Environment description. |
-| `color` | `string` | No | Display color. |
-| `promotionRules` | `object` | No | Promotion configuration. |
-| `promotionRules.requiresApproval` | `boolean` | No | Whether promotions require approval. |
-| `promotionRules.approvers` | `string[]` | No | User IDs allowed to approve. |
-| `promotionRules.autoPromoteFrom` | `string` | No | Environment slug to auto-promote from. |
-| `promotionRules.requiredChecks` | `string[]` | No | Checks that must pass before promotion. |
-| `accessControl` | `object` | No | Access restrictions. |
-| `accessControl.allowedRoles` | `string[]` | No | Roles allowed to deploy. |
-| `accessControl.allowedTeamIds` | `string[]` | No | Team IDs allowed to deploy. |
-| `variables` | `object` | No | Key-value environment variables. |
-| `protected` | `boolean` | No | Whether the environment is protected from deletion. |
+| `name` | `string` | Yes | The name value. |
+| `slug` | `string` | Yes | The slug value. |
+| `workspaceId` | `string` | Yes | The workspaceId value. |
+| `description` | `string` | No | The description value. |
+| `color` | `string` | No | The color value. |
+| `promotionRules` | `object` | No | The promotionRules value. |
+| `accessControl` | `object` | No | The accessControl value. |
+| `variables` | `object` | No | The variables value. |
+| `protected` | `boolean` | No | The protected value. |
 
 ## Response `201`
 
-Returns the created environment object.
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST /api/v1/environments \
+curl -X POST "/api/v1/environments" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Staging",
-    "slug": "staging",
-    "workspaceId": "ws-001",
-    "promotionRules": {
-      "requiresApproval": false,
-      "autoPromoteFrom": "development"
-    }
-  }'
-```
-
-```json title="Response"
-{
-  "id": "env-new",
-  "name": "Staging",
-  "slug": "staging",
-  "workspaceId": "ws-001",
-  "protected": false,
-  "promotionRules": {
-    "requiresApproval": false,
-    "autoPromoteFrom": "development"
-  },
-  "createdAt": "2024-03-01T09:00:00Z"
-}
+  "name": "example-name",
+  "slug": "example-slug",
+  "workspaceId": "example-workspaceId",
+  "description": "example-description",
+  "color": "example-color",
+  "promotionRules": {},
+  "accessControl": {},
+  "variables": {},
+  "protected": true
+}'
 ```

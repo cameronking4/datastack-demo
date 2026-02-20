@@ -3,12 +3,9 @@ title: Update retention policy
 description: Update retention policy
 ---
 
-```
-PATCH /api/v1/retention/policies/{policyId}
-```
+`PATCH /api/v1/retention/policies/{policyId}`
 
 Update retention policy
-
 
 ## Path Parameters
 
@@ -28,13 +25,12 @@ Update retention policy
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH "/api/v1/retention/policies/example-pol" \
+curl -X PATCH "/api/v1/retention/policies/{policyId}" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

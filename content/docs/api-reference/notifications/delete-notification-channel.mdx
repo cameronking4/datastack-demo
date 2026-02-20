@@ -1,0 +1,25 @@
+---
+title: Delete notification channel
+description: Remove a notification channel
+---
+
+`DELETE /api/v1/notifications/{notificationId}`
+
+Remove a notification channel
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `notificationId` | `string` | Yes | The notificationId value. |
+
+## Response `204`
+
+No content
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE "/api/v1/notifications/{notificationId}" \
+  -H "Authorization: Bearer <accessToken>"
+```

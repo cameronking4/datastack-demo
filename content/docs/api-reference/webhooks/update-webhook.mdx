@@ -1,54 +1,47 @@
 ---
-title: Update Webhook
-description: Update an existing webhook's configuration.
+title: Update webhook
+description: Update webhook URL, events, retry policy, or signing configuration
 ---
 
-```
-PATCH /api/v1/webhooks/{webhookId}
-```
+`PATCH /api/v1/webhooks/{webhookId}`
 
-Update one or more properties of an existing webhook.
-
-**Required scope:** `manage:webhooks`
+Update webhook URL, events, retry policy, or signing configuration
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `webhookId` | `string` | The webhook identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `webhookId` | `string` | Yes | The webhookId value. |
 
 ## Request Body
 
-All fields are optional.
-
-| Field | Type | Description |
-|---|---|---|
-| `url` | `string` | Delivery URL. |
-| `events` | `string[]` | Event types to subscribe to. |
-| `active` | `boolean` | Whether the webhook is active. |
-| `secret` | `string` | Shared secret for verification. |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `url` | `string` | No | The url value. |
+| `events` | `array<string>` | No | The events value. |
+| `signingSecret` | `string` | No | The signingSecret value. |
+| `signingAlgorithm` | `string` | No | The signingAlgorithm value. |
+| `active` | `boolean` | No | The active value. |
+| `headers` | `object` | No | The headers value. |
+| `retryPolicy` | `object` | No | The retryPolicy value. |
 
 ## Response `200`
 
-Returns the updated webhook object.
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X PATCH /api/v1/webhooks/wh-001 \
+curl -X PATCH "/api/v1/webhooks/{webhookId}" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{"events": ["job.completed", "job.failed", "pipeline.completed"]}'
-```
-
-```json title="Response"
-{
-  "id": "wh-001",
-  "url": "https://example.com/hooks/datastack",
-  "events": ["job.completed", "job.failed"],
+  -d '{
+  "url": "example-url",
+  "events": [],
+  "signingSecret": "example-signingSecret",
+  "signingAlgorithm": "example-signingAlgorithm",
   "active": true,
-  "createdAt": "2024-03-01T09:00:00Z",
-  "updatedAt": "2024-06-10T12:00:00Z",
-  "failureCount": 0
-}
+  "headers": {},
+  "retryPolicy": {}
+}'
 ```

@@ -3,12 +3,9 @@ title: Clone query
 description: Clone a saved query with a new name
 ---
 
-```
-POST /api/v1/queries/{queryId}/clone
-```
+`POST /api/v1/queries/{queryId}/clone`
 
 Clone a saved query with a new name
-
 
 ## Path Parameters
 
@@ -24,13 +21,12 @@ Clone a saved query with a new name
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/queries/example-que/clone" \
+curl -X POST "/api/v1/queries/{queryId}/clone" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

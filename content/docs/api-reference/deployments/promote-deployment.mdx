@@ -1,55 +1,35 @@
 ---
-title: Promote Deployment
-description: Promote a deployment to the next environment.
+title: Promote deployment
+description: Promote a deployment to the next environment (dev -> staging -> production)
 ---
 
-```
-POST /api/v1/deployments/{deploymentId}/promote
-```
+`POST /api/v1/deployments/{deploymentId}/promote`
 
-Promotes a deployment to the next environment (e.g., development to staging, staging to production).
-
-**Required scope:** `manage:deployments`
+Promote a deployment to the next environment (dev -> staging -> production)
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `deploymentId` | `string` | Source deployment identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `deploymentId` | `string` | Yes | The deploymentId value. |
 
 ## Request Body
 
-| Field | Type | Default | Description |
+| Field | Type | Required | Description |
 |---|---|---|---|
-| `targetEnvironment` | `string` | Next environment | Target environment to promote to. |
+| `targetEnvironment` | `string` | No | The targetEnvironment value. |
 
 ## Response `202`
 
-Returns the new deployment object with status `IN_PROGRESS`.
+Accepted
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/deployments/deploy-002/promote" \
+curl -X POST "/api/v1/deployments/{deploymentId}/promote" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{ "targetEnvironment": "PRODUCTION" }'
-```
-
-```json title="Response"
-{
-  "id": "deploy-new",
-  "stackId": "stack-001",
-  "stackName": "Analytics Platform",
-  "version": 3,
-  "environment": "PRODUCTION",
-  "status": "IN_PROGRESS",
-  "promotedFrom": "deploy-002",
-  "steps": [
-    { "layer": "ingestion", "resourceType": "pipeline", "resourceId": "pipe-001", "action": "CREATE", "status": "PENDING" },
-    { "layer": "compute", "resourceType": "cluster", "resourceId": "cluster-001", "action": "CREATE", "status": "PENDING" }
-  ],
-  "startedAt": "2024-06-10T12:00:00Z",
-  "startedBy": "api"
-}
+  -d '{
+  "targetEnvironment": "example-targetEnvironment"
+}'
 ```

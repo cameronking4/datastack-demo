@@ -1,16 +1,16 @@
 {
   "title": "Alerts",
   "pages": [
-    "list-alerts",
-    "create-alert",
-    "get-alert",
-    "update-alert",
-    "delete-alert",
-    "mute-alert",
-    "unmute-alert",
+    "list-alert-incidents",
+    "list-alert-rules",
+    "create-alert-rule",
     "create-anomaly-detector",
     "create-notification-channel",
-    "list-alert-incidents",
-    "preview-alert-rule"
+    "get-alert-rule",
+    "update-alert-rule",
+    "delete-alert-rule",
+    "mute-alert",
+    "preview-alert-rule",
+    "unmute-alert"
   ]
 }

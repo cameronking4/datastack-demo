@@ -1,72 +1,27 @@
 ---
-title: List Users
-description: Retrieve a paginated list of users.
+title: List users
+description: List users with pagination, role, and team filters
 ---
 
-```
-GET /api/v1/users
-```
+`GET /api/v1/users`
 
-Returns a paginated list of users with optional filters.
-
-**Required scope:** `read:users`
+List users with pagination, role, and team filters
 
 ## Query Parameters
 
-| Parameter | Type | Default | Description |
+| Parameter | Type | Required | Description |
 |---|---|---|---|
-| `page` | `number` | `1` | Page number (min 1). |
-| `perPage` | `number` | `20` | Results per page (1–100). |
+| `role` | `string` | No | The role value. |
+| `teamId` | `string` | No | The teamId value. |
+| `status` | `string` | No | The status value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `data` | `object[]` | Array of user objects. |
-| `data[].id` | `string` | User identifier. |
-| `data[].fullName` | `string` | Full name. |
-| `data[].email` | `string` | Email address. |
-| `data[].avatarUrl` | `string` | Avatar image URL. |
-| `data[].department` | `string` | Department name. |
-| `data[].createdAt` | `string` | ISO 8601 creation timestamp. |
-| `data[].updatedAt` | `string` | ISO 8601 last update timestamp. |
-| `data[].role` | `string` | User role (e.g., `admin`). |
-| `data[].status` | `string` | Account status (`active`, `pending_verification`). |
-| `data[].lastLoginAt` | `string` | ISO 8601 last login timestamp. |
-| `pagination` | `object` | Pagination metadata. |
-| `pagination.total` | `number` | Total number of users. |
-| `pagination.page` | `number` | Current page. |
-| `pagination.perPage` | `number` | Results per page. |
-| `pagination.hasMore` | `boolean` | Whether more pages exist. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl "/api/v1/users?page=1&perPage=10" \
+curl -X GET "/api/v1/users" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "data": [
-    {
-      "id": "u1",
-      "fullName": "Ada Lovelace",
-      "email": "ada@datastack.dev",
-      "avatarUrl": "https://api.datastack.dev/avatars/ada.png",
-      "department": "Engineering",
-      "createdAt": "2024-01-15T10:00:00Z",
-      "updatedAt": "2024-06-01T15:30:00Z",
-      "role": "admin",
-      "status": "active",
-      "lastLoginAt": "2024-06-10T08:00:00Z"
-    }
-  ],
-  "pagination": {
-    "total": 1,
-    "page": 1,
-    "perPage": 10,
-    "hasMore": false
-  }
-}
 ```

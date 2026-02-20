@@ -3,12 +3,9 @@ title: Get table lineage
 description: Get table lineage
 ---
 
-```
-GET /api/v1/lineage/table/{catalogName}/{schemaName}/{tableName}
-```
+`GET /api/v1/lineage/table/{catalogName}/{schemaName}/{tableName}`
 
 Get table lineage
-
 
 ## Path Parameters
 
@@ -20,12 +17,11 @@ Get table lineage
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/lineage/table/example-cat/example-sch/example-tab" \
+curl -X GET "/api/v1/lineage/table/{catalogName}/{schemaName}/{tableName}" \
   -H "Authorization: Bearer <accessToken>"
 ```

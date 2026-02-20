@@ -1,29 +1,25 @@
 ---
-title: Delete Stack
-description: Delete a stack by identifier.
+title: Delete stack
+description: Delete a stack. The stack must be unlocked and have no active deployments.
 ---
 
-```
-DELETE /api/v1/stacks/{stackId}
-```
+`DELETE /api/v1/stacks/{stackId}`
 
-Deletes a stack. Running deployments are not affected.
-
-**Required scope:** `manage:stacks`
+Delete a stack. The stack must be unlocked and have no active deployments.
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `stackId` | `string` | Stack identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `stackId` | `string` | Yes | The stackId value. |
 
 ## Response `204`
 
-No content returned on success.
+No content
 
 ## Example
 
 ```bash title="cURL"
-curl -X DELETE "/api/v1/stacks/stack-001" \
+curl -X DELETE "/api/v1/stacks/{stackId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

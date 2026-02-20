@@ -1,9 +1,9 @@
 {
   "title": "Current User",
   "pages": [
-    "get-user-preferences",
-    "update-user-preferences",
+    "get-current-user",
     "get-recent-resources",
-    "get-current-user"
+    "get-user-preferences",
+    "update-user-preferences"
   ]
 }

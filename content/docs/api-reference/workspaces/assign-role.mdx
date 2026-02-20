@@ -3,12 +3,9 @@ title: Assign role
 description: Assign role
 ---
 
-```
-POST /api/v1/workspaces/{workspaceId}/roles
-```
+`POST /api/v1/workspaces/{workspaceId}/roles`
 
 Assign role
-
 
 ## Path Parameters
 
@@ -25,13 +22,12 @@ Assign role
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/workspaces/example-wor/roles" \
+curl -X POST "/api/v1/workspaces/{workspaceId}/roles" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

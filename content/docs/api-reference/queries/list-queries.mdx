@@ -1,69 +1,27 @@
 ---
-title: List Queries
-description: List saved SQL queries.
+title: List queries
+description: List saved SQL queries with optional filters
 ---
 
-```
-GET /api/v1/queries
-```
+`GET /api/v1/queries`
 
-Returns a paginated list of saved SQL queries.
-
-**Required scope:** `read:queries`
+List saved SQL queries with optional filters
 
 ## Query Parameters
 
-| Parameter | Type | Default | Description |
+| Parameter | Type | Required | Description |
 |---|---|---|---|
-| `page` | `number` | `1` | Page number (min 1). |
-| `pageSize` | `number` | `25` | Results per page (1–100). |
+| `warehouseId` | `string` | No | The warehouseId value. |
+| `ownerId` | `string` | No | The ownerId value. |
+| `tag` | `string` | No | The tag value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `queries` | `object[]` | Array of query objects. |
-| `queries[].id` | `string` | Query identifier. |
-| `queries[].name` | `string` | Display name. |
-| `queries[].description` | `string` | Query description. |
-| `queries[].warehouseId` | `string` | Target warehouse identifier. |
-| `queries[].sql` | `string` | SQL statement. |
-| `queries[].status` | `string` | Status (`SAVED`). |
-| `queries[].lastExecutedAt` | `string` | ISO 8601 last execution timestamp. |
-| `queries[].lastExecutionDurationMs` | `number` | Last execution duration in milliseconds. |
-| `queries[].createdAt` | `string` | ISO 8601 creation timestamp. |
-| `queries[].updatedAt` | `string` | ISO 8601 last-updated timestamp. |
-| `queries[].createdBy` | `string` | Creator identity. |
-| `totalCount` | `number` | Total number of queries. |
-| `page` | `number` | Current page number. |
-| `pageSize` | `number` | Results per page. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl "/api/v1/queries?page=1&pageSize=10" \
+curl -X GET "/api/v1/queries" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "queries": [
-    {
-      "id": "query-001",
-      "name": "Daily Active Users",
-      "description": "Count distinct users by day",
-      "warehouseId": "wh-001",
-      "sql": "SELECT date_trunc('day', created_at) AS day, COUNT(DISTINCT user_id) AS dau FROM main.gold.user_sessions GROUP BY 1 ORDER BY 1 DESC LIMIT 30",
-      "status": "SAVED",
-      "lastExecutedAt": "2024-06-10T09:00:00Z",
-      "lastExecutionDurationMs": 1250,
-      "createdAt": "2024-03-01T10:00:00Z",
-      "updatedAt": "2024-06-10T09:00:00Z",
-      "createdBy": "ada@datastack.dev"
-    }
-  ],
-  "totalCount": 2,
-  "page": 1,
-  "pageSize": 10
-}
 ```

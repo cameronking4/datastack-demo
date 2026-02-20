@@ -1,0 +1,39 @@
+---
+title: Create alert rule
+description: Create alert rule
+---
+
+`POST /api/v1/alerts/rules`
+
+Create alert rule
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `metric` | `string` | No | The metric value. |
+| `condition` | `string` | No | The condition value. |
+| `threshold` | `number` | No | The threshold value. |
+| `severity` | `string` | No | The severity value. |
+| `channels` | `array<string>` | No | The channels value. |
+
+## Response `201`
+
+Created
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/alerts/rules" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "metric": "example-metric",
+  "condition": "example-condition",
+  "threshold": 10,
+  "severity": "example-severity",
+  "channels": []
+}'
+```

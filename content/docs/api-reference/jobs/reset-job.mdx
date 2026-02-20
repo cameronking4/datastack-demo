@@ -1,58 +1,37 @@
 ---
-title: Reset Job
-description: Reset a job's state, optionally from a specific checkpoint.
+title: Reset job
+description: Reset job
 ---
 
-```
-POST /api/v1/jobs/{jobId}/reset
-```
+`POST /api/v1/jobs/{jobId}/reset`
 
-Queues a state reset for a job. The next run will start from the specified checkpoint or from scratch if none is provided.
-
-**Required scope:** `manage:jobs`
+Reset job
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `jobId` | `string` | The job identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `jobId` | `string` | Yes | The jobId value. |
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `fromCheckpoint` | `string` | No | Checkpoint identifier to reset from. When omitted the full state is cleared. |
-| `clearState` | `boolean` | No | Whether to clear all persisted state. Defaults to `false`. |
+| `fromCheckpoint` | `string` | No | The fromCheckpoint value. |
+| `clearState` | `boolean` | No | The clearState value. |
 
-## Response `202`
+## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `jobId` | `string` | Job identifier. |
-| `resetId` | `string` | Unique reset request identifier. |
-| `fromCheckpoint` | `string\|null` | Checkpoint used, or `null` if resetting from scratch. |
-| `clearState` | `boolean` | Whether state was cleared. |
-| `status` | `string` | Reset status (`RESET_ACCEPTED`). |
-| `message` | `string` | Human-readable status message. |
-| `requestId` | `string` | Request trace identifier. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST /api/v1/jobs/job-001/reset \
+curl -X POST "/api/v1/jobs/{jobId}/reset" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{ "fromCheckpoint": "cp-20240601", "clearState": false }'
-```
-
-```json title="Response — 202 Accepted"
-{
-  "jobId": "job-001",
-  "resetId": "reset-1717200000000",
-  "fromCheckpoint": "cp-20240601",
-  "clearState": false,
-  "status": "RESET_ACCEPTED",
-  "message": "Job state reset has been queued. Next run will start from the specified checkpoint.",
-  "requestId": "req-abc123"
-}
+  -d '{
+  "fromCheckpoint": "example-fromCheckpoint",
+  "clearState": true
+}'
 ```

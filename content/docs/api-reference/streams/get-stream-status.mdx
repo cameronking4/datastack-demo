@@ -3,12 +3,9 @@ title: Get stream status
 description: Get streaming job status and health
 ---
 
-```
-GET /api/v1/streams/{streamId}/status
-```
+`GET /api/v1/streams/{streamId}/status`
 
 Get streaming job status and health
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Get streaming job status and health
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/streams/example-str/status" \
+curl -X GET "/api/v1/streams/{streamId}/status" \
   -H "Authorization: Bearer <accessToken>"
 ```

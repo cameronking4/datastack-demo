@@ -1,37 +1,25 @@
 ---
-title: Delete Connection
-description: Delete a connection by identifier.
+title: Delete connection
+description: Delete a connection. Fails if any active pipelines or jobs reference it.
 ---
 
-```
-DELETE /api/v1/connections/{connectionId}
-```
+`DELETE /api/v1/connections/{connectionId}`
 
-Deletes a connection. Stacks referencing this connection should be updated first.
-
-**Required scope:** `manage:connections`
+Delete a connection. Fails if any active pipelines or jobs reference it.
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `connectionId` | `string` | Connection identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `connectionId` | `string` | Yes | The connectionId value. |
 
-## Response `200`
+## Response `204`
 
-| Field | Type | Description |
-|---|---|---|
-| `message` | `string` | Confirmation message. |
+No content
 
 ## Example
 
 ```bash title="cURL"
-curl -X DELETE "/api/v1/connections/conn-001" \
+curl -X DELETE "/api/v1/connections/{connectionId}" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "message": "Connection conn-001 deleted."
-}
 ```

@@ -3,12 +3,9 @@ title: Get run logs
 description: Get run logs
 ---
 
-```
-GET /api/v1/run-logs/{runId}
-```
+`GET /api/v1/run-logs/{runId}`
 
 Get run logs
-
 
 ## Path Parameters
 
@@ -25,12 +22,11 @@ Get run logs
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/run-logs/example-run" \
+curl -X GET "/api/v1/run-logs/{runId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

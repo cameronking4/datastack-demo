@@ -3,12 +3,9 @@ title: Backfill job
 description: Backfill job
 ---
 
-```
-POST /api/v1/jobs/{jobId}/backfill
-```
+`POST /api/v1/jobs/{jobId}/backfill`
 
 Backfill job
-
 
 ## Path Parameters
 
@@ -25,13 +22,12 @@ Backfill job
 
 ## Response `202`
 
-Returns accepted.
-
+Accepted
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/jobs/example-job/backfill" \
+curl -X POST "/api/v1/jobs/{jobId}/backfill" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

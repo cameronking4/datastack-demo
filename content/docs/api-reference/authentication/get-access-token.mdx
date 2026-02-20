@@ -1,0 +1,35 @@
+---
+title: Get access token
+description: Exchange credentials for access token (OAuth2 client_credentials or refresh_token grant)
+---
+
+`POST /api/v1/auth/token`
+
+Exchange credentials for access token (OAuth2 client_credentials or refresh_token grant)
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `grantType` | `string` | Yes | The grantType value. |
+| `scopes` | `array<string>` | No | The scopes value. |
+| `refreshToken` | `string` | No | The refreshToken value. |
+| `audience` | `string` | No | The audience value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/auth/token" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "grantType": "example-grantType",
+  "scopes": [],
+  "refreshToken": "example-refreshToken",
+  "audience": "example-audience"
+}'
+```

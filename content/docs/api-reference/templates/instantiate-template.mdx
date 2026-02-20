@@ -3,12 +3,9 @@ title: Instantiate template
 description: Create a stack or pipeline from a template with variable substitution
 ---
 
-```
-POST /api/v1/templates/{templateId}/instantiate
-```
+`POST /api/v1/templates/{templateId}/instantiate`
 
 Create a stack or pipeline from a template with variable substitution
-
 
 ## Path Parameters
 
@@ -18,13 +15,11 @@ Create a stack or pipeline from a template with variable substitution
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/templates/example-tem/instantiate" \
-  -H "Authorization: Bearer <accessToken>" \
-  -H "Content-Type: application/json"
+curl -X POST "/api/v1/templates/{templateId}/instantiate" \
+  -H "Authorization: Bearer <accessToken>"
 ```

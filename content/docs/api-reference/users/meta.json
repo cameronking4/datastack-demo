@@ -3,7 +3,7 @@
   "pages": [
     "list-users",
     "create-user",
-    "get-user",
+    "get-user-by-id",
     "update-user",
     "delete-user"
   ]

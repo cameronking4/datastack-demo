@@ -1,0 +1,45 @@
+---
+title: Update alert rule
+description: Update alert rule conditions, channels, or enabled state
+---
+
+`PATCH /api/v1/alerts/{alertId}`
+
+Update alert rule conditions, channels, or enabled state
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `alertId` | `string` | Yes | The alertId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `condition` | `object` | No | The condition value. |
+| `severity` | `string` | No | The severity value. |
+| `channels` | `array<object>` | No | The channels value. |
+| `enabled` | `boolean` | No | The enabled value. |
+| `cooldownMinutes` | `integer` | No | The cooldownMinutes value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH "/api/v1/alerts/{alertId}" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "condition": {},
+  "severity": "example-severity",
+  "channels": [],
+  "enabled": true,
+  "cooldownMinutes": 10
+}'
+```

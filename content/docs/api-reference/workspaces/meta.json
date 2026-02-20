@@ -1,18 +1,18 @@
 {
   "title": "Workspaces",
   "pages": [
+    "list-role-assignments",
+    "list-workspace-members",
+    "list-workspace-templates",
     "list-workspaces",
     "create-workspace",
-    "get-workspace",
-    "list-workspace-members",
-    "add-workspace-member",
     "create-workspace-backup",
+    "get-usage-report",
+    "get-workspace",
     "get-workspace-export",
-    "list-role-assignments",
-    "assign-role",
     "get-workspace-settings",
     "update-workspace-settings",
-    "list-workspace-templates",
-    "get-usage-report"
+    "add-workspace-member",
+    "assign-role"
   ]
 }

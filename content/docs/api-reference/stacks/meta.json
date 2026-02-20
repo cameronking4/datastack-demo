@@ -1,16 +1,16 @@
 {
   "title": "Stacks",
   "pages": [
+    "list-stack-deployments",
     "list-stacks",
     "create-stack",
     "get-stack",
     "update-stack",
     "delete-stack",
+    "bulk-validate-stacks",
     "deploy-stack",
-    "validate-stack",
-    "list-stack-deployments",
     "lock-stack",
     "unlock-stack",
-    "bulk-validate-stacks"
+    "validate-stack"
   ]
 }

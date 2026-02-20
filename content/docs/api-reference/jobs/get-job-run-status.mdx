@@ -1,0 +1,26 @@
+---
+title: Get job run status
+description: Get job run status
+---
+
+`GET /api/v1/jobs/{jobId}/runs/{runId}`
+
+Get job run status
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `jobId` | `string` | Yes | The jobId value. |
+| `runId` | `string` | Yes | The runId value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/jobs/{jobId}/runs/{runId}" \
+  -H "Authorization: Bearer <accessToken>"
+```

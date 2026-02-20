@@ -3,12 +3,9 @@ title: Duplicate job
 description: Duplicate job
 ---
 
-```
-POST /api/v1/jobs/{jobId}/duplicate
-```
+`POST /api/v1/jobs/{jobId}/duplicate`
 
 Duplicate job
-
 
 ## Path Parameters
 
@@ -24,13 +21,12 @@ Duplicate job
 
 ## Response `201`
 
-Returns created.
-
+Created
 
 ## Example
 
 ```bash title="cURL"
-curl -X POST "/api/v1/jobs/example-job/duplicate" \
+curl -X POST "/api/v1/jobs/{jobId}/duplicate" \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{

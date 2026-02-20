@@ -3,24 +3,20 @@ title: Run validation
 description: Run data quality rules against a table on demand
 ---
 
-```
-POST /api/v1/data-quality/validate
-```
+`POST /api/v1/data-quality/validate`
 
 Run data quality rules against a table on demand
-
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `table` | `string` | No | The table value. |
-| `ruleIds` | `string[]` | No | The ruleIds value. |
+| `ruleIds` | `array<string>` | No | The ruleIds value. |
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 

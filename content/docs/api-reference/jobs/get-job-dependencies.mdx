@@ -3,12 +3,9 @@ title: Get job dependencies
 description: Get job dependencies
 ---
 
-```
-GET /api/v1/jobs/{jobId}/dependencies
-```
+`GET /api/v1/jobs/{jobId}/dependencies`
 
 Get job dependencies
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Get job dependencies
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/jobs/example-job/dependencies" \
+curl -X GET "/api/v1/jobs/{jobId}/dependencies" \
   -H "Authorization: Bearer <accessToken>"
 ```

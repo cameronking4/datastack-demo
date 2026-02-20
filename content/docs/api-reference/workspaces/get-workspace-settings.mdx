@@ -3,12 +3,9 @@ title: Get workspace settings
 description: Get workspace-level settings (defaults, features, retention)
 ---
 
-```
-GET /api/v1/workspaces/{workspaceId}/settings
-```
+`GET /api/v1/workspaces/{workspaceId}/settings`
 
 Get workspace-level settings (defaults, features, retention)
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Get workspace-level settings (defaults, features, retention)
 
 ## Response `200`
 
-Returns success.
-
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl -X GET "/api/v1/workspaces/example-wor/settings" \
+curl -X GET "/api/v1/workspaces/{workspaceId}/settings" \
   -H "Authorization: Bearer <accessToken>"
 ```

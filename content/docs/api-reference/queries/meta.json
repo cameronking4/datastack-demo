@@ -2,16 +2,16 @@
   "title": "Queries",
   "pages": [
     "list-queries",
+    "list-slow-queries",
+    "create-cache-strategy",
     "create-query",
     "get-query",
+    "get-query-results",
     "update-query",
     "delete-query",
-    "execute-query",
-    "get-query-results",
-    "explain-query",
     "clone-query",
-    "create-cache-strategy",
-    "optimize-query",
-    "list-slow-queries"
+    "execute-query",
+    "explain-query",
+    "optimize-query"
   ]
 }

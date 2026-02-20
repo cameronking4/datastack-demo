@@ -1,70 +1,25 @@
 ---
-title: Get Pipeline
-description: Retrieve details of a specific pipeline.
+title: Get pipeline
+description: Get pipeline
 ---
 
-```
-GET /api/v1/pipelines/{pipelineId}
-```
+`GET /api/v1/pipelines/{pipelineId}`
 
-Returns full details for a single pipeline.
-
-**Required scope:** `read:pipelines`
+Get pipeline
 
 ## Path Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `pipelineId` | `string` | The pipeline identifier. |
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `pipelineId` | `string` | Yes | The pipelineId value. |
 
 ## Response `200`
 
-| Field | Type | Description |
-|---|---|---|
-| `id` | `string` | Pipeline identifier. |
-| `name` | `string` | Pipeline name. |
-| `workspaceId` | `string` | Workspace identifier. |
-| `state` | `string` | Current state. |
-| `target` | `string` | Target environment. |
-| `catalog` | `string` | Unity Catalog name. |
-| `schema` | `string` | Database schema. |
-| `continuous` | `boolean` | Continuous mode. |
-| `photon` | `boolean` | Photon enabled. |
-| `edition` | `string` | Product edition. |
-| `clusters` | `object[]` | Cluster configurations. |
-| `createdAt` | `string` | Creation timestamp. |
-| `createdBy` | `string` | Creator email. |
-| `lastRunAt` | `string` | Last run timestamp. |
+Success
 
 ## Example
 
 ```bash title="cURL"
-curl /api/v1/pipelines/pipe-001 \
+curl -X GET "/api/v1/pipelines/{pipelineId}" \
   -H "Authorization: Bearer <accessToken>"
-```
-
-```json title="Response"
-{
-  "id": "pipe-001",
-  "name": "Bronze Ingestion",
-  "workspaceId": "ws-001",
-  "state": "RUNNING",
-  "target": "PRODUCTION",
-  "catalog": "main",
-  "schema": "bronze",
-  "continuous": true,
-  "photon": true,
-  "edition": "PRO",
-  "clusters": [
-    {
-      "label": "default",
-      "nodeType": "i3.xlarge",
-      "workerCount": 4,
-      "enableAutoscaling": true
-    }
-  ],
-  "createdAt": "2024-03-01T09:00:00Z",
-  "createdBy": "ada@datastack.dev",
-  "lastRunAt": "2024-06-10T02:00:00Z"
-}
 ```

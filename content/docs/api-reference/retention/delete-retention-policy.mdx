@@ -3,12 +3,9 @@ title: Delete retention policy
 description: Delete retention policy
 ---
 
-```
-DELETE /api/v1/retention/policies/{policyId}
-```
+`DELETE /api/v1/retention/policies/{policyId}`
 
 Delete retention policy
-
 
 ## Path Parameters
 
@@ -18,12 +15,11 @@ Delete retention policy
 
 ## Response `204`
 
-Returns no content.
-
+No content
 
 ## Example
 
 ```bash title="cURL"
-curl -X DELETE "/api/v1/retention/policies/example-pol" \
+curl -X DELETE "/api/v1/retention/policies/{policyId}" \
   -H "Authorization: Bearer <accessToken>"
 ```

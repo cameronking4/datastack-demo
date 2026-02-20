@@ -1,0 +1,37 @@
+---
+title: Create or overwrite notebook
+description: Create or overwrite notebook
+---
+
+`PUT /api/v1/notebooks`
+
+Create or overwrite notebook
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `path` | `string` | Yes | The path value. |
+| `language` | `string` | Yes | The language value. |
+| `content` | `string` | No | The content value. |
+| `overwrite` | `boolean` | No | The overwrite value. |
+| `format` | `string` | No | The format value. |
+
+## Response `200`
+
+Success
+
+## Example
+
+```bash title="cURL"
+curl -X PUT "/api/v1/notebooks" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "path": "example-path",
+  "language": "example-language",
+  "content": "example-content",
+  "overwrite": true,
+  "format": "example-format"
+}'
+```
