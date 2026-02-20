@@ -2,8 +2,35 @@ import { NextRequest, NextResponse } from "next/server";
 import { isPreviewEnabled, previewRequiredResponse } from "@/lib/api/preview";
 
 /**
- * GET /api/v1/clusters/:clusterId/metrics
- * Get cluster performance metrics (preview only)
+ * @swagger
+ * /api/v1/clusters/{clusterId}/metrics:
+ *   get:
+ *     summary: Get cluster metrics
+ *     description: Get cluster performance metrics (preview only)
+ *     parameters:
+ *       - in: path
+ *         name: clusterId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: startTime
+ *         schema:
+ *           type: string
+ *           format: date-time
+ *       - in: query
+ *         name: endTime
+ *         schema:
+ *           type: string
+ *           format: date-time
+ *       - in: query
+ *         name: metricNames
+ *         schema:
+ *           type: string
+ *         description: Comma-separated metric names
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(
   request: NextRequest,

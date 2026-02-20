@@ -2,8 +2,20 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/templates/{templateId}
- * Get template details and configuration.
+ * @swagger
+ * /api/v1/templates/{templateId}:
+ *   get:
+ *     summary: Get template
+ *     description: Get template details and configuration
+ *     parameters:
+ *       - in: path
+ *         name: templateId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(
   request: NextRequest,

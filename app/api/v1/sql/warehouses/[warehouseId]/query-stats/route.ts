@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_QUERY_INTELLIGENCE_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/sql/warehouses/{warehouseId}/query-stats:
+ *   get:
+ *     summary: Get warehouse query stats
+ *     parameters:
+ *       - in: path
+ *         name: warehouseId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ warehouseId: string }> }

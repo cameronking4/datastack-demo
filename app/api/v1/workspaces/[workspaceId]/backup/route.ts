@@ -2,6 +2,35 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getRequestId } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/workspaces/{workspaceId}/backup:
+ *   post:
+ *     summary: Create workspace backup
+ *     description: Queue a workspace backup (metadata or full)
+ *     parameters:
+ *       - in: path
+ *         name: workspaceId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               scope:
+ *                 type: string
+ *                 enum: [metadata, full]
+ *               includeSecrets:
+ *                 type: boolean
+ *               destinationPath:
+ *                 type: string
+ *     responses:
+ *       202:
+ *         description: Accepted
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ workspaceId: string }> }

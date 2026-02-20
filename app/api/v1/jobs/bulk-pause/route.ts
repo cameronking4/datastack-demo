@@ -2,8 +2,23 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * POST /api/v1/jobs/bulk-pause
- * Pause multiple jobs in a single request.
+ * @swagger
+ * /api/v1/jobs/bulk-pause:
+ *   post:
+ *     summary: Bulk pause jobs
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               jobIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request);

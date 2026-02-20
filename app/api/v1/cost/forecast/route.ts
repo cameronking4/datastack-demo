@@ -1,6 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_COST_MANAGEMENT_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/cost/forecast:
+ *   get:
+ *     summary: Get cost forecast
+ *     description: Get projected cost over a horizon
+ *     parameters:
+ *       - in: query
+ *         name: horizon
+ *         schema:
+ *           type: string
+ *         description: Forecast horizon in days
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_COST_MANAGEMENT_HEADER)) {
     return featureRequiredResponse(FEATURE_COST_MANAGEMENT_HEADER);

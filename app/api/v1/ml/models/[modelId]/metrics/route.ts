@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_MLOPS_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/ml/models/{modelId}/metrics:
+ *   get:
+ *     summary: Get model metrics
+ *     parameters:
+ *       - in: path
+ *         name: modelId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ modelId: string }> }

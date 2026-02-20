@@ -3,6 +3,33 @@ import { NextResponse } from "next/server";
 import { getRequestId } from "@/lib/api/response";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_DATA_APPS_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/apps/{appId}/deploy:
+ *   post:
+ *     summary: Deploy app
+ *     parameters:
+ *       - in: path
+ *         name: appId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               versionId:
+ *                 type: string
+ *               tag:
+ *                 type: string
+ *               env:
+ *                 type: object
+ *     responses:
+ *       202:
+ *         description: Accepted
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ appId: string }> }

@@ -2,6 +2,29 @@ import { NextRequest } from "next/server";
 import { listResponse, parsePagePagination, getRequestId } from "@/lib/api/response";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_RBAC_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/permissions:
+ *   get:
+ *     summary: List permissions
+ *     description: List available permissions with optional scope filter
+ *     parameters:
+ *       - in: query
+ *         name: scope
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_RBAC_HEADER)) {
     return featureRequiredResponse(FEATURE_RBAC_HEADER);

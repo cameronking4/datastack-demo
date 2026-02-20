@@ -29,7 +29,7 @@ pathMappings:
   - match: lib/api/preview.ts
     impacts:
       - ./content/docs/*
-mode: strict
+mode: auto
 branchStrategy: single
 devin:
   apiVersion: v1
@@ -37,6 +37,8 @@ devin:
   maxAcuLimit: 2
   tags:
     - docdrift
+  customInstructions:
+    - .docdrift/DocDrift.md
 policy:
   prCaps:
     maxPrsPerDay: 10
@@ -44,7 +46,6 @@ policy:
   confidence:
     autopatchThreshold: 0.75
   allowlist:
-    - openapi/**
     - ./**
   verification:
     commands:

@@ -2,6 +2,38 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getRequestId } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/pipelines/{pipelineId}/dependencies:
+ *   get:
+ *     summary: Get pipeline dependencies
+ *     description: Get upstream and downstream dependencies
+ *     parameters:
+ *       - in: path
+ *         name: pipelineId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *   put:
+ *     summary: Update pipeline dependencies
+ *     parameters:
+ *       - in: path
+ *         name: pipelineId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ pipelineId: string }> }

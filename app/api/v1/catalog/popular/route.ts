@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_CATALOG_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/catalog/popular:
+ *   get:
+ *     summary: Get popular datasets
+ *     description: Get most queried or accessed catalog assets
+ *     parameters:
+ *       - in: query
+ *         name: period
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_CATALOG_HEADER)) {
     return featureRequiredResponse(FEATURE_CATALOG_HEADER);

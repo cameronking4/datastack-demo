@@ -1,6 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_STREAMING_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/streams/{streamId}/checkpoint:
+ *   post:
+ *     summary: Create checkpoint
+ *     description: Create or manage stream checkpoint
+ *     parameters:
+ *       - in: path
+ *         name: streamId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               action:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ streamId: string }> }

@@ -1,6 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_STREAMING_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/streams/{streamId}/scale:
+ *   post:
+ *     summary: Scale stream
+ *     description: Scale streaming job parallelism
+ *     parameters:
+ *       - in: path
+ *         name: streamId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               targetParallelism:
+ *                 type: integer
+ *               autoScale:
+ *                 type: boolean
+ *               minParallelism:
+ *                 type: integer
+ *               maxParallelism:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ streamId: string }> }

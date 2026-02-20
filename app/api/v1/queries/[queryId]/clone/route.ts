@@ -2,8 +2,28 @@ import { NextRequest } from "next/server";
 import { created, getRequestId } from "@/lib/api/response";
 
 /**
- * POST /api/v1/queries/{queryId}/clone
- * Clone a saved query with a new name.
+ * @swagger
+ * /api/v1/queries/{queryId}/clone:
+ *   post:
+ *     summary: Clone query
+ *     description: Clone a saved query with a new name
+ *     parameters:
+ *       - in: path
+ *         name: queryId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
  */
 export async function POST(
   request: NextRequest,

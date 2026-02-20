@@ -2,8 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { isPreviewEnabled, previewRequiredResponse } from "@/lib/api/preview";
 
 /**
- * POST /api/v1/jobs/:jobId/runs/:runId/cancel
- * Cancel a running job run (preview only)
+ * @swagger
+ * /api/v1/jobs/{jobId}/runs/{runId}/cancel:
+ *   post:
+ *     summary: Cancel job run
+ *     parameters:
+ *       - in: path
+ *         name: jobId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: runId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function POST(
   request: NextRequest,

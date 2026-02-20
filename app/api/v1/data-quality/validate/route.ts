@@ -1,6 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_DATA_QUALITY_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/data-quality/validate:
+ *   post:
+ *     summary: Run validation
+ *     description: Run data quality rules against a table on demand
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               table:
+ *                 type: string
+ *               ruleIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function POST(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_DATA_QUALITY_HEADER)) {
     return featureRequiredResponse(FEATURE_DATA_QUALITY_HEADER);

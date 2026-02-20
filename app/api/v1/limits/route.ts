@@ -2,8 +2,19 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/limits
- * Get account and workspace limits (quotas).
+ * @swagger
+ * /api/v1/limits:
+ *   get:
+ *     summary: Get limits
+ *     description: Get account and workspace limits (quotas)
+ *     parameters:
+ *       - in: query
+ *         name: workspaceId
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

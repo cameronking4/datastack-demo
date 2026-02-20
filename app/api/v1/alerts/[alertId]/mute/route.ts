@@ -2,6 +2,42 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getRequestId } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/alerts/{alertId}/mute:
+ *   post:
+ *     summary: Mute alert
+ *     parameters:
+ *       - in: path
+ *         name: alertId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               durationMinutes:
+ *                 type: integer
+ *               reason:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *   delete:
+ *     summary: Unmute alert
+ *     parameters:
+ *       - in: path
+ *         name: alertId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ alertId: string }> }

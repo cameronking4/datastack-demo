@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_GOVERNANCE_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/governance/access-requests:
+ *   get:
+ *     summary: List access requests
+ *     parameters:
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_GOVERNANCE_HEADER)) {
     return featureRequiredResponse(FEATURE_GOVERNANCE_HEADER);

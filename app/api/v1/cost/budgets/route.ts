@@ -1,6 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_COST_MANAGEMENT_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/cost/budgets:
+ *   post:
+ *     summary: Create budget
+ *     description: Create a cost budget with alert thresholds
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               monthlyLimit:
+ *                 type: number
+ *               alertThresholds:
+ *                 type: array
+ *                 items:
+ *                   type: number
+ *               notifyEmails:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function POST(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_COST_MANAGEMENT_HEADER)) {
     return featureRequiredResponse(FEATURE_COST_MANAGEMENT_HEADER);

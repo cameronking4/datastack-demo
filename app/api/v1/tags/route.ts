@@ -7,8 +7,42 @@ import {
 } from "@/lib/api/response";
 
 /**
- * GET /api/v1/tags
- * List tags used across the workspace (tag taxonomy).
+ * @swagger
+ * /api/v1/tags:
+ *   get:
+ *     summary: List tags
+ *     description: List tags used across the workspace (tag taxonomy)
+ *     parameters:
+ *       - in: query
+ *         name: prefix
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create tag
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               key:
+ *                 type: string
+ *               value:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -39,10 +73,6 @@ export async function GET(request: NextRequest) {
   });
 }
 
-/**
- * POST /api/v1/tags
- * Create or register a tag key-value (for taxonomy).
- */
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request);
   const body = (await request.json()) as { key: string; value: string };

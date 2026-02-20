@@ -2,6 +2,34 @@ import { NextRequest, NextResponse } from "next/server";
 import { getRequestId } from "@/lib/api/response";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_OBSERVABILITY_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/run-metrics:
+ *   get:
+ *     summary: List run metrics
+ *     parameters:
+ *       - in: query
+ *         name: jobId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: runId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: from
+ *         schema:
+ *           type: string
+ *           format: date-time
+ *       - in: query
+ *         name: to
+ *         schema:
+ *           type: string
+ *           format: date-time
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_OBSERVABILITY_HEADER)) {
     return featureRequiredResponse(FEATURE_OBSERVABILITY_HEADER);

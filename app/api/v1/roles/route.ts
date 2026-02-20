@@ -7,6 +7,49 @@ import {
 } from "@/lib/api/response";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_RBAC_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/roles:
+ *   get:
+ *     summary: List roles
+ *     parameters:
+ *       - in: query
+ *         name: workspaceId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create role
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               workspaceId:
+ *                 type: string
+ *               permissions:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function GET(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_RBAC_HEADER)) {
     return featureRequiredResponse(FEATURE_RBAC_HEADER);

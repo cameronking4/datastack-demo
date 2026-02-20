@@ -2,6 +2,36 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getRequestId } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/clusters/{clusterId}/resize:
+ *   post:
+ *     summary: Resize cluster
+ *     description: Resize cluster workers or node type
+ *     parameters:
+ *       - in: path
+ *         name: clusterId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               numWorkers:
+ *                 type: integer
+ *               minWorkers:
+ *                 type: integer
+ *               maxWorkers:
+ *                 type: integer
+ *               nodeType:
+ *                 type: string
+ *     responses:
+ *       202:
+ *         description: Accepted
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ clusterId: string }> }

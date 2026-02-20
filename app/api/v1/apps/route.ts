@@ -7,6 +7,49 @@ import {
 } from "@/lib/api/response";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_DATA_APPS_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/apps:
+ *   get:
+ *     summary: List apps
+ *     parameters:
+ *       - in: query
+ *         name: workspaceId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create app
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               workspaceId:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function GET(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_DATA_APPS_HEADER)) {
     return featureRequiredResponse(FEATURE_DATA_APPS_HEADER);

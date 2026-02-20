@@ -2,6 +2,22 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getRequestId } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/pipelines/{pipelineId}/health:
+ *   get:
+ *     summary: Get pipeline health
+ *     description: Get pipeline health checks and status
+ *     parameters:
+ *       - in: path
+ *         name: pipelineId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ pipelineId: string }> }

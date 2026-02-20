@@ -1,6 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_COST_MANAGEMENT_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/cost/analysis:
+ *   get:
+ *     summary: Get cost analysis
+ *     description: Get cost breakdown by category for a period
+ *     parameters:
+ *       - in: query
+ *         name: startDate
+ *         schema:
+ *           type: string
+ *           format: date
+ *       - in: query
+ *         name: endDate
+ *         schema:
+ *           type: string
+ *           format: date
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_COST_MANAGEMENT_HEADER)) {
     return featureRequiredResponse(FEATURE_COST_MANAGEMENT_HEADER);

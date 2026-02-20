@@ -2,8 +2,28 @@ import { NextRequest, NextResponse } from "next/server";
 import { isPreviewEnabled, previewRequiredResponse } from "@/lib/api/preview";
 
 /**
- * POST /api/v1/pipelines/:pipelineId/validate
- * Validate pipeline configuration before starting (preview only)
+ * @swagger
+ * /api/v1/pipelines/{pipelineId}/validate:
+ *   post:
+ *     summary: Validate pipeline
+ *     description: Validate pipeline configuration before starting (preview only)
+ *     parameters:
+ *       - in: path
+ *         name: pipelineId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fullRefresh:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function POST(
   request: NextRequest,

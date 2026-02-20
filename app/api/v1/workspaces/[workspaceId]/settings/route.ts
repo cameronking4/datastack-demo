@@ -2,8 +2,36 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/workspaces/{workspaceId}/settings
- * Get workspace-level settings (defaults, features, retention).
+ * @swagger
+ * /api/v1/workspaces/{workspaceId}/settings:
+ *   get:
+ *     summary: Get workspace settings
+ *     description: Get workspace-level settings (defaults, features, retention)
+ *     parameters:
+ *       - in: path
+ *         name: workspaceId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *   patch:
+ *     summary: Update workspace settings
+ *     parameters:
+ *       - in: path
+ *         name: workspaceId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(
   request: NextRequest,
@@ -39,10 +67,6 @@ export async function GET(
   );
 }
 
-/**
- * PATCH /api/v1/workspaces/{workspaceId}/settings
- * Update workspace-level settings.
- */
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ workspaceId: string }> }

@@ -8,20 +8,20 @@ import {
 
 /**
  * @swagger
- * /api/v1/backups:
+ * /api/v1/snapshots:
  *   get:
- *     summary: List backups
- *     description: List workspace backups with optional filters by workspace and status
+ *     summary: List snapshots
+ *     description: List table or volume snapshots with optional workspace and type filters
  *     parameters:
  *       - in: query
  *         name: workspaceId
  *         schema:
  *           type: string
  *       - in: query
- *         name: status
+ *         name: type
  *         schema:
  *           type: string
- *           enum: [pending, completed, failed]
+ *           enum: [table, volume]
  *       - in: query
  *         name: limit
  *         schema:
@@ -34,8 +34,8 @@ import {
  *       200:
  *         description: Success
  *   post:
- *     summary: Create backup
- *     description: Create a new backup for a workspace
+ *     summary: Create snapshot
+ *     description: Create a new table or volume snapshot
  *     requestBody:
  *       required: true
  *       content:
@@ -44,86 +44,88 @@ import {
  *             type: object
  *             required:
  *               - workspaceId
+ *               - resourceType
+ *               - resourceId
  *             properties:
  *               workspaceId:
  *                 type: string
- *               type:
+ *               resourceType:
  *                 type: string
- *                 enum: [full, incremental]
+ *                 enum: [table, volume]
+ *               resourceId:
+ *                 type: string
+ *               name:
+ *                 type: string
  *               retentionDays:
  *                 type: integer
  *     responses:
  *       201:
  *         description: Created
  */
-
-/**
- * GET /api/v1/backups
- * List workspace backups with optional filters.
- */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const { limit, offset } = parseOffsetPagination(searchParams, { limit: 25 });
   const requestId = getRequestId(request);
   const workspaceId = searchParams.get("workspaceId");
-  const status = searchParams.get("status");
+  const type = searchParams.get("type");
 
-  const backups = [
+  const snapshots = [
     {
-      backupId: "backup-001",
+      snapshotId: "snap-001",
       workspaceId: "ws-001",
-      type: "full",
-      status: "completed",
-      sizeBytes: 10737418240,
-      startedAt: "2024-06-09T22:00:00Z",
-      completedAt: "2024-06-10T01:30:00Z",
-      retentionUntil: "2024-07-10T01:30:00Z",
+      type: "table",
+      resourceId: "main.schema.events",
+      name: "events-pre-migration",
+      sizeBytes: 2147483648,
+      createdAt: "2024-06-08T00:00:00Z",
+      retentionUntil: "2024-07-08T00:00:00Z",
+      status: "available",
     },
     {
-      backupId: "backup-002",
+      snapshotId: "snap-002",
       workspaceId: "ws-001",
-      type: "incremental",
-      status: "completed",
-      sizeBytes: 536870912,
-      startedAt: "2024-06-10T22:00:00Z",
-      completedAt: "2024-06-10T22:15:00Z",
-      retentionUntil: "2024-07-10T22:15:00Z",
+      type: "volume",
+      resourceId: "vol-abc-001",
+      name: "bronze-volume-daily",
+      sizeBytes: 10737418240,
+      createdAt: "2024-06-10T02:00:00Z",
+      retentionUntil: "2024-07-10T02:00:00Z",
+      status: "available",
     },
   ];
 
-  let filtered = backups;
-  if (workspaceId) filtered = filtered.filter((b) => b.workspaceId === workspaceId);
-  if (status) filtered = filtered.filter((b) => b.status === status);
+  let filtered = snapshots;
+  if (workspaceId) filtered = filtered.filter((s) => s.workspaceId === workspaceId);
+  if (type) filtered = filtered.filter((s) => s.type === type);
   const totalCount = filtered.length;
   const paged = filtered.slice(offset, offset + limit);
 
-  return listResponse("backups", paged, totalCount, {
+  return listResponse("snapshots", paged, totalCount, {
     limit,
     offset,
     requestId,
   });
 }
 
-/**
- * POST /api/v1/backups
- * Create a new backup for a workspace.
- */
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request);
   const body = (await request.json()) as {
     workspaceId: string;
-    type?: "full" | "incremental";
+    resourceType: "table" | "volume";
+    resourceId: string;
+    name?: string;
     retentionDays?: number;
   };
 
   return created(
     {
-      backupId: "backup-" + Date.now(),
+      snapshotId: "snap-" + Date.now(),
       workspaceId: body.workspaceId,
-      type: body.type ?? "full",
-      status: "pending",
-      startedAt: new Date().toISOString(),
-      completedAt: null,
+      type: body.resourceType,
+      resourceId: body.resourceId,
+      name: body.name ?? `snapshot-${body.resourceId}`,
+      status: "creating",
+      createdAt: new Date().toISOString(),
       retentionUntil: null,
     },
     { requestId }

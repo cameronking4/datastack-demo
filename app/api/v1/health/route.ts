@@ -2,10 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/health
- * Liveness/readiness check for load balancers and orchestrators.
- * Returns 200 when the API is accepting requests.
- * Query param probe=readiness includes dependency checks.
+ * @swagger
+ * /api/v1/health:
+ *   get:
+ *     summary: Health check
+ *     description: Liveness/readiness check for load balancers and orchestrators. Query param probe=readiness includes dependency checks.
+ *     parameters:
+ *       - in: query
+ *         name: probe
+ *         schema:
+ *           type: string
+ *           enum: [readiness]
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(request: NextRequest) {
   const requestId = getRequestId(request);

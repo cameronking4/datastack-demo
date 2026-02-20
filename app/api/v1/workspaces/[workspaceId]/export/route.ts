@@ -2,8 +2,25 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/workspaces/{workspaceId}/export
- * Request or retrieve a workspace configuration export (stacks, jobs, connections metadata).
+ * @swagger
+ * /api/v1/workspaces/{workspaceId}/export:
+ *   get:
+ *     summary: Get workspace export
+ *     description: Request or retrieve a workspace configuration export (stacks, jobs, connections metadata)
+ *     parameters:
+ *       - in: path
+ *         name: workspaceId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: format
+ *         schema:
+ *           type: string
+ *           enum: [json, yaml]
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(
   request: NextRequest,

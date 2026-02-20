@@ -2,6 +2,27 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getRequestId } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/jobs/batch-run:
+ *   post:
+ *     summary: Batch run jobs
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               jobIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               waitForCompletion:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request);
   const body = (await request.json()) as { jobIds: string[]; waitForCompletion?: boolean };

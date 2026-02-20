@@ -1,6 +1,29 @@
 import { NextRequest } from "next/server";
 import { created, getRequestId } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/jobs/{jobId}/duplicate:
+ *   post:
+ *     summary: Duplicate job
+ *     parameters:
+ *       - in: path
+ *         name: jobId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ jobId: string }> }

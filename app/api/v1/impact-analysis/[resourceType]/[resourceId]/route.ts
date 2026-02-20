@@ -1,6 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_LINEAGE_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/impact-analysis/{resourceType}/{resourceId}:
+ *   get:
+ *     summary: Get impact analysis
+ *     description: Get downstream impact of a resource
+ *     parameters:
+ *       - in: path
+ *         name: resourceType
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: resourceId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ resourceType: string; resourceId: string }> }

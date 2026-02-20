@@ -1,6 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_MLOPS_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/ml/experiments:
+ *   post:
+ *     summary: Create experiment
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               modelId:
+ *                 type: string
+ *               parameters:
+ *                 type: object
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function POST(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_MLOPS_HEADER)) {
     return featureRequiredResponse(FEATURE_MLOPS_HEADER);

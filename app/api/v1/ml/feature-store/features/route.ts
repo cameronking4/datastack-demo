@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_MLOPS_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/ml/feature-store/features:
+ *   get:
+ *     summary: List feature store features
+ *     parameters:
+ *       - in: query
+ *         name: featureGroup
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_MLOPS_HEADER)) {
     return featureRequiredResponse(FEATURE_MLOPS_HEADER);
