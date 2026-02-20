@@ -38,7 +38,7 @@ devin:
   tags:
     - docdrift
   customInstructions:
-    - .docdrift/DocDrift.md
+    - DocDrift.md
 policy:
   prCaps:
     maxPrsPerDay: 10
