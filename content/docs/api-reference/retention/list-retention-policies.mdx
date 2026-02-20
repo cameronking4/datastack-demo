@@ -1,0 +1,32 @@
+---
+title: List retention policies
+description: List retention policies with optional filters
+---
+
+```
+GET /api/v1/retention/policies
+```
+
+List retention policies with optional filters
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | No | The workspaceId value. |
+| `targetType` | `string` | No | The targetType value. |
+| `page` | `integer` | No | The page value. |
+| `pageSize` | `integer` | No | The pageSize value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/retention/policies" \
+  -H "Authorization: Bearer <accessToken>"
+```

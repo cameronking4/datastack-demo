@@ -1,0 +1,35 @@
+---
+title: Run validation
+description: Run data quality rules against a table on demand
+---
+
+```
+POST /api/v1/data-quality/validate
+```
+
+Run data quality rules against a table on demand
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `table` | `string` | No | The table value. |
+| `ruleIds` | `string[]` | No | The ruleIds value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/data-quality/validate" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "table": "example-table",
+  "ruleIds": []
+}'
+```

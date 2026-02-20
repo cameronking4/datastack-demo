@@ -1,0 +1,30 @@
+---
+title: Get impact analysis
+description: Get downstream impact of a resource
+---
+
+```
+GET /api/v1/impact-analysis/{resourceType}/{resourceId}
+```
+
+Get downstream impact of a resource
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `resourceType` | `string` | Yes | The resourceType value. |
+| `resourceId` | `string` | Yes | The resourceId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/impact-analysis/example-res/example-res" \
+  -H "Authorization: Bearer <accessToken>"
+```

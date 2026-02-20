@@ -2,6 +2,10 @@
   "title": "Data Quality",
   "pages": [
     "list-rules",
-    "create-rule"
+    "create-rule",
+    "list-data-quality-incidents",
+    "create-data-quality-monitor",
+    "get-quality-report",
+    "run-validation"
   ]
 }

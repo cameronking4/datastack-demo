@@ -1,0 +1,29 @@
+---
+title: Get limits
+description: Get account and workspace limits (quotas)
+---
+
+```
+GET /api/v1/limits
+```
+
+Get account and workspace limits (quotas)
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | No | The workspaceId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/limits" \
+  -H "Authorization: Bearer <accessToken>"
+```

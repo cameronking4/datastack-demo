@@ -1,0 +1,29 @@
+---
+title: Get pipeline health
+description: Get pipeline health checks and status
+---
+
+```
+GET /api/v1/pipelines/{pipelineId}/health
+```
+
+Get pipeline health checks and status
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `pipelineId` | `string` | Yes | The pipelineId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/pipelines/example-pip/health" \
+  -H "Authorization: Bearer <accessToken>"
+```

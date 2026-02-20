@@ -1,0 +1,31 @@
+---
+title: List permissions
+description: List available permissions with optional scope filter
+---
+
+```
+GET /api/v1/permissions
+```
+
+List available permissions with optional scope filter
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `scope` | `string` | No | The scope value. |
+| `page` | `integer` | No | The page value. |
+| `pageSize` | `integer` | No | The pageSize value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/permissions" \
+  -H "Authorization: Bearer <accessToken>"
+```

@@ -1,0 +1,33 @@
+---
+title: Bulk resume jobs
+description: Bulk resume jobs
+---
+
+```
+POST /api/v1/jobs/bulk-resume
+```
+
+Bulk resume jobs
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `jobIds` | `string[]` | No | The jobIds value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/jobs/bulk-resume" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "jobIds": []
+}'
+```

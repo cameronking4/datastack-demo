@@ -1,0 +1,29 @@
+---
+title: List feature store features
+description: List feature store features
+---
+
+```
+GET /api/v1/ml/feature-store/features
+```
+
+List feature store features
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `featureGroup` | `string` | No | The featureGroup value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/ml/feature-store/features" \
+  -H "Authorization: Bearer <accessToken>"
+```

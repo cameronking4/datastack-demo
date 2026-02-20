@@ -1,0 +1,23 @@
+---
+title: Get user preferences
+description: Get the current user's UI and notification preferences
+---
+
+```
+GET /api/v1/me/preferences
+```
+
+Get the current user's UI and notification preferences
+
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/me/preferences" \
+  -H "Authorization: Bearer <accessToken>"
+```

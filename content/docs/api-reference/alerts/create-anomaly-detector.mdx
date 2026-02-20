@@ -1,0 +1,37 @@
+---
+title: Create anomaly detector
+description: Create anomaly detector
+---
+
+```
+POST /api/v1/alerts/anomaly-detection
+```
+
+Create anomaly detector
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `metric` | `string` | No | The metric value. |
+| `sensitivity` | `string` | No | The sensitivity value. |
+| `lookbackDays` | `integer` | No | The lookbackDays value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/alerts/anomaly-detection" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "metric": "example-metric",
+  "sensitivity": "example-sensitivity",
+  "lookbackDays": 10
+}'
+```

@@ -1,0 +1,10 @@
+{
+  "title": "Catalog",
+  "pages": [
+    "add-annotation",
+    "update-resource-tags",
+    "get-popular-datasets",
+    "get-catalog-recommendations",
+    "search-catalog"
+  ]
+}

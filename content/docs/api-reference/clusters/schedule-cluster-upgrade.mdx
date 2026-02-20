@@ -1,0 +1,41 @@
+---
+title: Schedule cluster upgrade
+description: Schedule runtime upgrade for a cluster
+---
+
+```
+POST /api/v1/clusters/{clusterId}/upgrade
+```
+
+Schedule runtime upgrade for a cluster
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `clusterId` | `string` | Yes | The clusterId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `targetRuntimeVersion` | `string` | No | The targetRuntimeVersion value. |
+| `scheduleAt` | `string` | No | The scheduleAt value. Format: `date-time`. |
+
+## Response `202`
+
+Returns accepted.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/clusters/example-clu/upgrade" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "targetRuntimeVersion": "example-targetRuntimeVersion",
+  "scheduleAt": "2024-01-01T00:00:00Z"
+}'
+```

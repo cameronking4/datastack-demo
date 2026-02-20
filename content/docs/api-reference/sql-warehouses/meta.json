@@ -4,6 +4,8 @@
     "list-warehouses",
     "get-warehouse",
     "start-warehouse",
-    "stop-warehouse"
+    "stop-warehouse",
+    "get-warehouse-query-stats",
+    "create-sql-warehouse"
   ]
 }

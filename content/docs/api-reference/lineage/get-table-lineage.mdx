@@ -1,0 +1,31 @@
+---
+title: Get table lineage
+description: Get table lineage
+---
+
+```
+GET /api/v1/lineage/table/{catalogName}/{schemaName}/{tableName}
+```
+
+Get table lineage
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `catalogName` | `string` | Yes | The catalogName value. |
+| `schemaName` | `string` | Yes | The schemaName value. |
+| `tableName` | `string` | Yes | The tableName value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/lineage/table/example-cat/example-sch/example-tab" \
+  -H "Authorization: Bearer <accessToken>"
+```

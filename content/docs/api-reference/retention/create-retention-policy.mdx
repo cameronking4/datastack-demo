@@ -1,0 +1,43 @@
+---
+title: Create retention policy
+description: Create a new retention policy
+---
+
+```
+POST /api/v1/retention/policies
+```
+
+Create a new retention policy
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | The name value. |
+| `description` | `string` | No | The description value. |
+| `workspaceId` | `string` | Yes | The workspaceId value. |
+| `targetType` | `string` | Yes | The targetType value. |
+| `targetPattern` | `string` | Yes | The targetPattern value. |
+| `retentionDays` | `integer` | Yes | The retentionDays value. |
+| `action` | `string` | No | The action value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/retention/policies" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "description": "example-description",
+  "workspaceId": "example-workspaceId",
+  "targetType": "example-targetType",
+  "targetPattern": "example-targetPattern"
+}'
+```

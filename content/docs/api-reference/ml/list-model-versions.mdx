@@ -1,0 +1,36 @@
+---
+title: List model versions
+description: List all registered versions of an ML model
+---
+
+```
+GET /api/v1/ml/models/{modelId}/versions
+```
+
+List all registered versions of an ML model
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `modelId` | `string` | Yes | The modelId value. |
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `limit` | `integer` | No | The limit value. |
+| `offset` | `integer` | No | The offset value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/ml/models/example-mod/versions" \
+  -H "Authorization: Bearer <accessToken>"
+```

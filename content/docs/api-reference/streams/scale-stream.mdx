@@ -1,0 +1,45 @@
+---
+title: Scale stream
+description: Scale streaming job parallelism
+---
+
+```
+POST /api/v1/streams/{streamId}/scale
+```
+
+Scale streaming job parallelism
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `streamId` | `string` | Yes | The streamId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `targetParallelism` | `integer` | No | The targetParallelism value. |
+| `autoScale` | `boolean` | No | The autoScale value. |
+| `minParallelism` | `integer` | No | The minParallelism value. |
+| `maxParallelism` | `integer` | No | The maxParallelism value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/streams/example-str/scale" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "targetParallelism": 10,
+  "autoScale": true,
+  "minParallelism": 10,
+  "maxParallelism": 10
+}'
+```

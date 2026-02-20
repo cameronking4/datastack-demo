@@ -1,0 +1,29 @@
+---
+title: Get popular datasets
+description: Get most queried or accessed catalog assets
+---
+
+```
+GET /api/v1/catalog/popular
+```
+
+Get most queried or accessed catalog assets
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `period` | `string` | No | The period value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/catalog/popular" \
+  -H "Authorization: Bearer <accessToken>"
+```

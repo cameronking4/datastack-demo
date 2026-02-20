@@ -1,0 +1,37 @@
+---
+title: Create backup
+description: Create a new backup for a workspace
+---
+
+```
+POST /api/v1/backups
+```
+
+Create a new backup for a workspace
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | Yes | The workspaceId value. |
+| `type` | `string` | No | The type value. One of: `full`, `incremental`. |
+| `retentionDays` | `integer` | No | The retentionDays value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/backups" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "workspaceId": "example-workspaceId",
+  "type": "full",
+  "retentionDays": 10
+}'
+```

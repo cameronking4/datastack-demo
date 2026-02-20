@@ -1,0 +1,43 @@
+---
+title: Deploy app
+description: Deploy app
+---
+
+```
+POST /api/v1/apps/{appId}/deploy
+```
+
+Deploy app
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `appId` | `string` | Yes | The appId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `versionId` | `string` | No | The versionId value. |
+| `tag` | `string` | No | The tag value. |
+| `env` | `object` | No | The env value. |
+
+## Response `202`
+
+Returns accepted.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/apps/example-app/deploy" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "versionId": "example-versionId",
+  "tag": "example-tag",
+  "env": {}
+}'
+```

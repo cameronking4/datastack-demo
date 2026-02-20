@@ -1,0 +1,42 @@
+---
+title: Create SQL warehouse
+description: Create a new SQL warehouse (preview only)
+---
+
+```
+POST /api/v1/sql/warehouses/create
+```
+
+Create a new SQL warehouse (preview only)
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | The name value. |
+| `clusterSize` | `string` | No | The clusterSize value. |
+| `autoStopMinutes` | `integer` | No | The autoStopMinutes value. |
+| `enableServerless` | `boolean` | No | The enableServerless value. |
+| `channel` | `string` | No | The channel value. |
+| `tags` | `object` | No | The tags value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/sql/warehouses/create" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "clusterSize": "example-clusterSize",
+  "autoStopMinutes": 10,
+  "enableServerless": true,
+  "channel": "example-channel"
+}'
+```

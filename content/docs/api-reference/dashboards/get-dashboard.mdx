@@ -1,0 +1,29 @@
+---
+title: Get dashboard
+description: Get dashboard with widget configuration
+---
+
+```
+GET /api/v1/dashboards/{dashboardId}
+```
+
+Get dashboard with widget configuration
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `dashboardId` | `string` | Yes | The dashboardId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/dashboards/example-das" \
+  -H "Authorization: Bearer <accessToken>"
+```

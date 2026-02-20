@@ -1,0 +1,29 @@
+---
+title: Get stream status
+description: Get streaming job status and health
+---
+
+```
+GET /api/v1/streams/{streamId}/status
+```
+
+Get streaming job status and health
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `streamId` | `string` | Yes | The streamId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/streams/example-str/status" \
+  -H "Authorization: Bearer <accessToken>"
+```

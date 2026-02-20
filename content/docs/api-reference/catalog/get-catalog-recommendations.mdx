@@ -1,0 +1,35 @@
+---
+title: Get catalog recommendations
+description: Get personalized catalog recommendations for a user or context
+---
+
+```
+POST /api/v1/catalog/recommendations
+```
+
+Get personalized catalog recommendations for a user or context
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `userId` | `string` | No | The userId value. |
+| `context` | `string` | No | The context value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/catalog/recommendations" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "userId": "example-userId",
+  "context": "example-context"
+}'
+```

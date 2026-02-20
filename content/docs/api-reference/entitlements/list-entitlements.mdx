@@ -1,0 +1,30 @@
+---
+title: List entitlements
+description: Get feature and resource entitlements for the current user or workspace
+---
+
+```
+GET /api/v1/entitlements
+```
+
+Get feature and resource entitlements for the current user or workspace
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | No | The workspaceId value. |
+| `scope` | `string` | No | The scope value. One of: `user`, `workspace`. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/entitlements" \
+  -H "Authorization: Bearer <accessToken>"
+```

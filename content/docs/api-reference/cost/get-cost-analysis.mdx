@@ -1,0 +1,30 @@
+---
+title: Get cost analysis
+description: Get cost breakdown by category for a period
+---
+
+```
+GET /api/v1/cost/analysis
+```
+
+Get cost breakdown by category for a period
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `startDate` | `string` | No | The startDate value. |
+| `endDate` | `string` | No | The endDate value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/cost/analysis" \
+  -H "Authorization: Bearer <accessToken>"
+```

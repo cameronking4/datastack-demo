@@ -1,0 +1,41 @@
+---
+title: Assign role
+description: Assign role
+---
+
+```
+POST /api/v1/workspaces/{workspaceId}/roles
+```
+
+Assign role
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | Yes | The workspaceId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `userId` | `string` | No | The userId value. |
+| `roleId` | `string` | No | The roleId value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/workspaces/example-wor/roles" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "userId": "example-userId",
+  "roleId": "example-roleId"
+}'
+```

@@ -1,0 +1,43 @@
+---
+title: Deploy model
+description: Deploy model
+---
+
+```
+POST /api/v1/ml/models/{modelId}/deploy
+```
+
+Deploy model
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `modelId` | `string` | Yes | The modelId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `environment` | `string` | No | The environment value. |
+| `instanceType` | `string` | No | The instanceType value. |
+| `replicas` | `integer` | No | The replicas value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/ml/models/example-mod/deploy" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "environment": "example-environment",
+  "instanceType": "example-instanceType",
+  "replicas": 10
+}'
+```

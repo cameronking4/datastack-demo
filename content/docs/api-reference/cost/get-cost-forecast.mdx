@@ -1,0 +1,29 @@
+---
+title: Get cost forecast
+description: Get projected cost over a horizon
+---
+
+```
+GET /api/v1/cost/forecast
+```
+
+Get projected cost over a horizon
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `horizon` | `string` | No | Forecast horizon in days |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/cost/forecast" \
+  -H "Authorization: Bearer <accessToken>"
+```

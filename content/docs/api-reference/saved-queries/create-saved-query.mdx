@@ -1,0 +1,39 @@
+---
+title: Create saved query
+description: Create saved query
+---
+
+```
+POST /api/v1/saved-queries
+```
+
+Create saved query
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `description` | `string` | No | The description value. |
+| `sql` | `string` | No | The sql value. |
+| `workspaceId` | `string` | No | The workspaceId value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/saved-queries" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "description": "example-description",
+  "sql": "example-sql",
+  "workspaceId": "example-workspaceId"
+}'
+```

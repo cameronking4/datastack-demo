@@ -1,0 +1,41 @@
+---
+title: Update user preferences
+description: Update the current user's preferences
+---
+
+```
+PATCH /api/v1/me/preferences
+```
+
+Update the current user's preferences
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `theme` | `string` | No | The theme value. |
+| `defaultPageSize` | `integer` | No | The defaultPageSize value. |
+| `timezone` | `string` | No | The timezone value. |
+| `dateFormat` | `string` | No | The dateFormat value. |
+| `notifications` | `object` | No | The notifications value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH "/api/v1/me/preferences" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "theme": "example-theme",
+  "defaultPageSize": 10,
+  "timezone": "example-timezone",
+  "dateFormat": "example-dateFormat",
+  "notifications": {}
+}'
+```

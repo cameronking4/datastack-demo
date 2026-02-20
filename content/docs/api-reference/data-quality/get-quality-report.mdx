@@ -1,0 +1,29 @@
+---
+title: Get quality report
+description: Get data quality report and score for a table
+---
+
+```
+GET /api/v1/data-quality/reports/{tableId}
+```
+
+Get data quality report and score for a table
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `tableId` | `string` | Yes | The tableId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/data-quality/reports/example-tab" \
+  -H "Authorization: Bearer <accessToken>"
+```

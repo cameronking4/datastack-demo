@@ -1,0 +1,30 @@
+---
+title: Update pipeline dependencies
+description: Update pipeline dependencies
+---
+
+```
+PUT /api/v1/pipelines/{pipelineId}/dependencies
+```
+
+Update pipeline dependencies
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `pipelineId` | `string` | Yes | The pipelineId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X PUT "/api/v1/pipelines/example-pip/dependencies" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json"
+```

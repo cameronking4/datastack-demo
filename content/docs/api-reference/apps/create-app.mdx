@@ -1,0 +1,37 @@
+---
+title: Create app
+description: Create app
+---
+
+```
+POST /api/v1/apps
+```
+
+Create app
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | The name value. |
+| `description` | `string` | No | The description value. |
+| `workspaceId` | `string` | No | The workspaceId value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/apps" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "name": "example-name",
+  "description": "example-description",
+  "workspaceId": "example-workspaceId"
+}'
+```

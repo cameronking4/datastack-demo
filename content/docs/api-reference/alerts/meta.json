@@ -5,6 +5,12 @@
     "create-alert",
     "get-alert",
     "update-alert",
-    "delete-alert"
+    "delete-alert",
+    "mute-alert",
+    "unmute-alert",
+    "create-anomaly-detector",
+    "create-notification-channel",
+    "list-alert-incidents",
+    "preview-alert-rule"
   ]
 }

@@ -1,0 +1,35 @@
+---
+title: Get usage report
+description: Get workspace usage summary for a period
+---
+
+```
+GET /api/v1/workspaces/{workspaceId}/usage-report
+```
+
+Get workspace usage summary for a period
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | Yes | The workspaceId value. |
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `period` | `string` | No | The period value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/workspaces/example-wor/usage-report" \
+  -H "Authorization: Bearer <accessToken>"
+```

@@ -1,0 +1,35 @@
+---
+title: Create tag
+description: Create tag
+---
+
+```
+POST /api/v1/tags
+```
+
+Create tag
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | No | The key value. |
+| `value` | `string` | No | The value value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/tags" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "key": "example-key",
+  "value": "example-value"
+}'
+```

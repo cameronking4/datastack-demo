@@ -1,0 +1,41 @@
+---
+title: Backfill job
+description: Backfill job
+---
+
+```
+POST /api/v1/jobs/{jobId}/backfill
+```
+
+Backfill job
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `jobId` | `string` | Yes | The jobId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `startDate` | `string` | No | The startDate value. |
+| `endDate` | `string` | No | The endDate value. |
+
+## Response `202`
+
+Returns accepted.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/jobs/example-job/backfill" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "startDate": "example-startDate",
+  "endDate": "example-endDate"
+}'
+```

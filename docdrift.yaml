@@ -17,18 +17,22 @@ pathMappings:
   - match: app/api/v1/**
     impacts:
       - ./openapi/**
-      - ./content/docs/api-reference/overview.mdx
-      - ./content/docs/*
+      - ./content/docs/api-reference/**
   - match: lib/api/auth.ts
     impacts:
       - ./content/docs/getting-started/authentication.mdx
       - ./content/docs/api-reference/overview.mdx
+      - ./content/docs/api-reference/authentication/**
   - match: content/docs/**/meta.json
     impacts:
       - ./content/docs/**
   - match: lib/api/preview.ts
     impacts:
       - ./content/docs/*
+  - match: scripts/generate-openapi.mjs
+    impacts:
+      - ./openapi/**
+      - ./content/docs/api-reference/overview.mdx
 mode: auto
 branchStrategy: single
 devin:

@@ -1,0 +1,9 @@
+{
+  "title": "Cost Management",
+  "pages": [
+    "get-cost-analysis",
+    "create-budget",
+    "get-cost-forecast",
+    "get-cost-optimization-recommendations"
+  ]
+}

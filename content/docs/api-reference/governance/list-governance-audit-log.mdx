@@ -1,0 +1,29 @@
+---
+title: List governance audit log
+description: List governance audit log
+---
+
+```
+GET /api/v1/governance/audit-log
+```
+
+List governance audit log
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `limit` | `integer` | No | The limit value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/governance/audit-log" \
+  -H "Authorization: Bearer <accessToken>"
+```

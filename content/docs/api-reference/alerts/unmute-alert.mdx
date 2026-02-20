@@ -1,0 +1,29 @@
+---
+title: Unmute alert
+description: Unmute alert
+---
+
+```
+DELETE /api/v1/alerts/{alertId}/mute
+```
+
+Unmute alert
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `alertId` | `string` | Yes | The alertId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X DELETE "/api/v1/alerts/example-ale/mute" \
+  -H "Authorization: Bearer <accessToken>"
+```

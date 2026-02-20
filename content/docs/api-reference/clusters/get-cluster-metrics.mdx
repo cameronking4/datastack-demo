@@ -1,0 +1,37 @@
+---
+title: Get cluster metrics
+description: Get cluster performance metrics (preview only)
+---
+
+```
+GET /api/v1/clusters/{clusterId}/metrics
+```
+
+Get cluster performance metrics (preview only)
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `clusterId` | `string` | Yes | The clusterId value. |
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `startTime` | `string` | No | The startTime value. |
+| `endTime` | `string` | No | The endTime value. |
+| `metricNames` | `string` | No | Comma-separated metric names |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/clusters/example-clu/metrics" \
+  -H "Authorization: Bearer <accessToken>"
+```

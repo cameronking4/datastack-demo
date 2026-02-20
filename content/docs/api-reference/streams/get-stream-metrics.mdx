@@ -1,0 +1,29 @@
+---
+title: Get stream metrics
+description: Get streaming job throughput and latency metrics
+---
+
+```
+GET /api/v1/streams/{streamId}/metrics
+```
+
+Get streaming job throughput and latency metrics
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `streamId` | `string` | Yes | The streamId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/streams/example-str/metrics" \
+  -H "Authorization: Bearer <accessToken>"
+```

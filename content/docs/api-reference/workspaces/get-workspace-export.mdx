@@ -1,0 +1,35 @@
+---
+title: Get workspace export
+description: Request or retrieve a workspace configuration export (stacks, jobs, connections metadata)
+---
+
+```
+GET /api/v1/workspaces/{workspaceId}/export
+```
+
+Request or retrieve a workspace configuration export (stacks, jobs, connections metadata)
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | Yes | The workspaceId value. |
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `format` | `string` | No | The format value. One of: `json`, `yaml`. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/workspaces/example-wor/export" \
+  -H "Authorization: Bearer <accessToken>"
+```

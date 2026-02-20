@@ -1,0 +1,39 @@
+---
+title: Create cache strategy
+description: Create or update query result cache strategy for a warehouse
+---
+
+```
+POST /api/v1/queries/cache-strategy
+```
+
+Create or update query result cache strategy for a warehouse
+
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `warehouseId` | `string` | No | The warehouseId value. |
+| `ttlMinutes` | `integer` | No | The ttlMinutes value. |
+| `maxCacheSizeMb` | `integer` | No | The maxCacheSizeMb value. |
+| `enableAdaptive` | `boolean` | No | The enableAdaptive value. |
+
+## Response `201`
+
+Returns created.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/queries/cache-strategy" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "warehouseId": "example-warehouseId",
+  "ttlMinutes": 10,
+  "maxCacheSizeMb": 10,
+  "enableAdaptive": true
+}'
+```

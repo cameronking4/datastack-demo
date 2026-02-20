@@ -1,0 +1,41 @@
+---
+title: Mute alert
+description: Mute alert
+---
+
+```
+POST /api/v1/alerts/{alertId}/mute
+```
+
+Mute alert
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `alertId` | `string` | Yes | The alertId value. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `durationMinutes` | `integer` | No | The durationMinutes value. |
+| `reason` | `string` | No | The reason value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X POST "/api/v1/alerts/example-ale/mute" \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "durationMinutes": 10,
+  "reason": "example-reason"
+}'
+```

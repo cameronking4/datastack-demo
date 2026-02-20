@@ -1,0 +1,32 @@
+---
+title: List apps
+description: List apps
+---
+
+```
+GET /api/v1/apps
+```
+
+List apps
+
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `workspaceId` | `string` | No | The workspaceId value. |
+| `status` | `string` | No | The status value. |
+| `page` | `integer` | No | The page value. |
+| `pageSize` | `integer` | No | The pageSize value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/apps" \
+  -H "Authorization: Bearer <accessToken>"
+```

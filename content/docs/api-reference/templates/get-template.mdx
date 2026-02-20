@@ -1,0 +1,29 @@
+---
+title: Get template
+description: Get template details and configuration
+---
+
+```
+GET /api/v1/templates/{templateId}
+```
+
+Get template details and configuration
+
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `templateId` | `string` | Yes | The templateId value. |
+
+## Response `200`
+
+Returns success.
+
+
+## Example
+
+```bash title="cURL"
+curl -X GET "/api/v1/templates/example-tem" \
+  -H "Authorization: Bearer <accessToken>"
+```
