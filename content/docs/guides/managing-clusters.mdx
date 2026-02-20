@@ -61,16 +61,16 @@ The cluster scales between `minWorkers` and `maxWorkers` based on pending task q
 
 ## Resizing a Running Cluster
 
-Submit a resize request on a running cluster. The resize is queued and applied after the next restart or when autoscale runs:
+Resize a running cluster by specifying the desired worker count:
 
 ```bash title="Resize cluster"
 curl -X POST /api/v1/clusters/cluster-001/resize \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{ "numWorkers": 8 }'
+  -d '{ "workerCount": 8 }'
 ```
 
-The endpoint returns `202 Accepted` with a `resizeRequestId` and status `RESIZE_ACCEPTED`. You can also set `minWorkers` and `maxWorkers` for autoscaling bounds.
+The `workerCount` field is required. You can optionally pass `nodeType` to change the instance type. The endpoint returns `200` on success.
 
 ## Auto-Termination
 

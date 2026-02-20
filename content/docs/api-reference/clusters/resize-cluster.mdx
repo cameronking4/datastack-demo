@@ -7,7 +7,7 @@ description: Adjust the worker count of a running cluster.
 POST /api/v1/clusters/{clusterId}/resize
 ```
 
-Submit a resize request for a running cluster. The request is queued and applied after the next restart or when autoscale runs.
+Resize a running cluster by setting a new worker count and optionally changing the node type.
 
 **Required scope:** `manage:clusters`
 
@@ -21,26 +21,12 @@ Submit a resize request for a running cluster. The request is queued and applied
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `numWorkers` | `integer` | No | Desired number of worker nodes. |
-| `minWorkers` | `integer` | No | Minimum workers for autoscaling. |
-| `maxWorkers` | `integer` | No | Maximum workers for autoscaling. |
+| `workerCount` | `integer` | Yes | Desired number of worker nodes. |
 | `nodeType` | `string` | No | Instance type for workers. |
 
-## Response `202`
+## Response `200`
 
-Returns a resize-request acknowledgement. The resize is queued, not immediate.
-
-| Field | Type | Description |
-|---|---|---|
-| `clusterId` | `string` | Cluster identifier. |
-| `resizeRequestId` | `string` | Unique identifier for the resize request. |
-| `numWorkers` | `integer` | Effective worker count. |
-| `minWorkers` | `integer` | Minimum worker count. |
-| `maxWorkers` | `integer` | Maximum worker count. |
-| `nodeType` | `string` | Instance type. |
-| `status` | `string` | `RESIZE_ACCEPTED` while the request is queued. |
-| `message` | `string` | Human-readable status message. |
-| `requestId` | `string` | Request trace identifier. |
+Returns a success response when the resize operation is accepted.
 
 ## Example
 
@@ -48,19 +34,11 @@ Returns a resize-request acknowledgement. The resize is queued, not immediate.
 curl -X POST /api/v1/clusters/cluster-001/resize \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
-  -d '{"numWorkers": 8}'
+  -d '{"workerCount": 8}'
 ```
 
-```json title="Response — 202 Accepted"
+```json title="Response — 200 OK"
 {
-  "clusterId": "cluster-001",
-  "resizeRequestId": "resize-1718900000000",
-  "numWorkers": 8,
-  "minWorkers": 2,
-  "maxWorkers": 8,
-  "nodeType": "i3.xlarge",
-  "status": "RESIZE_ACCEPTED",
-  "message": "Cluster resize has been queued. Changes will apply after the next restart or when autoscale runs.",
-  "requestId": "req-abc123"
+  "status": "ok"
 }
 ```
