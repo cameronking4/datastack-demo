@@ -2,8 +2,14 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/me/recent
- * Get resources the current user recently viewed or edited.
+ * @swagger
+ * /api/v1/me/recent:
+ *   get:
+ *     summary: Get recent resources
+ *     description: Get resources the current user recently viewed or edited
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(request: NextRequest) {
   const requestId = getRequestId(request);

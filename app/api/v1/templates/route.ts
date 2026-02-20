@@ -6,8 +6,19 @@ import {
 } from "@/lib/api/response";
 
 /**
- * GET /api/v1/templates
- * List available stack and pipeline templates for quick-start.
+ * @swagger
+ * /api/v1/templates:
+ *   get:
+ *     summary: List templates
+ *     description: List available stack and pipeline templates for quick-start
+ *     parameters:
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

@@ -1,6 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_GOVERNANCE_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/governance/policies:
+ *   post:
+ *     summary: Create access policy
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               resource:
+ *                 type: string
+ *               principal:
+ *                 type: string
+ *               permissions:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               conditions:
+ *                 type: object
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function POST(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_GOVERNANCE_HEADER)) {
     return featureRequiredResponse(FEATURE_GOVERNANCE_HEADER);

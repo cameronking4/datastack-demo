@@ -2,8 +2,19 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/feature-flags
- * Get feature flags and experiments for the current user/workspace.
+ * @swagger
+ * /api/v1/feature-flags:
+ *   get:
+ *     summary: Get feature flags
+ *     description: Get feature flags and experiments for the current user or workspace
+ *     parameters:
+ *       - in: query
+ *         name: workspaceId
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(request: NextRequest) {
   const requestId = getRequestId(request);

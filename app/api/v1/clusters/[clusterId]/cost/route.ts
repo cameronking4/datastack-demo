@@ -1,6 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_COST_MANAGEMENT_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/clusters/{clusterId}/cost:
+ *   get:
+ *     summary: Get cluster cost
+ *     description: Get cost breakdown and recommendations for a cluster
+ *     parameters:
+ *       - in: path
+ *         name: clusterId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ clusterId: string }> }

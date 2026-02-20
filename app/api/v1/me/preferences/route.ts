@@ -2,8 +2,36 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/me/preferences
- * Get the current user's UI and notification preferences.
+ * @swagger
+ * /api/v1/me/preferences:
+ *   get:
+ *     summary: Get user preferences
+ *     description: Get the current user's UI and notification preferences
+ *     responses:
+ *       200:
+ *         description: Success
+ *   patch:
+ *     summary: Update user preferences
+ *     description: Update the current user's preferences
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               theme:
+ *                 type: string
+ *               defaultPageSize:
+ *                 type: integer
+ *               timezone:
+ *                 type: string
+ *               dateFormat:
+ *                 type: string
+ *               notifications:
+ *                 type: object
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(request: NextRequest) {
   const requestId = getRequestId(request);
@@ -25,10 +53,6 @@ export async function GET(request: NextRequest) {
   );
 }
 
-/**
- * PATCH /api/v1/me/preferences
- * Update the current user's preferences.
- */
 export async function PATCH(request: NextRequest) {
   const requestId = getRequestId(request);
   const body = (await request.json()) as Record<string, unknown>;

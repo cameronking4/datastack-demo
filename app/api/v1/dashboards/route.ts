@@ -7,8 +7,40 @@ import {
 } from "@/lib/api/response";
 
 /**
- * GET /api/v1/dashboards
- * List saved dashboards (widget layouts).
+ * @swagger
+ * /api/v1/dashboards:
+ *   get:
+ *     summary: List dashboards
+ *     description: List saved dashboards (widget layouts)
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create dashboard
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               workspaceId:
+ *                 type: string
+ *               widgets:
+ *                 type: array
+ *     responses:
+ *       201:
+ *         description: Created
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -47,10 +79,6 @@ export async function GET(request: NextRequest) {
   });
 }
 
-/**
- * POST /api/v1/dashboards
- * Create a new dashboard.
- */
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request);
   const body = (await request.json()) as { name: string; workspaceId: string };

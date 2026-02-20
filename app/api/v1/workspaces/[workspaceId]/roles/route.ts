@@ -7,6 +7,51 @@ import {
 } from "@/lib/api/response";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_RBAC_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/workspaces/{workspaceId}/roles:
+ *   get:
+ *     summary: List role assignments
+ *     description: List user-role assignments in the workspace
+ *     parameters:
+ *       - in: path
+ *         name: workspaceId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Assign role
+ *     parameters:
+ *       - in: path
+ *         name: workspaceId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *               roleId:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ workspaceId: string }> }

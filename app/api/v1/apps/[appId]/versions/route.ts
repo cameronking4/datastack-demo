@@ -7,6 +7,50 @@ import {
 } from "@/lib/api/response";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_DATA_APPS_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/apps/{appId}/versions:
+ *   get:
+ *     summary: List app versions
+ *     parameters:
+ *       - in: path
+ *         name: appId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create app version
+ *     parameters:
+ *       - in: path
+ *         name: appId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               tag:
+ *                 type: string
+ *               assets:
+ *                 type: object
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ appId: string }> }

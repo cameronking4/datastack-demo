@@ -2,6 +2,33 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getRequestId } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/clusters/{clusterId}/upgrade:
+ *   post:
+ *     summary: Schedule cluster upgrade
+ *     description: Schedule runtime upgrade for a cluster
+ *     parameters:
+ *       - in: path
+ *         name: clusterId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               targetRuntimeVersion:
+ *                 type: string
+ *               scheduleAt:
+ *                 type: string
+ *                 format: date-time
+ *     responses:
+ *       202:
+ *         description: Accepted
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ clusterId: string }> }

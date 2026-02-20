@@ -1,6 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_QUERY_INTELLIGENCE_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/queries/{queryId}/explain:
+ *   post:
+ *     summary: Explain query
+ *     description: Get execution plan and suggestions for a query
+ *     parameters:
+ *       - in: path
+ *         name: queryId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ queryId: string }> }

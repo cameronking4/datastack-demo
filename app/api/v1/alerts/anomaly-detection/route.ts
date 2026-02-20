@@ -1,6 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_ALERTS_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/alerts/anomaly-detection:
+ *   post:
+ *     summary: Create anomaly detector
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               metric:
+ *                 type: string
+ *               sensitivity:
+ *                 type: string
+ *               lookbackDays:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function POST(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_ALERTS_HEADER)) {
     return featureRequiredResponse(FEATURE_ALERTS_HEADER);

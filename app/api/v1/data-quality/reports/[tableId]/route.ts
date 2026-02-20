@@ -1,6 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_DATA_QUALITY_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/data-quality/reports/{tableId}:
+ *   get:
+ *     summary: Get quality report
+ *     description: Get data quality report and score for a table
+ *     parameters:
+ *       - in: path
+ *         name: tableId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ tableId: string }> }

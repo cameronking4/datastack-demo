@@ -1,6 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_QUERY_INTELLIGENCE_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/queries/optimize:
+ *   post:
+ *     summary: Optimize query
+ *     description: Get optimized SQL and improvement suggestions
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               sql:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function POST(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_QUERY_INTELLIGENCE_HEADER)) {
     return featureRequiredResponse(FEATURE_QUERY_INTELLIGENCE_HEADER);

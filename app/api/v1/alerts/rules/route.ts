@@ -1,6 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_ALERTS_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/alerts/rules:
+ *   post:
+ *     summary: Create alert rule
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               metric:
+ *                 type: string
+ *               condition:
+ *                 type: string
+ *               threshold:
+ *                 type: number
+ *               severity:
+ *                 type: string
+ *               channels:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function POST(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_ALERTS_HEADER)) {
     return featureRequiredResponse(FEATURE_ALERTS_HEADER);

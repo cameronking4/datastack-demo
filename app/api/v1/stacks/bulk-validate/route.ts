@@ -2,8 +2,24 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * POST /api/v1/stacks/bulk-validate
- * Validate multiple stacks in parallel.
+ * @swagger
+ * /api/v1/stacks/bulk-validate:
+ *   post:
+ *     summary: Bulk validate stacks
+ *     description: Validate multiple stacks in parallel
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               stackIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request);

@@ -2,8 +2,14 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/me
- * Get the current authenticated user's profile.
+ * @swagger
+ * /api/v1/me:
+ *   get:
+ *     summary: Get current user
+ *     description: Get the current authenticated user's profile
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(request: NextRequest) {
   const requestId = getRequestId(request);

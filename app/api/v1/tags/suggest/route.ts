@@ -2,8 +2,19 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/tags/suggest
- * Suggest tag keys/values based on partial input (autocomplete).
+ * @swagger
+ * /api/v1/tags/suggest:
+ *   get:
+ *     summary: Suggest tags
+ *     description: Suggest tag keys/values based on partial input (autocomplete)
+ *     parameters:
+ *       - in: query
+ *         name: q
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

@@ -1,6 +1,55 @@
 import { NextRequest } from "next/server";
 import { getRequestId, ok, noContent } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/saved-queries/{savedQueryId}:
+ *   get:
+ *     summary: Get saved query
+ *     parameters:
+ *       - in: path
+ *         name: savedQueryId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *   patch:
+ *     summary: Update saved query
+ *     parameters:
+ *       - in: path
+ *         name: savedQueryId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               sql:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *   delete:
+ *     summary: Delete saved query
+ *     parameters:
+ *       - in: path
+ *         name: savedQueryId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: No content
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ savedQueryId: string }> }

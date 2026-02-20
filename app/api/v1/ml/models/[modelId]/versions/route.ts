@@ -6,8 +6,28 @@ import {
 } from "@/lib/api/response";
 
 /**
- * GET /api/v1/ml/models/:modelId/versions
- * List all registered versions of an ML model.
+ * @swagger
+ * /api/v1/ml/models/{modelId}/versions:
+ *   get:
+ *     summary: List model versions
+ *     description: List all registered versions of an ML model
+ *     parameters:
+ *       - in: path
+ *         name: modelId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: offset
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(
   request: NextRequest,

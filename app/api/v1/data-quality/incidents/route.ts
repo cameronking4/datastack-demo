@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_DATA_QUALITY_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/data-quality/incidents:
+ *   get:
+ *     summary: List data quality incidents
+ *     description: List open or resolved data quality incidents
+ *     parameters:
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_DATA_QUALITY_HEADER)) {
     return featureRequiredResponse(FEATURE_DATA_QUALITY_HEADER);

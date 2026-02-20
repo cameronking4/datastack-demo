@@ -2,8 +2,30 @@ import { NextRequest, NextResponse } from "next/server";
 import { isPreviewEnabled, previewRequiredResponse } from "@/lib/api/preview";
 
 /**
- * POST /api/v1/clusters/:clusterId/clone
- * Clone an existing cluster (preview only)
+ * @swagger
+ * /api/v1/clusters/{clusterId}/clone:
+ *   post:
+ *     summary: Clone cluster
+ *     description: Clone an existing cluster (preview only)
+ *     parameters:
+ *       - in: path
+ *         name: clusterId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               newName:
+ *                 type: string
+ *               overrideTags:
+ *                 type: object
+ *     responses:
+ *       201:
+ *         description: Created
  */
 export async function POST(
   request: NextRequest,

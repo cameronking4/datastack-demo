@@ -1,6 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_ORCHESTRATION_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/jobs/{jobId}/sla:
+ *   put:
+ *     summary: Update job SLA
+ *     parameters:
+ *       - in: path
+ *         name: jobId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               maxDurationMinutes:
+ *                 type: integer
+ *               deadlineCron:
+ *                 type: string
+ *               alertOnBreach:
+ *                 type: boolean
+ *               notifyEmails:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               priority:
+ *                 type: string
+ *               escalationPolicy:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ jobId: string }> }

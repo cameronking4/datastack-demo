@@ -6,8 +6,32 @@ import {
 } from "@/lib/api/response";
 
 /**
- * GET /api/v1/workspaces/:workspaceId/templates
- * List reusable templates available in the workspace.
+ * @swagger
+ * /api/v1/workspaces/{workspaceId}/templates:
+ *   get:
+ *     summary: List workspace templates
+ *     description: List reusable templates available in the workspace
+ *     parameters:
+ *       - in: path
+ *         name: workspaceId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(
   request: NextRequest,

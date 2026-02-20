@@ -1,6 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_ALERTS_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/alerts/preview:
+ *   get:
+ *     summary: Preview alert rule
+ *     description: Evaluate whether a rule would trigger with current data
+ *     parameters:
+ *       - in: query
+ *         name: ruleId
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_ALERTS_HEADER)) {
     return featureRequiredResponse(FEATURE_ALERTS_HEADER);

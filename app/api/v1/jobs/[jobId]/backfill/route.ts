@@ -1,6 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_ORCHESTRATION_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/jobs/{jobId}/backfill:
+ *   post:
+ *     summary: Backfill job
+ *     parameters:
+ *       - in: path
+ *         name: jobId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               startDate:
+ *                 type: string
+ *               endDate:
+ *                 type: string
+ *     responses:
+ *       202:
+ *         description: Accepted
+ */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ jobId: string }> }

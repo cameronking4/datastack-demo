@@ -3,6 +3,29 @@ import { NextResponse } from "next/server";
 import { getRequestId } from "@/lib/api/response";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_OBSERVABILITY_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/run-logs/{runId}:
+ *   get:
+ *     summary: Get run logs
+ *     parameters:
+ *       - in: path
+ *         name: runId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: level
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ runId: string }> }

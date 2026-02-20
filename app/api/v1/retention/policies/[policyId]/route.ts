@@ -1,6 +1,60 @@
 import { NextRequest } from "next/server";
 import { getRequestId, ok, noContent } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/retention/policies/{policyId}:
+ *   get:
+ *     summary: Get retention policy
+ *     description: Get a retention policy by ID
+ *     parameters:
+ *       - in: path
+ *         name: policyId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *   patch:
+ *     summary: Update retention policy
+ *     parameters:
+ *       - in: path
+ *         name: policyId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               retentionDays:
+ *                 type: integer
+ *               action:
+ *                 type: string
+ *               enabled:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Success
+ *   delete:
+ *     summary: Delete retention policy
+ *     parameters:
+ *       - in: path
+ *         name: policyId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: No content
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ policyId: string }> }

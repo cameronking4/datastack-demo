@@ -6,6 +6,48 @@ import {
   getRequestId,
 } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/saved-queries:
+ *   get:
+ *     summary: List saved queries
+ *     parameters:
+ *       - in: query
+ *         name: workspaceId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create saved query
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               sql:
+ *                 type: string
+ *               workspaceId:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const { page, pageSize } = parsePagePagination(searchParams, { pageSize: 25 });

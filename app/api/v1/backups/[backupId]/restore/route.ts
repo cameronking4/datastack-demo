@@ -2,6 +2,33 @@ import { NextRequest } from "next/server";
 import { created, getRequestId } from "@/lib/api/response";
 
 /**
+ * @swagger
+ * /api/v1/backups/{backupId}/restore:
+ *   post:
+ *     summary: Restore from backup
+ *     description: Restore a workspace from a backup
+ *     parameters:
+ *       - in: path
+ *         name: backupId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               targetWorkspaceId:
+ *                 type: string
+ *               overwrite:
+ *                 type: boolean
+ *     responses:
+ *       201:
+ *         description: Created
+ */
+
+/**
  * POST /api/v1/backups/:backupId/restore
  * Restore a workspace from a backup.
  */

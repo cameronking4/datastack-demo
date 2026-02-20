@@ -7,8 +7,47 @@ import {
 } from "@/lib/api/response";
 
 /**
- * GET /api/v1/favorites
- * List the caller's favorited resources (queries, clusters, pipelines, etc).
+ * @swagger
+ * /api/v1/favorites:
+ *   get:
+ *     summary: List favorites
+ *     description: List the caller's favorited resources (queries, clusters, pipelines, etc)
+ *     parameters:
+ *       - in: query
+ *         name: resourceType
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Add favorite
+ *     description: Add a resource to favorites
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - resourceType
+ *               - resourceId
+ *             properties:
+ *               resourceType:
+ *                 type: string
+ *               resourceId:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -54,10 +93,6 @@ export async function GET(request: NextRequest) {
   });
 }
 
-/**
- * POST /api/v1/favorites
- * Add a resource to favorites.
- */
 export async function POST(request: NextRequest) {
   const requestId = getRequestId(request);
   const body = (await request.json()) as {

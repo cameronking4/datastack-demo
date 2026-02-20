@@ -6,6 +6,66 @@ import {
   getRequestId,
 } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/retention/policies:
+ *   get:
+ *     summary: List retention policies
+ *     description: List retention policies with optional filters
+ *     parameters:
+ *       - in: query
+ *         name: workspaceId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: targetType
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ *   post:
+ *     summary: Create retention policy
+ *     description: Create a new retention policy
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - workspaceId
+ *               - targetType
+ *               - targetPattern
+ *               - retentionDays
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               workspaceId:
+ *                 type: string
+ *               targetType:
+ *                 type: string
+ *               targetPattern:
+ *                 type: string
+ *               retentionDays:
+ *                 type: integer
+ *               action:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const { page, pageSize } = parsePagePagination(searchParams, { pageSize: 25 });

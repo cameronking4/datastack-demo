@@ -2,8 +2,27 @@ import { NextRequest } from "next/server";
 import { ok, getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/usage
- * Get workspace usage stats (compute, storage, API calls).
+ * @swagger
+ * /api/v1/usage:
+ *   get:
+ *     summary: Get usage
+ *     description: Get workspace usage stats (compute, storage, API calls, streaming, AI units)
+ *     parameters:
+ *       - in: query
+ *         name: workspaceId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: period
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: includeForecast
+ *         schema:
+ *           type: boolean
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

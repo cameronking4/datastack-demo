@@ -6,8 +6,31 @@ import {
 } from "@/lib/api/response";
 
 /**
- * GET /api/v1/activity
- * List recent activity across the workspace (runs, deployments, edits).
+ * @swagger
+ * /api/v1/activity:
+ *   get:
+ *     summary: List activity
+ *     description: List recent activity across the workspace (runs, deployments, edits)
+ *     parameters:
+ *       - in: query
+ *         name: resourceType
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: action
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: offset
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

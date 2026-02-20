@@ -5,6 +5,36 @@ import {
   getRequestId,
 } from "@/lib/api/response";
 
+/**
+ * @swagger
+ * /api/v1/query-history:
+ *   get:
+ *     summary: List query history
+ *     parameters:
+ *       - in: query
+ *         name: warehouseId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: offset
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const { limit, offset } = parseOffsetPagination(searchParams, { limit: 50 });

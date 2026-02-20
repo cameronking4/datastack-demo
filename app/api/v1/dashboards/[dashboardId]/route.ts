@@ -2,8 +2,48 @@ import { NextRequest } from "next/server";
 import { ok, noContent, getRequestId } from "@/lib/api/response";
 
 /**
- * GET /api/v1/dashboards/{dashboardId}
- * Get dashboard with widget configuration.
+ * @swagger
+ * /api/v1/dashboards/{dashboardId}:
+ *   get:
+ *     summary: Get dashboard
+ *     description: Get dashboard with widget configuration
+ *     parameters:
+ *       - in: path
+ *         name: dashboardId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *   patch:
+ *     summary: Update dashboard
+ *     description: Update dashboard name or widget layout
+ *     parameters:
+ *       - in: path
+ *         name: dashboardId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *     responses:
+ *       200:
+ *         description: Success
+ *   delete:
+ *     summary: Delete dashboard
+ *     parameters:
+ *       - in: path
+ *         name: dashboardId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: No content
  */
 export async function GET(
   request: NextRequest,
@@ -29,10 +69,6 @@ export async function GET(
   );
 }
 
-/**
- * PATCH /api/v1/dashboards/{dashboardId}
- * Update dashboard name or widget layout.
- */
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ dashboardId: string }> }
@@ -51,9 +87,6 @@ export async function PATCH(
   );
 }
 
-/**
- * DELETE /api/v1/dashboards/{dashboardId}
- */
 export async function DELETE(
   _request: NextRequest,
   { params }: { params: Promise<{ dashboardId: string }> }

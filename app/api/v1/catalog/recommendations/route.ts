@@ -1,6 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isFeatureEnabled, featureRequiredResponse, FEATURE_CATALOG_HEADER } from "@/lib/api/preview";
 
+/**
+ * @swagger
+ * /api/v1/catalog/recommendations:
+ *   post:
+ *     summary: Get catalog recommendations
+ *     description: Get personalized catalog recommendations for a user or context
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *               context:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
 export async function POST(request: NextRequest) {
   if (!isFeatureEnabled(request, FEATURE_CATALOG_HEADER)) {
     return featureRequiredResponse(FEATURE_CATALOG_HEADER);

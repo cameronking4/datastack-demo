@@ -2,8 +2,35 @@ import { NextRequest, NextResponse } from "next/server";
 import { isPreviewEnabled, previewRequiredResponse } from "@/lib/api/preview";
 
 /**
- * POST /api/v1/sql/warehouses/create
- * Create a new SQL warehouse (preview only)
+ * @swagger
+ * /api/v1/sql/warehouses/create:
+ *   post:
+ *     summary: Create SQL warehouse
+ *     description: Create a new SQL warehouse (preview only)
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *             properties:
+ *               name:
+ *                 type: string
+ *               clusterSize:
+ *                 type: string
+ *               autoStopMinutes:
+ *                 type: integer
+ *               enableServerless:
+ *                 type: boolean
+ *               channel:
+ *                 type: string
+ *               tags:
+ *                 type: object
+ *     responses:
+ *       201:
+ *         description: Created
  */
 export async function POST(request: NextRequest) {
   if (!isPreviewEnabled(request)) {
