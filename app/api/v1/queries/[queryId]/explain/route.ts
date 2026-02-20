@@ -13,6 +13,16 @@ import { isFeatureEnabled, featureRequiredResponse, FEATURE_QUERY_INTELLIGENCE_H
  *         required: true
  *         schema:
  *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               format:
+ *                 type: string
+ *               verbose:
+ *                 type: boolean
  *     responses:
  *       200:
  *         description: Success

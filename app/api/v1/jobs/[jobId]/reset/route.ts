@@ -13,6 +13,16 @@ import { getRequestId } from "@/lib/api/response";
  *         required: true
  *         schema:
  *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fromCheckpoint:
+ *                 type: string
+ *               clearState:
+ *                 type: boolean
  *     responses:
  *       200:
  *         description: Success

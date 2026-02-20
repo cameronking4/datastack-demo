@@ -17,6 +17,14 @@ import { isPreviewEnabled, previewRequiredResponse } from "@/lib/api/preview";
  *         required: true
  *         schema:
  *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               reason:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Success
