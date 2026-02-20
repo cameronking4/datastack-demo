@@ -25,7 +25,7 @@ jobs:
       - run: npm install
 
       - name: Update lastKnownBaseline
-        run: npx tsx src/cli.ts baseline set ${{ github.event.pull_request.merge_commit_sha }}
+        run: npx @devinnn/docdrift baseline set ${{ github.event.pull_request.merge_commit_sha }}
         env:
           GITHUB_SHA: ${{ github.event.pull_request.merge_commit_sha }}
 
