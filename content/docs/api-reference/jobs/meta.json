@@ -4,6 +4,8 @@
     "list-jobs",
     "create-job",
     "get-job",
+    "update-job",
+    "delete-job",
     "trigger-job-run",
     "get-job-run"
   ]
