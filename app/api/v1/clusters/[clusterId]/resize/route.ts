@@ -1,73 +1,32 @@
-import { NextRequest, NextResponse } from "next/server";
-import { isPreviewEnabled } from "@/lib/api/preview";
+import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { getRequestId } from "@/lib/api/response";
 
-/**
- * @swagger
- * /api/v1/clusters/{clusterId}/resize:
- *   post:
- *     summary: Resize cluster
- *     parameters:
- *       - in: path
- *         name: clusterId
- *         required: true
- *         schema:
- *           type: string
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - workerCount
- *             properties:
- *               workerCount:
- *                 type: integer
- *               nodeType:
- *                 type: string
- *     responses:
- *       200:
- *         description: Success
- */
-/**
- * POST /api/v1/clusters/:clusterId/resize
- * Resize cluster (change worker count)
- */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ clusterId: string }> }
 ) {
-  const preview = isPreviewEnabled(request);
   const { clusterId } = await params;
+  const requestId = getRequestId(request);
   const body = (await request.json()) as {
-    workerCount: number;
-    nodeType?: string;
-    enableAutoscaling?: boolean;
+    numWorkers?: number;
     minWorkers?: number;
     maxWorkers?: number;
+    nodeType?: string;
   };
 
-  const response: Record<string, unknown> = {
-    id: clusterId,
-    name: "Analytics Cluster",
-    workspaceId: "ws-001",
-    clusterSize: "Medium",
-    region: "us-east-1",
-    state: "RESIZING",
-    sparkVersion: "3.5.x-scala2.12",
-    nodeType: "i3.xlarge",
-    workerCount: body.workerCount,
-    autoTerminationMinutes: 30,
-    createdAt: "2024-03-01T09:00:00Z",
-    createdBy: "ada@datastack.dev",
-  };
-
-  if (preview) {
-    if (body.nodeType) response.nodeType = body.nodeType;
-    response.enableAutoscaling = body.enableAutoscaling ?? false;
-    response.minWorkers = body.minWorkers ?? 1;
-    response.maxWorkers = body.maxWorkers ?? 8;
-  }
-
-  return NextResponse.json(response);
+  return NextResponse.json(
+    {
+      clusterId,
+      resizeRequestId: "resize-" + Date.now(),
+      numWorkers: body.numWorkers ?? 4,
+      minWorkers: body.minWorkers ?? 2,
+      maxWorkers: body.maxWorkers ?? 8,
+      nodeType: body.nodeType ?? "i3.xlarge",
+      status: "RESIZE_ACCEPTED",
+      message: "Cluster resize has been queued. Changes will apply after the next restart or when autoscale runs.",
+      requestId,
+    },
+    { status: 202, headers: { "x-request-id": requestId } }
+  );
 }
