@@ -23,9 +23,13 @@
     "---Infrastructure---",
     "stacks",
     "deployments",
+    "environments",
     "workspaces",
     "---Monitoring---",
     "alerts",
+    "notifications",
+    "---Scheduling---",
+    "schedules",
     "---Other---",
     "webhooks"
   ]

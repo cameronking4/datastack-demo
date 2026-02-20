@@ -8,6 +8,8 @@
     "delete-stack",
     "deploy-stack",
     "validate-stack",
-    "list-stack-deployments"
+    "list-stack-deployments",
+    "lock-stack",
+    "unlock-stack"
   ]
 }

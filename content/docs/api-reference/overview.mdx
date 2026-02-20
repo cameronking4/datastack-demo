@@ -18,7 +18,7 @@ See [Authentication](/docs/getting-started/authentication) for details.
 
 List endpoints support pagination via query parameters. Three patterns are used:
 
-**Page-based** (clusters, SQL warehouses, users, stacks, connections, queries, deployments):
+**Page-based** (clusters, SQL warehouses, users, stacks, connections, queries, deployments, environments):
 
 | Parameter | Default | Max |
 |---|---|---|
@@ -37,6 +37,10 @@ List endpoints support pagination via query parameters. Three patterns are used:
 |---|---|---|
 | `limit` | `25` | `100` |
 | `offset` | `0` | — |
+
+**Filter-based** (notifications, schedules):
+
+Some list endpoints use query-parameter filters instead of numeric pagination. See each endpoint for available filters.
 
 ## Response Envelope
 
