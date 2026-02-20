@@ -102,6 +102,7 @@ export async function GET(request: NextRequest) {
   const severityFilter = searchParams.get("severity");
   const enabledFilter = searchParams.get("enabled");
   const resourceFilter = searchParams.get("resource");
+  const sourceFilter = searchParams.get("source");
 
   const alerts = [
     {
@@ -116,6 +117,7 @@ export async function GET(request: NextRequest) {
         aggregation: "avg",
       },
       severity: "critical",
+      source: "threshold",
       channels: [
         { type: "slack", target: "#data-alerts" },
         { type: "pagerduty", target: "data-oncall" },
@@ -141,6 +143,7 @@ export async function GET(request: NextRequest) {
         aggregation: "p99",
       },
       severity: "warning",
+      source: "anomaly",
       channels: [{ type: "email", target: "infra@datastack.dev" }],
       resource: null,
       resourceType: "cluster",
@@ -160,6 +163,7 @@ export async function GET(request: NextRequest) {
     filtered = filtered.filter((a) => a.enabled === enabled);
   }
   if (resourceFilter) filtered = filtered.filter((a) => a.resource === resourceFilter);
+  if (sourceFilter) filtered = filtered.filter((a) => a.source === sourceFilter);
 
   const totalCount = filtered.length;
   const start = (page - 1) * pageSize;
@@ -190,6 +194,7 @@ export async function POST(request: NextRequest) {
     resourceType?: string;
     cooldownMinutes?: number;
     enabled?: boolean;
+    snoozeUntil?: string;
   };
 
   return created(
@@ -199,11 +204,13 @@ export async function POST(request: NextRequest) {
       description: body.description ?? "",
       condition: body.condition,
       severity: body.severity ?? "warning",
+      source: "threshold",
       channels: body.channels,
       resource: body.resource ?? null,
       resourceType: body.resourceType ?? null,
       cooldownMinutes: body.cooldownMinutes ?? 30,
       enabled: body.enabled ?? true,
+      snoozeUntil: body.snoozeUntil ?? null,
       lastTriggeredAt: null,
       triggerCount: 0,
       createdAt: new Date().toISOString(),
