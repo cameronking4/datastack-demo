@@ -1,0 +1,58 @@
+---
+title: Get Schedule
+description: Get schedule details including fire history and next execution time.
+---
+
+```
+GET /api/v1/schedules/{scheduleId}
+```
+
+Returns full details for a single schedule.
+
+**Required scope:** `read:jobs`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `scheduleId` | `string` | The schedule identifier. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `string` | Schedule identifier. |
+| `name` | `string` | Display name. |
+| `resourceType` | `string` | Associated resource type. |
+| `resourceId` | `string` | Associated resource identifier. |
+| `scheduleExpression` | `string` | Cron or interval expression. |
+| `timezone` | `string` | Schedule timezone. |
+| `active` | `boolean` | Whether the schedule is active. |
+| `startDate` | `string` | ISO 8601 start date. |
+| `endDate` | `string` | ISO 8601 end date. |
+| `skipIfRunning` | `boolean` | Whether to skip if previous run is active. |
+| `catchUpMissed` | `boolean` | Whether to catch up missed runs. |
+| `parameters` | `object` | Execution parameters. |
+| `createdAt` | `string` | ISO 8601 creation timestamp. |
+
+## Example
+
+```bash title="cURL"
+curl /api/v1/schedules/sched-001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "id": "sched-001",
+  "name": "Nightly ETL",
+  "resourceType": "job",
+  "resourceId": "job-001",
+  "scheduleExpression": "0 2 * * *",
+  "timezone": "UTC",
+  "active": true,
+  "skipIfRunning": true,
+  "catchUpMissed": false,
+  "createdAt": "2024-03-01T09:00:00Z"
+}
+```

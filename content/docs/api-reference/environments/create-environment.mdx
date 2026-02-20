@@ -1,0 +1,67 @@
+---
+title: Create Environment
+description: Create a new deployment environment with approval and promotion configuration.
+---
+
+```
+POST /api/v1/environments
+```
+
+Create a new deployment environment.
+
+**Required scope:** `manage:deployments`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Environment display name. |
+| `slug` | `string` | Yes | URL-friendly identifier. |
+| `workspaceId` | `string` | Yes | Target workspace ID. |
+| `description` | `string` | No | Environment description. |
+| `color` | `string` | No | Display color. |
+| `promotionRules` | `object` | No | Promotion configuration. |
+| `promotionRules.requiresApproval` | `boolean` | No | Whether promotions require approval. |
+| `promotionRules.approvers` | `string[]` | No | User IDs allowed to approve. |
+| `promotionRules.autoPromoteFrom` | `string` | No | Environment slug to auto-promote from. |
+| `promotionRules.requiredChecks` | `string[]` | No | Checks that must pass before promotion. |
+| `accessControl` | `object` | No | Access restrictions. |
+| `accessControl.allowedRoles` | `string[]` | No | Roles allowed to deploy. |
+| `accessControl.allowedTeamIds` | `string[]` | No | Team IDs allowed to deploy. |
+| `variables` | `object` | No | Key-value environment variables. |
+
+## Response `201`
+
+Returns the created environment object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/environments \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Staging",
+    "slug": "staging",
+    "workspaceId": "ws-001",
+    "promotionRules": {
+      "requiresApproval": false,
+      "autoPromoteFrom": "development"
+    }
+  }'
+```
+
+```json title="Response"
+{
+  "id": "env-new",
+  "name": "Staging",
+  "slug": "staging",
+  "workspaceId": "ws-001",
+  "protected": false,
+  "promotionRules": {
+    "requiresApproval": false,
+    "autoPromoteFrom": "development"
+  },
+  "createdAt": "2024-03-01T09:00:00Z"
+}
+```

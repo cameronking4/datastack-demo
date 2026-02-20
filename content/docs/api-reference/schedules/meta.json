@@ -1,0 +1,10 @@
+{
+  "title": "Schedules",
+  "pages": [
+    "list-schedules",
+    "create-schedule",
+    "get-schedule",
+    "update-schedule",
+    "delete-schedule"
+  ]
+}

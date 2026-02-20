@@ -1,0 +1,53 @@
+---
+title: List Notification Channels
+description: List configured notification channels and preferences.
+---
+
+```
+GET /api/v1/notifications
+```
+
+Returns a list of notification channels.
+
+**Required scope:** `read:alerts`
+
+## Query Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `type` | `string` | Filter by channel type (`email`, `slack`, `pagerduty`, `webhook`, `teams`). |
+| `enabled` | `boolean` | Filter by enabled state. |
+
+## Response `200`
+
+| Field | Type | Description |
+|---|---|---|
+| `channels` | `object[]` | Array of notification channel objects. |
+| `channels[].id` | `string` | Channel identifier. |
+| `channels[].name` | `string` | Display name. |
+| `channels[].type` | `string` | Channel type. |
+| `channels[].enabled` | `boolean` | Whether the channel is active. |
+| `channels[].createdAt` | `string` | ISO 8601 creation timestamp. |
+| `totalCount` | `number` | Total number of channels. |
+
+## Example
+
+```bash title="cURL"
+curl "/api/v1/notifications?type=slack&enabled=true" \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+```json title="Response"
+{
+  "channels": [
+    {
+      "id": "notif-001",
+      "name": "Engineering Slack",
+      "type": "slack",
+      "enabled": true,
+      "createdAt": "2024-03-01T09:00:00Z"
+    }
+  ],
+  "totalCount": 1
+}
+```

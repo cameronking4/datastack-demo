@@ -1,0 +1,66 @@
+---
+title: Create Notification Channel
+description: Register a new notification channel for alerts and event notifications.
+---
+
+```
+POST /api/v1/notifications
+```
+
+Register a new notification channel.
+
+**Required scope:** `manage:alerts`
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Channel display name. |
+| `type` | `string` | Yes | Channel type (`email`, `slack`, `pagerduty`, `webhook`, `teams`). |
+| `config` | `object` | Yes | Channel-specific configuration. |
+| `config.recipients` | `string[]` | No | Email recipients. |
+| `config.webhookUrl` | `string` | No | Webhook endpoint URL. |
+| `config.slackChannel` | `string` | No | Slack channel name. |
+| `config.pagerdutyServiceKey` | `string` | No | PagerDuty service integration key. |
+| `eventFilters` | `string[]` | No | Event types to receive. |
+| `severityFilter` | `string[]` | No | Severity levels (`info`, `warning`, `error`, `critical`). |
+| `enabled` | `boolean` | No | Whether the channel is active. Defaults to `true`. |
+| `quietHours` | `object` | No | Suppress notifications during quiet hours. |
+| `quietHours.enabled` | `boolean` | No | Enable quiet hours. |
+| `quietHours.startTime` | `string` | No | Start time (e.g., `22:00`). |
+| `quietHours.endTime` | `string` | No | End time (e.g., `06:00`). |
+| `quietHours.timezone` | `string` | No | Timezone for quiet hours. |
+
+## Response `201`
+
+Returns the created notification channel object.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/notifications \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Engineering Slack",
+    "type": "slack",
+    "config": {
+      "slackChannel": "#eng-alerts"
+    },
+    "severityFilter": ["error", "critical"]
+  }'
+```
+
+```json title="Response"
+{
+  "id": "notif-new",
+  "name": "Engineering Slack",
+  "type": "slack",
+  "config": {
+    "slackChannel": "#eng-alerts"
+  },
+  "severityFilter": ["error", "critical"],
+  "enabled": true,
+  "createdAt": "2024-03-01T09:00:00Z"
+}
+```

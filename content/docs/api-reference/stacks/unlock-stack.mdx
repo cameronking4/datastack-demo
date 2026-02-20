@@ -1,0 +1,37 @@
+---
+title: Unlock Stack
+description: Release the exclusive lock on a stack.
+---
+
+```
+POST /api/v1/stacks/{stackId}/unlock
+```
+
+Release the exclusive lock on a stack.
+
+**Required scope:** `manage:stacks`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `stackId` | `string` | The stack identifier. |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `force` | `boolean` | No | Force unlock even if the lock is held by another user. |
+
+## Response `200`
+
+Returns success confirmation.
+
+## Example
+
+```bash title="cURL"
+curl -X POST /api/v1/stacks/stack-001/unlock \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"force": false}'
+```

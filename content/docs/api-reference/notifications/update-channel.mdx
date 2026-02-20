@@ -1,0 +1,46 @@
+---
+title: Update Notification Channel
+description: Update notification channel configuration, filters, or quiet hours.
+---
+
+```
+PATCH /api/v1/notifications/{notificationId}
+```
+
+Update an existing notification channel.
+
+**Required scope:** `manage:alerts`
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `notificationId` | `string` | The notification channel identifier. |
+
+## Request Body
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | Display name. |
+| `config` | `object` | Channel-specific configuration. |
+| `eventFilters` | `string[]` | Event types to receive. |
+| `severityFilter` | `string[]` | Severity levels. |
+| `enabled` | `boolean` | Whether the channel is active. |
+| `quietHours` | `object` | Quiet hours configuration. |
+| `rateLimitPerHour` | `integer` | Maximum notifications per hour. |
+
+## Response `200`
+
+Returns the updated notification channel object.
+
+## Example
+
+```bash title="cURL"
+curl -X PATCH /api/v1/notifications/notif-001 \
+  -H "Authorization: Bearer <accessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "severityFilter": ["warning", "error", "critical"],
+    "rateLimitPerHour": 50
+  }'
+```
