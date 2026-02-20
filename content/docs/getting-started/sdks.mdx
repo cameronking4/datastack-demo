@@ -41,7 +41,7 @@ cluster = client.clusters.create(
 
 print(f"Cluster {cluster.id} is {cluster.state}")
 
-client.clusters.resize(cluster.id, worker_count=8)
+client.clusters.resize(cluster.id, num_workers=8)
 ```
 
 ```python title="Trigger a job run"
