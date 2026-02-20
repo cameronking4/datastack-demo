@@ -28,7 +28,7 @@ Returns a paginated list of clusters.
 | `clusters[].clusterSize` | `string` | Capacity label (e.g., `Medium`, `Large`). |
 | `clusters[].region` | `string` | Deployment region. |
 | `clusters[].state` | `string` | Current state (`RUNNING`, `PENDING`, `TERMINATED`, `RESIZING`). |
-| `clusters[].sparkVersion` | `string` | Apache Spark version. |
+| `clusters[].runtimeVersion` | `string` | Runtime version. |
 | `clusters[].nodeType` | `string` | VM instance type. |
 | `clusters[].numWorkers` | `number` | Number of worker nodes. |
 | `clusters[].autoTerminationMinutes` | `number` | Idle timeout in minutes. `0` disables auto-termination. |
@@ -51,7 +51,7 @@ curl "/api/v1/clusters?page=1&pageSize=10" \
       "clusterSize": "Medium",
       "region": "us-east-1",
       "state": "RUNNING",
-      "sparkVersion": "3.5.x-scala2.12",
+      "runtimeVersion": "3.5.x-scala2.12",
       "nodeType": "i3.xlarge",
       "numWorkers": 4,
       "autoTerminationMinutes": 30,

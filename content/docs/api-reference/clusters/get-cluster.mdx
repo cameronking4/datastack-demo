@@ -26,7 +26,7 @@ Returns full details for a single cluster.
 | `clusterSize` | `string` | Capacity label. |
 | `region` | `string` | Deployment region. |
 | `state` | `string` | Current state. |
-| `sparkVersion` | `string` | Spark version. |
+| `runtimeVersion` | `string` | Runtime version. |
 | `nodeType` | `string` | Instance type. |
 | `numWorkers` | `number` | Number of worker nodes. |
 | `autoTerminationMinutes` | `number` | Idle timeout in minutes. |
@@ -46,7 +46,7 @@ curl /api/v1/clusters/cluster-001 \
   "clusterSize": "Medium",
   "region": "us-east-1",
   "state": "RUNNING",
-  "sparkVersion": "3.5.x-scala2.12",
+  "runtimeVersion": "3.5.x-scala2.12",
   "nodeType": "i3.xlarge",
   "numWorkers": 4,
   "autoTerminationMinutes": 30,
